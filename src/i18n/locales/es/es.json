@@ -1,0 +1,13 @@
+{
+  "menu": {
+    "users": "Usuarios",
+    "manager": "Gerente",
+    "operator": "Operador",
+    "deposits": "Depósitos",
+    "withdraws": "Retiros",
+    "reports": "Informes"
+  },
+  "messages": {
+    "hello": "Hola"
+  }
+}

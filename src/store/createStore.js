@@ -7,3 +7,4 @@ const CreateStore = (reducers, middlewares) => {
 };
 
 export default CreateStore;
+

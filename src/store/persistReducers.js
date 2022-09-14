@@ -1,24 +1,15 @@
-import storage from 'redux-persist/lib/storage';
-import { persistReducer } from 'redux-persist';
+import storage from "redux-persist/lib/storage";
+import { persistReducer } from "redux-persist";
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default (reducers) => {
-  const persistedReducer = persistReducer(
+const Reducers = reducers => {
+  return persistReducer(
     {
-      key: 'vendas',
+      key: "ngt-rgs",
       storage,
-      whitelist: [
-        'auth', 
-        'user', 
-        'adress', 
-        'product', 
-        'sales', 
-        'wokrs',
-        'financialBox'
-      ],
+      whitelist: ["auth", "user"],
     },
     reducers
   );
-
-  return persistedReducer;
 };
+
+export default Reducers;

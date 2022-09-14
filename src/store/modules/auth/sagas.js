@@ -2,60 +2,37 @@ import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
 import history from '../../../services/history';
-import api from '../../../services/api';
+import { apiAuth } from '../../../services/api';
 
-import { signInSuccess, signUpSuccess, signFailure } from './actions';
+import { signInSuccess, signFailure } from './actions';
 
 export function* signIn({ payload }) {
+ const { email, pw } =  payload
   try {
-    const { email, password } = payload;
+    const response = yield call(apiAuth.post, 'user/authenticate', {}, {
+      headers: {
+      "email": email,
+      "password": pw
+     }}
+    )
 
-    const response = yield call(api.post, 'users/authenticate', {
-      email,
-      password,
-    });
+    const { access_token, rooms } = response.data;
 
-    const { token, users } = response.data;
+    apiAuth.defaults.headers.Authorization = `Bearer ${access_token}`;
 
-    api.defaults.headers.Authorization = `Bearer ${token}`;
-
-    yield put(signInSuccess(token, users));
-
-    history.push('/dashboard');
+    yield put(signInSuccess(access_token, rooms));
   } catch (err) {
     toast.error('Falha na autenticação verifique seus dados');
     yield put(signFailure());
   }
 }
 
-export function* signUp({ payload }) {
-  try {
-    const { name, email, password } = payload;
-
-    yield call(api.post, 'users/register', {
-      name,
-      email,
-      password,
-      provider: true,
-    });
-
-    yield put(signUpSuccess());
-
-    history.push('/');
-    toast.success('Cadastro concluído com sucesso!');
-  } catch (err) {
-    toast.error('Falha no cadrastro, verifique seu dados!');
-
-    yield put(signFailure());
-  }
-}
-
 export function setToken({ payload }) {
   if (!payload) return;
-  const { token } = payload.auth;
+  const { access_token } = payload.auth;
 
-  if (token) {
-    api.defaults.headers.Authorization = `Bearer ${token} `;
+  if (access_token) {
+    apiAuth.defaults.headers = `Bearer ${access_token} `;
   }
 }
 
@@ -66,6 +43,5 @@ export function signOut() {
 export default all([
   takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
-  takeLatest('@auth/SIGN_UP_REQUEST', signUp),
   takeLatest('@auth/SIGN_OUT', signOut),
 ]);

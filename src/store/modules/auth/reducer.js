@@ -1,7 +1,7 @@
 import produce from 'immer';
 
 const INITIAL_STATE = {
-  token: null,
+  access_token: null,
   signed: false,
   loading: false,
 };
@@ -13,17 +13,9 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.loading = true;
         break;
       }
-      case '@auth/SIGN_UP_REQUEST': {
-        draft.loading = true;
-        break;
-      }
       case '@auth/SIGN_IN_SUCCESS': {
         draft.token = action.payload.token;
         draft.signed = true;
-        draft.loading = false;
-        break;
-      }
-      case '@auth/SIGN_UP_SUCCESS': {
         draft.loading = false;
         break;
       }

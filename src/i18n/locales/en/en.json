@@ -1,0 +1,13 @@
+{
+  "menu": {
+    "users": "Users",
+    "manager": "Manager",
+    "operator": "Operator",
+    "deposits": "Deposits",
+    "withdraws": "Withdraws",
+    "reports": "Reports"
+  },
+  "messages": {
+    "hello": "Hello"
+  }
+}

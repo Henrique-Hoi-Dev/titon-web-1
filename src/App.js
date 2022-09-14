@@ -1,27 +1,88 @@
-import React from "react";
-import { Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { ToastContainer } from 'react-toastify';
-import { store, persistor } from './store';
-
-import Routes from './routes';
-import history from './services/history';
-import GlobalStyle from './styles/global';
-
-import 'assets/css/material-dashboard-react.css?v=1.9.0';
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { api, apiAuth, apiBingo } from "services/api";
+import { errorNotification } from "utils/notification";
+import { signOut } from "store/modules/auth/actions";
+import RouterController from "routes/routerController";
 
 function App() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  apiAuth.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      //const { statusCode } = error.response.data
+      const statusText = error.response.statusText
+
+      if (
+        //statusText === "Unauthorized" || 
+        statusText === "jwt expired" || 
+        statusText === "invalid token"
+      ) {
+        dispatch(signOut())
+        navigate("/login");
+        window.location.reload();
+      }
+
+      if (statusText) {
+        errorNotification(statusText)
+      }
+
+      return Promise.reject(error);
+    }
+  );
+
+  api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      // const { statusCode } = error.response.data
+      const statusText = error.response.statusText
+
+      if (
+       statusText === "Unauthorized"|| 
+        statusText === "jwt expired" || 
+        statusText === "invalid token"
+      ) {
+        dispatch(signOut())
+        navigate("/login");
+        window.location.reload();
+      }
+
+      if (statusText) {
+        errorNotification(statusText)
+      }
+
+      return Promise.reject(error);
+    },
+  );
+
+  apiBingo.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      //const { statusCode } = error.response.data
+      const statusText = error.response.statusText
+
+      if (
+        statusText === "Unauthorized" ||
+        statusText === "jwt expired" || 
+        statusText === "invalid token"
+      ) {
+        dispatch(signOut())
+        navigate("/login");
+        window.location.reload();
+      }
+
+      if (statusText) {
+        errorNotification(statusText)
+      }
+
+      return Promise.reject(error);
+    }
+  );
+
   return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <Router history={history}>
-          <Routes />
-          <ToastContainer autoClose={3000} />
-          <GlobalStyle />
-        </Router>
-      </PersistGate>
-    </Provider>
+      <RouterController />
   );
 }
 

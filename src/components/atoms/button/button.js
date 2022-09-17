@@ -27,6 +27,7 @@ const Button = ({ children, loading, variant, sx, ...props }) => {
           disableElevation
           variant={variant ? variant : "default"}
           sx={{
+            background: "#fff",
             position: "relative",
             fontSize: "14px",
             minHeight: "40px",
@@ -37,6 +38,7 @@ const Button = ({ children, loading, variant, sx, ...props }) => {
             <CircularProgress
             size={24}
             sx={{
+              background: "#fff",
               color: 'text.disabled',
               position: 'absolute',
               top: '50%',

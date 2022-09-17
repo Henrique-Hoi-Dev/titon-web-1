@@ -33,13 +33,14 @@ export const SLabel = styled(TableSortLabel)(({ theme, hideSortIcon }) => ({
 export const STable = styled(Table)(({ theme }) => ({}));
 
 export const SHead = styled(TableHead)
-(({ color, backgroundColor, fontWeight, displaywidth }) => ({
+(({ color, backgroundColor, fontweight, displaywidth }) => ({
   display: `${displaywidth ? "none" : ""}`,
   fontSize: 18,
-  backgroundColor:  `${backgroundColor ? backgroundColor : "#34495E!important"}`,
+  backgroundColor: `${backgroundColor ? backgroundColor : "#fff!important"}`,
+  "& :hover": { color: "black" },
   "& .MuiTableCell-root": {
-    color: `${color ? "black" : "white"}`,
-    fontWeight: `${fontWeight ? fontWeight : 'normal'}`,
+    color: `${color ? "black" : "black"}`,
+    fontWeight: `${fontweight ? '900' : 'normal'}`,
   },
 }));
 

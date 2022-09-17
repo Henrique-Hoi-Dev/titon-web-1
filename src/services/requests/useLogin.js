@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { apiAuth } from "../api";
+import { api } from "../api";
 
 export const useLogin = (userData) => {
   const { username, password } = userData;
@@ -12,7 +12,7 @@ export const useLogin = (userData) => {
       setIsFetching(true);
       username &&
         password &&
-        apiAuth
+        api
         .post("auth/login/room", 
         {},
         {

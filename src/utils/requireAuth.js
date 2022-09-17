@@ -1,6 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useValidateToken } from "services/requests/useValidateToken";
 
 const RequireAuth = () => {
   const auth = useSelector((state) => state.auth);

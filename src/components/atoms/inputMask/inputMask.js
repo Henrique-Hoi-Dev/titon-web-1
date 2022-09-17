@@ -1,6 +1,6 @@
 import React from "react";
-import { TextField, Grid } from "@mui/material";
 import InputMask from 'react-input-mask';
+import { TextField, Grid } from "@mui/material";
 
 const InputMaskComponent = ({
   holder,
@@ -14,24 +14,25 @@ const InputMaskComponent = ({
 }) => {
   const Label = {};
   return (
-      <Grid sx={{ display: "flex", flexDirection: "column" }}>
+      <Grid sx={{ display: "flex", flexDirection: "column", background: "#fff!importante" }}>
         {holder}
 
         <InputMask 
           mask={mask}
-          value={value} 
+          value={value}
+          sx={{ fontWeight: "bold", background: "#fff!importante" }}
           onChange={onChange}
         >
         {(inputProps) =>
           <TextField 
-          {...inputProps}
-          required
-          fullWidth
-          type={type}
-          size={size ? size : "small"}
-          variant="outlined"
-          sx={{ fontWeight: "bold" }}
-          helperText={value == "" && "Algum texto"}
+            {...inputProps}
+            required
+            fullWidth
+            type={type}
+            size={size ? size : "small"}
+            variant="outlined"
+            sx={{ fontWeight: "bold", background: "#fff!importante" }}
+            helperText={value === "" && "Algum texto"}
           />
         }
         

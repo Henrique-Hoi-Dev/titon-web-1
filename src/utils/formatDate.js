@@ -1,11 +1,11 @@
 import { format } from "date-fns";
-import { utcToZonedTime, formatInTimeZone } from "date-fns-tz";
+import { utcToZonedTime } from "date-fns-tz";
 
 export const formatDate = (date, local) => {
   if (date) {
-    if (local) return format(new Date(date), "dd-MM-yyyy HH:mm:ss");
+    if (local) return format(new Date(date), "dd-MM-yyyy");
     else {
-      return format(utcToZonedTime(new Date(date), ""), "dd-MM-yyyy HH:mm:ss");
+      return format(utcToZonedTime(new Date(date), ""), "dd-MM-yyyy");
     }
   } else {
     return "-";

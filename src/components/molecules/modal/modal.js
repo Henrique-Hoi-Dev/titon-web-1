@@ -20,6 +20,7 @@ const Modal = ({
   maxHeight
 }) => {
   const { t } = useTranslation();
+
   const isDesktop = useMediaQuery({ maxWidth: "1400px" });
   const isSmallDesktop = useMediaQuery({ maxWidth: "910px" });
   const isTable = useMediaQuery({ maxWidth: "610px" })
@@ -37,11 +38,11 @@ const Modal = ({
           transform: "translate(-50%, -50%)",
           backgroundColor: "white",
           height: `${height ? height : "auto"}`,
-          maxWidth:`${(isMobile ? "370px" : maxWidth) ||
-          (isTable ? "470px" : maxWidth)|| 
-          (isSmallDesktop ? "700px" : maxWidth) || 
-          (isDesktop ? "1000px" : maxWidth)}`,
-          maxHeight:`${(isDesktop ? "550px" : maxHeight)}`,
+          maxWidth:`${(isMobile ? "370px" : maxWidth ?? "1100px") ||
+          (isTable ? "470px" : maxWidth ?? "1100px")|| 
+          (isSmallDesktop ? "700px" : maxWidth ?? "1100px") || 
+          (isDesktop ? "1000px" : maxWidth ?? "1100px")}`,
+          maxHeight:`${(isDesktop ? "530px" : maxHeight ?? "600px")}`,
           padding: "10px",
           borderRadius: "20px",
         }}

@@ -1,7 +1,7 @@
 import React from "react";
 import { CircularProgress, Grid } from "@mui/material";
 
-const Loading = ({ sx, titulo }) => (
+const Loading = ({ sx }) => (
   <Grid
     container
     alignItems="center"
@@ -11,7 +11,7 @@ const Loading = ({ sx, titulo }) => (
     pt={4}
   >
     <CircularProgress color="inherit" />
-    <p>{titulo}...</p>
+    <p>Carregando...</p>
   </Grid>
 );
 

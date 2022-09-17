@@ -24,6 +24,7 @@ const Autocomplete = ({
       renderInput={(params) => (
         <TextField
           {...params}
+          sx={{ background: "white!important" }}
           required={required}
           label={placeholder}
           InputProps={{

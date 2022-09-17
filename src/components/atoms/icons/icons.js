@@ -32,6 +32,24 @@ import PersonIcon from '@mui/icons-material/Person';
 import AirlineStopsIcon from '@mui/icons-material/AirlineStops';
 import { HiOutlineTemplate } from "react-icons/hi";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { AiOutlineSearch } from 'react-icons/ai'
+import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
+
+export const IconActions = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <ArrowDropDownCircleIcon/>
+    </SvgIcon>
+  );
+};
+
+export const IconSearch = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <AiOutlineSearch/>
+    </SvgIcon>
+  );
+};
 
 export const IconReturn = (props) => {
   return (

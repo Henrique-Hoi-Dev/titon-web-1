@@ -2,25 +2,25 @@ import { takeLatest, call, put, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
 import history from '../../../services/history';
-import { apiAuth } from '../../../services/api';
+import { api } from '../../../services/api';
 
 import { signInSuccess, signFailure } from './actions';
 
 export function* signIn({ payload }) {
  const { email, pw } =  payload
   try {
-    const response = yield call(apiAuth.post, 'user/authenticate', {}, {
+    const response = yield call(api.post, 'user/authenticate', {}, {
       headers: {
       "email": email,
       "password": pw
      }}
     )
 
-    const { access_token, rooms } = response.data;
+    const { token } = response.data.dataResult;
 
-    apiAuth.defaults.headers.Authorization = `Bearer ${access_token}`;
+    api.defaults.headers.Authorization = `Bearer ${token}`;
 
-    yield put(signInSuccess(access_token, rooms));
+    yield put(signInSuccess(token));
   } catch (err) {
     toast.error('Falha na autenticação verifique seus dados');
     yield put(signFailure());
@@ -29,10 +29,10 @@ export function* signIn({ payload }) {
 
 export function setToken({ payload }) {
   if (!payload) return;
-  const { access_token } = payload.auth;
+  const { token } = payload.auth;
 
-  if (access_token) {
-    apiAuth.defaults.headers = `Bearer ${access_token} `;
+  if (token) {
+    api.defaults.headers = `Bearer ${token} `;
   }
 }
 

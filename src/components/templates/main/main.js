@@ -1,11 +1,11 @@
 import { ThemeProvider } from "@emotion/react";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
+import { createContext, useState } from "react";
 import Theme from "theme/theme";
 import Content from "components/organisms/content/content";
 import HeaderBar from "components/organisms/headerBar/headerBar";
-import Menu from "components/organisms/menu/menu";
-import { createContext, useState } from "react";
+
 export const templateContext = createContext({});
 
 const MainTemplate = () => {
@@ -17,7 +17,6 @@ const MainTemplate = () => {
       <templateContext.Provider value={{ Theme, openMenu, setOpenMenu }}>
         <Box>
           <HeaderBar />
-          <Menu />
           <Content />
         </Box>
       </templateContext.Provider>

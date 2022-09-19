@@ -72,15 +72,13 @@ const InfoRow = (props) => {
         <SCell>
           <IconButton
             color="inherit"
-            fontSize="12px"
+            fontSize="20px"
             sx={{ mr: 1 }}
             onClick={(ev) => handleClick(ev)}
           >
             <IconActions
               sx={{
-                ":hover": {
-                  cursor: "pointer",
-                },
+                color: "#ff443a",
                 height: "30px",
                 width: "30px",
               }}

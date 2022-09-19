@@ -11,7 +11,7 @@ import {
 
 export const SLabel = styled(TableSortLabel)(({ theme, hideSortIcon }) => ({
   "&:hover": {
-    color: "#FFFFFF",
+    color: "#333",
     opacity: 1,
     cursor: hideSortIcon ? "default" : "pointer",
   },

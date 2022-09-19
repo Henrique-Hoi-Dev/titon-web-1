@@ -21,7 +21,6 @@ const Button = ({ children, loading, variant, sx, ...props }) => {
         {children}
       </ButtonComponent>
     )}
-
       {loading && (
         <ButtonComponent
           disableElevation

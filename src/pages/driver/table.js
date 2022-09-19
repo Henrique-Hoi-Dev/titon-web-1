@@ -101,15 +101,7 @@ const Table = (
                   Carreta
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isDesktop ? 1 : 0}>
-                <SLabel
-                  active={query?.sort_field === "date"}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("date")}
-                >
-                  Ações
-                </SLabel>
-              </SCell>
+              <SCell displaywidth={isDesktop ? 1 : 0}>Ações</SCell>
             </SRow>
           </SHead>
           {!isFetching && data && data?.dataResult?.length > 0 && (

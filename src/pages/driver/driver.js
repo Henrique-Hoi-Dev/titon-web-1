@@ -67,6 +67,7 @@ const Driver = () => {
         item
         container
         mb={5}
+        minHeight={'100%'}
         alignItems="flex-start"
         justifyContent="flex-start"
         width={`calc(100% - 50px)`}

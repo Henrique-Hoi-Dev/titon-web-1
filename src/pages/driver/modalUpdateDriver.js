@@ -270,11 +270,11 @@ const ModalUpdateDriver = (
           <Grid container item xs={12} md={12} lg={12} spacing={2} mt={2}>
             <Grid item xs={12} md={12} lg={6}>
               <Button variant="return" onClick={() => onClose()}>
-                {t("button.return")}
+                Voltar
               </Button>
             </Grid>
             <Grid item xs={12} md={12} lg={6}>
-              <Button type="submit">{t("button.confirm")}</Button>
+              <Button type="submit" variant="contained" color="success">Confirmar</Button>
             </Grid>
           </Grid>
 

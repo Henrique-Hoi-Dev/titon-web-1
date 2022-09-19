@@ -18,7 +18,8 @@
     "draw": "Draw",
     "info": "Info",
     "device": "Terminal",
-    "transactions": "Transactions"
+    "transactions": "Transactions",
+    "collector": "Collector"
   },
   "field": {
     "name": "Name",
@@ -59,7 +60,7 @@
     "deposit_date": "Deposit date",
     "withdraw_date": "Withdraw date",
     "language": "Language",
-    "game_instance": "Game Instance",
+    "game_instance": "Local",
     "game_counter": "Game Counter",
     "denominator": "Denominator",
     "total_spent": "Total Spent",
@@ -70,9 +71,9 @@
     "date": "Date",
     "sellers": "Sellers",
     "seller_name": "Seller Name",
-    "point_of_sales": "Point of sales",
+    "point_of_sales": "Point of sale",
     "operators": "Operators",
-    "entries": "Entries",
+    "entries": "Credito",
     "not_paid": "Not Paid",
     "collector_name": "Collector Name",
     "collector": "Collector",
@@ -100,23 +101,35 @@
     "time": "Time",
     "salespoint_name": "Salespoint",
     "device": "Device",
-    "contribution": "Contribution",
+    "contribution": "Credit",
     "bleed": "Bleed",
     "device_number": "Terminal Number",
     "disabled": "Disabled",
-    "activated": "Activated"
+    "activated": "Activated",
+    "route": "Route",
+    "number_of_sweepstakes": "Number of Sweepstakes",
+    "type_of_draw": "Type of Draw",
+    "day_of_week": "Day of Week",
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "clear_list": "Clear List"
   },
   "card": {
-    "paid_value": "Paid Value",
-    "in_value": "In Value",
-    "not_paid_value": "Not Paid Value",
-    "seller_fee": "Seller Fee",
-    "seller_entry": "Seller Entry",
+    "paid_value": "Paid",
+    "in_value": "Sale ",
+    "not_paid_value": "Not Value",
+    "seller_fee": "Commission",
+    "seller_entry": "Credit",
     "balance": "Balance",
-    "entry_credit": "Entry Credit",
-    "entry_debit": "Entry Debit",
+    "entry_credit": "Credit",
+    "entry_debit": "Debit",
     "guaranteed_total": "Guaranteed",
-    "sold_total": "Sold",
+    "sold_total": "Sales",
     "housecut_total": "Housecut",
     "ticket_total": "Ticket",
     "balance_total": "Balance",
@@ -138,7 +151,8 @@
     "button_default": "Button Default",
     "button_return": "Button Return",
     "sidebar": "Sidebar",
-    "navigation_bar": "Navigation Bar"
+    "navigation_bar": "Navigation Bar",
+    "line_per_page": "Line per page"
   },
   "messages": {
     "hello": "Hello",
@@ -149,10 +163,17 @@
     "min_interval": "Minimum interval of 10 minutes",
     "success_msg": "Operation performed successfully!",
     "select_room": "Select a room",
-    "select_game_instance_or_status": "Select a game instance or status",
-    "select_game_instance": "Select a game instance"
+    "select_game_instance_or_status": "Select a local or status",
+    "select_game_instance": "Select a local",
+    "select_template": "Select a template",
+    "unknown_error": "Unknown error",
+    "loading": "Loading",
+    "number_of_draws_added": "Number of draws added",
+    "there_are_no_sweepstakes": "There are no sweepstakes"
   },
   "error": {
-   "passwords_not_match": "Passwords not match"
+   "passwords_not_match": "Passwords not match",
+   "there_is_already_a_draw_at_this_time": "There is already a draw at this time!",
+   "minimum_break_is_10_minutes": "Minimum break is 10 minutes!"
   }
 }

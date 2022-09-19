@@ -60,31 +60,31 @@ const Modal = ({
           p={1}
           sx={{ overflowY: "auto"}}
         >
-            {showCloseIcon && (
-              <Grid item p={1} sx={{ 
-                display: `${isMobile ? "none" : ""}`,
-                position: "absolute",
-                top: `${isMobile ? "3px" : "10px"}`,
-                right: `${isMobile ? 0 : "20px"}`,
-              }}> 
-                <Button
-                  sx={{
-                    height: "40px",
-                    width: "20px",
+          {showCloseIcon && (
+            <Grid item p={1} sx={{ 
+              display: `${isMobile ? "none" : ""}`,
+              position: "absolute",
+              top: `${isMobile ? "3px" : "10px"}`,
+              right: `${isMobile ? 0 : "20px"}`,
+            }}> 
+              <Button
+                sx={{
+                  height: "40px",
+                  width: "20px",
+                  backgroundColor: "transparent",
+                  ":hover": {
                     backgroundColor: "transparent",
-                    ":hover": {
-                      backgroundColor: "transparent",
-                    },
-                  }}
-                  onClick={onClose}
-                >
-                  <IconClose sx={{ color: "black", fontSize: "30px" }} />
-                </Button>
-              </Grid>
-            )}
-            <Grid item container>
-              <Text>{title}</Text>
+                  },
+                }}
+                onClick={onClose}
+              >
+                <IconClose sx={{ color: "black", fontSize: "30px" }} />
+              </Button>
             </Grid>
+          )}
+          <Grid item container>
+            <Text>{title}</Text>
+          </Grid>
           <Grid item container spacing={2}>
             {children}
           </Grid>
@@ -96,7 +96,6 @@ const Modal = ({
             )}
           </Grid>
         )}
-        
       </Grid>
     </MuiModal>
   );

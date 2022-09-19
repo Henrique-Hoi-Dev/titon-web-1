@@ -11,22 +11,10 @@ app.get('/', function (req, res) {
 app.get("/driver", function(req, res){
   res.sendFile(resolve(__dirname, 'build', 'index.html'));
 });
-app.get("/dashboard", function(req, res){
+app.get("/login", function(req, res){
   res.sendFile(resolve(__dirname, 'build', 'index.html'));
 });
-app.get("/perfil/:id", function(req, res){
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get("/adress/:id", function(req, res){
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get("/caixa/:id", function(req, res){
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get("/listProducts", function(req, res){
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get("/listServico", function(req, res){
+app.get("/home", function(req, res){
   res.sendFile(resolve(__dirname, 'build', 'index.html'));
 });
 

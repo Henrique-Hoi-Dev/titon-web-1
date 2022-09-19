@@ -4,7 +4,7 @@ import { persistReducer } from "redux-persist";
 const Reducers = reducers => {
   return persistReducer(
     {
-      key: "ngt-rgs",
+      key: "titon",
       storage,
       whitelist: ["auth", "user"],
     },

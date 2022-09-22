@@ -25,7 +25,12 @@ const ModalAddDriver = (
 
   const [fetch, setFetch] = useState(false);
 
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [passwordError, setPasswordError] = useState(false);
 
   const {
     data: newDevice,
@@ -45,7 +50,15 @@ const ModalAddDriver = (
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
+
+    if(body?.password !== confirmPassword){
+        setPasswordError(true)
+      return
+    }
+
     setFetch(true);
+    setPasswordError(false)
+    setConfirmPassword('')
   };
 
   useEffect(() => {
@@ -66,7 +79,7 @@ const ModalAddDriver = (
       onClose={onClose}
       component="form"
       onSubmit={handleSubmit}
-      maxWidth={"400px"}
+      maxWidth={"600px"}
       maxHeight={"800px"}
     >
       <ContentHeader mt={2}>
@@ -81,7 +94,7 @@ const ModalAddDriver = (
           mt={1}
           sx={{ minHeight: "300px", justifyContent: "flex-start" }}
         > 
-          <Grid item xs={12} md={12} lg={12}>
+          <Grid item xs={12} md={6} lg={6}>
             <Text sx={{ ml: 1 }}>Nome Completo</Text>
             <Input
               required
@@ -100,7 +113,7 @@ const ModalAddDriver = (
             />
           </Grid>
 
-          <Grid item xs={12} md={12} lg={12}>
+          <Grid item xs={12} md={6} lg={6}>
             <Text sx={{ ml: 1 }}>Nome de usuário</Text>
             <Input
               required
@@ -119,7 +132,7 @@ const ModalAddDriver = (
             />
           </Grid>
 
-          <Grid item xs={12} md={12} lg={12}>
+          <Grid item xs={12} md={6} lg={6}>
             <Text sx={{ ml: 1 }}>Senha</Text>
             <Input
               required
@@ -131,13 +144,27 @@ const ModalAddDriver = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.password}
+              error={passwordError}
+              helperText={passwordError ? "Senhas não conferem" : ""}
+              value={body?.password ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
                   password: ev.target.value,
                 }))
               }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
+            <Text sx={{ ml: 1 }}>Confirmar Senha</Text>
+            <Input
+              type={showConfirmPassword ? "text" : "password"}
+              onChange={(ev) => setConfirmPassword(ev.target.value)}
+              isPassword
+              value={confirmPassword ?? ""}
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              required
             />
           </Grid>
 

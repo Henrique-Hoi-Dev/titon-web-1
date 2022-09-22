@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { successNotification } from "utils/notification";
+import { errorNotification, successNotification } from "utils/notification";
 import { useGet } from "services/requests/useGet";
 import { useUpdate } from "services/requests/useUpdate";
-import { formatDatePicker } from "utils/formatDate";
+import { useSelector } from "react-redux";
 
 import Button from "components/atoms/button/button";
 import Input from "components/atoms/input/input";
@@ -13,48 +12,65 @@ import Loading from "components/atoms/loading/loading";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
 import Text from "components/atoms/text/text";
-import PickerDate from "components/atoms/pickerDate/pickerDate";
+import Autocomplete from "components/atoms/autocomplete/autocomplete";
 
 const ModalUpdateUser = (
   { 
     showModal, 
     setShowModal, 
     mutate, 
-    driverId
+    userId
   }) => {
 
-  const { t } = useTranslation();
+  const users = useSelector((state) => state?.user);
 
   const [fetch, setFetch] = useState(false);
   const [body, setBody] = useState([]);
-  // const [routeSelect, setRouteSelect] = useState([]);
-  // const [userSelect, setUserSelect] = useState([])
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [passwordError, setPasswordError] = useState(false);
+
+  const typeUser = [
+    { value: "master", name: "Master" },
+    { value: "director", name: "Diretor" },
+    { value: "manager", name: "Gerente" },
+    { value: "collaborator", name: "Colaborador" }
+  ]
+
+  const getTypeUser = () => typeUser.find(item => item.value === body?.type_position ) ?? null
 
   const {
-    data: driver,
+    data: user,
     isValidating
   } = useGet(
-    `driver/${driverId}`, 
+    `user/${userId}`, 
     []
   );
 
   const {
-    data: salespointUpdate,
-    error: errorSalespointUpdate,
+    data: userUpdate,
+    error: errorUserUpadate,
     isFetching
   } = useUpdate(
-    `driver/${driverId}`, 
+    `user/${userId}`, 
     body, 
     "",
     fetch, 
     setFetch
   );
 
-  console.log( "modal", body)
-
   const handleSubmit = (ev) => {
     ev.preventDefault();
+
+    if(body?.password !== body?.confirmPassword){
+        setPasswordError(true)
+      return
+    }
+
     setFetch(true);
+    setPasswordError(false)
   };
 
   const onClose = () => {
@@ -65,30 +81,25 @@ const ModalUpdateUser = (
   useEffect(() => {
     setBody((state) => ({
       ...state,
-      name: driver?.dataResult?.name,
-      conjunto: driver?.dataResult?.conjunto,
-      number_cnh: Number(driver?.dataResult?.number_cnh),
-      valid_cnh: driver?.dataResult?.valid_cnh,
-      date_valid_mopp: driver?.dataResult?.date_valid_mopp,
-      date_valid_nr20: driver?.dataResult?.date_valid_nr20,
-      date_valid_nr35: driver?.dataResult?.date_valid_nr35,
-      cpf: driver?.dataResult?.cpf,
-      date_admission: driver?.dataResult?.date_admission,
-      date_birthday: driver?.dataResult?.date_birthday,
+      name: user?.dataResult?.name,
+      email: user?.dataResult?.email,
+      cpf: user?.dataResult?.cpf,
+      type_position: user?.dataResult?.type_position,
     }))
-  }, [driver]);
+  }, [user]);
 
   useEffect(() => {
-    if (salespointUpdate) {
+    if (userUpdate) {
       mutate();
       onClose();
-      successNotification(t("messages.success_msg"));
+      successNotification();
     }
-    if(salespointUpdate){
-      successNotification(t("messages.success_msg"));
+
+    if(errorUserUpadate){
+      errorNotification(errorUserUpadate?.response?.data?.msg);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [salespointUpdate, errorSalespointUpdate]);
+  }, [userUpdate, errorUserUpadate]);
 
   return (
     <Modal
@@ -97,10 +108,10 @@ const ModalUpdateUser = (
       onClose={onClose}
       component="form"
       onSubmit={handleSubmit}
-      maxWidth={"700px"}
+      maxWidth={"600px"}
     >
       <ContentHeader>
-        <Title>Editar Motorista</Title>
+        <Title>Editar Usuário</Title>
       </ContentHeader>
 
       {!isFetching && !isValidating && (
@@ -116,10 +127,10 @@ const ModalUpdateUser = (
             <Input
               styles={{
                 "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "2.4rem",
+                  height: "1.4rem",
                 },
               }}
-              value={body?.name}
+              value={body?.name ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
@@ -130,78 +141,14 @@ const ModalUpdateUser = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Data da Admissão</Text>
-            <PickerDate
-              value={body?.date_admission}
-              size="medium"
-              onChange={(newValue) =>
-                setBody((state) => ({
-                  ...state,
-                  date_admission: formatDatePicker(newValue)
-                })) 
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Conjunto</Text>
-            <Input
-              styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "2.4rem",
-                },
-              }}
-              value={body?.conjunto}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  conjunto: ev.target.value
-                })) 
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Data Nascimento</Text>
-            <PickerDate
-              value={body?.date_birthday}
-              size="medium"
-              onChange={(newValue) =>
-                setBody((state) => ({
-                  ...state,
-                  date_birthday: formatDatePicker(newValue)
-                })) 
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>CNH</Text>
-            <Input
-              styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "2.4rem",
-                },
-              }}
-              value={body?.number_cnh}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  number_cnh: Number(ev.target.value)
-                })) 
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
             <Text sx={{ ml: 1 }}>CPF</Text>
             <Input
               styles={{
                 "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "2.4rem",
+                  height: "1.4rem",
                 },
               }}
-              value={body?.cpf}
+              value={body?.cpf ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
@@ -211,59 +158,98 @@ const ModalUpdateUser = (
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Validade CNH</Text>
-            <PickerDate
-              value={body?.valid_cnh}
-              size="medium"
-              onChange={(newValue) =>
+          <Grid 
+            item 
+            xs={12} 
+            md={users?.data?.users?.type_position === "master" ? 6 : 12} 
+            lg={users?.data?.users?.type_position === "master" ? 6 : 12}
+          >
+            <Text sx={{ ml: 1 }}>Email</Text>
+            <Input
+              required
+              styles={{
+                maxWidth: "274px",
+                "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                  height: "1.4rem",
+                },
+              }}
+              value={body?.email ?? ''}
+              onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  valid_cnh: formatDatePicker(newValue)
-                })) 
+                  email: ev.target.value,
+                }))
+              }
+            />
+          </Grid>
+
+          {users?.data?.users?.type_position === "master" && (
+            <Grid item xs={12} md={6} lg={6}>
+              <Text sx={{ ml: 1 }}>Tipo usuário</Text>
+              <Autocomplete 
+                sx={{
+                  "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+                    height: "0.4em"
+                  },
+                }}  
+                options={typeUser ?? []}
+                getOptionLabel={(option) => option.name ?? ''}
+                isOptionEqualToValue={(option, value) => option.value === value.value}
+                value={getTypeUser()}
+                onChange={(event, newValue) => {
+                  if (newValue) {
+                    setBody((state) => ({ ...state, type_position: newValue.value }));
+                  }
+                  if (newValue === null) {
+                    setBody((state) => ({ ...state, type_position: '' }));
+                  }
+                }}
+              />
+            </Grid>            
+          )}
+
+
+          <Grid item xs={12} md={6} lg={6}>
+            <Text sx={{ ml: 1 }}>Nova Senha</Text>
+            <Input
+              type={showPassword ? "text" : "password"}
+              onClick={() => setShowPassword(!showPassword)}
+              isPassword
+              styles={{
+                "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                  height: "1.4rem",
+                },
+              }}
+              error={passwordError}
+              helperText={passwordError ? "Senhas não conferem" : ""}
+              value={body?.password ?? ''}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  password: ev.target.value,
+                }))
               }
             />
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Validade MOPP</Text>
-            <PickerDate
-              value={body?.date_valid_mopp}
-              size="medium"
-              onChange={(newValue) =>
+            <Text sx={{ ml: 1 }}>Confirmar Senha</Text>
+            <Input
+              type={showConfirmPassword ? "text" : "password"}
+              styles={{
+                "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                  height: "1.4rem",
+                },
+              }}
+              isPassword
+              value={body?.confirmPassword ?? ""}
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              onChange={(ev) => {
                 setBody((state) => ({
                   ...state,
-                  date_valid_mopp: formatDatePicker(newValue)
-                })) 
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Validade NR20</Text>
-            <PickerDate
-              value={body?.date_valid_nr20}
-              size="medium"
-              onChange={(newValue) =>
-                setBody((state) => ({
-                  ...state,
-                  date_valid_nr20: formatDatePicker(newValue)
-                })) 
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Validade NR35</Text>
-            <PickerDate
-              value={body?.date_valid_nr35}
-              size="medium"
-              onChange={(newValue) =>
-                setBody((state) => ({
-                  ...state,
-                  date_valid_nr35: formatDatePicker(newValue)
-                })) 
-              }
+                  confirmPassword: ev.target.value,
+                }))
+              }}
             />
           </Grid>
 

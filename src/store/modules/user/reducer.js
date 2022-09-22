@@ -11,7 +11,7 @@ export default function user(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (type) {
       case "@auth/SIGN_IN_SUCCESS": {
-        draft.data = payload.user;
+        draft.data = payload.users;
         break;
       }
 

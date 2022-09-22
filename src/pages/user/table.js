@@ -37,7 +37,7 @@ const Table = (
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showModalUpdate, setShowModalUpdate] = useState(false);
 
-  const [driverId, setDriveId] = useState(null)
+  const [userId, setUserId] = useState(null)
 
   const handleSort = (item) => {
     setQuery((state) => ({
@@ -102,7 +102,7 @@ const Table = (
                     key={item.id}
                     data={item}
                     index={index}
-                    setDriveId={setDriveId}
+                    setUserId={setUserId}
                     setShowModalDelete={setShowModalDelete}
                     setShowModalUpdate={setShowModalUpdate}
                   />
@@ -167,7 +167,7 @@ const Table = (
         <ModalDeleteDriver 
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
-          id={driverId}
+          id={userId}
           mutate={mutate}
         />
       )}
@@ -176,7 +176,7 @@ const Table = (
         <ModalUpdateDevice 
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
-          driverId={driverId}
+          userId={userId}
           mutate={mutate}
         />
       )}

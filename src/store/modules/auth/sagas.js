@@ -16,11 +16,13 @@ export function* signIn({ payload }) {
      }}
     )
 
-    const { token } = response.data.dataResult;
+    console.log("res", response)
+
+    const { token, ...users } = response.data.dataResult;
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
-    yield put(signInSuccess(token));
+    yield put(signInSuccess(token, users));
   } catch (err) {
     toast.error('Falha na autenticação verifique seus dados');
     yield put(signFailure());

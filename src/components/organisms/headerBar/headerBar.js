@@ -70,14 +70,6 @@ const HeaderBar = () => {
             sx={{ mr: 1 }}
             onClick={(ev) => navigate("/")}
           >
-            CONJUNTOS
-          </IconButton>
-          <IconButton
-            color="error"
-            fontSize="12px"
-            sx={{ mr: 1 }}
-            onClick={(ev) => navigate("/")}
-          >
             PERMISSÕES
           </IconButton>
           <IconButton
@@ -87,6 +79,22 @@ const HeaderBar = () => {
             onClick={(ev) => navigate("/")}
           >
             RELATÓRIOS
+          </IconButton>
+          <IconButton
+            color="error"
+            fontSize="12px"
+            sx={{ mr: 1 }}
+            onClick={(ev) => navigate("/")}
+          >
+            CARRETAR
+          </IconButton>
+          <IconButton
+            color="error"
+            fontSize="12px"
+            sx={{ mr: 1 }}
+            onClick={(ev) => navigate("/")}
+          >
+            CAMINHÕES
           </IconButton>
           <IconButton
             color="error"

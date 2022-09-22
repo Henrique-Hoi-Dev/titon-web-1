@@ -111,7 +111,7 @@ const User = () => {
             </Collapse>
           </Grid>
 
-          <Grid container item xs={12} md={1} lg={1} mb={1} justifyContent="flex-start">
+          <Grid container item xs={12} md={1} lg={1.2} mb={1.2} justifyContent="flex-start">
             <Button 
               sx={{ 
                 display: "flex",

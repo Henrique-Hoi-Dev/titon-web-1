@@ -29,8 +29,6 @@ const ModalDeleteDriver = (
     setFetch
   );
 
-  console.log("modal", data)
-
   const handleSubmit = (ev) => {
     ev.preventDefault();
     setFetch(true);

@@ -23,13 +23,11 @@ const ModalDeleteUser = (
     isFetching,
     error
   } = useDelete(
-    "driver",
+    "user",
     id,
     fetch,
     setFetch
   );
-
-  console.log("modal", data)
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
@@ -71,7 +69,7 @@ const ModalDeleteUser = (
       {!isFetching && (
         <>
           <Grid item container justifyContent="center">
-            <Text fontSize={"30px"}>Deseja Deletar Motorista?</Text>
+            <Text fontSize={"30px"}>Deseja Deletar Usuario?</Text>
           </Grid>
           <Grid item xs={12} md={12} lg={6} mt={2}>
             <Button variant="return" onClick={() => onClose()}>Voltar</Button>

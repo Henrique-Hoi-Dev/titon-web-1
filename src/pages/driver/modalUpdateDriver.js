@@ -27,8 +27,6 @@ const ModalUpdateDriver = (
 
   const [fetch, setFetch] = useState(false);
   const [body, setBody] = useState([]);
-  // const [routeSelect, setRouteSelect] = useState([]);
-  // const [userSelect, setUserSelect] = useState([])
 
   const {
     data: driver,
@@ -49,8 +47,6 @@ const ModalUpdateDriver = (
     fetch, 
     setFetch
   );
-
-  console.log( "modal", body)
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
@@ -116,7 +112,7 @@ const ModalUpdateDriver = (
             <Input
               styles={{
                 "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "2.4rem",
+                  height: "1.4rem",
                 },
               }}
               value={body?.name}
@@ -144,24 +140,6 @@ const ModalUpdateDriver = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Conjunto</Text>
-            <Input
-              styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "2.4rem",
-                },
-              }}
-              value={body?.conjunto}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  conjunto: ev.target.value
-                })) 
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
             <Text sx={{ ml: 1 }}>Data Nascimento</Text>
             <PickerDate
               value={body?.date_birthday}
@@ -180,7 +158,7 @@ const ModalUpdateDriver = (
             <Input
               styles={{
                 "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "2.4rem",
+                  height: "1.4rem",
                 },
               }}
               value={body?.number_cnh}
@@ -198,7 +176,7 @@ const ModalUpdateDriver = (
             <Input
               styles={{
                 "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "2.4rem",
+                  height: "1.4rem",
                 },
               }}
               value={body?.cpf}

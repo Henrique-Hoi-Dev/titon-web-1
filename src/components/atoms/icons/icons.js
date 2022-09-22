@@ -34,6 +34,15 @@ import { HiOutlineTemplate } from "react-icons/hi";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { AiOutlineSearch } from 'react-icons/ai'
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+
+export const IconExit = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <ExitToAppIcon/>
+    </SvgIcon>
+  );
+};
 
 export const IconActions = (props) => {
   return (

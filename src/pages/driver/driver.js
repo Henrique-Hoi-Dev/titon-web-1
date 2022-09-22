@@ -74,7 +74,7 @@ const Driver = () => {
         sx={{ background: "#000", borderRadius: "8px" }}
       >
         <Grid item container pl={2} spacing={1} mb={-4}>
-          <Grid container item xs={12} md={1.3} lg={1.3} mb={1} justifyContent="flex-start">
+          <Grid container item xs={12} md={1.5} lg={1.5} mb={1} justifyContent="flex-start">
             <Button
               sx={{
                 display: "flex",

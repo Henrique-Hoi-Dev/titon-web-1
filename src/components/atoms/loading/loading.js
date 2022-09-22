@@ -1,7 +1,7 @@
 import React from "react";
 import { CircularProgress, Grid } from "@mui/material";
 
-const Loading = ({ sx }) => (
+const Loading = ({ sx, color }) => (
   <Grid
     container
     alignItems="center"
@@ -10,8 +10,8 @@ const Loading = ({ sx }) => (
     sx={sx}
     pt={4}
   >
-    <CircularProgress color="inherit" />
-    <p>Carregando...</p>
+    <CircularProgress sx={{ color: `${color ? color : "black"}` }} />
+    <p style={{ color: `${color ? color : "black"}` }}>Carregando...</p>
   </Grid>
 );
 

@@ -1,23 +1,19 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 // import { templateContext } from "components/templates/main/main";
-import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "store/modules/auth/actions";
 // import { useStateValue } from "context/state";
 // import { useMediaQuery } from "react-responsive";
 import {
+  Avatar,
   Grid,
   IconButton,
   Menu,
   MenuItem,
 } from "@mui/material";
 
-import getUnicodeFlagIcon from "country-flag-icons/unicode";
-
 const HeaderBar = () => {
-  const { t, i18n } = useTranslation();
-
   // const isSmallDesktop = useMediaQuery({ maxWidth: "710px" });
 
   const dispatch = useDispatch();
@@ -40,10 +36,6 @@ const HeaderBar = () => {
     navigate("/login");
   };
 
-  const handleChangeLanguage = (language) => {
-    i18n.changeLanguage(language);
-  };
-
   return (
     <>
       <Grid
@@ -53,17 +45,16 @@ const HeaderBar = () => {
           backgroundColor: "inherit",
           height: "64px",
         }}
-        justifyContent="flex-start"
+        justifyContent="flex-end"
         alignItems="center"
       >
         <Grid 
           item 
           container
           xs={6}
-          md={8}
+          md={10}
           flexWrap="nowrap"
           alignItems="center"
-          justifyContent="flex-end"
         >
           <IconButton
             color="error"
@@ -105,6 +96,33 @@ const HeaderBar = () => {
           >
             MOTORISTAS
           </IconButton>
+
+          <Grid 
+            item 
+            container
+            xs={12}
+            md={12}
+            lg={12}
+            alignItems="center"
+            justifyContent="flex-end"
+          >
+            <IconButton
+              color="inherit"
+              fontSize="12px"
+              sx={{ mr: 1 }}
+              onClick={(ev) => handleClick(ev)}
+            >
+              <Avatar
+                sx={{
+                  ":hover": {
+                    cursor: "pointer",
+                  },
+                  height: "30px",
+                  width: "30px",
+                }}
+              />
+            </IconButton>          
+          </Grid>          
         </Grid>
 
         <Menu
@@ -124,53 +142,8 @@ const HeaderBar = () => {
           open={openSettings}
           onClose={() => setOpenSettings(!openSettings)}
         >
-          <Grid
-            container
-            direction="column"
-            alignItems="center"
-            justifyContent="center"
-            spacing={1}
-            minWidth="180px"
-            sx={{ padding: 1, mt: 1 }}
-          >
-            {t("field.language")}
-            <Grid
-              container
-              item
-              direction="row"
-              mt={1}
-              ml={2}
-              justifyContent="space-evenly"
-              alignItems="center"
-            >
-              <Grid
-                item
-                lg={4}
-                alignItems="center"
-                onClick={() => handleChangeLanguage("en")}
-                sx={{ cursor: "pointer"}}
-              >
-                {getUnicodeFlagIcon("US")}
-              </Grid>
-              <Grid
-                item
-                lg={4}
-                onClick={() => handleChangeLanguage("es")}
-                sx={{ cursor: "pointer"}}
-              >
-                {getUnicodeFlagIcon("ES")}
-              </Grid>
-              <Grid
-                item
-                lg={4}
-                onClick={() => handleChangeLanguage("pt")}
-                sx={{ cursor: "pointer" }}
-              >
-                {getUnicodeFlagIcon("BR")}
-              </Grid>
-            </Grid>
-          </Grid>
-          <MenuItem onClick={handleLogOut}>{t("field.log_out")}</MenuItem>
+          <MenuItem onClick={() => navigate("/user")}>Usuários</MenuItem>
+          <MenuItem onClick={handleLogOut}>SAIR...</MenuItem>
         </Menu>
       </Grid>
     </>

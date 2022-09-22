@@ -17,6 +17,9 @@ app.get("/login", function(req, res){
 app.get("/home", function(req, res){
   res.sendFile(resolve(__dirname, 'build', 'index.html'));
 });
+app.get("/user", function(req, res){
+  res.sendFile(resolve(__dirname, 'build', 'index.html'));
+});
 
 app.listen(process.env.PORT, (err) => {
   if (err) { return console.log(err) }

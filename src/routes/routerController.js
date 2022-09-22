@@ -1,9 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import MainTemplate from "components/templates/main/main";
+import RequireAuth from "utils/requireAuth";
+
 import Login from "pages/login/login";
 import Home from "pages/home/home";
 import Driver from "pages/driver/driver";
-import RequireAuth from "utils/requireAuth";
+import User from "pages/user/user";
 
 const RouterController = () => {
   const initialPage = () => {
@@ -17,7 +19,7 @@ const RouterController = () => {
           <Route path="/" element={initialPage()} />
           <Route path="/home" element={<Home />} />
           <Route path="/driver" element={<Driver />} />
-          {/* <Route path="/report" element={<ReportWithdraws />} /> */}
+          <Route path="/user" element={<User />} />
           {/* <Route path="/permission" element={<ReportHistoricScratchGames />} />
           <Route path="/conjuntos" element={<ReportSettingsScratchGames />} /> */}
         </Route>

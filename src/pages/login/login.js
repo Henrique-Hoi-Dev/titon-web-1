@@ -29,15 +29,16 @@ const Login = () => {
 
   const [userData, setUserData] = useState(INITIAL_STATE);
 
-  const { error, isFetching } = useLogin(userData);
+  const { error } = useLogin(userData);
 
   const auth = useSelector((state) => state.auth);
 
   const token = auth?.token
+  const loading = auth?.loading
   
-  const showLoading = isFetching
+  const showLoading = loading
   const showError = error
-
+  
   useEffect(() => {
     if (token) {
       navigate("/home", { replace: true });
@@ -144,7 +145,7 @@ const Login = () => {
                   </Button>
                 </Grid>
               )}
-              {showLoading && <Loading />}
+              {showLoading && <Loading color={"white"} />}
               {showError && !showLoading && (
                 <Text center sx={{ mt: "10px" }} type="warning">
                   Usuário e/ou senha incorretos

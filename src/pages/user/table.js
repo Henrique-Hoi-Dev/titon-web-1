@@ -15,8 +15,8 @@ import {
 import InfoRow from "./infoRow";
 import Text from "components/atoms/text/text";
 import Loading from "components/atoms/loading/loading";
-import ModalDeleteDriver from "./modalDeleteDriver";
-import ModalUpdateDevice from "./modalUpdateDriver";
+import ModalDeleteDriver from "./modalDeleteUser";
+import ModalUpdateDevice from "./modalUpdateUser";
 
 const Table = (
   { 

@@ -66,7 +66,7 @@ const ModalAddDriver = (
       onClose={onClose}
       component="form"
       onSubmit={handleSubmit}
-      maxWidth={"500px"}
+      maxWidth={"400px"}
       maxHeight={"800px"}
     >
       <ContentHeader mt={2}>
@@ -99,6 +99,26 @@ const ModalAddDriver = (
               }
             />
           </Grid>
+
+          <Grid item xs={12} md={12} lg={12}>
+            <Text sx={{ ml: 1 }}>Nome de usuário</Text>
+            <Input
+              required
+              styles={{
+                "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                  height: "1.4rem",
+                },
+              }}
+              value={body?.name_user}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  name_user: ev.target.value,
+                }))
+              }
+            />
+          </Grid>
+
           <Grid item xs={12} md={12} lg={12}>
             <Text sx={{ ml: 1 }}>Senha</Text>
             <Input
@@ -119,15 +139,6 @@ const ModalAddDriver = (
                 }))
               }
             />
-
-            {/* <Input
-              placeholder={"Senha"}
-              
-              onChange={(ev) => setPassword(ev.target.value)}
-              isPassword
-              onClick={() => setShowPassword(!showPassword)}
-              required
-            /> */}
           </Grid>
 
           <Grid container item xs={12} md={12} lg={12} spacing={2} mt={2}>

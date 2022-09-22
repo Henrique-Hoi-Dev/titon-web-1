@@ -68,7 +68,7 @@ const HeaderBar = () => {
             color="error"
             fontSize="12px"
             sx={{ mr: 1 }}
-            onClick={(ev) => navigate("/conjuntos")}
+            onClick={(ev) => navigate("/")}
           >
             CONJUNTOS
           </IconButton>
@@ -76,7 +76,7 @@ const HeaderBar = () => {
             color="error"
             fontSize="12px"
             sx={{ mr: 1 }}
-            onClick={(ev) => navigate('permission')}
+            onClick={(ev) => navigate("/")}
           >
             PERMISSÕES
           </IconButton>
@@ -84,7 +84,7 @@ const HeaderBar = () => {
             color="error"
             fontSize="12px"
             sx={{ mr: 1 }}
-            onClick={(ev) => navigate("/report")}
+            onClick={(ev) => navigate("/")}
           >
             RELATÓRIOS
           </IconButton>

@@ -7,6 +7,7 @@ const PickerDate = ({
   size,
   label,
   readOnly,
+  height,
   ...props
 }) => {
   return (
@@ -22,12 +23,15 @@ const PickerDate = ({
             width: `${minWidth ? minWidth : "100%"}`,
             "& .MuiSvgIcon-root": {
               color: "black !important",
+              height: `${height}`,
             },
             "& .MuiIconButton-root": {
               color: "black !important",
+              height: `${height}`,
             },
             "& .MuiOutlinedInput-root": {
               color: "black !important",
+              height: `${height}`,
             },
           }}
         />

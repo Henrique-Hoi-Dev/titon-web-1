@@ -93,7 +93,7 @@ const ModalUpdateDriver = (
       onClose={onClose}
       component="form"
       onSubmit={handleSubmit}
-      maxWidth={"700px"}
+      maxWidth={"600px"}
     >
       <ContentHeader>
         <Title>Editar Motorista</Title>
@@ -115,7 +115,7 @@ const ModalUpdateDriver = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.name}
+              value={body?.name ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
@@ -130,6 +130,7 @@ const ModalUpdateDriver = (
             <PickerDate
               value={body?.date_admission}
               size="medium"
+              height="2.4em"
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,
@@ -144,6 +145,7 @@ const ModalUpdateDriver = (
             <PickerDate
               value={body?.date_birthday}
               size="medium"
+              height="2.4em"
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,
@@ -161,7 +163,7 @@ const ModalUpdateDriver = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.number_cnh}
+              value={body?.number_cnh ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
@@ -179,7 +181,7 @@ const ModalUpdateDriver = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.cpf}
+              value={body?.cpf ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
@@ -192,6 +194,7 @@ const ModalUpdateDriver = (
           <Grid item xs={12} md={6} lg={6}>
             <Text sx={{ ml: 1 }}>Validade CNH</Text>
             <PickerDate
+              height="2.4em"
               value={body?.valid_cnh}
               size="medium"
               onChange={(newValue) =>
@@ -208,6 +211,7 @@ const ModalUpdateDriver = (
             <PickerDate
               value={body?.date_valid_mopp}
               size="medium"
+              height="2.4em"
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,
@@ -222,6 +226,7 @@ const ModalUpdateDriver = (
             <PickerDate
               value={body?.date_valid_nr20}
               size="medium"
+              height="2.4em"
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,
@@ -236,6 +241,7 @@ const ModalUpdateDriver = (
             <PickerDate
               value={body?.date_valid_nr35}
               size="medium"
+              height="2.7em"
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,

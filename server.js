@@ -20,6 +20,9 @@ app.get("/home", function(req, res){
 app.get("/user", function(req, res){
   res.sendFile(resolve(__dirname, 'build', 'index.html'));
 });
+app.get("/truck", function(req, res){
+  res.sendFile(resolve(__dirname, 'build', 'index.html'));
+});
 
 app.listen(process.env.PORT, (err) => {
   if (err) { return console.log(err) }

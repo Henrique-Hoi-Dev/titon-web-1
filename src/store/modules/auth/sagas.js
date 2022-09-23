@@ -15,14 +15,15 @@ export function* signIn({ payload }) {
       "password": pw
      }}
     )
-
-    console.log("res", response)
-
+    
     const { token, ...users } = response.data.dataResult;
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
     yield put(signInSuccess(token, users));
+
+    history.push('/home');
+
   } catch (err) {
     toast.error('Falha na autenticação verifique seus dados');
     yield put(signFailure());

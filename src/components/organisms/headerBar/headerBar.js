@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-// import { templateContext } from "components/templates/main/main";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "store/modules/auth/actions";
-// import { useStateValue } from "context/state";
-// import { useMediaQuery } from "react-responsive";
 import {
   Avatar,
   Grid,
@@ -13,14 +10,15 @@ import {
   MenuItem,
 } from "@mui/material";
 
+import Text from "components/atoms/text/text";
+import Button from "components/atoms/button/button";
+
 const HeaderBar = () => {
-  // const isSmallDesktop = useMediaQuery({ maxWidth: "710px" });
 
   const dispatch = useDispatch();
 
-  // const user = useSelector((state) => state.user);
+  const users = useSelector((state) => state?.user);
 
-  // const { openMenu, } = useContext(templateContext);
   const [openSettings, setOpenSettings] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
 
@@ -84,7 +82,7 @@ const HeaderBar = () => {
             color="error"
             fontSize="12px"
             sx={{ mr: 1 }}
-            onClick={(ev) => navigate("/")}
+            onClick={(ev) => navigate("cart")}
           >
             CARRETAR
           </IconButton>
@@ -92,7 +90,7 @@ const HeaderBar = () => {
             color="error"
             fontSize="12px"
             sx={{ mr: 1 }}
-            onClick={(ev) => navigate("/")}
+            onClick={(ev) => navigate("truck")}
           >
             CAMINHÕES
           </IconButton>
@@ -146,12 +144,44 @@ const HeaderBar = () => {
           sx={{
             zIndex: 4444,
             mt: 5,
+            width: "300px"
           }}
           open={openSettings}
           onClose={() => setOpenSettings(!openSettings)}
         >
-          <MenuItem onClick={() => navigate("/user")}>Usuários</MenuItem>
-          <MenuItem onClick={handleLogOut}>SAIR...</MenuItem>
+          <Grid 
+            item 
+            container
+            xs={12}
+            md={12}
+            lg={12}
+            mt={2}
+            mb={2}
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Avatar
+              sx={{
+                height: "30px",
+                width: "30px",
+                marginRight: "5px",
+              }}
+            />
+            <Text sx={{ fontWeight: "900" }}>{users?.data?.users?.type_position}</Text>
+          </Grid>
+          <MenuItem sx={{ fontWeight: "700" }} onClick={() => navigate("/user")}>Usuários</MenuItem>
+          <MenuItem sx={{ fontWeight: "700" }} onClick={handleLogOut}>
+            <Button 
+              sx={{ 
+                backgroundColor: "red",
+                "&:hover": {
+                  backgroundColor: "red"
+                }
+              }}
+            >
+              SAIR...              
+            </Button>
+          </MenuItem>
         </Menu>
       </Grid>
     </>

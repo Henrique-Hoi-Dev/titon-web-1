@@ -23,6 +23,12 @@ app.get("/user", function(req, res){
 app.get("/truck", function(req, res){
   res.sendFile(resolve(__dirname, 'build', 'index.html'));
 });
+app.get("/cart", function(req, res){
+  res.sendFile(resolve(__dirname, 'build', 'index.html'));
+});
+app.get("/financial", function(req, res){
+  res.sendFile(resolve(__dirname, 'build', 'index.html'));
+});
 
 app.listen(process.env.PORT, (err) => {
   if (err) { return console.log(err) }

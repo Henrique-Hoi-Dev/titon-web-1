@@ -15,15 +15,10 @@ export function* signIn({ payload }) {
       "password": pw
      }}
     )
-    
     const { token, ...users } = response.data.dataResult;
 
-    api.defaults.headers.Authorization = `Bearer ${token}`;
-
     yield put(signInSuccess(token, users));
-
     history.push('/home');
-
   } catch (err) {
     toast.error('Falha na autenticação verifique seus dados');
     yield put(signFailure());
@@ -35,7 +30,8 @@ export function setToken({ payload }) {
   const { token } = payload.auth;
 
   if (token) {
-    api.defaults.headers = `Bearer ${token} `;
+    // api.defaults.headers = `Bearer ${token}`;
+    api.defaults.headers.Authorization = `Bearer ${token} `;
   }
 }
 

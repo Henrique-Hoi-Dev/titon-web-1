@@ -23,7 +23,7 @@ const ModalDeleteCart = (
     isFetching,
     error
   } = useDelete(
-    "truck",
+    "cart",
     id,
     fetch,
     setFetch

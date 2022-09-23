@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 
 import useSWR from "swr";
 
-export const useGet = (url, params) => {
+export const useGet = (url, params, props) => {
   const auth = useSelector((state) => state.auth);
   const token = auth?.token
 
   const { data, error, isValidating, mutate } = useSWR(
-    [`${url}`, params, token], 
+    !props && [`${url}`, params, token],  
     fetcher,
     {
       revalidateOnFocus: false,

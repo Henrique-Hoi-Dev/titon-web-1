@@ -43,7 +43,7 @@ const HeaderBar = () => {
           backgroundColor: "inherit",
           height: "64px",
         }}
-        justifyContent="flex-end"
+        justifyContent="center"
         alignItems="center"
       >
         <Grid 
@@ -102,6 +102,14 @@ const HeaderBar = () => {
           >
             MOTORISTAS
           </IconButton>
+          <IconButton
+            color="error"
+            fontSize="12px"
+            sx={{ mr: 1 }}
+            onClick={(ev) => navigate("financial")}
+          >
+            FICHAS MOTORISTAS
+          </IconButton>
 
           <Grid 
             item 
@@ -115,7 +123,7 @@ const HeaderBar = () => {
             <IconButton
               color="inherit"
               fontSize="12px"
-              sx={{ mr: 1 }}
+              sx={{ ml: "25px" }}
               onClick={(ev) => handleClick(ev)}
             >
               <Avatar
@@ -123,8 +131,8 @@ const HeaderBar = () => {
                   ":hover": {
                     cursor: "pointer",
                   },
-                  height: "30px",
-                  width: "30px",
+                  height: "40px",
+                  width: "40px",
                 }}
               />
             </IconButton>          
@@ -158,6 +166,7 @@ const HeaderBar = () => {
             mt={2}
             mb={2}
             alignItems="center"
+            flexDirection={"column"}
             justifyContent="center"
           >
             <Avatar

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Avatar, Box, Collapse, IconButton, Menu, MenuItem } from "@mui/material";
+import { Box, Collapse, IconButton, Menu, MenuItem } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
 import { moneyMask } from "utils/masks";
 import {
@@ -22,7 +22,7 @@ const InfoRow = (props) => {
     index, 
     setShowModalDelete, 
     setShowModalUpdate,
-    setUserId, 
+    setCartId, 
   } = props;
 
   const [open, setOpen] = useState(false);
@@ -40,13 +40,13 @@ const InfoRow = (props) => {
 
   const handleDelete = (id) => {
     setShowModalDelete(true)
-    setUserId(id)
+    setCartId(id)
     setOpenSettings(false)
   }
   
   const handleUpdate = (id) => {
     setShowModalUpdate(true)
-    setUserId(id)
+    setCartId(id)
     setOpenSettings(false)
   }
 

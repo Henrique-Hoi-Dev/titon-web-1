@@ -281,7 +281,7 @@ const ModalAddTruck = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Ano</Text>
+            <Text sx={{ ml: 1 }}>Ano Fabricação</Text>
             <Input
               required
               styles={{

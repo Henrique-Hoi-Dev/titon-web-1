@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { useCreate } from "services/requests/useCreate";
 import { successNotification, errorNotification } from "utils/notification";
+
 import Button from "components/atoms/button/button";
 import Input from "components/atoms/input/input";
 import Modal from "components/molecules/modal/modal";
@@ -9,6 +10,7 @@ import Loading from "components/atoms/loading/loading";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
 import Text from "components/atoms/text/text";
+import Autocomplete from "components/atoms/autocomplete/autocomplete";
 
 const ModalAddCart = (
   { 
@@ -20,13 +22,21 @@ const ModalAddCart = (
   const [body, setBody] = useState({});
 
   const [fetch, setFetch] = useState(false);
+
+  const typeCart = [
+    { value: "tank", name: "Tanque" },
+    { value: "bulkCarrier", name: "Graneleiro" },
+    { value: "sider", name: "Sider" },
+    { value: "chest", name: "Baú" },
+    { value: "bucket", name: "Caçamba" }
+  ]
   
   const {
-    data: user,
-    error: errorUser,
+    data: cart,
+    error: errorCart,
     isFetching,
   } = useCreate(
-    "truck", 
+    "cart", 
     body, 
     fetch, 
     setFetch
@@ -35,7 +45,6 @@ const ModalAddCart = (
   const onClose = () => {
     setShowModal(false);
     setBody({});
-    // setPreview("https://i.pinimg.com/474x/a6/70/05/a67005e9bf90bc529088205650784bba.jpg")
   };
 
   const handleSubmit = (ev) => {
@@ -44,20 +53,22 @@ const ModalAddCart = (
   };
 
   useEffect(() => {
-    if (user) {
+    if (cart) {
       mutate();
       onClose();
     }
 
-    if(user){
+    if(cart){
       successNotification();
     }
 
-    if(errorUser){
-      errorNotification(errorUser?.response?.data?.msg);
+    if(errorCart){
+      errorNotification(errorCart?.response?.data?.msg);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, errorUser]);
+  }, [cart, errorCart]);
+
+  console.log("body", body)
 
   return (
     <Modal
@@ -69,7 +80,7 @@ const ModalAddCart = (
       maxHeight={"800px"}
     >
       <ContentHeader mt={2}>
-        <Title>Cadastrar Caminhões</Title>
+        <Title>Cadastrar Carreta</Title>
       </ContentHeader>
 
       {!isFetching && (
@@ -80,7 +91,6 @@ const ModalAddCart = (
           mt={1}
           sx={{ minHeight: "300px", justifyContent: "flex-start" }}
         > 
-
           <Grid item xs={12} md={6} lg={6}>
             <Text sx={{ ml: 1 }}>Modelo</Text>
             <Input
@@ -90,11 +100,11 @@ const ModalAddCart = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.truck_models ?? ''}
+              value={body?.cart_models ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  truck_models: ev.target.value,
+                  cart_models: ev.target.value,
                 }))
               }
             />
@@ -110,11 +120,11 @@ const ModalAddCart = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.truck_name_brand ?? ''}
+              value={body?.cart_brand ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  truck_name_brand: ev.target.value,
+                  cart_brand: ev.target.value,
                 }))
               }
             />
@@ -130,15 +140,15 @@ const ModalAddCart = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.truck_board ?? ''}
+              value={body?.cart_board ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  truck_board: ev.target.value,
+                  cart_board: ev.target.value,
                 }))
               }
             />
-          </Grid>            
+          </Grid>  
 
           <Grid item xs={12} md={6} lg={6}>
             <Text sx={{ ml: 1 }}>Cor</Text>
@@ -150,18 +160,88 @@ const ModalAddCart = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.truck_color ?? ''}
+              value={body?.cart_color ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  truck_color: ev.target.value,
+                  cart_color: ev.target.value,
                 }))
               }
             />
-          </Grid>
+          </Grid>  
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>KM</Text>
+            <Text sx={{ ml: 1 }}>Tipo usuário</Text>
+            <Autocomplete 
+              sx={{
+                "& .MuiAutocomplete-input": {
+                  height: "0.4em!important",
+                },
+              }} 
+              options={typeCart ?? []}
+              getOptionLabel={(option) => option.name ?? ''}
+              isOptionEqualToValue={(option, value) => option.value === value.value}
+              onChange={(event, newValue) => {
+                if (newValue) {
+                  setBody((state) => ({ ...state, cart_bodywork: newValue.value }));
+                }
+                if (newValue === null) {
+                  setBody((state) => ({ ...state, cart_bodywork: '' }));
+                }
+              }}
+            />
+          </Grid>           
+          
+          {body?.cart_bodywork === "tank" && (
+            <Grid item xs={12} md={6} lg={6}>
+              <Text sx={{ ml: 1 }}>Capacidade de litros</Text>
+              <Input
+                required
+                styles={{
+                  maxWidth: "274px",
+                  "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                    height: "1.4rem",
+                  },
+                }}
+                value={body?.cart_liter_capacity ?? ''}
+                onChange={(ev) =>
+                  setBody((state) => ({
+                    ...state,
+                    cart_liter_capacity: ev.target.value,
+                  }))
+                }
+              />
+            </Grid>            
+          )} 
+
+          {((body?.cart_bodywork === "bulkCarrier") ||
+          (body?.cart_bodywork === "sider") ||
+          (body?.cart_bodywork === "chest") ||
+          (body?.cart_bodywork === "bucket")
+          ) && (
+            <Grid item xs={12} md={6} lg={6}>
+              <Text sx={{ ml: 1 }}>Capacidade de tonelada</Text>
+              <Input
+                required
+                styles={{
+                  maxWidth: "274px",
+                  "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                    height: "1.4rem",
+                  },
+                }}
+                value={body?.cart_ton_capacity ?? ''}
+                onChange={(ev) =>
+                  setBody((state) => ({
+                    ...state,
+                    cart_ton_capacity: ev.target.value,
+                  }))
+                }
+              />
+            </Grid>            
+          )}
+
+          <Grid item xs={12} md={6} lg={6}>
+            <Text sx={{ ml: 1 }}>Tara</Text>
             <Input
               required
               styles={{
@@ -170,11 +250,11 @@ const ModalAddCart = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.truck_km ?? ''}
+              value={body?.cart_tara ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  truck_km: ev.target.value,
+                  cart_tara: ev.target.value,
                 }))
               }
             />
@@ -190,18 +270,18 @@ const ModalAddCart = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.truck_chassis ?? ''}
+              value={body?.cart_chassis ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  truck_chassis: ev.target.value,
+                  cart_chassis: ev.target.value,
                 }))
               }
             />
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Ano</Text>
+            <Text sx={{ ml: 1 }}>Ano Fabricação</Text>
             <Input
               required
               styles={{
@@ -210,11 +290,11 @@ const ModalAddCart = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.truck_year ?? ''}
+              value={body?.cart_year ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  truck_year: ev.target.value,
+                  cart_year: ev.target.value,
                 }))
               }
             />

@@ -67,27 +67,27 @@ const Table = (
               </SCell>
               <SCell>
                 <SLabel
-                  active={query?.sort_field === "id"}
+                  active={query?.sort_field === "name"}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("id")}
+                  onClick={() => handleSort("name")}
                 >
                   Motorista
                 </SLabel>
               </SCell>
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "roomid"}
+                  active={query?.sort_field === ""}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("roomid")}
+                  onClick={() => handleSort("")}
                 >
                   Crédito/Débito
                 </SLabel>
               </SCell>
               <SCell displaywidth={isSmallDesktop ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "userid"}
+                  active={query?.sort_field === "truck_models"}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("userid")}
+                  onClick={() => handleSort("truck_models")}
                 >
                   Caminhão
                 </SLabel>

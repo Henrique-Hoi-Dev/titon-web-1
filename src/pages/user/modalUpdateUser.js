@@ -188,10 +188,10 @@ const ModalUpdateUser = (
               <Text sx={{ ml: 1 }}>Tipo usuário</Text>
               <Autocomplete 
                 sx={{
-                  "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
-                    height: "0.4em"
+                  "& .MuiAutocomplete-input": {
+                    height: "0.4em!important",
                   },
-                }}  
+                }} 
                 options={typeUser ?? []}
                 getOptionLabel={(option) => option.name ?? ''}
                 isOptionEqualToValue={(option, value) => option.value === value.value}

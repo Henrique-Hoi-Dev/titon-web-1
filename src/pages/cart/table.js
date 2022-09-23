@@ -37,7 +37,7 @@ const Table = (
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showModalUpdate, setShowModalUpdate] = useState(false);
 
-  const [truckId, setTruckId] = useState(null)
+  const [cartId, setCartId] = useState(null)
 
   const handleSort = (item) => {
     setQuery((state) => ({
@@ -147,7 +147,7 @@ const Table = (
                     key={item.id}
                     data={item}
                     index={index}
-                    setUserId={setTruckId}
+                    setCartId={setCartId}
                     setShowModalDelete={setShowModalDelete}
                     setShowModalUpdate={setShowModalUpdate}
                   />
@@ -212,7 +212,7 @@ const Table = (
         <ModalDeleteDriver 
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
-          id={truckId}
+          id={cartId}
           mutate={mutate}
         />
       )}
@@ -221,7 +221,7 @@ const Table = (
         <ModalUpdateDevice 
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
-          truckId={truckId}
+          cartId={cartId}
           mutate={mutate}
         />
       )}

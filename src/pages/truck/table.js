@@ -139,7 +139,7 @@ const Table = (
                     key={item.id}
                     data={item}
                     index={index}
-                    setUserId={setTruckId}
+                    setTruckId={setTruckId}
                     setShowModalDelete={setShowModalDelete}
                     setShowModalUpdate={setShowModalUpdate}
                   />

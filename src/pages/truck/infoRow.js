@@ -22,7 +22,7 @@ const InfoRow = (props) => {
     index, 
     setShowModalDelete, 
     setShowModalUpdate,
-    setUserId, 
+    setTruckId, 
   } = props;
 
   const [open, setOpen] = useState(false);
@@ -40,13 +40,13 @@ const InfoRow = (props) => {
 
   const handleDelete = (id) => {
     setShowModalDelete(true)
-    setUserId(id)
+    setTruckId(id)
     setOpenSettings(false)
   }
   
   const handleUpdate = (id) => {
     setShowModalUpdate(true)
-    setUserId(id)
+    setTruckId(id)
     setOpenSettings(false)
   }
 

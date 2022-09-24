@@ -15,8 +15,8 @@ import {
 import InfoRow from "./infoRow";
 import Text from "components/atoms/text/text";
 import Loading from "components/atoms/loading/loading";
-import ModalDeleteDriver from "./modalDeleteTruck";
-import ModalUpdateDevice from "./modalUpdateTruck";
+import ModalDeleteTruck from "./modalDeleteTruck";
+import ModalUpdateTruck from "./modalUpdateTruck";
 
 const Table = (
   { 
@@ -201,7 +201,7 @@ const Table = (
       </TableContainer>   
 
       {showModalDelete && (
-        <ModalDeleteDriver 
+        <ModalDeleteTruck 
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
           id={truckId}
@@ -210,7 +210,7 @@ const Table = (
       )}
 
       {showModalUpdate && (
-        <ModalUpdateDevice 
+        <ModalUpdateTruck 
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
           truckId={truckId}

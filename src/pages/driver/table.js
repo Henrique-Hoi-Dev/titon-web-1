@@ -16,7 +16,7 @@ import InfoRow from "./infoRow";
 import Text from "components/atoms/text/text";
 import Loading from "components/atoms/loading/loading";
 import ModalDeleteDriver from "./modalDeleteDriver";
-import ModalUpdateDevice from "./modalUpdateDriver";
+import ModalUpdateDriver from "./modalUpdateDriver";
 
 const Table = (
   { 
@@ -183,7 +183,7 @@ const Table = (
       )}
 
       {showModalUpdate && (
-        <ModalUpdateDevice 
+        <ModalUpdateDriver 
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
           driverId={driverId}

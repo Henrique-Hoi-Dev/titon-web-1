@@ -62,7 +62,6 @@ const ModalUpdateDriver = (
     setBody((state) => ({
       ...state,
       name: driver?.dataResult?.name,
-      conjunto: driver?.dataResult?.conjunto,
       number_cnh: Number(driver?.dataResult?.number_cnh),
       valid_cnh: driver?.dataResult?.valid_cnh,
       date_valid_mopp: driver?.dataResult?.date_valid_mopp,

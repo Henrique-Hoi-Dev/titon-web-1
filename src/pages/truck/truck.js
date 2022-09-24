@@ -6,7 +6,7 @@ import { IconAdd, IconSearch } from "components/atoms/icons/icons";
 import Table from "./table";
 import Input from "components/atoms/input/input";
 import Text from "components/atoms/text/text";
-import ModalAddDriver from "./modalAddTruck";
+import ModalAddTruck from "./modalAddTruck";
 import Title from "components/atoms/title/title";
 import Button from "components/atoms/button/button";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
@@ -157,7 +157,7 @@ const Truck = () => {
         </Grid>        
       </Grid>
 
-      <ModalAddDriver 
+      <ModalAddTruck 
         setShowModal={setShowModalDriver}
         showModal={showModalDriver}
         mutate={mutate}

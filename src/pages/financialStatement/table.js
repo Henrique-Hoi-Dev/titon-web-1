@@ -15,8 +15,8 @@ import {
 import InfoRow from "./infoRow";
 import Text from "components/atoms/text/text";
 import Loading from "components/atoms/loading/loading";
-import ModalDeleteDriver from "./modalDeleteDriver";
-import ModalUpdateDevice from "./modalUpdateDriver";
+import ModalDeleteFinancial from "./modalDeleteFinancial";
+import ModalUpdateFinancial from "./modalUpdateFinancial";
 
 const Table = (
   { 
@@ -38,7 +38,7 @@ const Table = (
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showModalUpdate, setShowModalUpdate] = useState(false);
 
-  const [driverId, setDriveId] = useState(null)
+  const [financialId, setFinancialId] = useState(null)
 
   const handleSort = (item) => {
     setQuery((state) => ({
@@ -55,7 +55,7 @@ const Table = (
         <STable>
           <SHead>
             <SRow>
-              <SCell displaywidth={isDesktop ? 0 : 1}>Info</SCell>
+              <SCell>Info</SCell>
               <SCell>
                 <SLabel
                   active={query?.sort_field === "id"}
@@ -101,6 +101,7 @@ const Table = (
                   Inici da Ficha
                 </SLabel>
               </SCell>
+              <SCell displaywidth={isDesktop ? 1 : 0}>Avatar</SCell>
               <SCell displaywidth={isDesktop ? 1 : 0}>Ações</SCell>
             </SRow>
           </SHead>
@@ -112,7 +113,7 @@ const Table = (
                     key={item.id}
                     data={item}
                     index={index}
-                    setDriveId={setDriveId}
+                    setFinancialId={setFinancialId}
                     setShowModalDelete={setShowModalDelete}
                     setShowModalUpdate={setShowModalUpdate}
                   />
@@ -174,19 +175,19 @@ const Table = (
       </TableContainer>   
 
       {showModalDelete && (
-        <ModalDeleteDriver 
+        <ModalDeleteFinancial 
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
-          id={driverId}
+          id={financialId}
           mutate={mutate}
         />
       )}
 
       {showModalUpdate && (
-        <ModalUpdateDevice 
+        <ModalUpdateFinancial 
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
-          driverId={driverId}
+          financialId={financialId}
           mutate={mutate}
         />
       )}

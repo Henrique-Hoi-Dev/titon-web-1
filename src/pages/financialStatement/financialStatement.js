@@ -9,7 +9,7 @@ import Table from "./table";
 import Button from "components/atoms/button/button";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Text from "components/atoms/text/text";
-import ModalAddDriver from "./modalAddDriver";
+import ModalAddFinancial from "./modalAddFinancial";
 
 const FinancialStatement = () => {
   const [open, setOpen] = useState(false);
@@ -132,7 +132,7 @@ const FinancialStatement = () => {
           </Grid>          
         </Grid>
 
-        <Grid item container pl={2} mr={4} mt={5} justifyContent={"center"}>
+        <Grid item container pl={2} mr={4} mt={5} justifyContent={"center"} maxWidth={"1135px"} sx={{  }}>
           <Grid 
             item 
             container 
@@ -157,7 +157,7 @@ const FinancialStatement = () => {
         </Grid>        
       </Grid>
 
-      <ModalAddDriver 
+      <ModalAddFinancial 
         setShowModal={setShowModalDriver}
         showModal={showModalDriver}
         mutate={mutate}

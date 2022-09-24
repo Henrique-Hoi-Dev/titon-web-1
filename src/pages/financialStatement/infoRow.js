@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Box, Collapse, IconButton, Menu, MenuItem } from "@mui/material";
+import { Avatar, Box, Collapse, IconButton, Menu, MenuItem } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
-import { moneyMask } from "utils/masks";
+// import { moneyMask } from "utils/masks";
 import { formatDate } from "utils/formatDate";
 import {
   ArrowDownIcon,
@@ -13,7 +13,7 @@ import {
   SRow,
   STable,
   STableBody,
-  SCellTwoHead,
+  SHead,
 } from "components/atoms/table/table";
 
 const InfoRow = (props) => {
@@ -23,7 +23,7 @@ const InfoRow = (props) => {
     index, 
     setShowModalDelete, 
     setShowModalUpdate,
-    setDriveId, 
+    setFinancialId, 
   } = props;
 
   const [open, setOpen] = useState(false);
@@ -41,20 +41,20 @@ const InfoRow = (props) => {
 
   const handleDelete = (id) => {
     setShowModalDelete(true)
-    setDriveId(id)
+    setFinancialId(id)
     setOpenSettings(false)
   }
   
   const handleUpdate = (id) => {
     setShowModalUpdate(true)
-    setDriveId(id)
+    setFinancialId(id)
     setOpenSettings(false)
   }
 
   return (
     <>
       <SRow key={data.id} alternatingcolors={index} >
-        <SCell minwidth={"0px"} displaywidth={isDesktop ? 0 : 1}>
+        <SCell minwidth={"0px"}>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -70,8 +70,14 @@ const InfoRow = (props) => {
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.cart_models}</SCell>
         <SCell displaywidth={isDesktop ? 1 : 0}>{formatDate(data.start_date)}</SCell>
         <SCell>
+          <Avatar
+            alt="img" 
+            sx={{ height: "70px", width: "70px", marginLeft: "12px" }} 
+            src={data.truck_avatar}
+          />
+        </SCell>
+        <SCell>
           <IconButton
-            disabled
             color="inherit"
             fontSize="20px"
             sx={{ mr: 1 }}
@@ -110,7 +116,6 @@ const InfoRow = (props) => {
       </Menu>
 
       <SRow 
-        displaywidth={isDesktop ? 0 : 1} 
         sx={{ backgroundColor: "white" }}>
         <SCell
           style={{ paddingBottom: 0, paddingTop: 0, border: 0 }}
@@ -119,46 +124,37 @@ const InfoRow = (props) => {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 4 }}>
               <STable aria-label="purchases">
-                <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                  <STableBody>
-
-                   <SRow sx={{ backgroundColor: "white" }}>
-                      <SCellTwoHead displaywidth={isMobile ? 0 : 1}>
-                        ID 
-                      </SCellTwoHead>
-                      <SCell displaywidth={isMobile ? 0 : 1}>
-                        {data.roomid}
-                      </SCell>
-                    </SRow>
-
+                <SHead>
+                  <SRow>
+                    <SCell>Status Check</SCell>
+                    <SCell>Contratante</SCell>
+                    <SCell>Cidade Inicio Frete</SCell>
+                    <SCell>Cidade Final Frete</SCell>
+                    <SCell>Previa Peso Carregamento</SCell>
+                    <SCell>Km Atual Caminhção</SCell>
+                    <SCell>Valor Tonelada</SCell>
+                  </SRow>
+                </SHead>
+                <STableBody>
+                  {data?.freigth.map((res) => (
                     <SRow sx={{ backgroundColor: "white" }}>
-                      <SCellTwoHead displaywidth={isSmallDesktop ? 0 : 1}>
-                        ID 
-                      </SCellTwoHead>
-                      <SCell displaywidth={isSmallDesktop ? 0 : 1}>
-                        {data.userid}
+                      <SCell 
+                        sx={{ 
+                          fontWeight: "900",
+                          color: `${res.status_check_order === 'approval_process' && "green"}` 
+                        }}
+                      >
+                        {res.status_check_order === 'approval_process' && "Em Processo"}
                       </SCell>
-                    </SRow>
-
-                    <SRow sx={{ backgroundColor: "white" }}>
-                      <SCellTwoHead displaywidth={isSmallDesktop ? 0 : 1}>
-                        value
-                      </SCellTwoHead>
-                      <SCell displaywidth={isSmallDesktop ? 0 : 1}>
-                          {moneyMask(data.value || [0])}
-                      </SCell>
-                    </SRow>
-
-                    <SRow sx={{ backgroundColor: "white" }}>
-                      <SCellTwoHead displaywidth={isDesktop ? 0 : 1}>
-                        trst
-                      </SCellTwoHead>
-                      <SCell displaywidth={isDesktop ? 0 : 1}>
-                        {data.date}
-                      </SCell>
-                    </SRow>
-                  </STableBody>
-                </Box>
+                      <SCell>{res.contractor}</SCell>
+                      <SCell>{res.start_city}</SCell>
+                      <SCell>{res.final_city}</SCell>
+                      <SCell>{res.preview_tonne}T</SCell>
+                      <SCell>{res.start_km}</SCell>
+                      <SCell>{res.value_tonne}</SCell>
+                    </SRow>                      
+                  ))}
+                </STableBody>
               </STable>
             </Box>
           </Collapse>

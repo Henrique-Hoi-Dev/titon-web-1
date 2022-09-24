@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Box, Collapse, IconButton, Menu, MenuItem } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
 import { moneyMask } from "utils/masks";
-import { formatDate } from "utils/formatDate";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
@@ -51,6 +50,8 @@ const InfoRow = (props) => {
     setOpenSettings(false)
   }
 
+  console.log("data", data)
+
   return (
     <>
       <SRow key={data.id} alternatingcolors={index} >
@@ -66,9 +67,14 @@ const InfoRow = (props) => {
 
         <SCell>{data.id}</SCell>
         <SCell displaywidth={isMobile ? 1 : 0}>{data.name}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>0</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.number_cnh}</SCell>
-        <SCell displaywidth={isDesktop ? 1 : 0}>{formatDate(data.valid_cnh)}</SCell>
+        <SCell 
+          sx={{ color: `${(data.credit > 0 && "green") || (data.credit < 0 && "red")}` }}
+          displaywidth={isSmallDesktop ? 1 : 0}
+        >
+          {moneyMask(data.credit)}
+        </SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.truck}</SCell>
+        <SCell displaywidth={isDesktop ? 1 : 0}>{data.cart}</SCell>
         <SCell>
           <IconButton
             color="inherit"

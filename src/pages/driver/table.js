@@ -76,27 +76,27 @@ const Table = (
               </SCell>
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === ""}
+                  active={query?.sort_field === "credit"}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("")}
+                  onClick={() => handleSort("credit")}
                 >
                   Crédito/Débito
                 </SLabel>
               </SCell>
               <SCell displaywidth={isSmallDesktop ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "truck_models"}
+                  active={query?.sort_field === "truck"}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("truck_models")}
+                  onClick={() => handleSort("truck")}
                 >
                   Caminhão
                 </SLabel>
               </SCell>
               <SCell displaywidth={isSmallDesktop ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "value"}
+                  active={query?.sort_field === "cart"}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("value")}
+                  onClick={() => handleSort("cart")}
                 >
                   Carreta
                 </SLabel>

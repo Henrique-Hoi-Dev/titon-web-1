@@ -29,6 +29,9 @@ app.get("/cart", function(req, res){
 app.get("/financial", function(req, res){
   res.sendFile(resolve(__dirname, 'build', 'index.html'));
 });
+app.get("/permission", function(req, res){
+  res.sendFile(resolve(__dirname, 'build', 'index.html'));
+});
 
 app.listen(process.env.PORT, (err) => {
   if (err) { return console.log(err) }

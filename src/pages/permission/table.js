@@ -15,8 +15,7 @@ import {
 import InfoRow from "./infoRow";
 import Text from "components/atoms/text/text";
 import Loading from "components/atoms/loading/loading";
-import ModalDeleteCart from "./modalDeleteCart";
-import ModalUpdateCart from "./modalUpdateCart";
+import ModalAction from "./modalAction";
 
 const Table = (
   { 
@@ -31,13 +30,13 @@ const Table = (
 
   const { t } = useTranslation();
 
-  const isDesktop = useMediaQuery({ maxWidth: "1120px" });
+  const isDesktop = useMediaQuery({ maxWidth: "1400px" });
+  const isSmallDesktop = useMediaQuery({ maxWidth: "1100px" });
   const isMobile = useMediaQuery({ maxWidth: "730px" });
 
-  const [showModalDelete, setShowModalDelete] = useState(false);
-  const [showModalUpdate, setShowModalUpdate] = useState(false);
+  const [showModalAction, setShowModalAction] = useState(false);
 
-  const [cartId, setCartId] = useState(null)
+  const [checkId, setCheckId] = useState(null)
 
   const handleSort = (item) => {
     setQuery((state) => ({
@@ -50,93 +49,102 @@ const Table = (
   
   return (
     <>
-      <TableContainer component={Paper} sx={{ maxWidth: "1120px" }}>
+      <TableContainer component={Paper}>
         <STable>
           <SHead>
             <SRow>
-              <SCell displaywidth={isDesktop ? 0 : 1}>Info</SCell>
-              <SCell>
+              <SCell displaywidth={isDesktop ? 0 : 1}>Mais Info</SCell>
+              <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "id"}
+                  active={query?.sort_field === "status_check_order"}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("id")}
+                  onClick={() => handleSort("status_check_order")}
                 >
-                  ID
-                </SLabel>
-              </SCell>
-              <SCell>
-                <SLabel
-                  active={query?.sort_field === "cart_brand"}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_brand")}
-                >
-                  Marca
+                  Status
                 </SLabel>
               </SCell>
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "cart_models"}
+                  active={query?.sort_field === "contractor"}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_models")}
+                  onClick={() => handleSort("contractor")}
                 >
-                  Modelo
+                  Empresa
                 </SLabel>
               </SCell>
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "cart_brand"}
+                  active={query?.sort_field === "start_city"}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_brand")}
+                  onClick={() => handleSort("start_city")}
                 >
-                  Placa
+                  Inicio Frete
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
+              <SCell displaywidth={isSmallDesktop ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "cart_color"}
+                  active={query?.sort_field === "final_city"}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_color")}
+                  onClick={() => handleSort("final_city")}
                 >
-                  Cor
+                  Final Frete
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
+              <SCell displaywidth={isSmallDesktop ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "cart_tara"}
+                  active={query?.sort_field === "location_of_the_truck"}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_tara")}
+                  onClick={() => handleSort("location_of_the_truck")}
                 >
-                  Tara
+                  Local Atual
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
+              <SCell displaywidth={isSmallDesktop ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "cart_bodywork"}
+                  active={query?.sort_field === "preview_tonne"}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_bodywork")}
+                  onClick={() => handleSort("preview_tonne")}
                 >
-                  Tipo Carreta
+                  Prévia Tonelada
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
+              <SCell displaywidth={isSmallDesktop ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "cart_chassis"}
+                  active={query?.sort_field === "truck_chassis"}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_chassis")}
+                  onClick={() => handleSort("truck_chassis")}
                 >
-                  Chassi
+                  Km Atual
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
+              <SCell displaywidth={isDesktop ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "cart_year"}
+                  active={query?.sort_field === "start_km"}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_year")}
+                  onClick={() => handleSort("start_km")}
                 >
-                  Ano Fabricação
+                  Valor Tonelada
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isDesktop ? 1 : 0}>Ações</SCell>
+              <SCell displaywidth={isDesktop ? 1 : 0}>
+                <SLabel
+                  active={query?.sort_field === "preview_value_diesel"}
+                  direction={query?.sort_order?.toLowerCase()}
+                  onClick={() => handleSort("preview_value_diesel")}
+                >
+                  Valor Prévia Diesel
+                </SLabel>
+              </SCell>
+              <SCell displaywidth={isDesktop ? 1 : 0}>
+                <SLabel
+                  active={query?.sort_field === "start_date"}
+                  direction={query?.sort_order?.toLowerCase()}
+                  onClick={() => handleSort("start_date")}
+                >
+                  Data Check Frete
+                </SLabel>
+              </SCell>
+              <SCell>Ações</SCell>
             </SRow>
           </SHead>
           {!isFetching && data && data?.dataResult?.length > 0 && (
@@ -147,9 +155,10 @@ const Table = (
                     key={item.id}
                     data={item}
                     index={index}
-                    setCartId={setCartId}
-                    setShowModalDelete={setShowModalDelete}
-                    setShowModalUpdate={setShowModalUpdate}
+                    setCheckId={setCheckId}
+                    setShowModalAction={setShowModalAction}
+                    query={query}
+                    setQuery={setQuery}
                   />
                 ))}
               </STableBody>
@@ -208,23 +217,14 @@ const Table = (
         )}
       </TableContainer>   
 
-      {showModalDelete && (
-        <ModalDeleteCart 
-          setShowModal={setShowModalDelete}
-          showModal={showModalDelete}
-          id={cartId}
+      {showModalAction && (
+        <ModalAction 
+          setShowModal={setShowModalAction}
+          showModal={showModalAction}
+          props={checkId}
           mutate={mutate}
         />
-      )}
-
-      {showModalUpdate && (
-        <ModalUpdateCart 
-          setShowModal={setShowModalUpdate}
-          showModal={showModalUpdate}
-          cartId={cartId}
-          mutate={mutate}
-        />
-      )}
+      )} 
     </>
 
   );

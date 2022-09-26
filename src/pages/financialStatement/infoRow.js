@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Avatar, Box, Collapse, IconButton, Menu, MenuItem } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
-// import { moneyMask } from "utils/masks";
+import { moneyMask } from "utils/masks";
 import { formatDate } from "utils/formatDate";
 import {
   ArrowDownIcon,
@@ -33,6 +33,15 @@ const InfoRow = (props) => {
   const isDesktop = useMediaQuery({ maxWidth: "1250px" });
   const isSmallDesktop = useMediaQuery({ maxWidth: "1100px" });
   const isMobile = useMediaQuery({ maxWidth: "730px" });
+
+  const status = [
+    { value: "approval_process", label: "Em processo", color: "green" },
+    { value: "approved", label: "Aprovado", color: "#1976d2" },
+    { value: "denied", label: "Negado", color: "red" },
+    { value: "finished", label: "Finalizado", color: "grey" },
+  ]
+
+  const getStatus = (res) => status.find(item => item.value === res)
 
   const handleClick = (ev) => {
     setOpenSettings(!openSettings);
@@ -116,42 +125,48 @@ const InfoRow = (props) => {
       </Menu>
 
       <SRow 
-        sx={{ backgroundColor: "white" }}>
+        sx={{ backgroundColor: "white" }}
+        displaywidth={data?.freigth.length > 0 ? 0 : 1}
+      >
         <SCell
           style={{ paddingBottom: 0, paddingTop: 0, border: 0 }}
           colSpan={6}
         >
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 4 }}>
-              <STable aria-label="purchases">
+            <Box sx={{ margin: 1 }}>
+              <STable aria-label="purchases" sx={{ borderRadius: "8px" }}>
                 <SHead>
                   <SRow>
                     <SCell>Status Check</SCell>
                     <SCell>Contratante</SCell>
                     <SCell>Cidade Inicio Frete</SCell>
                     <SCell>Cidade Final Frete</SCell>
-                    <SCell>Previa Peso Carregamento</SCell>
-                    <SCell>Km Atual Caminhção</SCell>
                     <SCell>Valor Tonelada</SCell>
+                    <SCell>Km Atual Caminhção</SCell>
+                    <SCell>Km Final Viagem</SCell>
                   </SRow>
                 </SHead>
                 <STableBody>
-                  {data?.freigth.map((res) => (
-                    <SRow sx={{ backgroundColor: "white" }}>
+                  {data?.freigth.map((res, i) => (
+                    <SRow 
+                      key={i}
+                      sx={{ backgroundColor: "white" }} 
+                      displaywidth={res?.status_check_order === 'approval_process' ? 0 : 1}
+                    >
                       <SCell 
                         sx={{ 
                           fontWeight: "900",
-                          color: `${res.status_check_order === 'approval_process' && "green"}` 
+                          color: `${getStatus(res?.status_check_order)?.color}` 
                         }}
                       >
-                        {res.status_check_order === 'approval_process' && "Em Processo"}
+                        {getStatus(res?.status_check_order)?.label}
                       </SCell>
-                      <SCell>{res.contractor}</SCell>
-                      <SCell>{res.start_city}</SCell>
-                      <SCell>{res.final_city}</SCell>
-                      <SCell>{res.preview_tonne}T</SCell>
-                      <SCell>{res.start_km}</SCell>
-                      <SCell>{res.value_tonne}</SCell>
+                      <SCell>{res?.contractor}</SCell>
+                      <SCell>{res?.start_city}</SCell>
+                      <SCell>{res?.final_city}</SCell>
+                      <SCell>{moneyMask(res?.value_tonne || [0])}</SCell>
+                      <SCell>{res?.start_km}Km</SCell>
+                      <SCell>{res?.final_km}Km</SCell>
                     </SRow>                      
                   ))}
                 </STableBody>

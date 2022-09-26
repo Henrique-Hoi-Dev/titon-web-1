@@ -30,7 +30,7 @@ export const SLabel = styled(TableSortLabel)(({ theme, hideSortIcon }) => ({
   }
 }));
 
-export const STable = styled(Table)(({ theme }) => ({}));
+export const STable = styled(Table)(({ theme }) => ({ }));
 
 export const SHead = styled(TableHead)
 (({ color, backgroundColor, fontweight, displaywidth }) => ({
@@ -40,7 +40,7 @@ export const SHead = styled(TableHead)
   "& :hover": { color: "black" },
   "& .MuiTableCell-root": {
     color: `${color ? "black" : "black"}`,
-    fontWeight: `${fontweight ? '900' : 'normal'}`,
+    fontWeight: `${'900'}`,
   },
 }));
 

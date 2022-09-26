@@ -50,8 +50,6 @@ const InfoRow = (props) => {
     setOpenSettings(false)
   }
 
-  console.log("data", data)
-
   return (
     <>
       <SRow key={data.id} alternatingcolors={index} >
@@ -71,7 +69,7 @@ const InfoRow = (props) => {
           sx={{ color: `${(data.credit > 0 && "green") || (data.credit < 0 && "red")}` }}
           displaywidth={isSmallDesktop ? 1 : 0}
         >
-          {moneyMask(data.credit)}
+          {moneyMask(data.credit || [0])}
         </SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.truck}</SCell>
         <SCell displaywidth={isDesktop ? 1 : 0}>{data.cart}</SCell>

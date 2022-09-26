@@ -43,7 +43,6 @@ const HeaderBar = () => {
           backgroundColor: "inherit",
           height: "64px",
         }}
-        justifyContent="center"
         alignItems="center"
       >
         <Grid 
@@ -51,8 +50,10 @@ const HeaderBar = () => {
           container
           xs={6}
           md={10}
+          ml={3}
           flexWrap="nowrap"
           alignItems="center"
+          justifyContent={"space-between"}
         >
           <IconButton
             color="error"
@@ -68,15 +69,15 @@ const HeaderBar = () => {
             sx={{ mr: 1 }}
             onClick={(ev) => navigate("/")}
           >
-            PERMISSÕES
+            RELATÓRIOS
           </IconButton>
           <IconButton
             color="error"
             fontSize="12px"
             sx={{ mr: 1 }}
-            onClick={(ev) => navigate("/")}
+            onClick={(ev) => navigate("permission")}
           >
-            RELATÓRIOS
+            PERMISSÕES
           </IconButton>
           <IconButton
             color="error"
@@ -111,32 +112,32 @@ const HeaderBar = () => {
             FICHAS MOTORISTAS
           </IconButton>
 
-          <Grid 
-            item 
-            container
-            xs={12}
-            md={12}
-            lg={12}
-            alignItems="center"
-            justifyContent="flex-end"
+          <IconButton
+            color="inherit"
+            fontSize="12px"
+            sx={{ ml: "25px", width: "130px" }}
+            onClick={(ev) => handleClick(ev)}
           >
-            <IconButton
-              color="inherit"
-              fontSize="12px"
-              sx={{ ml: "25px" }}
-              onClick={(ev) => handleClick(ev)}
+            <Grid 
+              item 
+              container
+              xs={12}
+              md={12}
+              lg={12}
+              alignItems="center"
+              justifyContent="flex-end"
             >
               <Avatar
                 sx={{
                   ":hover": {
                     cursor: "pointer",
                   },
-                  height: "40px",
-                  width: "40px",
+                  height: "50px",
+                  width: "50px",
                 }}
               />
-            </IconButton>          
-          </Grid>          
+            </Grid>
+          </IconButton>              
         </Grid>
 
         <Menu

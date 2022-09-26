@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { Avatar, Grid, IconButton } from "@mui/material";
 import { useCreate } from "services/requests/useCreate";
 import { successNotification, errorNotification } from "utils/notification";
+
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { storage } from 'base';
 
 import Button from "components/atoms/button/button";
 import Input from "components/atoms/input/input";
@@ -10,9 +13,9 @@ import Loading from "components/atoms/loading/loading";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
 import Text from "components/atoms/text/text";
-import Autocomplete from "components/atoms/autocomplete/autocomplete";
+import Progress from "components/atoms/progress/progress";
 
-const ModalAddCart = (
+const ModalAddFreight = (
   { 
     showModal, 
     setShowModal, 
@@ -23,20 +26,16 @@ const ModalAddCart = (
 
   const [fetch, setFetch] = useState(false);
 
-  const typeCart = [
-    { value: "tank", label: "Tanque" },
-    { value: "bulkCarrier", label: "Graneleiro" },
-    { value: "sider", label: "Sider" },
-    { value: "chest", label: "Baú" },
-    { value: "bucket", label: "Caçamba" }
-  ]
+  const [preview, setPreview] = useState('');
+
+  const [progressPercent, setProgressPercent] = useState(0)
   
   const {
-    data: cart,
-    error: errorCart,
+    data: user,
+    error: errorUser,
     isFetching,
   } = useCreate(
-    "cart", 
+    "truck", 
     body, 
     fetch, 
     setFetch
@@ -45,6 +44,7 @@ const ModalAddCart = (
   const onClose = () => {
     setShowModal(false);
     setBody({});
+    setPreview("https://i.pinimg.com/474x/a6/70/05/a67005e9bf90bc529088205650784bba.jpg")
   };
 
   const handleSubmit = (ev) => {
@@ -53,20 +53,52 @@ const ModalAddCart = (
   };
 
   useEffect(() => {
-    if (cart) {
+    setBody((state) => ({
+      ...state,
+      truck_avatar: preview
+    }))
+  }, [preview, setPreview]);
+
+  useEffect(() => {
+    if (user) {
       mutate();
       onClose();
     }
 
-    if(cart){
+    if(user){
       successNotification();
     }
 
-    if(errorCart){
-      errorNotification(errorCart?.response?.data?.msg);
+    if(errorUser){
+      errorNotification(errorUser?.response?.data?.msg);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart, errorCart]);
+  }, [user, errorUser]);
+
+  async function handleChange(e) {
+    const file = e.target.files[0]
+
+    if (!file) return null;
+    const storageRef = ref(storage, `avatar/${file.name}`)
+    const uploadTask = uploadBytesResumable(storageRef, file)
+
+    uploadTask.on("state_changed",
+      (snapshot) => {
+        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+        setProgressPercent(progress)
+      },
+      (error) => {
+        alert(error)
+      },
+      () => {
+        // e.target[0].value = ''
+        getDownloadURL(storageRef).then((downloadURL) => {
+          console.log("avatar", downloadURL)
+          setPreview(downloadURL)
+        })
+      }
+    )
+  }
 
   return (
     <Modal
@@ -78,7 +110,7 @@ const ModalAddCart = (
       maxHeight={"800px"}
     >
       <ContentHeader mt={2}>
-        <Title>Cadastrar Carreta</Title>
+        <Title>Cadastrar Caminhões</Title>
       </ContentHeader>
 
       {!isFetching && (
@@ -89,6 +121,46 @@ const ModalAddCart = (
           mt={1}
           sx={{ minHeight: "300px", justifyContent: "flex-start" }}
         > 
+          <Grid 
+            item 
+            container 
+            xs={12} 
+            md={12} 
+            lg={12} 
+            mb={2}
+            mr={2} 
+            justifyContent={"center"}
+          >
+            <IconButton 
+              color="info" 
+              aria-label="upload picture" 
+              component="label"
+              sx={{ 
+                background: "#8b8787",
+                "&:hover": {
+                  background: "#3333",
+                }
+              }}
+            >
+              <Avatar 
+                alt="img" 
+                sx={{ height: "100px", width: "100px" }} 
+                src={
+                  preview ? preview :
+                  "https://i.pinimg.com/474x/a6/70/05/a67005e9bf90bc529088205650784bba.jpg"  
+                }
+              >
+              </Avatar>
+              <input hidden accept="image/*" type="file" onChange={handleChange} />
+            </IconButton>
+            {progressPercent > 0 && (
+              <Progress
+                progressPercent={progressPercent}
+                setProgressPercent={setProgressPercent}
+              />
+            )}
+          </Grid>
+
           <Grid item xs={12} md={6} lg={6}>
             <Text sx={{ ml: 1 }}>Modelo</Text>
             <Input
@@ -98,11 +170,11 @@ const ModalAddCart = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.cart_models ?? ''}
+              value={body?.truck_models ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_models: ev.target.value,
+                  truck_models: ev.target.value,
                 }))
               }
             />
@@ -118,11 +190,11 @@ const ModalAddCart = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.cart_brand ?? ''}
+              value={body?.truck_name_brand ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_brand: ev.target.value,
+                  truck_name_brand: ev.target.value,
                 }))
               }
             />
@@ -138,15 +210,15 @@ const ModalAddCart = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.cart_board ?? ''}
+              value={body?.truck_board ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_board: ev.target.value,
+                  truck_board: ev.target.value,
                 }))
               }
             />
-          </Grid>  
+          </Grid>            
 
           <Grid item xs={12} md={6} lg={6}>
             <Text sx={{ ml: 1 }}>Cor</Text>
@@ -158,88 +230,18 @@ const ModalAddCart = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.cart_color ?? ''}
+              value={body?.truck_color ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_color: ev.target.value,
+                  truck_color: ev.target.value,
                 }))
               }
             />
-          </Grid>  
+          </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Tipo usuário</Text>
-            <Autocomplete 
-              sx={{
-                "& .MuiAutocomplete-input": {
-                  height: "0.4em!important",
-                },
-              }} 
-              options={typeCart ?? []}
-              getOptionLabel={(option) => option.label ?? ''}
-              isOptionEqualToValue={(option, value) => option.value === value.value}
-              onChange={(event, newValue) => {
-                if (newValue) {
-                  setBody((state) => ({ ...state, cart_bodywork: newValue.value }));
-                }
-                if (newValue === null) {
-                  setBody((state) => ({ ...state, cart_bodywork: '' }));
-                }
-              }}
-            />
-          </Grid>           
-          
-          {body?.cart_bodywork === "tank" && (
-            <Grid item xs={12} md={6} lg={6}>
-              <Text sx={{ ml: 1 }}>Capacidade de litros</Text>
-              <Input
-                required
-                styles={{
-                  maxWidth: "274px",
-                  "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                    height: "1.4rem",
-                  },
-                }}
-                value={body?.cart_liter_capacity ?? ''}
-                onChange={(ev) =>
-                  setBody((state) => ({
-                    ...state,
-                    cart_liter_capacity: ev.target.value,
-                  }))
-                }
-              />
-            </Grid>            
-          )} 
-
-          {((body?.cart_bodywork === "bulkCarrier") ||
-          (body?.cart_bodywork === "sider") ||
-          (body?.cart_bodywork === "chest") ||
-          (body?.cart_bodywork === "bucket")
-          ) && (
-            <Grid item xs={12} md={6} lg={6}>
-              <Text sx={{ ml: 1 }}>Capacidade de tonelada</Text>
-              <Input
-                required
-                styles={{
-                  maxWidth: "274px",
-                  "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                    height: "1.4rem",
-                  },
-                }}
-                value={body?.cart_ton_capacity ?? ''}
-                onChange={(ev) =>
-                  setBody((state) => ({
-                    ...state,
-                    cart_ton_capacity: ev.target.value,
-                  }))
-                }
-              />
-            </Grid>            
-          )}
-
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Tara</Text>
+            <Text sx={{ ml: 1 }}>KM</Text>
             <Input
               required
               styles={{
@@ -248,11 +250,11 @@ const ModalAddCart = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.cart_tara ?? ''}
+              value={body?.truck_km ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_tara: ev.target.value,
+                  truck_km: ev.target.value,
                 }))
               }
             />
@@ -268,11 +270,11 @@ const ModalAddCart = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.cart_chassis ?? ''}
+              value={body?.truck_chassis ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_chassis: ev.target.value,
+                  truck_chassis: ev.target.value,
                 }))
               }
             />
@@ -288,11 +290,11 @@ const ModalAddCart = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.cart_year ?? ''}
+              value={body?.truck_year ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_year: ev.target.value,
+                  truck_year: ev.target.value,
                 }))
               }
             />
@@ -316,4 +318,4 @@ const ModalAddCart = (
   );
 };
 
-export default ModalAddCart;
+export default ModalAddFreight;

@@ -25,7 +25,7 @@ export const maskCPF = (cpf) => {
 };
 
 export const formatMoney = (value) => {
-  value = value?.replace(".", "").replace(",", "").replace(/\D/g, "");
+  value = value?.toString()?.replace(".", "").replace(",", "").replace(/\D/g, "");
 
   const options = { minimumFractionDigits: 2 };
   const result =

@@ -33,6 +33,16 @@ const InfoRow = (props) => {
   const isSmallDesktop = useMediaQuery({ maxWidth: "1100px" });
   const isMobile = useMediaQuery({ maxWidth: "730px" });
 
+  const typeBodywork = [
+    { value: "bucket", label: "Caçanba" },
+    { value: "bulkCarrier", label: "Graneleiro" },
+    { value: "sider", label: "Sider" },
+    { value: "chest", label: "Bau" },
+    { value: "tank", label: "Tanque" },
+  ]
+
+  const getBodywork = () => typeBodywork.find(item => item.value === data.cart_bodyworks)
+
   const handleClick = (ev) => {
     setOpenSettings(!openSettings);
     setAnchorEl(ev.currentTarget);
@@ -69,7 +79,7 @@ const InfoRow = (props) => {
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.cart_board}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.cart_color}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.cart_tara}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.cart_bodywork}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{getBodywork().label}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.cart_chassis}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.cart_year}</SCell>
         <SCell>

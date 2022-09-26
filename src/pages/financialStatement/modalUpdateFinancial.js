@@ -61,12 +61,10 @@ const ModalUpdateFinancial = (
   useEffect(() => {
     setBody((state) => ({
       ...state,
-      // total_value: financial?.dataResult?.total_value ?? "0",
-      // total_amount_paid: financial?.dataResult?.total_amount_paid ?? "0",
+      total_value: financial?.dataResult?.total_value,
+      total_amount_paid: financial?.dataResult?.total_amount_paid,
     }))
   }, [financial]);
-
-  console.log("body", body)
 
   useEffect(() => {
     if (salespointUpdate) {
@@ -124,7 +122,7 @@ const ModalUpdateFinancial = (
                   height: "1.4rem",
                 },
               }}
-              value={formatMoney(body?.total_value ?? '0')}
+              value={formatMoney(body?.total_value)}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
@@ -142,7 +140,7 @@ const ModalUpdateFinancial = (
                   height: "1.4rem",
                 },
               }}
-              value={formatMoney(body?.total_amount_paid ?? '0')}
+              value={formatMoney(body?.total_amount_paid)}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,

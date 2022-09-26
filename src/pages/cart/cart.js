@@ -143,7 +143,7 @@ const Cart = () => {
             height={"50px"}
             sx={{ background: "#a6a6a6", borderRadius: "8px" }}
           >
-          <Text sx={{ mt: 1, fontWeight: "bold" }}>Foram encontrado {users?.total} Usuário</Text>
+          <Text sx={{ mt: 1, fontWeight: "bold" }}>Foram encontrado {users?.total} Carreta</Text>
           </Grid>
           <Table
             data={users}

@@ -81,7 +81,7 @@ const Permission = () => {
           </Grid>          
         </Grid>
 
-        <Grid item container pl={2} mr={4} mt={5} justifyContent={"center"} width={`calc(100% - 30px)`}>
+        <Grid item container pl={2} mr={4} mt={5} mb={3} justifyContent={"center"} width={`calc(100% - 30px)`}>
           <Grid 
             item 
             container 

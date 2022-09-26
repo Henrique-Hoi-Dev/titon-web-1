@@ -132,7 +132,7 @@ const Cart = () => {
           </Grid>          
         </Grid>
 
-        <Grid item container pl={2} mr={4} mt={5} justifyContent={"center"}>
+        <Grid item container pl={2} mr={4} mt={5} mb={3} justifyContent={"center"}>
           <Grid 
             item 
             container 

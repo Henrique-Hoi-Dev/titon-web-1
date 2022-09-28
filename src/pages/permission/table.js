@@ -69,7 +69,7 @@ const Table = (
                   direction={query?.sort_order?.toLowerCase()}
                   onClick={() => handleSort("contractor")}
                 >
-                  Empresa
+                  Motorista
                 </SLabel>
               </SCell>
               <SCell displaywidth={isMobile ? 1 : 0}>
@@ -114,7 +114,7 @@ const Table = (
                   direction={query?.sort_order?.toLowerCase()}
                   onClick={() => handleSort("truck_chassis")}
                 >
-                  Km Atual
+                  Placa
                 </SLabel>
               </SCell>
               <SCell displaywidth={isDesktop ? 1 : 0}>

@@ -81,7 +81,7 @@ const InfoRow = (props) => {
         <SCell>
           <Avatar
             alt="img" 
-            sx={{ height: "70px", width: "70px", marginLeft: "12px" }} 
+            sx={{ height: "40px", width: "40px", marginLeft: "35px" }} 
             src={data.truck_avatar}
           />
         </SCell>
@@ -139,11 +139,10 @@ const InfoRow = (props) => {
                   <SRow>
                     <SCell>Status Check</SCell>
                     <SCell>Contratante</SCell>
-                    <SCell>Cidade Inicio Frete</SCell>
-                    <SCell>Cidade Final Frete</SCell>
+                    <SCell>Inicio Frete</SCell>
+                    <SCell>Final Frete</SCell>
                     <SCell>Valor Tonelada</SCell>
-                    <SCell>Km Atual Caminhção</SCell>
-                    <SCell>Km Final Viagem</SCell>
+                    <SCell>Km Caminhão</SCell>
                   </SRow>
                 </SHead>
                 <STableBody>
@@ -166,7 +165,6 @@ const InfoRow = (props) => {
                       <SCell>{res?.final_city}</SCell>
                       <SCell>{moneyMask(res?.value_tonne || [0])}</SCell>
                       <SCell>{res?.start_km}Km</SCell>
-                      <SCell>{res?.final_km}Km</SCell>
                     </SRow>                      
                   ))}
                 </STableBody>

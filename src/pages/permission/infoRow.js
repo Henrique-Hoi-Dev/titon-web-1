@@ -16,8 +16,7 @@ import {
 } from "components/atoms/table/table";
 import { formatDate } from "utils/formatDate";
 
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
+import InfoIcon from '@mui/icons-material/Info';
 
 const InfoRow = (props) => {
 
@@ -47,7 +46,7 @@ const InfoRow = (props) => {
 
   const handleAction = (id, status) => {
     setShowModalAction(true)
-    setCheckId({ id: id, status: status})
+    setCheckId({ id: id, status: status })
   }
   
   const handleSort = (item) => {
@@ -81,12 +80,12 @@ const InfoRow = (props) => {
         >
           {getStatus(data?.status_check_order)?.label}
         </SCell>
-        <SCell displaywidth={isMobile ? 1 : 0}>{data.contractor}</SCell>
+        <SCell displaywidth={isMobile ? 1 : 0}>{data.financialStatements.driver_name}</SCell>
         <SCell displaywidth={isMobile ? 1 : 0}>{data.start_city}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.final_city}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.location_of_the_truck}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.preview_tonne}T</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.start_km}Km</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.financialStatements.truck_board}</SCell>
         <SCell displaywidth={isDesktop ? 1 : 0}>{moneyMask(data.value_tonne)}</SCell>
         <SCell displaywidth={isDesktop ? 1 : 0}>{moneyMask(data.preview_value_diesel)}</SCell>
         <SCell displaywidth={isDesktop ? 1 : 0}>{formatDate(data.start_date)}</SCell>
@@ -99,22 +98,10 @@ const InfoRow = (props) => {
         >
           <IconButton
             color="inherit"
-            fontSize="20px"
             sx={{ mr: 1 }}
             onClick={() => handleAction(data?.id, "approved")}
           >
-            <CheckCircleIcon sx={{ color: "green" }} />
-          </IconButton>
-
-          <hr style={{ height: "17px", margin: "12px" }} />
-
-          <IconButton
-            color="inherit"
-            fontSize="20px"
-            sx={{ mr: 1 }}
-            onClick={() => handleAction(data?.id, "denied")}
-          >
-            <CancelIcon sx={{ color: "red" }} />
+            <InfoIcon sx={{ color: "#264bd1", fontSize: "30px" }} />
           </IconButton>
         </SCell>
       </SRow>
@@ -166,7 +153,7 @@ const InfoRow = (props) => {
                       <SRow alternatingcolors={index}>
                         <SCell displaywidth={isDesktop ? 0 : 1}>{moneyMask(data.value_tonne)}</SCell>
                         <SCell displaywidth={isDesktop ? 0 : 1}>{moneyMask(data.preview_value_diesel)}</SCell>
-                        <SCell displaywidth={isDesktop ? 0 : 1}>{formatDate(data.start_date)}</SCell>
+                        <SCell displaywidth={isDesktop ? 0 : 1}>{formatDate(data.createdAt)}</SCell>
                       </SRow>                      
                     </STableBody>
                   </STable>

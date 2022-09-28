@@ -45,7 +45,7 @@ const Permission = () => {
       sx={{ background: "#FFF", borderRadius: "8px" }}
     >
       <ContentHeader>
-        <Title>Permissões fretes</Title>
+        <Title>Permissões Checks</Title>
       </ContentHeader>
 
       <Grid

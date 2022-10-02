@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useCreate } from "services/requests/useCreate";
+import { useCreateDriver } from "services/requests/useCreate";
 import { successNotification } from "utils/notification";
 
 import Button from "components/atoms/button/button";
@@ -36,7 +36,7 @@ const ModalAddDriver = (
     data: newDevice,
     error: errorNewDevice,
     isFetching,
-  } = useCreate(
+  } = useCreateDriver(
     "driver/register", 
     body, 
     fetch, 

@@ -38,7 +38,7 @@ const Truck = () => {
     loading, 
     mutate,
   } = useGet(
-    "/trucks", 
+    "trucks", 
     userQuery
   );
 

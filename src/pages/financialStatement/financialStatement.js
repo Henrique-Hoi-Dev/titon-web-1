@@ -38,7 +38,7 @@ const FinancialStatement = () => {
     loading, 
     mutate,
   } = useGet(
-    "/financialStatements", 
+    "financialStatements", 
     driverQuery
   );
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Collapse, Grid, List, ListItemButton } from "@mui/material";
-import { useGetDriver } from "services/requests/useGet";
+import { useGet } from "services/requests/useGet";
 import { IconAdd, IconSearch } from "components/atoms/icons/icons";
 
 import Title from "components/atoms/title/title";
@@ -37,7 +37,7 @@ const Driver = () => {
     isFetching: driversIsFetching,
     loading, 
     mutate,
-  } = useGetDriver(
+  } = useGet(
     "/drivers", 
     driverQuery
   );

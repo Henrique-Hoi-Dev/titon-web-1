@@ -53,7 +53,7 @@ const Table = (
         <STable>
           <SHead>
             <SRow>
-              <SCell displaywidth={isDesktop ? 0 : 1}>Mais Info</SCell>
+              {/* <SCell displaywidth={isDesktop ? 0 : 1}>Mais Info</SCell> */}
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
                   active={query?.sort_field === "status_check_order"}
@@ -221,7 +221,7 @@ const Table = (
         <ModalAction 
           setShowModal={setShowModalAction}
           showModal={showModalAction}
-          props={checkId}
+          checkId={checkId}
           mutate={mutate}
         />
       )} 

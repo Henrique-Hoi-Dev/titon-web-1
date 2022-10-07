@@ -36,7 +36,7 @@ const ModalUpdateTruck = (
     data: truck,
     isValidating
   } = useGet(
-    `truck/${truckId}`, 
+    `user/truck/${truckId}`, 
     []
   );
 
@@ -45,7 +45,7 @@ const ModalUpdateTruck = (
     error: errorTruckUpadate,
     isFetching
   } = useUpdate(
-    `truck/${truckId}`, 
+    `user/truck/${truckId}`, 
     body, 
     "",
     fetch, 

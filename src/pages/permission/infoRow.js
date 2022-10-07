@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Collapse, IconButton } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
 import { moneyMask } from "utils/masks";
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-} from "components/atoms/icons/icons";
+// import {
+//   ArrowDownIcon,
+//   ArrowUpIcon,
+// } from "components/atoms/icons/icons";
 import {
   SCell,
   SRow,
@@ -29,7 +29,7 @@ const InfoRow = (props) => {
     query
   } = props;
 
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
   const isDesktop = useMediaQuery({ maxWidth: "1400px" });
   const isSmallDesktop = useMediaQuery({ maxWidth: "1100px" });
@@ -61,7 +61,7 @@ const InfoRow = (props) => {
   return (
     <>
       <SRow key={data.id} alternatingcolors={index}>
-        <SCell minwidth={"0px"} displaywidth={isDesktop ? 0 : 1}>
+        {/* <SCell minwidth={"0px"} displaywidth={isDesktop ? 0 : 1}>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -69,7 +69,7 @@ const InfoRow = (props) => {
           >
             {open ? <ArrowUpIcon /> : <ArrowDownIcon />}
           </IconButton>
-        </SCell>
+        </SCell> */}
 
         <SCell 
           displaywidth={isMobile ? 1 : 0}
@@ -113,7 +113,11 @@ const InfoRow = (props) => {
           style={{ paddingBottom: 0, paddingTop: 0, border: 0 }}
           colSpan={6}
         >
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse 
+            // in={open} 
+            timeout="auto" 
+            unmountOnExit
+          >
             <Box sx={{ margin: 4 }}>
               <STable aria-label="purchases">
                 <Box sx={{ display: "flex", flexWrap: "wrap" }}>

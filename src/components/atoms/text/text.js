@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import React from "react";
 
-const Text = ({ children, center, type, sx, fontSize }) => {
+const Text = ({ children, center, type, sx, fontSize, whiteSpace }) => {
   return (
     <Typography
       variant="p"
@@ -9,6 +9,7 @@ const Text = ({ children, center, type, sx, fontSize }) => {
       sx={{
         ...sx,
         fontSize: `${fontSize ? fontSize : '18px'}`,
+        whiteSpace: `${whiteSpace}`
       }}
     >
       {children}

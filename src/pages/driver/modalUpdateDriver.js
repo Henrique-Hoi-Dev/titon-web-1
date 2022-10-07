@@ -32,7 +32,7 @@ const ModalUpdateDriver = (
     data: driver,
     isValidating
   } = useGet(
-    `driver/${driverId}`, 
+    `user/driver/${driverId}`, 
     []
   );
 
@@ -41,7 +41,7 @@ const ModalUpdateDriver = (
     error: errorSalespointUpdate,
     isFetching
   } = useUpdate(
-    `driver/${driverId}`, 
+    `user/driver/${driverId}`, 
     body, 
     "",
     fetch, 

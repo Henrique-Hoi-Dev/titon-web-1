@@ -1,6 +1,8 @@
 import React from 'react';
 import { Grid } from '@mui/material';
 
+import Cards from './cards';
+
 const Home = () => {
   return (
     <Grid
@@ -20,7 +22,7 @@ const Home = () => {
         justifyContent="flex-start"
         sx={{ color: "#fff" }}
       >
-        HOME
+        <Cards />
       </Grid>
     </Grid>   
   );

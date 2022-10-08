@@ -6,8 +6,8 @@ import Typography from '@mui/material/Typography';
 const CardInfoValues = ({ value, title, colorstatus, colorvalue, backgroundstatus, styles }) => {
   return (
     <Card sx={{ 
-      width: "200px!important", 
-      height: "100px!important",
+      width: "180px!important", 
+      height: "250px!important",
       backgroundColor: `${(backgroundstatus ? backgroundstatus : "white")}`,
     }}>
         <CardContent

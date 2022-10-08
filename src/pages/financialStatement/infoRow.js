@@ -126,7 +126,7 @@ const InfoRow = (props) => {
 
       <SRow 
         sx={{ backgroundColor: "white" }}
-        displaywidth={data?.freigth.length > 0 ? 0 : 1}
+        displaywidth={(data?.freigth.length > 0 ? 0 : 1)}
       >
         <SCell
           style={{ paddingBottom: 0, paddingTop: 0, border: 0 }}
@@ -150,7 +150,7 @@ const InfoRow = (props) => {
                     <SRow 
                       key={i}
                       sx={{ backgroundColor: "white" }} 
-                      displaywidth={res?.status_check_order === 'approval_process' ? 0 : 1}
+                      displaywidth={res?.status_check_order === 'finished' ? 0 : 1}
                     >
                       <SCell 
                         sx={{ 

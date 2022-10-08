@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useCreate } from "services/requests/useCreate";
-import { successNotification } from "utils/notification";
+import { errorNotification, successNotification } from "utils/notification";
 import { useGet } from "services/requests/useGet";
+import { useSelector } from "react-redux";
 import { format, startOfDay } from "date-fns";
 
 import Button from "components/atoms/button/button";
@@ -23,19 +24,26 @@ const ModalAddFinancial = (
   }) => {
 
   const { t } = useTranslation();
-  
-  const [body, setBody] = useState({ });
+
+  const user = useSelector((state) => state?.user);
+
+  const [body, setBody] = useState({});
 
   const [truckId, setTruckId] = useState('')
+  const [cartId, setCartId] = useState('')
+  const [driverId, setDriverId] = useState('')
+  const [date, setDate] = useState(format(startOfDay(new Date()), "MM-dd-yyyy"))
 
   const [fetch, setFetch] = useState(false);
+
+  console.log("final", body)
 
   const {
     data: newFinancial,
     error: errorNewFinancial,
     isFetching,
   } = useCreate(
-    "financialStatement", 
+    "user/financialStatement", 
     body, 
     fetch, 
     setFetch
@@ -64,7 +72,10 @@ const ModalAddFinancial = (
 
   const onClose = () => {
     setShowModal(false);
-    setBody({});
+    setBody({})
+    setTruckId('')
+    setDriverId('')
+    setCartId('')
   };
 
   const handleSubmit = (ev) => {
@@ -76,11 +87,14 @@ const ModalAddFinancial = (
   useEffect(() => {
     setBody((state) => ({
       ...state,
-      start_date: format(startOfDay(new Date()), "MM-dd-yyyy"),
-      truck_id: truckId
+      start_date: date,
+      truck_id: truckId,
+      driver_id: driverId,
+      cart_id: cartId,
+      creator_user_id: user.data.users.id 
     }))
 
-  }, [truckId]);
+  }, [truckId, user, driverId, cartId, date]);
 
   useEffect(() => {
     if (newFinancial) {
@@ -91,6 +105,9 @@ const ModalAddFinancial = (
     if(newFinancial){
       successNotification(t("messages.success_msg"));
     }
+    if (errorNewFinancial) {
+      errorNotification(errorNewFinancial?.response?.data?.responseData?.msg)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newFinancial, errorNewFinancial]);
 
@@ -98,8 +115,6 @@ const ModalAddFinancial = (
     <Modal
       open={showModal}
       onClose={onClose}
-      component="form"
-      onSubmit={handleSubmit}
       maxWidth={"600px"}
       maxHeight={"800px"}
     >
@@ -121,10 +136,7 @@ const ModalAddFinancial = (
               size="medium"
               height="2.4em"
               onChange={(newValue) => {
-                setBody((state) => ({
-                  ...state,
-                  start_date: format(startOfDay(newValue), "MM-dd-yyyy")
-                }))
+                setDate(format(startOfDay(newValue), "MM-dd-yyyy"))
               }}
             />
           </Grid>
@@ -156,10 +168,7 @@ const ModalAddFinancial = (
               options={drivers?.dataResult ?? []}
               getOptionLabel={(option) => option.name}
               onChange={(event, newValue) => {
-                setBody((state) => ({
-                  ...state,
-                  driver_id: newValue?.id
-                }))
+                setDriverId(newValue.id)
               }}
             />
           </Grid>
@@ -175,10 +184,7 @@ const ModalAddFinancial = (
               options={carts?.dataResult ?? []}
               getOptionLabel={(option) => option.cart_models}
               onChange={(event, newValue) => {
-                setBody((state) => ({
-                  ...state,
-                  cart_id: newValue?.id
-                }))
+                setCartId(newValue.id)
               }}
             />
           </Grid>
@@ -190,7 +196,13 @@ const ModalAddFinancial = (
               </Button>
             </Grid>
             <Grid item xs={12} md={12} lg={6}>
-              <Button type="submit" variant="contained" color="success">Confirmar</Button>
+              <Button 
+                onClick={(ev) => handleSubmit(ev)} 
+                variant="contained" 
+                color="success"
+              >
+                Confirmar
+              </Button>
             </Grid>
           </Grid>
         </Grid>

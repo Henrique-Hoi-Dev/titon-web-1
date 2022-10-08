@@ -23,7 +23,7 @@ const ModalDeleteFinancial = (
     isFetching,
     error
   } = useDelete(
-    "driver",
+    "user/financialStatement",
     id,
     fetch,
     setFetch

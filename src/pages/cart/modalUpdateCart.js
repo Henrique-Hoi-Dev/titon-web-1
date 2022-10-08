@@ -28,7 +28,7 @@ const ModalUpdateCart = (
     data: cart,
     isValidating
   } = useGet(
-    `cart/${cartId}`, 
+    `user/cart/${cartId}`, 
     []
   );
 
@@ -37,7 +37,7 @@ const ModalUpdateCart = (
     error: errorCartUpadate,
     isFetching
   } = useUpdate(
-    `cart/${cartId}`, 
+    `user/cart/${cartId}`, 
     body, 
     "",
     fetch, 

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Grid, IconButton } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useCreate } from "services/requests/useCreate";
 import { successNotification, errorNotification } from "utils/notification";
-
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { storage } from 'base';
+import { useGet } from "services/requests/useGet";
+import { formatMoney } from "utils/masks";
 
 import Button from "components/atoms/button/button";
 import Input from "components/atoms/input/input";
@@ -13,7 +12,7 @@ import Loading from "components/atoms/loading/loading";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
 import Text from "components/atoms/text/text";
-import Progress from "components/atoms/progress/progress";
+import Autocomplete from "components/atoms/autocomplete/autocomplete";
 
 const ModalAddFreight = (
   { 
@@ -24,12 +23,14 @@ const ModalAddFreight = (
 
   const [body, setBody] = useState({});
 
-  const [fetch, setFetch] = useState(false);
+  const [fetchFreight, setFetchFreight] = useState(false);
 
-  const [preview, setPreview] = useState('');
+  const [paraCity, setParaCity] = useState('');
+  const [deCity, setDeCity] = useState('');
 
-  const [progressPercent, setProgressPercent] = useState(0)
-  
+  const [deState, setDeState] = useState('');
+  const [paraState, setParaState] = useState('');
+
   const {
     data: user,
     error: errorUser,
@@ -37,27 +38,26 @@ const ModalAddFreight = (
   } = useCreate(
     "truck", 
     body, 
-    fetch, 
-    setFetch
+    fetchFreight, 
+    setFetchFreight
+  );
+
+  const {
+    data: financial,
+  } = useGet(
+    "financialStatements", 
+    {}, 
   );
 
   const onClose = () => {
     setShowModal(false);
     setBody({});
-    setPreview("https://i.pinimg.com/474x/a6/70/05/a67005e9bf90bc529088205650784bba.jpg")
   };
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    setFetch(true);
+    setFetchFreight(true);
   };
-
-  useEffect(() => {
-    setBody((state) => ({
-      ...state,
-      truck_avatar: preview
-    }))
-  }, [preview, setPreview]);
 
   useEffect(() => {
     if (user) {
@@ -75,30 +75,54 @@ const ModalAddFreight = (
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, errorUser]);
 
-  async function handleChange(e) {
-    const file = e.target.files[0]
-
-    if (!file) return null;
-    const storageRef = ref(storage, `avatar/${file.name}`)
-    const uploadTask = uploadBytesResumable(storageRef, file)
-
-    uploadTask.on("state_changed",
-      (snapshot) => {
-        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
-        setProgressPercent(progress)
-      },
-      (error) => {
-        alert(error)
-      },
-      () => {
-        // e.target[0].value = ''
-        getDownloadURL(storageRef).then((downloadURL) => {
-          console.log("avatar", downloadURL)
-          setPreview(downloadURL)
-        })
-      }
-    )
+  function statesDe() {
+    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`)
+    .then((res) => res.json()).then((data) => setDeState(data));
   }
+
+  function statesPara() {
+    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`)
+    .then((res) => res.json()).then((data) => setParaState(data));
+  }
+
+  function citysDe() {
+    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${body?.ofStateSigla}/distritos`)
+    .then((res) => res.json()).then((data) => setDeCity(data));
+  }
+
+  function citysPara() {
+    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${body?.stopStateSigla}/distritos`)
+    .then((res) => res.json()).then((data) => setParaCity(data));
+  }
+
+  console.log("cidade", deCity.map(res => res.id), body)
+
+  useEffect(() => {
+    citysDe()
+    citysPara()
+    statesDe()
+    statesPara()
+
+    setBody((state) => ({
+      ...state,
+      ofStateSigla: null,
+      stopStateSigla: null,
+      stopCitySigla: null,
+      ofCitySigla: null,
+    }))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (body?.ofStateSigla) {
+      citysDe()
+    }
+    if (body?.stopStateSigla) {
+      citysPara()
+    }
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [body]);
 
   return (
     <Modal
@@ -110,7 +134,7 @@ const ModalAddFreight = (
       maxHeight={"800px"}
     >
       <ContentHeader mt={2}>
-        <Title>Cadastrar Caminhões</Title>
+        <Title>Novo Frete</Title>
       </ContentHeader>
 
       {!isFetching && (
@@ -121,67 +145,28 @@ const ModalAddFreight = (
           mt={1}
           sx={{ minHeight: "300px", justifyContent: "flex-start" }}
         > 
-          <Grid 
-            item 
-            container 
-            xs={12} 
-            md={12} 
-            lg={12} 
-            mb={2}
-            mr={2} 
-            justifyContent={"center"}
-          >
-            <IconButton 
-              color="info" 
-              aria-label="upload picture" 
-              component="label"
-              sx={{ 
-                background: "#8b8787",
-                "&:hover": {
-                  background: "#3333",
-                }
-              }}
-            >
-              <Avatar 
-                alt="img" 
-                sx={{ height: "100px", width: "100px" }} 
-                src={
-                  preview ? preview :
-                  "https://i.pinimg.com/474x/a6/70/05/a67005e9bf90bc529088205650784bba.jpg"  
-                }
-              >
-              </Avatar>
-              <input hidden accept="image/*" type="file" onChange={handleChange} />
-            </IconButton>
-            {progressPercent > 0 && (
-              <Progress
-                progressPercent={progressPercent}
-                setProgressPercent={setProgressPercent}
-              />
-            )}
-          </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Modelo</Text>
-            <Input
-              required
-              styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
+            <Text sx={{ ml: 1 }}>Fichas Motoristas</Text>
+            <Autocomplete 
+              sx={{
+                "& .MuiAutocomplete-input": {
+                  height: "0.4em!important",
                 },
-              }}
-              value={body?.truck_models ?? ''}
-              onChange={(ev) =>
+              }}  
+              options={financial?.dataResult ?? []}
+              getOptionLabel={(option) => option.driver_name}
+              onChange={(event, newValue) => {
                 setBody((state) => ({
                   ...state,
-                  truck_models: ev.target.value,
+                  financial_statements_id: newValue.id,
                 }))
-              }
+              }}
             />
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Marca</Text>
+            <Text sx={{ ml: 1 }}>Contratante</Text>
             <Input
               required
               styles={{
@@ -190,58 +175,128 @@ const ModalAddFreight = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.truck_name_brand ?? ''}
+              value={body?.contractor ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  truck_name_brand: ev.target.value,
+                  contractor: ev.target.value,
                 }))
               }
             />
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Placa</Text>
-            <Input
-              required
-              styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
+            <Text sx={{ ml: 1 }}>De: Estato</Text>
+            <Autocomplete 
+              sx={{
+                "& .MuiAutocomplete-input": {
+                  height: "0.4em!important",
                 },
+              }}  
+              options={deState ?? []}
+              getOptionLabel={(option) => option.nome}
+              isOptionEqualToValue={(option, value) => option?.sigla === value?.sigla}
+              onChange={(event, newValue) => {
+                if (newValue) {
+                  setBody((state) => ({
+                    ...state,
+                    ofStateSigla: newValue.sigla,
+                  }))                  
+                } else {
+                  setBody((state) => ({
+                    ...state,
+                    ofStateSigla: null,
+                  }))     
+                }
               }}
-              value={body?.truck_board ?? ''}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  truck_board: ev.target.value,
-                }))
-              }
             />
           </Grid>            
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Cor</Text>
-            <Input
-              required
-              styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
+            <Text sx={{ ml: 1 }}>Para: Estado</Text>
+            <Autocomplete 
+              sx={{
+                "& .MuiAutocomplete-input": {
+                  height: "0.4em!important",
                 },
+              }}  
+              options={paraState ?? []}
+              getOptionLabel={(option) => option.nome}
+              isOptionEqualToValue={(option, value) => option?.sigla === value?.sigla}
+              onChange={(event, newValue) => {
+                if (newValue) {
+                  setBody((state) => ({
+                    ...state,
+                    stopStateSigla: newValue.sigla,
+                  }))                  
+                } else {
+                  setBody((state) => ({
+                    ...state,
+                    stopStateSigla: null,
+                  })) 
+                }
               }}
-              value={body?.truck_color ?? ''}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  truck_color: ev.target.value,
-                }))
-              }
             />
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>KM</Text>
+            <Text sx={{ ml: 1 }}>De: Cidade</Text>
+            <Autocomplete
+              disabled={body.ofStateSigla === null}
+              sx={{
+                "& .MuiAutocomplete-input": {
+                  height: "0.4em!important",
+                },
+              }}  
+              options={deCity ?? []}
+              getOptionLabel={(option) => option.nome}
+              isOptionEqualToValue={(option, value) => option.nome === value.nome}
+              onChange={(event, newValue) => {
+                if (newValue) {
+                  setBody((state) => ({
+                    ...state,
+                    ofCitySigla: newValue.sigla,
+                  }))                  
+                } else {
+                  setBody((state) => ({
+                    ...state,
+                    ofCitySigla: null,
+                  })) 
+                }
+              }}
+            />
+          </Grid>            
+
+          <Grid item xs={12} md={6} lg={6}>
+            <Text sx={{ ml: 1 }}>Para: Cidade</Text>
+            <Autocomplete
+              disabled={body.stopStateSigla === null}
+              sx={{
+                "& .MuiAutocomplete-input": {
+                  height: "0.4em!important",
+                },
+              }}  
+              options={paraCity ?? []}
+              getOptionLabel={(option) => option.nome}
+              isOptionEqualToValue={(option, value) => option?.id === value?.id}
+              onChange={(event, newValue) => {
+                if (newValue) {
+                  setBody((state) => ({
+                    ...state,
+                    stopCitySigla: newValue.sigla,
+                  }))                  
+                } else {
+                  setBody((state) => ({
+                    ...state,
+                    stopCitySigla: null,
+                  })) 
+                }
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={3} lg={3}>
+            <Text sx={{ ml: 1 }}>Prévia Tonel...</Text>
             <Input
               required
               styles={{
@@ -260,8 +315,8 @@ const ModalAddFreight = (
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Número Chassi</Text>
+          <Grid item xs={12} md={3} lg={3}>
+            <Text sx={{ ml: 1 }}>Prévia Diesel</Text>
             <Input
               required
               styles={{
@@ -270,18 +325,18 @@ const ModalAddFreight = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.truck_chassis ?? ''}
+              value={formatMoney(body?.jackpot)}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  truck_chassis: ev.target.value,
+                  jackpot: formatMoney(ev.target.value),
                 }))
               }
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Ano Fabricação</Text>
+          <Grid item xs={12} md={3} lg={3}>
+            <Text sx={{ ml: 1 }}>Prévia Média</Text>
             <Input
               required
               styles={{
@@ -290,11 +345,31 @@ const ModalAddFreight = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.truck_year ?? ''}
+              value={body?.jackpot}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  truck_year: ev.target.value,
+                  jackpot: ev.target.value,
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={3} lg={3}>
+            <Text sx={{ ml: 1 }}>Valor Tonelada</Text>
+            <Input
+              required
+              styles={{
+                maxWidth: "274px",
+                "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                  height: "1.4rem",
+                },
+              }}
+              value={formatMoney(body?.jackpot)}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  jackpot: formatMoney(ev.target.value),
                 }))
               }
             />

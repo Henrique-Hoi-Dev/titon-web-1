@@ -5,14 +5,14 @@ import { IconAdd } from "components/atoms/icons/icons";
 
 import Table from "./table";
 import Text from "components/atoms/text/text";
-// import ModalAddTruck from "./modalAddTruck";
 import Title from "components/atoms/title/title";
 import Button from "components/atoms/button/button";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import ModalAddFreight from "./modalAddFreight";
 
 const Permission = () => {
-  const [showModalNewCheck, setShowModalNewCheck] = useState(false);
+
+  const [showModalAddFreight, setShowModalAddFreight] = useState(false);
   
   const INITIAL_STATE_USER = {
     limit: 10,
@@ -74,7 +74,7 @@ const Permission = () => {
                   background: "#fff",
                 }
               }} 
-              onClick={() => setShowModalNewCheck('')}
+              onClick={() => setShowModalAddFreight(true)}
             >
               Novo Frete <IconAdd sx={{ marginLeft: "5px", color: "#000", fontSize: "30px" }} />
             </Button>
@@ -106,11 +106,11 @@ const Permission = () => {
         </Grid>        
       </Grid>
 
-      {showModalNewCheck && (
+      {showModalAddFreight && (
         <ModalAddFreight 
           mutate={mutate}
-          setShowModal={setShowModalNewCheck}
-          showModal={showModalNewCheck}
+          setShowModal={setShowModalAddFreight}
+          showModal={showModalAddFreight}
         />
       )}
     </Grid>

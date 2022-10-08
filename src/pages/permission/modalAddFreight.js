@@ -25,11 +25,12 @@ const ModalAddFreight = (
 
   const [fetchFreight, setFetchFreight] = useState(false);
 
-  const [paraCity, setParaCity] = useState('');
-  const [deCity, setDeCity] = useState('');
+  const [paraCity, setParaCity] = useState([]);
+  const [deCity, setDeCity] = useState([]);
 
-  const [deState, setDeState] = useState('');
-  const [paraState, setParaState] = useState('');
+  const [deState, setDeState] = useState([]);
+  const [paraState, setParaState] = useState([]);
+
 
   const {
     data: user,
@@ -59,6 +60,33 @@ const ModalAddFreight = (
     setFetchFreight(true);
   };
 
+  function statesDe() {
+    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`)
+    .then((res) => res.json()).then((data) => setDeState(data));
+  }
+
+  function statesPara() {
+    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`)
+    .then((res) => res.json()).then((data) => setParaState(data));
+  }
+
+  function citysDe() {
+    if (body?.ofStateSigla) {
+      fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${body?.ofStateSigla}/distritos`)
+      .then((res) => res.json()).then((data) => setDeCity(data));      
+    }
+  }
+
+  function citysPara() {
+    if (body?.stopStateSigla) {
+      fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${body?.stopStateSigla}/distritos`)
+      .then((res) => res.json()).then((data) => setParaCity(data));      
+    }
+  }
+
+  const validateDuplicationDe = [...new Set(deCity?.map(res => res?.nome))] ?? []
+  const validateDuplicationPara = [...new Set(paraCity?.map(res => res?.nome))] ?? []
+
   useEffect(() => {
     if (user) {
       mutate();
@@ -75,31 +103,7 @@ const ModalAddFreight = (
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, errorUser]);
 
-  function statesDe() {
-    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`)
-    .then((res) => res.json()).then((data) => setDeState(data));
-  }
-
-  function statesPara() {
-    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`)
-    .then((res) => res.json()).then((data) => setParaState(data));
-  }
-
-  function citysDe() {
-    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${body?.ofStateSigla}/distritos`)
-    .then((res) => res.json()).then((data) => setDeCity(data));
-  }
-
-  function citysPara() {
-    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${body?.stopStateSigla}/distritos`)
-    .then((res) => res.json()).then((data) => setParaCity(data));
-  }
-
-  console.log("cidade", deCity.map(res => res.id), body)
-
   useEffect(() => {
-    citysDe()
-    citysPara()
     statesDe()
     statesPara()
 
@@ -107,8 +111,8 @@ const ModalAddFreight = (
       ...state,
       ofStateSigla: null,
       stopStateSigla: null,
-      stopCitySigla: null,
-      ofCitySigla: null,
+      stopCityNome: null,
+      ofCityNome: null,
     }))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -120,7 +124,6 @@ const ModalAddFreight = (
     if (body?.stopStateSigla) {
       citysPara()
     }
-    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [body]);
 
@@ -206,7 +209,9 @@ const ModalAddFreight = (
                   setBody((state) => ({
                     ...state,
                     ofStateSigla: null,
-                  }))     
+                    ofCityNome: null,
+                  })) 
+                  setDeCity([])
                 }
               }}
             />
@@ -233,7 +238,9 @@ const ModalAddFreight = (
                   setBody((state) => ({
                     ...state,
                     stopStateSigla: null,
+                    stopCityNome: null,
                   })) 
+                  setParaCity([])
                 }
               }}
             />
@@ -242,25 +249,25 @@ const ModalAddFreight = (
           <Grid item xs={12} md={6} lg={6}>
             <Text sx={{ ml: 1 }}>De: Cidade</Text>
             <Autocomplete
-              disabled={body.ofStateSigla === null}
+              // disabled={body.ofStateSigla === null}
               sx={{
                 "& .MuiAutocomplete-input": {
                   height: "0.4em!important",
                 },
               }}  
-              options={deCity ?? []}
-              getOptionLabel={(option) => option.nome}
-              isOptionEqualToValue={(option, value) => option.nome === value.nome}
+              options={validateDuplicationDe ?? []}
+              getOptionLabel={(option) => option}
+              isOptionEqualToValue={(option, value) => option === value}
               onChange={(event, newValue) => {
                 if (newValue) {
                   setBody((state) => ({
                     ...state,
-                    ofCitySigla: newValue.sigla,
+                    ofCityNome: newValue,
                   }))                  
                 } else {
                   setBody((state) => ({
                     ...state,
-                    ofCitySigla: null,
+                    ofCityNome: null,
                   })) 
                 }
               }}
@@ -270,25 +277,25 @@ const ModalAddFreight = (
           <Grid item xs={12} md={6} lg={6}>
             <Text sx={{ ml: 1 }}>Para: Cidade</Text>
             <Autocomplete
-              disabled={body.stopStateSigla === null}
+              // disabled={body.stopStateSigla === null}
               sx={{
                 "& .MuiAutocomplete-input": {
                   height: "0.4em!important",
                 },
               }}  
-              options={paraCity ?? []}
-              getOptionLabel={(option) => option.nome}
-              isOptionEqualToValue={(option, value) => option?.id === value?.id}
+              options={validateDuplicationPara ?? []}
+              getOptionLabel={(option) => option}
+              isOptionEqualToValue={(option, value) => option === value}
               onChange={(event, newValue) => {
                 if (newValue) {
                   setBody((state) => ({
                     ...state,
-                    stopCitySigla: newValue.sigla,
+                    stopCityNome: newValue,
                   }))                  
                 } else {
                   setBody((state) => ({
                     ...state,
-                    stopCitySigla: null,
+                    stopCityNome: null,
                   })) 
                 }
               }}

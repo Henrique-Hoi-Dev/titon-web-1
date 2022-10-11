@@ -8,7 +8,7 @@ import Text from "components/atoms/text/text";
 import Title from "components/atoms/title/title";
 import Button from "components/atoms/button/button";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
-import ModalAddFreight from "./modalAddFreight";
+import ModalAddFreight from "../../financialStatement/modalAddFreight";
 
 const Permission = () => {
 

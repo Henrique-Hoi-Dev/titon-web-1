@@ -33,36 +33,35 @@ const Cards = () => {
       <Box
         sx={{
           minHeight: "385px",
-          maxWidth: "100%",
+          minWidth: "100%",
           display: 'flex',
           flexDirection: "row",
           overflowX: 'auto',
           justifyContent: "center",
           '& > :not(style)': {
-              margin: "10px",
-              width: 180,
-              height: 80,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            },
+            margin: "10px",
+            width: 180,
+            height: 80,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          },
         }}
       >
         {financial?.dataResult?.map((financial) => (
-          <>
-            <CardInfoValues 
-              key={financial?.id}
-              backgroundstatus={"#dfdfdf"} 
-              props={financial}
-              title={financial.cart_board}
-            />    
-          </>
+          <CardInfoValues 
+            key={financial?.id}
+            backgroundstatus={"#dfdfdf"} 
+            props={financial}
+            title={financial.cart_board}
+          />    
         ))}
+  '     <Grid item container pl={2} mt={-2} justifyContent={"center"} alignItems={"center"}>
+          {loading && <Loading color={"white"}/> }
+        </Grid>'
       </Box>
-      <Grid item container pl={2} mt={-2} justifyContent={"center"} alignItems={"center"}>
-        {loading && <Loading color={"white"}/> }
-      </Grid>
+
     </Grid>
   );
 };

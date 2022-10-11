@@ -3,13 +3,21 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Text from '../text/text';
+import Button from '../button/button';
 
 import { moneyMask } from 'utils/masks';
 import { CardMedia, Chip, Grid, Paper, Stack } from '@mui/material';
 
-const CardInfoValues = ({ props, title, colorstatus, colorvalue, backgroundstatus, styles }) => {
-
-  console.log("rrrrrr", props)
+const CardInfoValues = (
+  { 
+    props, 
+    title, 
+    colorstatus, 
+    colorvalue, 
+    backgroundstatus, 
+    styles,
+    onClick
+  }) => {
   
   return (
     <Grid
@@ -17,7 +25,6 @@ const CardInfoValues = ({ props, title, colorstatus, colorvalue, backgroundstatu
         minWidth: "240px!important", 
         minHeight: "350px!important",
       }}
-      spacing={3}
     >
       <Stack 
         direction="row" 
@@ -45,23 +52,34 @@ const CardInfoValues = ({ props, title, colorstatus, colorvalue, backgroundstatu
             padding: "0px"
           }}
         >
-          <Typography 
-            variant="body1" 
+          <Button
+            onClick={onClick}
             sx={{ 
-              fontSize: "1.4rem",
-              fontWeight: "bold",
-              width: "130px",
-              padding: "5px 0 0 0",
-              textAlign: "center",
-              whiteSpace: "nowrap",
-              borderRadius: "8px",
-              margin: "5px",
-              background: "#000",
-              color: `#fff`,
-              ...styles,
-            }}>
-              {title}
-          </Typography>
+              background: "transparent",
+              width: "180px",
+              "&:hover": {
+                background: "transparent",
+              }
+            }}
+          >
+            <Typography 
+              variant="body1" 
+              sx={{ 
+                fontSize: "1.4rem",
+                fontWeight: "bold",
+                width: "130px",
+                padding: "5px 0 0 0",
+                textAlign: "center",
+                whiteSpace: "nowrap",
+                borderRadius: "8px",
+                margin: "5px",
+                background: "#000",
+                color: `#fff`,
+                ...styles,
+              }}>
+                {title}
+            </Typography>            
+          </Button>
           <Typography 
             variant="body2" 
             color="text.secondary" 

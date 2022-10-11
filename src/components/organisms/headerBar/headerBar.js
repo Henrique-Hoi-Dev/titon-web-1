@@ -100,6 +100,7 @@ const HeaderBar = () => {
           height: "64px",
         }}
         alignItems="center"
+        justifyContent={"flex-end"}
       >
         <Grid 
           item 
@@ -127,14 +128,14 @@ const HeaderBar = () => {
           >
             RELATÓRIOS
           </IconButton>
-          <IconButton
+          {/* <IconButton
             color="error"
             fontSize="12px"
             sx={{ mr: 1 }}
             onClick={(ev) => navigate("permission")}
           >
             PERMISSÕES
-          </IconButton>
+          </IconButton> */}
           <IconButton
             color="error"
             fontSize="12px"
@@ -181,7 +182,7 @@ const HeaderBar = () => {
           <IconButton
             color="inherit"
             fontSize="12px"
-            sx={{ ml: "10px", width: "80px" }}
+            sx={{ width: "80px" }}
             onClick={(ev) => handleClick(ev)}
           >
             <Grid 

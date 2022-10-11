@@ -5,12 +5,12 @@ export const moneyMask = (value) => {
       minimumFractionDigits: 2
     }).format(value);
 
-    if (value == null || result === 0 || result === "NaN") return "R$ 0,00";
+    if (value == null || result === 0 || result === "NaN") return "R$: 0,00";
 
     if (result) {
-      return "R$ " + result;
+      return "R$: " + result;
     } else {
-      return "R$ 0,00";
+      return "R$: 0,00";
     }
   }
 };

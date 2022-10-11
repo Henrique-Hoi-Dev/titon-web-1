@@ -19,20 +19,21 @@ code {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
+  height: 9px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #101011;
+  background-color: red;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #101011;
+  background-color: transparent;
 }
 
 .MuiButton-root.Mui-disabled {
-  background-color: #101011 !important;
+  background-color: #fff !important;
 }
 
 .MuiButtonBase-root.Mui-disabled {

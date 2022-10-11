@@ -32,7 +32,7 @@ const ModalUpdateFinancial = (
     data: financial,
     isValidating
   } = useGet(
-    `financialStatement/${financialId}`, 
+    `user/financialStatement/${financialId}`, 
     []
   );
 
@@ -41,7 +41,7 @@ const ModalUpdateFinancial = (
     error: errorSalespointUpdate,
     isFetching
   } = useUpdate(
-    `financialStatement/${financialId}`, 
+    `user/financialStatement/${financialId}`, 
     body, 
     "",
     fetch, 

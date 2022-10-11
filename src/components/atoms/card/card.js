@@ -2,25 +2,62 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import Text from '../text/text';
 
-const CardInfoValues = ({ value, title, colorstatus, colorvalue, backgroundstatus, styles }) => {
+import { moneyMask } from 'utils/masks';
+import { CardMedia, Chip, Grid, Paper, Stack } from '@mui/material';
+
+const CardInfoValues = ({ props, title, colorstatus, colorvalue, backgroundstatus, styles }) => {
+
+  console.log("rrrrrr", props)
+  
   return (
-    <Card sx={{ 
-      width: "180px!important", 
-      height: "250px!important",
-      backgroundColor: `${(backgroundstatus ? backgroundstatus : "white")}`,
-    }}>
+    <Grid
+      sx={{ 
+        minWidth: "240px!important", 
+        minHeight: "350px!important",
+      }}
+      spacing={3}
+    >
+      <Stack 
+        direction="row" 
+        spacing={1} 
+        sx={{ 
+          marginLeft: "180px!important",
+          marginBottom: "-14px",
+          zIndex: 1
+        }}
+      >
+        <Chip label={"status em pro"} color="success" />
+      </Stack>
+      <Card
+        sx={{ 
+          minWidth: "220px!important", 
+          minHeight: "350px!important",
+        }}
+      >
         <CardContent
-          sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+          sx={{ 
+            display: "flex", 
+            flexDirection: "column", 
+            alignItems: "center", 
+            marginTop: "10px",
+            padding: "0px"
+          }}
         >
           <Typography 
-            variant="h6" 
+            variant="body1" 
             sx={{ 
               fontSize: "1.4rem",
-              fontWeight: "bold", 
+              fontWeight: "bold",
+              width: "130px",
+              padding: "5px 0 0 0",
+              textAlign: "center",
               whiteSpace: "nowrap",
-              marginBottom: "5px",
-              color: `${colorstatus}`,
+              borderRadius: "8px",
+              margin: "5px",
+              background: "#000",
+              color: `#fff`,
               ...styles,
             }}>
               {title}
@@ -32,13 +69,38 @@ const CardInfoValues = ({ value, title, colorstatus, colorvalue, backgroundstatu
               fontWeight: "bold",
               whiteSpace: "nowrap",
               fontSize: "1.2rem",
-              color: `${(colorvalue >= 0 && "green") || (colorvalue < 0 && "red")}`,
               ...styles,
             }}>
-              {value || [0]}
+            <CardMedia
+              component="img"
+              height="150px"
+              sx={{ borderRadius: "8px", width: "220px" }}
+              image={props.truck_avatar}
+              alt="green iguana"
+            />
           </Typography>
-        </CardContent>
-    </Card>
+          <hr style={{ width: "220px", margin: "12px", border: "solid 1px" }} />
+          <Paper 
+            elevation={3}
+            sx={{ 
+              background: "#212121", 
+              color: `#fff`,
+              padding: "5px",
+              marginBottom: "10px",
+              width: "220px",
+              height: "90px"
+            }}
+          >
+            <Grid item container pl={2} mt={1} spacing={1} flexDirection={"column"}>
+              <Text fontSize={'13.5px'}>INICIO VIAGEM: <Text fontSize={'12.7px'}>12/20/2022</Text></Text> 
+              <Text fontSize={'13.5px'}>MÉDIA: <Text fontSize={'12.7px'}>1.2</Text></Text> 
+              <Text fontSize={'13.5px'}>MOTORISTA: <Text fontSize={'12.7px'}>{props.driver_name}</Text></Text> 
+              <Text fontSize={'13.5px'}>FATURAMENTO: <Text fontSize={'12.7px'}>{moneyMask(props.id || [0])}</Text></Text> 
+            </Grid>
+          </Paper>
+        </CardContent>      
+      </Card>        
+    </Grid>
   );
 };
 

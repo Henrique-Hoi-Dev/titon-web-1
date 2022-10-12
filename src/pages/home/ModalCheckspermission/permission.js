@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 import { useGet } from "services/requests/useGet";
-import { IconAdd } from "components/atoms/icons/icons";
 
 import Table from "./table";
-import Text from "components/atoms/text/text";
 import Title from "components/atoms/title/title";
-import Button from "components/atoms/button/button";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
-import ModalAddFreight from "../../financialStatement/modalAddFreight";
+import Modal from "components/molecules/modal/modal";
+import Text from "components/atoms/text/text";
 
-const Permission = () => {
-
-  const [showModalAddFreight, setShowModalAddFreight] = useState(false);
+const Permission = (
+  {
+    showModal,
+    setShowModal,
+    financialId
+  }) => {
   
   const INITIAL_STATE_USER = {
     limit: 10,
@@ -24,96 +25,177 @@ const Permission = () => {
   const [userQuery, setUserQuery] = useState(INITIAL_STATE_USER);
 
   const {
-    data: users,
-    error: usersError,
-    isFetching: usersIsFetching,
+    data: financial,
+    error: financialError,
+    isFetching: financialIsFetching,
     loading, 
     mutate,
   } = useGet(
-    "/freights", 
-    userQuery
+    `user/financialStatement/${financialId.id}`, 
+    [],
+    financialId ? false : true
   );
 
+  const onClose = () => {
+    setShowModal(false)
+  }
+
+  console.log("id", financial)
+
   return (
-    <Grid
-      container
-      justifyContent="center"
-      minHeight="88vh"
-      padding={1}
-      spacing={2}
-      m={2}
-      sx={{ background: "#FFF", borderRadius: "8px" }}
+    <Modal
+      open={showModal}
+      onClose={onClose}
+      component="form"
+      maxWidth="870px"
     >
       <ContentHeader>
         <Title>Permissões Checks</Title>
       </ContentHeader>
 
       <Grid
-        item
         container
-        mb={5}
-        minHeight={'100%'}
-        alignItems="flex-start"
-        justifyContent="flex-start"
-        width={`calc(100% - 50px)`}
-        sx={{ background: "#000", borderRadius: "8px" }}
+        justifyContent="center"
+        minHeight="88vh"
+        padding={1}
+        spacing={2}
       >
-        <Grid item container pl={2} spacing={1} mb={-4}>
-          <Grid container item xs={12} lg={12} mb={12} justifyContent="flex-end">
-            <Button 
-              sx={{ 
-                mr: 3,
-                display: "flex",
-                alignItems: "flex-end",
-                height: "40px", 
-                width: "240px", 
-                background: "#fff", 
-                color: "#000",
-                fontWeight: "900",
-                "&:hover": {
-                  background: "#fff",
-                }
-              }} 
-              onClick={() => setShowModalAddFreight(true)}
-            >
-              Novo Frete <IconAdd sx={{ marginLeft: "5px", color: "#000", fontSize: "30px" }} />
-            </Button>
-          </Grid>          
+        <Grid
+          item
+          mt={1}
+          xs={6} 
+          md={6} 
+          lg={6}
+          container
+          flexDirection={"column"}
+          alignItems="flex-start"
+          justifyContent="flex-end"
+        >
+          <Paper
+            elevation={3}
+            sx={{ 
+              background: "#212121", 
+              color: `#fff`,
+              padding: "5px",
+              marginBottom: "10px",
+              width: "140px",
+              height: "50px",
+              borderRadius: "11px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <Text fontSize={"27px"}>{financialId?.truck_board}</Text>
+          </Paper>
+          <Paper
+            elevation={3}
+            sx={{ 
+              background: "#212121", 
+              color: `#fff`,
+              padding: "5px",
+              marginBottom: "10px",
+              width: "330px",
+              height: "150px",
+              borderRadius: "11px"
+            }}
+          >
+
+          </Paper>
         </Grid>
 
-        <Grid item container pl={2} mr={4} mt={5} mb={3} justifyContent={"center"} width={`calc(100% - 30px)`}>
-          <Grid 
-            item 
-            container 
-            pl={2} 
-            spacing={1} 
-            mb={-2}
-            width={`calc(100% - 140px)`}
-            height={"50px"}
-            sx={{ background: "#a6a6a6", borderRadius: "8px" }}
+        <Grid
+          item
+          xs={6} 
+          md={6} 
+          lg={6}
+          container
+          flexDirection={"column"}
+          alignItems="flex-start"
+          justifyContent="flex-end"
+        >
+          <Text 
+            fontSize={"27px"}
+            sx={{ 
+              fontWeight: "700",
+              background: "#fff",
+              color: "#000"
+            }}
           >
-          <Text sx={{ mt: 1, fontWeight: "bold" }}>Foram encontrado {users?.total} Check</Text>
-          </Grid>
+            Permissões:
+          </Text>
+          <Paper
+            elevation={3}
+            sx={{ 
+              background: "#212121", 
+              color: `#fff`,
+              padding: "5px",
+              marginBottom: "10px",
+              width: "340px",
+              height: "120px",
+              borderRadius: "11px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              overflowY: "scroll"
+            }}
+          >
+            <Paper
+              elevation={3}
+              sx={{
+                width: "310px",
+                padding: "5px",
+                background: "#fff",
+                margin: "7px"
+              }}
+            >
+              <Text 
+                fontSize={"22px"}
+                sx={{ fontWeight: "700", margin: "10px" }}
+              >
+                notifica
+              </Text>              
+            </Paper>
+
+            <Paper
+              elevation={3}
+              sx={{
+                width: "310px",
+                padding: "5px",
+                background: "#fff",
+                margin: "7px"
+              }}
+            >
+              <Text 
+                fontSize={"22px"}
+                sx={{ fontWeight: "700", margin: "10px" }}
+              >
+                notifica
+              </Text>              
+            </Paper>
+
+          </Paper>
+        </Grid>
+
+        <Grid
+          item
+          container
+          alignItems="flex-start"
+          justifyContent="flex-start"
+        >
           <Table
-            data={users}
+            data={financial}
             query={userQuery}
             setQuery={setUserQuery}
-            isFetching={usersIsFetching}
-            error={usersError}
+            isFetching={financialIsFetching}
+            error={financialError}
             loading={loading}
             mutate={mutate}
           />
-        </Grid>        
-      </Grid>
-
-      {showModalAddFreight && (
-        <ModalAddFreight 
-          mutate={mutate}
-          setShowModal={setShowModalAddFreight}
-          showModal={showModalAddFreight}
-        />
-      )}
-    </Grid>
+        </Grid>
+      </Grid>    
+    </Modal>
   );
 };
 

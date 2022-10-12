@@ -5,8 +5,12 @@ import { useState } from "react";
 
 import CardInfoValues from "components/atoms/card/card";
 import Loading from "components/atoms/loading/loading";
+import Permission from "./ModalCheckspermission/permission";
 
 const Cards = () => {
+
+  const [showModal, setShowModal] = useState(false);
+  const [financialId, setFinancialId] = useState('');
 
   const INITIAL_STATE_DRIVER = {
     limit: 10,
@@ -55,13 +59,21 @@ const Cards = () => {
             backgroundstatus={"#dfdfdf"} 
             props={financial}
             title={financial.cart_board}
+            onClick={() => setShowModal(true) || setFinancialId({ id: financial?.id, truck_board: financial?.truck_board })}
           />    
         ))}
-  '     <Grid item container pl={2} mt={-2} justifyContent={"center"} alignItems={"center"}>
+        <Grid item container pl={2} mt={-2} justifyContent={"center"} alignItems={"center"}>
           {loading && <Loading color={"white"}/> }
-        </Grid>'
+        </Grid>
       </Box>
 
+      {showModal && (
+        <Permission 
+          setShowModal={setShowModal}
+          showModal={showModal}
+          financialId={financialId}
+        />
+      )}
     </Grid>
   );
 };

@@ -1,7 +1,6 @@
 import React from "react";
-import { Box, Collapse, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
-import { moneyMask } from "utils/masks";
 // import {
 //   ArrowDownIcon,
 //   ArrowUpIcon,
@@ -9,12 +8,7 @@ import { moneyMask } from "utils/masks";
 import {
   SCell,
   SRow,
-  STable,
-  STableBody,
-  SHead,
-  SLabel,
 } from "components/atoms/table/table";
-import { formatDate } from "utils/formatDate";
 
 import InfoIcon from '@mui/icons-material/Info';
 
@@ -25,13 +19,11 @@ const InfoRow = (props) => {
     index, 
     setShowModalAction, 
     setCheckId,
-    setQuery, 
-    query
   } = props;
 
   // const [open, setOpen] = useState(false);
 
-  const isDesktop = useMediaQuery({ maxWidth: "1400px" });
+  // const isDesktop = useMediaQuery({ maxWidth: "1400px" });
   const isSmallDesktop = useMediaQuery({ maxWidth: "1100px" });
   const isMobile = useMediaQuery({ maxWidth: "730px" });
 
@@ -48,29 +40,10 @@ const InfoRow = (props) => {
     setShowModalAction(true)
     setCheckId({ id: id, status: status })
   }
-  
-  const handleSort = (item) => {
-    setQuery((state) => ({
-      ...state,
-      sort_field: item,
-      sort_order: `${query?.sort_order === "ASC" ? "DESC" : "ASC"}`
-    }))
-    return;
-  };
 
   return (
     <>
       <SRow key={data.id} alternatingcolors={index}>
-        {/* <SCell minwidth={"0px"} displaywidth={isDesktop ? 0 : 1}>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <ArrowUpIcon /> : <ArrowDownIcon />}
-          </IconButton>
-        </SCell> */}
-
         <SCell 
           displaywidth={isMobile ? 1 : 0}
           sx={{ 
@@ -80,15 +53,10 @@ const InfoRow = (props) => {
         >
           {getStatus(data?.status_check_order)?.label}
         </SCell>
-        <SCell displaywidth={isMobile ? 1 : 0}>{data.financialStatements.driver_name}</SCell>
-        <SCell displaywidth={isMobile ? 1 : 0}>{data.start_city}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.final_city}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.location_of_the_truck}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.preview_tonne}T</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.financialStatements.truck_board}</SCell>
-        <SCell displaywidth={isDesktop ? 1 : 0}>{moneyMask(data.value_tonne)}</SCell>
-        <SCell displaywidth={isDesktop ? 1 : 0}>{moneyMask(data.preview_value_diesel)}</SCell>
-        <SCell displaywidth={isDesktop ? 1 : 0}>{formatDate(data.start_date)}</SCell>
+        <SCell displaywidth={isMobile ? 1 : 0}>{data?.start_city}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.final_city}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.location_of_the_truck}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.preview_tonne}T</SCell>
         <SCell
           sx={{ 
             display: "flex", 
@@ -106,7 +74,7 @@ const InfoRow = (props) => {
         </SCell>
       </SRow>
 
-      <SRow 
+      {/* <SRow 
         displaywidth={isDesktop ? 0 : 1} 
         sx={{ backgroundColor: "white" }}>
         <SCell
@@ -166,7 +134,7 @@ const InfoRow = (props) => {
             </Box>
           </Collapse>
         </SCell>
-      </SRow>
+      </SRow> */}
     </>
   );
 };

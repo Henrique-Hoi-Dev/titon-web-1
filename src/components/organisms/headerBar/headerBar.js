@@ -18,6 +18,7 @@ import Text from "components/atoms/text/text";
 import Button from "components/atoms/button/button";
 import pt from "date-fns/locale/pt";
 import CommentIcon from '@mui/icons-material/Comment';
+import logo from '../../../assets/logo.png'
 
 const HeaderBar = () => {
 
@@ -100,14 +101,23 @@ const HeaderBar = () => {
           height: "64px",
         }}
         alignItems="center"
-        justifyContent={"flex-end"}
+        justifyContent={"flex-start"}
       >
+        <Grid
+          item 
+          container
+          xs={2}
+          md={2}
+          lg={2}
+          justifyContent={"center"}
+        >
+          <img height={"70px"} src={logo} alt="img"/>
+        </Grid>
         <Grid 
           item 
           container
           xs={6}
-          md={10}
-          ml={3}
+          md={6}
           flexWrap="nowrap"
           alignItems="center"
           justifyContent={"space-between"}

@@ -16,7 +16,7 @@ const CardInfoValues = (
     colorvalue, 
     backgroundstatus, 
     styles,
-    onClick
+    onClick,
   }) => {
   
   return (

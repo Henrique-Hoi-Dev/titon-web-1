@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Grid, Paper, TableContainer } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { TablePagination } from "components/atoms/tablePagination/tablePagination";
 import { useMediaQuery } from "react-responsive";
 import {
   SCell,
@@ -30,13 +29,15 @@ const Table = (
 
   const { t } = useTranslation();
 
-  const isDesktop = useMediaQuery({ maxWidth: "1400px" });
+  // const isDesktop = useMediaQuery({ maxWidth: "1400px" });
   const isSmallDesktop = useMediaQuery({ maxWidth: "1100px" });
   const isMobile = useMediaQuery({ maxWidth: "730px" });
 
   const [showModalAction, setShowModalAction] = useState(false);
 
   const [checkId, setCheckId] = useState(null)
+
+  console.log("state", data)
 
   const handleSort = (item) => {
     setQuery((state) => ({
@@ -53,7 +54,6 @@ const Table = (
         <STable>
           <SHead>
             <SRow>
-              {/* <SCell displaywidth={isDesktop ? 0 : 1}>Mais Info</SCell> */}
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
                   active={query?.sort_field === "status_check_order"}
@@ -61,15 +61,6 @@ const Table = (
                   onClick={() => handleSort("status_check_order")}
                 >
                   Status
-                </SLabel>
-              </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
-                <SLabel
-                  active={query?.sort_field === "contractor"}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("contractor")}
-                >
-                  Motorista
                 </SLabel>
               </SCell>
               <SCell displaywidth={isMobile ? 1 : 0}>
@@ -108,67 +99,29 @@ const Table = (
                   Prévia Tonelada
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-                <SLabel
-                  active={query?.sort_field === "truck_chassis"}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("truck_chassis")}
-                >
-                  Placa
-                </SLabel>
-              </SCell>
-              <SCell displaywidth={isDesktop ? 1 : 0}>
-                <SLabel
-                  active={query?.sort_field === "start_km"}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("start_km")}
-                >
-                  Valor Tonelada
-                </SLabel>
-              </SCell>
-              <SCell displaywidth={isDesktop ? 1 : 0}>
-                <SLabel
-                  active={query?.sort_field === "preview_value_diesel"}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("preview_value_diesel")}
-                >
-                  Valor Prévia Diesel
-                </SLabel>
-              </SCell>
-              <SCell displaywidth={isDesktop ? 1 : 0}>
-                <SLabel
-                  active={query?.sort_field === "start_date"}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("start_date")}
-                >
-                  Data Check Frete
-                </SLabel>
-              </SCell>
-              <SCell>Ações</SCell>
+              <SCell>Info</SCell>
             </SRow>
           </SHead>
-          {!isFetching && data && data?.dataResult?.length > 0 && (
-            <>
-              <STableBody>
-                {data.dataResult.map((item, index) => (
-                  <InfoRow
-                    key={item.id}
-                    data={item}
-                    index={index}
-                    setCheckId={setCheckId}
-                    setShowModalAction={setShowModalAction}
-                    query={query}
-                    setQuery={setQuery}
-                  />
-                ))}
-              </STableBody>
-            </>
+          {!isFetching && data && data?.dataResult?.freigth?.length > 0 && (
+            <STableBody>
+              {data?.dataResult?.freigth?.map((item, index) => (
+                <InfoRow
+                  key={item.id}
+                  data={item}
+                  index={index}
+                  setCheckId={setCheckId}
+                  setShowModalAction={setShowModalAction}
+                  query={query}
+                  setQuery={setQuery}
+                />
+              ))}
+            </STableBody>
           )}
         </STable>
 
         {(loading || isFetching) && (
           <Grid container justifyContent="center" alignItems="center" mt={3}>
-            <Loading titulo={t("messages.loading")}/>
+            <Loading/>
           </Grid>
         )}
 
@@ -183,15 +136,7 @@ const Table = (
           justifyContent="center"
         > 
 
-          {(data?.total === 0) && !isFetching && (
-            <Grid item justifyContent="center" alignItems="center" pt={5}>
-              <Text fontSize={"28px"} center>
-                {t("messages.no_results_found").toUpperCase()}
-              </Text>
-            </Grid>
-          )}
-
-          {(data?.total === 0) && !data && !isFetching && (
+          {(data?.dataResult?.freigth?.length === 0) && !isFetching && (
             <Grid item justifyContent="center" alignItems="center" pt={5}>
               <Text fontSize={"28px"} center>
                 {t("messages.no_results_found").toUpperCase()}
@@ -207,14 +152,6 @@ const Table = (
             </Grid>
           )}
         </Grid>
-
-        {!isFetching && data?.totalPages > 0 && (
-          <TablePagination
-            data={data}
-            query={query}
-            setQuery={setQuery}
-          />
-        )}
       </TableContainer>   
 
       {showModalAction && (
@@ -226,7 +163,6 @@ const Table = (
         />
       )} 
     </>
-
   );
 };
 

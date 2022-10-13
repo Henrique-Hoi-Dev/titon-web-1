@@ -37,7 +37,7 @@ const Table = (
 
   const [checkId, setCheckId] = useState(null)
 
-  console.log("state", data)
+  // console.log("state", data)
 
   const handleSort = (item) => {
     setQuery((state) => ({

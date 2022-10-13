@@ -18,6 +18,8 @@ const CardInfoValues = (
     styles,
     onClick,
   }) => {
+
+    console.log("porps", props?.freigth[0]?.status_check_order ?? "Sem Check")
   
   return (
     <Grid
@@ -35,7 +37,13 @@ const CardInfoValues = (
           zIndex: 1
         }}
       >
-        <Chip label={"status em pro"} color="success" />
+        <Chip 
+          label={
+            (props?.freigth[0]?.status_check_order === "approved" ? "Aprovado" : "Sem Check")
+          } 
+          sx={{ fontWeight: "600", fontSize: "15px" }}
+          color="success" 
+        />
       </Stack>
       <Card
         sx={{ 

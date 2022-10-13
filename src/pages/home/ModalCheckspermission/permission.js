@@ -40,7 +40,7 @@ const Permission = (
     setShowModal(false)
   }
 
-  console.log("id", financial)
+  // console.log("id", financial)
 
   return (
     <Modal

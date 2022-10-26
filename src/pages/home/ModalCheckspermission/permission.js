@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Grid, Paper } from "@mui/material";
 import { useGet } from "services/requests/useGet";
+import { moneyMask } from "utils/masks";
+import { formatMMMM } from "utils/formatDate";
 
 import Table from "./table";
 import Title from "components/atoms/title/title";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Modal from "components/molecules/modal/modal";
 import Text from "components/atoms/text/text";
+import Button from "components/atoms/button/button";
 
 const Permission = (
   {
@@ -31,7 +34,7 @@ const Permission = (
     loading, 
     mutate,
   } = useGet(
-    `user/financialStatement/${financialId.id}`, 
+    `user/financialStatement/${financialId?.id}`, 
     [],
     financialId ? false : true
   );
@@ -91,16 +94,64 @@ const Permission = (
           <Paper
             elevation={3}
             sx={{ 
+              display: "flex",
+              alignItems: "flex-end",
               background: "#212121", 
               color: `#fff`,
               padding: "5px",
               marginBottom: "10px",
-              width: "330px",
+              width: "370px",
               height: "150px",
               borderRadius: "11px"
             }}
           >
-
+            <Grid item container pl={2} mt={1} spacing={1} flexWrap={"nowrap"}>
+              <Grid item container pl={2} mt={1} spacing={1} flexDirection={"column"}>
+                <Text 
+                  fontSize={'20px'} 
+                  sx={{ 
+                    marginBottom: "12px",
+                    maxWidth: "200px",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }} 
+                  whiteSpace={"nowrap"}
+                >
+                  FICHA MÊS {formatMMMM(financial?.dataResult?.start_date).toUpperCase()}
+                </Text> 
+                <Text fontSize={'18.5px'}>INICIO VIAGEM: </Text> 
+                <Text fontSize={'18.5px'}>MÉDIA: </Text> 
+                <Text fontSize={'18.5px'}>MOTORISTA: </Text> 
+                <Text fontSize={'18.5px'}>FATURAMENTO: </Text>                 
+              </Grid>
+              <Grid item container pl={2} mt={1} spacing={1} flexDirection={"column"} alignItems={"center"}>
+                <Text fontSize={'18.5px'} sx={{ marginBottom: "12px" }}>
+                  <Button 
+                    sx={{
+                      height: "25px",
+                      textAling: "center",
+                      background: "#004aad!important"
+                    }}
+                  >
+                    Finanlizar
+                  </Button>
+                </Text>
+                <Text fontSize={'18.5px'}>12/20/2022</Text>
+                <Text fontSize={'18.5px'}>1.2</Text>
+                <Text 
+                  fontSize={'18.5px'}
+                  whiteSpace={"nowrap"}
+                  sx={{
+                    maxWidth: "150px",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {financial?.dataResult?.driver_name ?? "Nome Motorista"}
+                </Text>
+                <Text fontSize={'18.5px'}>{moneyMask(financial?.dataResult?.total_value || [0])}</Text>
+              </Grid>
+            </Grid>
           </Paper>
         </Grid>
 

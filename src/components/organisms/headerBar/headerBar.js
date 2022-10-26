@@ -281,7 +281,7 @@ const HeaderBar = () => {
               </Grid>
               <Grid item container xs={3} md={2} lg={2} justifyContent={"flex-end"}>
                 <IconButton 
-                  onClick={() => (navigate("/permission") || handleMarkAsRead(res?.id))}
+                  onClick={() => handleMarkAsRead(res?.id)}
                 >
                   <CommentIcon 
                     color={`${(res.read === true && "error") || 
@@ -293,7 +293,7 @@ const HeaderBar = () => {
           ))}
           {notifications?.length === 0 && (
             <Grid item justifyContent="center" alignItems="center" pt={5} padding={"12px"}>
-              <Text fontSize={"28px"} center>
+              <Text fontSize={"18px"} center>
                 Não há Notificações
               </Text>
             </Grid>

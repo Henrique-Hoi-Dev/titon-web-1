@@ -57,7 +57,7 @@ const ModalAction = (
     setFetch
   );
 
-  console.log("status", user.data.users.id, checks)
+  // console.log("status", user.data.users.id, checks)
 
   const handleSubmitActive = (ev) => {
     ev.preventDefault();

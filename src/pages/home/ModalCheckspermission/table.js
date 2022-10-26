@@ -96,7 +96,7 @@ const Table = (
                   direction={query?.sort_order?.toLowerCase()}
                   onClick={() => handleSort("preview_tonne")}
                 >
-                  Prévia Tonelada
+                  Frete Bruto
                 </SLabel>
               </SCell>
               <SCell>Info</SCell>

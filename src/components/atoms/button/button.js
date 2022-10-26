@@ -14,7 +14,7 @@ const Button = ({ disabled, children, loading, variant, sx, ...props }) => {
           ...sx,
           position: "relative",
           fontSize: "14px",
-          minHeight: "40px",
+          // minHeight: "40px",
         }}
         fullWidth
         {...props}
@@ -30,7 +30,7 @@ const Button = ({ disabled, children, loading, variant, sx, ...props }) => {
             background: "#fff",
             position: "relative",
             fontSize: "14px",
-            minHeight: "40px",
+            // minHeight: "40px",
           }}
           fullWidth
           {...props}

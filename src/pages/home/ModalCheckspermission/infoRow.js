@@ -9,6 +9,7 @@ import {
   SCell,
   SRow,
 } from "components/atoms/table/table";
+import { moneyMask } from "utils/masks";
 
 import InfoIcon from '@mui/icons-material/Info';
 
@@ -56,7 +57,7 @@ const InfoRow = (props) => {
         <SCell displaywidth={isMobile ? 1 : 0}>{data?.start_city}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.final_city}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.location_of_the_truck}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.preview_tonne}T</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{moneyMask((data?.preview_tonne * 100)* (data?.value_tonne/100))}</SCell>
         <SCell
           sx={{ 
             display: "flex", 

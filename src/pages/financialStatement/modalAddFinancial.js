@@ -15,7 +15,6 @@ import Title from "components/atoms/title/title";
 import Text from "components/atoms/text/text";
 import Autocomplete from "components/atoms/autocomplete/autocomplete";
 import PickerDate from "components/atoms/pickerDate/pickerDate";
-import Input from "components/atoms/input/input";
 
 const ModalAddFinancial = (
   { 
@@ -36,8 +35,6 @@ const ModalAddFinancial = (
   const [date, setDate] = useState(format(startOfDay(new Date()), "MM-dd-yyyy"))
 
   const [fetch, setFetch] = useState(false);
-
-  console.log("final", body)
 
   const {
     data: newFinancial,
@@ -187,44 +184,6 @@ const ModalAddFinancial = (
               onChange={(event, newValue) => {
                 setCartId(newValue.id)
               }}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Valor Fixo</Text>
-            <Input
-              required
-              styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
-              }}
-              value={body?.percentage_commission ?? ''}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  percentage_commission: ev.target.value,
-                }))
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Valor Porcentagem</Text>
-            <Input
-              required
-              styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
-              }}
-              value={body?.fixed_commission ?? ''}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  fixed_commission: ev.target.value,
-                }))
-              }
             />
           </Grid>
 

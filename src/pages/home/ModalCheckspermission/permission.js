@@ -81,15 +81,25 @@ const Permission = (
               color: `#fff`,
               padding: "5px",
               marginBottom: "10px",
-              width: "140px",
+              width: "200px",
               height: "50px",
               borderRadius: "11px",
               display: "flex",
               alignItems: "center",
-              justifyContent: "center"
+              justifyContent: "center",
+              whiteSpace: "nowrap!important",
             }}
           >
-            <Text fontSize={"27px"}>{financialId?.truck_board}</Text>
+            <Text 
+              fontSize={"27px"}
+              sx={{ 
+                maxWidth: "170px",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {financialId?.truck_board}
+            </Text>
           </Paper>
           <Paper
             elevation={3}

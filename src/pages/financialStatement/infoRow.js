@@ -120,7 +120,7 @@ const InfoRow = (props) => {
         open={openSettings}
         onClose={() => setOpenSettings(!openSettings)}
       >
-        <MenuItem onClick={() => handleUpdate(data?.id)}>Editar</MenuItem>
+        {/* <MenuItem onClick={() => handleUpdate(data?.id)}>Editar</MenuItem> */}
         <MenuItem onClick={() => handleDelete(data?.id)}>Excluir</MenuItem>
       </Menu>
 

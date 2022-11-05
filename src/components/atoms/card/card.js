@@ -18,8 +18,6 @@ const CardInfoValues = (
     styles,
     onClick,
   }) => {
-
-    console.log("porps", props?.freigth[0]?.status_check_order ?? "Sem Check")
   
   return (
     <Grid

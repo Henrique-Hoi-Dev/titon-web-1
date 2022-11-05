@@ -3,6 +3,7 @@ import { Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useCreate } from "services/requests/useCreate";
 import { successNotification } from "utils/notification";
+import { formatMoney } from "utils/masks";
 
 import Button from "components/atoms/button/button";
 import Input from "components/atoms/input/input";
@@ -11,6 +12,8 @@ import Loading from "components/atoms/loading/loading";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
 import Text from "components/atoms/text/text";
+import { unmaskMoney } from "utils/unmaskMoney";
+
 
 const ModalAddDriver = (
   { 
@@ -22,6 +25,7 @@ const ModalAddDriver = (
   const { t } = useTranslation();
   
   const [body, setBody] = useState({});
+  const [data, setData] = useState({});
 
   const [fetch, setFetch] = useState(false);
 
@@ -38,7 +42,7 @@ const ModalAddDriver = (
     isFetching,
   } = useCreate(
     "driver/register", 
-    body, 
+    data, 
     fetch, 
     setFetch
   );
@@ -62,6 +66,19 @@ const ModalAddDriver = (
   };
 
   useEffect(() => {
+    setData((state) => ({
+      ...state,
+      name: body?.name,
+      name_user: body?.name_user,
+      password: body?.password,
+      percentage: body?.percentage ?? 0,
+      daily: unmaskMoney(body?.daily ?? 0),
+      value_fix: unmaskMoney(body?.value_fix?? 0),
+    }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [body]);
+
+  useEffect(() => {
     if (newDevice || errorNewDevice) {
       mutate();
       onClose();
@@ -83,7 +100,7 @@ const ModalAddDriver = (
       maxHeight={"800px"}
     >
       <ContentHeader mt={2}>
-        <Title>Cadastrar Motorista</Title>
+        <Title>Cadastro Motorista</Title>
       </ContentHeader>
 
       {!isFetching && (
@@ -103,7 +120,7 @@ const ModalAddDriver = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.name}
+              value={body?.name ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
@@ -122,11 +139,70 @@ const ModalAddDriver = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.name_user}
+            value={body?.name_user ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
                   name_user: ev.target.value,
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={12} lg={12}>
+            <Text sx={{ ml: 1 }}>Valor Diária</Text>
+            <Input
+              required
+              styles={{
+                maxWidth: "274.1px",
+                "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                  height: "1.4rem",
+                },
+              }}
+            value={formatMoney(body?.daily)}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  daily: ev.target.value,
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
+            <Text sx={{ ml: 1 }}>Remuneração Fixa</Text>
+            <Input
+              required
+              styles={{
+                "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                  height: "1.4rem",
+                },
+              }}
+              value={formatMoney(body?.value_fix)}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  value_fix: ev.target.value,
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
+            <Text sx={{ ml: 1 }}>Remuneração Porcentagem</Text>
+            <Input
+              required
+              type={"number"}
+              styles={{
+                "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                  height: "1.4rem",
+                },
+              }}
+              value={body?.percentage ?? 0}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  percentage: ev.target.value,
                 }))
               }
             />

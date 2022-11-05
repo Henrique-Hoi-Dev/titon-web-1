@@ -10,5 +10,5 @@ export const Wrapper = styled.div`
   background-image: url(${login});
 
   background-size: contain;
-  background-color: rgb(40, 39, 39);
+  /* background-color: rgb(40, 39, 39); */
 `;

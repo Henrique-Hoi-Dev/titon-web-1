@@ -13,7 +13,11 @@ const Content = () => {
   return (
     <Wrapper>
       <Grid
-        sx={{ background: "transparent", borderRadius: "8px" }}
+        sx={{ 
+          background: "transparent", 
+          boxShadow: "none",
+          borderRadius: "8px" 
+        }}
         p={"10px"}
         // ml={`${openMenu && !isDesktop  ? "268px" : "60px"}`}
         width={`calc(100% - 100px)`}

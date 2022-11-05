@@ -189,6 +189,44 @@ const ModalAddFinancial = (
             />
           </Grid>
 
+          <Grid item xs={12} md={6} lg={6}>
+            <Text sx={{ ml: 1 }}>Valor Fixo</Text>
+            <Input
+              required
+              styles={{
+                "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                  height: "1.4rem",
+                },
+              }}
+              value={body?.percentage_commission ?? ''}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  percentage_commission: ev.target.value,
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
+            <Text sx={{ ml: 1 }}>Valor Porcentagem</Text>
+            <Input
+              required
+              styles={{
+                "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                  height: "1.4rem",
+                },
+              }}
+              value={body?.fixed_commission ?? ''}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  fixed_commission: ev.target.value,
+                }))
+              }
+            />
+          </Grid>
+
           <Grid container item xs={12} md={12} lg={12} spacing={2} mt={2}>
             <Grid item xs={12} md={12} lg={6}>
               <Button variant="return" onClick={() => onClose()}>

@@ -35,7 +35,7 @@ const ModalAddTruck = (
     error: errorUser,
     isFetching,
   } = useCreate(
-    "truck", 
+    "user/truck", 
     body, 
     fetch, 
     setFetch

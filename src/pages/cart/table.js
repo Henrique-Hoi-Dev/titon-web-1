@@ -50,7 +50,7 @@ const Table = (
   
   return (
     <>
-      <TableContainer component={Paper} sx={{ maxWidth: "1120px" }}>
+      <TableContainer component={Paper} sx={{ maxWidth: "1420px" }}>
         <STable>
           <SHead>
             <SRow>

@@ -1,6 +1,6 @@
 export const unmaskMoney = (string, zero) => {
 
-    let unmask = string?.replace(/[^\d]/g, "");
+    let unmask = string?.toString().replace(/[^\d]/g, "");
 
     if (unmask === '' && !zero) return null
     if (unmask === undefined && zero) return 0

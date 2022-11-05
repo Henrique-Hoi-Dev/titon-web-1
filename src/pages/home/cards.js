@@ -58,7 +58,7 @@ const Cards = () => {
             key={financial?.id}
             backgroundstatus={"#dfdfdf"} 
             props={financial}
-            title={financial.cart_board}
+            title={financial.truck_board}
             onClick={() => setShowModal(true) || setFinancialId({ id: financial?.id, truck_board: financial?.truck_board })}
           />    
         ))}

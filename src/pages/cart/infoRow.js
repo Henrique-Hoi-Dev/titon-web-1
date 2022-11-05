@@ -41,7 +41,7 @@ const InfoRow = (props) => {
     { value: "tank", label: "Tanque" },
   ]
 
-  const getBodywork = () => typeBodywork.find(item => item.value === data.cart_bodyworks)
+  const getBodywork = () => typeBodywork.find(item => item.value === data?.cart_bodyworks)
 
   const handleClick = (ev) => {
     setOpenSettings(!openSettings);
@@ -73,15 +73,15 @@ const InfoRow = (props) => {
           </IconButton>
         </SCell>
 
-        <SCell>{data.id}</SCell>
-        <SCell displaywidth={isMobile ? 1 : 0}>{data.cart_brand}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.cart_models}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.cart_board}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.cart_color}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.cart_tara}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{getBodywork().label}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.cart_chassis}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.cart_year}</SCell>
+        <SCell>{data?.id}</SCell>
+        <SCell displaywidth={isMobile ? 1 : 0}>{data?.cart_brand}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.cart_models}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.cart_board}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.cart_color}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.cart_tara}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{getBodywork()?.label}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.cart_chassis}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.cart_year}</SCell>
         <SCell>
           <IconButton
             color="inherit"

@@ -36,7 +36,7 @@ const ModalAddCart = (
     error: errorCart,
     isFetching,
   } = useCreate(
-    "cart", 
+    "user/cart", 
     body, 
     fetch, 
     setFetch
@@ -169,7 +169,7 @@ const ModalAddCart = (
           </Grid>  
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Tipo usuário</Text>
+            <Text sx={{ ml: 1 }}>Tipo Carreta</Text>
             <Autocomplete 
               sx={{
                 "& .MuiAutocomplete-input": {
@@ -181,16 +181,16 @@ const ModalAddCart = (
               isOptionEqualToValue={(option, value) => option.value === value.value}
               onChange={(event, newValue) => {
                 if (newValue) {
-                  setBody((state) => ({ ...state, cart_bodywork: newValue.value }));
+                  setBody((state) => ({ ...state, cart_bodyworks: newValue.value }));
                 }
                 if (newValue === null) {
-                  setBody((state) => ({ ...state, cart_bodywork: '' }));
+                  setBody((state) => ({ ...state, cart_bodyworks: '' }));
                 }
               }}
             />
           </Grid>           
           
-          {body?.cart_bodywork === "tank" && (
+          {body?.cart_bodyworks === "tank" && (
             <Grid item xs={12} md={6} lg={6}>
               <Text sx={{ ml: 1 }}>Capacidade de litros</Text>
               <Input
@@ -212,10 +212,10 @@ const ModalAddCart = (
             </Grid>            
           )} 
 
-          {((body?.cart_bodywork === "bulkCarrier") ||
-          (body?.cart_bodywork === "sider") ||
-          (body?.cart_bodywork === "chest") ||
-          (body?.cart_bodywork === "bucket")
+          {((body?.cart_bodyworks === "bulkCarrier") ||
+          (body?.cart_bodyworks === "sider") ||
+          (body?.cart_bodyworks === "chest") ||
+          (body?.cart_bodyworks === "bucket")
           ) && (
             <Grid item xs={12} md={6} lg={6}>
               <Text sx={{ ml: 1 }}>Capacidade de tonelada</Text>

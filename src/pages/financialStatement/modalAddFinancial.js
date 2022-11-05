@@ -15,6 +15,7 @@ import Title from "components/atoms/title/title";
 import Text from "components/atoms/text/text";
 import Autocomplete from "components/atoms/autocomplete/autocomplete";
 import PickerDate from "components/atoms/pickerDate/pickerDate";
+import Input from "components/atoms/input/input";
 
 const ModalAddFinancial = (
   { 

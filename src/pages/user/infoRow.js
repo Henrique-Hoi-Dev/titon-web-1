@@ -66,7 +66,7 @@ const InfoRow = (props) => {
         <SCell>{data.id}</SCell>
         <SCell displaywidth={isMobile ? 1 : 0}>{data.name}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.email}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.type_position}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.type_positions}</SCell>
         <SCell>
           <IconButton
             color="inherit"

@@ -132,7 +132,7 @@ const FinancialStatement = () => {
           </Grid>          
         </Grid>
 
-        <Grid item container pl={2} mr={4} mt={5} justifyContent={"center"} maxWidth={"1435px"} mb={3}>
+        <Grid item container pl={2} mr={4} mt={5} justifyContent={"center"} mb={3}>
           <Grid 
             item 
             container 

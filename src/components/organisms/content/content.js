@@ -1,14 +1,14 @@
 import { Grid, Paper } from "@mui/material";
-// import { templateContext } from "components/templates/main/main";
-// import { useContext } from "react";
+import { templateContext } from "components/templates/main/main";
+import { useContext } from "react";
 // import { useMediaQuery } from "react-responsive";
 import { Outlet } from "react-router-dom";
 import { Wrapper } from './styles'
 
 const Content = () => {
-  // const { openMenu } = useContext(templateContext);
+  const { openMenu } = useContext(templateContext);
   
-  // const isDesktop = useMediaQuery({ maxWidth: 1230 });
+  // const isDesktop = useMediaQuery({ maxWidth: 1430 });
 
   return (
     <Wrapper>
@@ -19,8 +19,8 @@ const Content = () => {
           borderRadius: "8px" 
         }}
         p={"10px"}
-        // ml={`${openMenu && !isDesktop  ? "268px" : "60px"}`}
-        width={`calc(100% - 100px)`}
+        ml={`${openMenu ? "214px" : "60px"}`}
+        width={`${openMenu ? "calc(100% - 285px)" : "calc(100% - 100px)"}`}
         height={"calc(100vh - 66px)"}
         component={Paper}
         alignContent={"center"}

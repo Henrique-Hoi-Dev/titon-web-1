@@ -2,7 +2,7 @@ import React from "react";
 import { CircularProgress } from "@mui/material";
 import { Button as ButtonComponent } from "@mui/material";
 
-const Button = ({ disabled, children, loading, variant, sx, ...props }) => {
+const Button = ({ disabled, children, loading, variant, background, sx, ...props }) => {
   return (
     <>
     {!loading && (
@@ -15,6 +15,7 @@ const Button = ({ disabled, children, loading, variant, sx, ...props }) => {
           position: "relative",
           fontSize: "14px",
           // minHeight: "40px",
+          background: `${background}`
         }}
         fullWidth
         {...props}

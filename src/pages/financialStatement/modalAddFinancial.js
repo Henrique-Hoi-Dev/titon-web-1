@@ -113,11 +113,12 @@ const ModalAddFinancial = (
     <Modal
       open={showModal}
       onClose={onClose}
-      maxWidth={"600px"}
-      maxHeight={"800px"}
+      maxWidth={"400px"}
+      maxHeight={"500px"}
+      sx
     >
       <ContentHeader mt={2}>
-        <Title>Criar Ficha</Title>
+        <Title>Nova Ficha</Title>
       </ContentHeader>
 
       {!isFetching && (
@@ -126,20 +127,10 @@ const ModalAddFinancial = (
           item
           spacing={2}
           mt={1}
-          sx={{ minHeight: "300px", justifyContent: "flex-start" }}
+          justifyContent={"flex-start"}
+          sx={{ minHeight: "300px" }}
         > 
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Incio Ficha</Text>
-            <PickerDate
-              size="medium"
-              height="2.4em"
-              onChange={(newValue) => {
-                setDate(format(startOfDay(newValue), "MM-dd-yyyy"))
-              }}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
+          <Grid item xs={12} md={12} lg={12}>
             <Text sx={{ ml: 1 }}>Caminhão</Text>
             <Autocomplete 
               sx={{
@@ -155,7 +146,7 @@ const ModalAddFinancial = (
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={6}>
+          <Grid item xs={12} md={12} lg={12}>
             <Text sx={{ ml: 1 }}>Motorista</Text>
             <Autocomplete 
               sx={{
@@ -171,7 +162,7 @@ const ModalAddFinancial = (
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={6}>
+          <Grid item xs={12} md={12} lg={12}>
             <Text sx={{ ml: 1 }}>Carreta</Text>
             <Autocomplete 
               sx={{
@@ -183,6 +174,17 @@ const ModalAddFinancial = (
               getOptionLabel={(option) => option.cart_models}
               onChange={(event, newValue) => {
                 setCartId(newValue.id)
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={12} lg={12}>
+            <Text sx={{ ml: 1 }}>Incio Ficha</Text>
+            <PickerDate
+              size="medium"
+              height="2.4em"
+              onChange={(newValue) => {
+                setDate(format(startOfDay(newValue), "MM-dd-yyyy"))
               }}
             />
           </Grid>

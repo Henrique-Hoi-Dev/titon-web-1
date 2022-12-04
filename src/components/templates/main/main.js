@@ -6,11 +6,12 @@ import { createContext, useState } from "react";
 import Theme from "theme/theme";
 import Content from "components/organisms/content/content";
 import HeaderBar from "components/organisms/headerBar/headerBar";
+import Menu from "components/organisms/menu/menu";
 
 export const templateContext = createContext({});
 
 const MainTemplate = () => {
-  const [openMenu, setOpenMenu] = useState(false);
+  const [openMenu, setOpenMenu] = useState(true);
   const user = useSelector((state) => state.user);
 
   return (
@@ -18,6 +19,7 @@ const MainTemplate = () => {
       <templateContext.Provider value={{ Theme, openMenu, setOpenMenu }}>
         <Box>
           <HeaderBar />
+          <Menu />
           <Content />
         </Box>
       </templateContext.Provider>

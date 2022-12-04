@@ -25,7 +25,6 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import PeopleIcon from '@mui/icons-material/People';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
-import HomeIcon from '@mui/icons-material/Home';
 import { IoGameController } from "react-icons/io5";
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import PersonIcon from '@mui/icons-material/Person';
@@ -35,6 +34,88 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { AiOutlineSearch } from 'react-icons/ai'
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
+import SearchIcon from '@mui/icons-material/Search';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown';
+import { FaTrailer } from "react-icons/fa";
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+
+export const IconSubMenuTrendingDownIcon = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <TrendingDownIcon />
+    </SvgIcon>
+  );
+};
+
+export const IconSubMenuTrendingUpIcon = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <TrendingUpIcon />
+    </SvgIcon>
+  );
+};
+
+export const IconSearchIcon = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <SearchIcon/>
+    </SvgIcon>
+  );
+};
+
+export const IconNotifications = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <NotificationsOutlinedIcon/>
+    </SvgIcon>
+  );
+};
+
+export const IconMenuTrailer = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <FaTrailer/>
+    </SvgIcon>
+  );
+};
+
+export const IconMenuFile = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <DescriptionOutlinedIcon/>
+    </SvgIcon>
+  );
+};
+
+export const IconMenuUser = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <GroupOutlinedIcon/>
+    </SvgIcon>
+  );
+};
+
+export const IconMenuTruck = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <LocalShippingOutlinedIcon/>
+    </SvgIcon>
+  );
+};
+
+export const IconMenuBox = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <Inventory2OutlinedIcon/>
+    </SvgIcon>
+  );
+};
 
 export const IconExit = (props) => {
   return (
@@ -79,7 +160,7 @@ export const IconTemplateDraw = (props) => {
 export const IconMenuHome = (props) => {
   return (
     <SvgIcon {...props}>
-      <HomeIcon />
+      <HomeOutlinedIcon />
     </SvgIcon>
   );
 };
@@ -188,9 +269,9 @@ export const IconDelete = (props) => {
   );
 };
 
-export const IconAdd = (props) => {
+export const IconAdd = ({ sx }) => {
   return (
-    <SvgIcon {...props}>
+    <SvgIcon sx={{...sx}}>
       <AddIcon />
     </SvgIcon>
   );
@@ -292,10 +373,10 @@ export const DeviceIcon  = (props) => {
   );
 };
 
-export const PointIcon  = (props) => {
+export const PointIcon = ({ color, sx }) => {
   return (
-    <SvgIcon {...props}>
-      <GrStatusGoodSmall  color={props.color}/>
+    <SvgIcon sx={{...sx}}>
+      <GrStatusGoodSmall color={color} />
     </SvgIcon>
   );
 };

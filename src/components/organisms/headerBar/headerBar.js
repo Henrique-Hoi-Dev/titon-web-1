@@ -1,34 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { signOut } from "store/modules/auth/actions";
 import {
-  Avatar,
   Badge,
   Grid,
   IconButton,
   Menu,
-  MenuItem,
 } from "@mui/material";
+import { IconAdd, IconNotifications } from "components/atoms/icons/icons";
 import { formatDistance, parseISO } from "date-fns";
 import { api } from "services/api";
 
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import Text from "components/atoms/text/text";
-import Button from "components/atoms/button/button";
 import pt from "date-fns/locale/pt";
 import CommentIcon from '@mui/icons-material/Comment';
-import logo from '../../../assets/logo.png'
+import Input from "components/atoms/input/input";
+import Button from "components/atoms/button/button";
+import CustomizedMenus from "components/molecules/customizedMenus/customizedMenu";
+import ModalAddFinancial from "pages/financialStatement/modalAddFinancial";
 
 const HeaderBar = () => {
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
-  const users = useSelector((state) => state?.user);
+  // const users = useSelector((state) => state?.user);
+  const [showModal, setShowModal] = useState(false);
 
-  const [openSettings, setOpenSettings] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(false);
+  // const [openSettings, setOpenSettings] = useState(false);
+  // const [anchorEl, setAnchorEl] = useState(false);
   const [anchorElTwo, setAnchorElTwo] = useState(false);
   const [fetch, setFetch] = useState(false)
 
@@ -81,15 +79,15 @@ const HeaderBar = () => {
     setAnchorElTwo(false);
   };
 
-  const handleClick = (ev) => {
-    setOpenSettings(!openSettings);
-    setAnchorEl(ev.currentTarget);
-  };
+  // const handleClick = (ev) => {
+  //   setOpenSettings(!openSettings);
+  //   setAnchorEl(ev.currentTarget);
+  // };
 
-  const handleLogOut = () => {
-    dispatch(signOut())
-    navigate("/login");
-  };
+  // const handleLogOut = () => {
+  //   dispatch(signOut())
+  //   navigate("/login");
+  // };
 
   return (
     <>
@@ -101,120 +99,73 @@ const HeaderBar = () => {
           height: "64px",
         }}
         alignItems="center"
-        justifyContent={"flex-start"}
+        justifyContent={"flex-end"}
       >
-        <Grid
-          item 
-          container
-          xs={2}
-          md={2}
-          lg={2}
-          justifyContent={"center"}
-        >
-          <img height={"70px"} src={logo} alt="img"/>
-        </Grid>
         <Grid 
           item 
           container
-          xs={6}
-          md={6}
+          xs={9.6}
+          md={9.6}
           flexWrap="nowrap"
+          flexDirection={"row"}
           alignItems="center"
           justifyContent={"space-between"}
         >
-          <IconButton
-            color="error"
-            fontSize="12px"
-            sx={{ mr: 1 }}
-            onClick={(ev) => navigate("/home")}
+          <Grid 
+            item 
+            container
+            xs={6}
+            md={6}
+            lg={6}
+            alignItems="flex-end"
           >
-            HOME
-          </IconButton>
-          <IconButton
-            color="error"
-            fontSize="12px"
-            sx={{ mr: 1 }}
-            onClick={(ev) => navigate("/")}
-          >
-            RELATÓRIOS
-          </IconButton>
-          {/* <IconButton
-            color="error"
-            fontSize="12px"
-            sx={{ mr: 1 }}
-            onClick={(ev) => navigate("permission")}
-          >
-            PERMISSÕES
-          </IconButton> */}
-          <IconButton
-            color="error"
-            fontSize="12px"
-            sx={{ mr: 1 }}
-            onClick={(ev) => navigate("cart")}
-          >
-            CARRETAR
-          </IconButton>
-          <IconButton
-            color="error"
-            fontSize="12px"
-            sx={{ mr: 1 }}
-            onClick={(ev) => navigate("truck")}
-          >
-            CAMINHÕES
-          </IconButton>
-          <IconButton
-            color="error"
-            fontSize="12px"
-            sx={{ mr: 1 }}
-            onClick={(ev) => navigate("driver")}
-          >
-            MOTORISTAS
-          </IconButton>
-          <IconButton
-            color="error"
-            fontSize="12px"
-            sx={{ mr: 1 }}
-            onClick={(ev) => navigate("financial")}
-          >
-            FICHAS MOTORISTAS
-          </IconButton>
-          <IconButton
-            color="error"
-            fontSize="12px"
-            sx={{ ml: 3 }}
-            onClick={(ev) => handleClickTwo(ev)}
-          >
-            <Badge badgeContent={notifications.length} color="info">
-              <NotificationsIcon sx={{ color: "#fff" }} />
-            </Badge>
-          </IconButton>
-
-          <IconButton
-            color="inherit"
-            fontSize="12px"
-            sx={{ width: "80px" }}
-            onClick={(ev) => handleClick(ev)}
-          >
-            <Grid 
-              item 
-              container
-              xs={12}
-              md={12}
-              lg={12}
-              alignItems="center"
-              justifyContent="flex-end"
+            <IconButton
+              color="error"
+              fontSize="12px"
+              sx={{ ml: 3, mt: 4, mr: 3 }}
+              onClick={(ev) => handleClickTwo(ev)}
             >
-              <Avatar
-                sx={{
-                  ":hover": {
-                    cursor: "pointer",
-                  },
-                  height: "50px",
-                  width: "50px",
-                }}
-              />
-            </Grid>
-          </IconButton>              
+              <Badge badgeContent={notifications.length} color="info">
+                <IconNotifications sx={{ color: "#fff" }} />
+              </Badge>
+            </IconButton>
+
+            <CustomizedMenus />
+          </Grid>
+
+          <Grid 
+            item 
+            container
+            xs={12}
+            md={12}
+            lg={12}
+            mr={3}
+            mt={4}
+            alignItems="center"
+            justifyContent="flex-end"
+          >
+            <Button 
+              onClick={() => setShowModal(true)}
+              background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+              sx={{
+                fontSize: "14px",
+                color: "white",
+                width: "228px",
+                height: "40px",
+                marginRight: "15px",
+              }}
+            >
+              Adicionar Nova Ficha <IconAdd sx={{ mt: -0.7 }} />
+            </Button>
+            <Input
+              searches
+              searchesType={"searches"}
+              styles={{ minWidth: "350px"}}
+              placeholder={"Nome, placa..."}
+              // onChange={(ev) => setEmail(ev.target.value)}
+              required
+            />
+          </Grid>
         </Grid>
 
         <Menu
@@ -299,61 +250,12 @@ const HeaderBar = () => {
             </Grid>
           )}
         </Menu>
-
-        <Menu
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "center",
-          }}
-          transformOrigin={{
-            vertical: "bottom",
-            horizontal: "center",
-          }}
-          sx={{
-            zIndex: 4444,
-            mt: 5,
-            width: "300px"
-          }}
-          open={openSettings}
-          onClose={() => setOpenSettings(!openSettings)}
-        >
-          <Grid 
-            item 
-            container
-            xs={12}
-            md={12}
-            lg={12}
-            mt={2}
-            mb={2}
-            alignItems="center"
-            flexDirection={"column"}
-            justifyContent="center"
-          >
-            <Avatar
-              sx={{
-                height: "30px",
-                width: "30px",
-                marginRight: "5px",
-              }}
-            />
-            <Text sx={{ fontWeight: "900" }}>{users?.data?.users?.type_position}</Text>
-          </Grid>
-          <MenuItem sx={{ fontWeight: "700" }} onClick={() => navigate("/user")}>Usuários</MenuItem>
-          <MenuItem sx={{ fontWeight: "700" }} onClick={handleLogOut}>
-            <Button 
-              sx={{ 
-                backgroundColor: "red",
-                "&:hover": {
-                  backgroundColor: "red"
-                }
-              }}
-            >
-              SAIR...              
-            </Button>
-          </MenuItem>
-        </Menu>
       </Grid>
+
+      <ModalAddFinancial 
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
     </>
   );
 };

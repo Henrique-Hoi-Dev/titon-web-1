@@ -10,6 +10,7 @@ import Button from "components/atoms/button/button";
 import Input from "components/atoms/input/input";
 import Loading from "components/atoms/loading/loading";
 import Text from "components/atoms/text/text";
+import logo from "../../assets/logo.png"
 
 import { Wrapper } from './styles'
 
@@ -58,7 +59,7 @@ const Login = () => {
     <Wrapper>
       <Grid 
         container 
-        justifyContent="center" 
+        justifyContent="flex-start" 
         alignItems="center" 
         height="100vh"
       >
@@ -66,7 +67,12 @@ const Login = () => {
           elevation={3} 
           sx={{ 
             backgroundColor: "transparent!important",
-            boxShadow: "none"
+            boxShadow: "none",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
           }}
         >
           <Box
@@ -75,41 +81,54 @@ const Login = () => {
               justifyContent: "center",
               alignItems: "center",
               flexDirection: "column",
+              width: "600px",
+              height: "90%",
+              background: "#2B2B2C",
+              border: "1px solid #F1F3F9",
+              boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+              borderRadius: "32px",
             }}
             component="form"
             onSubmit={handleSubmit}
           >
             <Text
-              fontSize={"110px"}
               id="title"
               sx={{ 
-                fontWeight: "900", 
-                color: "#df3237",
-                marginBottom: "-24px!important", 
+                marginBottom: "14px!important", 
               }}
             >
-              GABRA
+              <img src={logo} alt="img" />
             </Text>
             <Text
-              fontSize={"27px"}
-              sx={{ fontWeight: "900", color: "#3b3d90" }}
+              fontSize={'14px'}
+              sx={{ 
+                width: "360px",
+                height: "32px",
+                fontStyle: "normal",
+                fontWeight: "500",
+                lineHeight: "100%",
+                textAlign: "center",
+                color: "#FFFFFF",
+              }}
             >
-              TRANSPORTE E LOGÍSTICA
+              Agora insira as informações da sua empresa e já tenha acesso ao melhor gerenciador de frotda.
             </Text>
 
             <Grid
               container
               justifyContent="center"
+              alignItems={"center"}
               direction="column"
               rowSpacing={3}
               p={4}
               minWidth="200px"
-              width="400px"
               maxWidth="400px"
+              width="400px"
             >
               <Grid item>
                 <Input
                   type="text"
+                  styles={{ minWidth: "350px" }}
                   placeholder={"E-mail"}
                   onChange={(ev) => setEmail(ev.target.value)}
                   required
@@ -119,6 +138,7 @@ const Login = () => {
                 <Input
                   placeholder={"Senha"}
                   type={showPassword ? "text" : "password"}
+                  styles={{ minWidth: "350px" }}
                   onChange={(ev) => setPassword(ev.target.value)}
                   isPassword
                   onClick={() => setShowPassword(!showPassword)}
@@ -129,14 +149,12 @@ const Login = () => {
                 <Grid item>
                   <Button
                     disableElevation
+                    background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
                     sx={{
                       fontSize: "14px",
                       color: "white",
-                      minHeight: "40px",
-                      backgroundColor: "#f93131",
-                      ":hover": {
-                        backgroundColor: "#f93131",
-                      },
+                      width: "168px",
+                      height: "50px",
                     }}
                     fullWidth
                     type="submit"

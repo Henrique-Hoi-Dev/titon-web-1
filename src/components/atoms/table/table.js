@@ -36,7 +36,7 @@ export const SHead = styled(TableHead)
 (({ color, backgroundColor, fontweight, displaywidth }) => ({
   display: `${displaywidth ? "none" : ""}`,
   fontSize: 18,
-  backgroundColor: `${backgroundColor ? backgroundColor : "#fff!important"}`,
+  backgroundColor: `${backgroundColor ? backgroundColor : "##CCD6EB!important"}`,
   "& :hover": { color: "black" },
   "& .MuiTableCell-root": {
     color: `${color ? "black" : "black"}`,
@@ -63,7 +63,7 @@ export const SCell = styled(TableCell)
 export const SRow = styled(TableRow) 
 (({ theme, displaywidth, alternatingcolors }) => ({
   display: `${displaywidth ? "none" : ""}`,
-  backgroundColor: `${( alternatingcolors % 2 !== 0 && "#3333330d" ) || 
+  backgroundColor: `${( alternatingcolors % 2 !== 0 && "#CCD6EB" ) || 
   ( alternatingcolors % 2 === 0 && "white")}`,
 }));
 

@@ -1,12 +1,12 @@
 import { Grid, Typography } from "@mui/material";
 import React from "react";
 
-const Title = ({ children }) => {
+const Title = ({ children, sx }) => {
   return (
     <>
       {children && (
         <Grid container direction="row">
-          <Typography fontSize="40px" sx={{ fontWeight: "700" }}>{children}</Typography>
+          <Typography fontSize="40px" sx={{ ...sx, fontWeight: "700" }}>{children}</Typography>
         </Grid>
       )}
     </>

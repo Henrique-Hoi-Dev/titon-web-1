@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from "react";
-import { Grid, List, ListItemText, Tooltip } from "@mui/material";
+import { Avatar, Grid, List, ListItemText, Tooltip } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from '../../../store/modules/auth/actions'
 import { templateContext } from "components/templates/main/main";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
@@ -8,7 +10,10 @@ import {
   ListItemCategory, 
   IconMenuCategory, 
   ButtonMenu,
-  DrawerHeader
+  DrawerHeader,
+  ListText,
+  ListSub,
+  ListItemCategoryUser
 } from "./styles";
 
 import { 
@@ -23,8 +28,18 @@ import {
 } from "components/atoms/icons/icons";
 
 import logo from '../../../assets/logo.png'
+import { FiLogOut } from "react-icons/fi";
 
 const Menu = () => {
+  const user = useSelector((state) => state?.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    dispatch(signOut())
+    navigate("/login");
+  };
+
   const {openMenu, setOpenMenu} = useContext(templateContext);
 
   const isSmallDesktop = useMediaQuery({ maxWidth: "710px" });
@@ -38,8 +53,6 @@ const Menu = () => {
     setOpenMenu, 
     isSmallDesktop
   ])
-
-  const navigate = useNavigate();
 
   return (
     <Drawer variant="permanent" open={openMenu} >
@@ -157,9 +170,7 @@ const Menu = () => {
               </IconMenuCategory>
             </Tooltip>
             
-            <ListItemText 
-              sx={{ opacity: openMenu ? 1 : 0, fontSize: "1.2rem", marginTop: "10px" }} 
-            >
+            <ListItemText sx={{ opacity: openMenu ? 1 : 0, fontSize: "1.2rem", marginTop: "10px" }}>
               Motoristas
             </ListItemText>
           </ButtonMenu>
@@ -193,7 +204,7 @@ const Menu = () => {
           onClick={() => navigate("/cart")}
           sx={{ display: 'block' }} 
         >
-          <ButtonMenu 
+          <ButtonMenu
             sx={{ 
               justifyContent: openMenu ? 'initial' : 'center',
               marginLeft: openMenu ? '25px' : '0px',
@@ -214,11 +225,12 @@ const Menu = () => {
         </ListItemCategory>
 
         <ListItemCategory 
+          onClick={() => navigate("/historic")}
           sx={{ 
             display: 'block' 
           }}
         >
-          <ButtonMenu 
+          <ButtonMenu
             sx={{ 
               justifyContent: openMenu ? 'initial' : 'center',
               marginLeft: openMenu ? '25px' : '0px',
@@ -238,6 +250,33 @@ const Menu = () => {
           </ButtonMenu>
         </ListItemCategory>
       </List>
+
+      <ListSub>
+        <ListItemCategoryUser 
+          sx={{ 
+            display: 'block' 
+          }}
+        >
+          <ButtonMenu
+            sx={{ 
+              justifyContent: openMenu ? 'initial' : 'center',
+            }}
+          >
+            <IconMenuCategory sx={{ mr: openMenu ? 0.4 : 'auto'}}>
+              <Avatar sx={{ fontSize: "30px" }}/>
+            </IconMenuCategory>
+            
+            <ListText  sx={{ opacity: openMenu ? 1 : 0 }}>
+              {user?.data?.userProps?.name} 
+            </ListText>
+          </ButtonMenu>
+
+          <FiLogOut 
+            onClick={() => handleLogOut()}
+            style={{ fontSize: "25px" }}
+          />
+        </ListItemCategoryUser>
+      </ListSub>
     </Drawer>
   );
 };

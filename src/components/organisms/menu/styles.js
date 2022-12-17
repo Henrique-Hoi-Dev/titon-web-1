@@ -4,20 +4,31 @@ import {
   ListItem, 
   ListItemButton, 
   ListItemIcon, 
-  ListItemText 
+  ListItemText,
+  List
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { MENU_WIDTH } from "utils/constants";
 
 import MuiDrawer from "@mui/material/Drawer";
 
+export const ListItemCategoryUser = styled(ListItem)({
+  cursor: "pointer",
+  color: "#FFFFFF",  
+  display: 'flex!important',
+  transition: "2s",
+  marginLeft: "-12px",
+  marginTop: "12px",
+  borderRadius: "8px",
+  width: "260px",
+  padding: 0,
+});
+
 export const ListItemCategory = styled(ListItem)({
   cursor: "pointer",
   color: "#FFFFFF",  
   display: 'block',
   transition: "2s",
-  // margin: "10px",
-  // background: "#0C59BB",
   marginLeft: "-12px",
   marginTop: "12px",
   borderRadius: "8px",
@@ -26,12 +37,8 @@ export const ListItemCategory = styled(ListItem)({
 
   "& .css-10hburv-MuiTypography-root": { 
     fontSize: "1.2rem", 
-    fontWeight: "600",
+    fontWeight: "400",
   },
-  // "& :hover": {
-  //   borderRadius: "8px",
-  //   background: "#0C59BB",
-  // },
   "& :focus": {
     background: "#0C59BB",
     borderRadius: "8px",
@@ -44,6 +51,13 @@ export const ButtonMenu = styled(ListItemButton)({
   px: 2.5,
 });
 
+export const ListSub = styled(List)({
+  display: "flex",
+  alignItems: "flex-end",
+  height: "100%",
+  paddingBottom: "24px",
+});
+
 export const IconMenuCategory = styled(ListItemIcon)({
   cursor: "pointer",
   color: "#FFFFFF",  
@@ -52,10 +66,11 @@ export const IconMenuCategory = styled(ListItemIcon)({
 
 export const ListText = styled(ListItemText)({
   cursor: "pointer",
-  color: "#34475a",
-  "& .css-10hburv-MuiTypography-root": { fontWeight: "600" },
+  color: "#F1F3F9",
+  fontSize: "1.1rem",
+  "& .css-10hburv-MuiTypography-root": { fontWeight: "400" },
   marginTop: 0,
-  marginBottom: "10px"
+  marginBottom: "-4px"
 });
 
 export const MenuCollapse = styled(Collapse)({

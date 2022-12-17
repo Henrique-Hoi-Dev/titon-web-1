@@ -12,7 +12,7 @@ const InputMaskComponent = ({
   required,
   ...inputProps
 }) => {
-  const Label = {};
+  // const Label = {};
   return (
       <Grid sx={{ display: "flex", flexDirection: "column", background: "#fff!importante" }}>
         {holder}

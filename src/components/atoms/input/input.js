@@ -42,10 +42,10 @@ const Input = ({
             boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
             borderRadius: "8px",
             ".css-md26zr-MuiInputBase-root-MuiOutlinedInput-root": {
-              color: "#FFFFFF" 
+              color: "#FFFFFF!important" 
             },
             ".css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root": {
-              color: "#FFFFFF" 
+              color: "#FFFFFF!important" 
             }
           }}
           inputProps={{ 

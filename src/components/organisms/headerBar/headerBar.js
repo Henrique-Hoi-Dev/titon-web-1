@@ -8,6 +8,7 @@ import {
 import { IconAdd, IconNotifications } from "components/atoms/icons/icons";
 import { formatDistance, parseISO } from "date-fns";
 import { api } from "services/api";
+import { useSelector } from "react-redux";
 
 import Text from "components/atoms/text/text";
 import pt from "date-fns/locale/pt";
@@ -18,11 +19,11 @@ import CustomizedMenus from "components/molecules/customizedMenus/customizedMenu
 import ModalAddFinancial from "pages/financialStatement/modalAddFinancial";
 
 const HeaderBar = () => {
+  const user = useSelector((state) => state?.user);
 
   // const dispatch = useDispatch();
   // const navigate = useNavigate();
 
-  // const users = useSelector((state) => state?.user);
   const [showModal, setShowModal] = useState(false);
 
   // const [openSettings, setOpenSettings] = useState(false);
@@ -48,11 +49,13 @@ const HeaderBar = () => {
       setNotifications(data)
     }
     if (fetch === true) {
-      loadNotifications()
+      if (user?.data.users?.type_role === "MASTER") {
+        return  loadNotifications()        
+      }
       setFetch(false)
     }
     
-  }, [fetch])
+  }, [fetch, user])
 
   useEffect(() => {
     setFetch(true)
@@ -255,6 +258,7 @@ const HeaderBar = () => {
       <ModalAddFinancial 
         showModal={showModal}
         setShowModal={setShowModal}
+        
       />
     </>
   );

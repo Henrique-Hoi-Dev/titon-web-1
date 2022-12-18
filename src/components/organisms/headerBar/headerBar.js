@@ -18,16 +18,13 @@ import Button from "components/atoms/button/button";
 import CustomizedMenus from "components/molecules/customizedMenus/customizedMenu";
 import ModalAddFinancial from "pages/financialStatement/modalAddFinancial";
 
-const HeaderBar = () => {
+const HeaderBar = ({ menu }) => {
   const user = useSelector((state) => state?.user);
-
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
 
   const [showModal, setShowModal] = useState(false);
 
-  // const [openSettings, setOpenSettings] = useState(false);
-  // const [anchorEl, setAnchorEl] = useState(false);
+  console.log("menuuuuuuuuu", menu)
+
   const [anchorElTwo, setAnchorElTwo] = useState(false);
   const [fetch, setFetch] = useState(false)
 
@@ -82,16 +79,6 @@ const HeaderBar = () => {
     setAnchorElTwo(false);
   };
 
-  // const handleClick = (ev) => {
-  //   setOpenSettings(!openSettings);
-  //   setAnchorEl(ev.currentTarget);
-  // };
-
-  // const handleLogOut = () => {
-  //   dispatch(signOut())
-  //   navigate("/login");
-  // };
-
   return (
     <>
       <Grid
@@ -132,8 +119,9 @@ const HeaderBar = () => {
                 <IconNotifications sx={{ color: "#fff" }} />
               </Badge>
             </IconButton>
-
-            <CustomizedMenus />
+            {menu?.home && (
+              <CustomizedMenus />
+            )}
           </Grid>
 
           <Grid 
@@ -147,27 +135,149 @@ const HeaderBar = () => {
             alignItems="center"
             justifyContent="flex-end"
           >
-            <Button 
-              onClick={() => setShowModal(true)}
-              background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
-              sx={{
-                fontSize: "14px",
-                color: "white",
-                width: "228px",
-                height: "40px",
-                marginRight: "15px",
-              }}
-            >
-              Adicionar Nova Ficha <IconAdd sx={{ mt: -0.7 }} />
-            </Button>
-            <Input
-              searches
-              searchesType={"searches"}
-              styles={{ minWidth: "350px"}}
-              placeholder={"Nome, placa..."}
-              // onChange={(ev) => setEmail(ev.target.value)}
-              required
-            />
+            {menu?.home && (
+              <>
+                <Button 
+                  onClick={() => setShowModal(true)}
+                  background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+                  sx={{
+                    fontSize: "14px",
+                    color: "white",
+                    width: "228px",
+                    height: "40px",
+                    marginRight: "15px",
+                  }}
+                >
+                  Adicionar Nova Ficha <IconAdd sx={{ mt: -0.7 }} />
+                </Button>
+                <Input
+                  searches
+                  searchesType={"searches"}
+                  styles={{ minWidth: "350px"}}
+                  placeholder={"Nome, placa..."}
+                  // onChange={(ev) => setEmail(ev.target.value)}
+                  required
+                />               
+              </>
+            )}
+
+            {menu?.report && (
+              <>
+                <Button 
+                  onClick={() => setShowModal(true)}
+                  background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+                  sx={{
+                    fontSize: "14px",
+                    color: "white",
+                    width: "228px",
+                    height: "40px",
+                    marginRight: "15px",
+                  }}
+                >
+                  Imprimir DRE
+                </Button>
+                <Input
+                  searches
+                  searchesType={"searches"}
+                  styles={{ minWidth: "350px"}}
+                  placeholder={"Nome, placa..."}
+                  // onChange={(ev) => setEmail(ev.target.value)}
+                  required
+                />               
+              </>
+            )}
+
+             {menu?.driver && (
+              <>
+                <Button 
+                  onClick={() => setShowModal(true)}
+                  background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+                  sx={{
+                    fontSize: "14px",
+                    color: "white",
+                    width: "228px",
+                    height: "40px",
+                    marginRight: "15px",
+                  }}
+                >
+                  Adicionar Motorista <IconAdd sx={{ mt: -0.7 }} />
+                </Button>
+                <Input
+                  searches
+                  searchesType={"searches"}
+                  styles={{ minWidth: "350px"}}
+                  placeholder={"Nome, placa..."}
+                  // onChange={(ev) => setEmail(ev.target.value)}
+                  required
+                />               
+              </>
+            )}
+
+             {menu?.truck && (
+              <>
+                <Button 
+                  onClick={() => setShowModal(true)}
+                  background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+                  sx={{
+                    fontSize: "14px",
+                    color: "white",
+                    width: "228px",
+                    height: "40px",
+                    marginRight: "15px",
+                  }}
+                >
+                  Adicionar Caminhão <IconAdd sx={{ mt: -0.7 }} />
+                </Button>
+                <Input
+                  searches
+                  searchesType={"searches"}
+                  styles={{ minWidth: "350px"}}
+                  placeholder={"Nome, placa..."}
+                  // onChange={(ev) => setEmail(ev.target.value)}
+                  required
+                />               
+              </>
+            )}
+
+             {menu?.cart && (
+              <>
+                <Button 
+                  onClick={() => setShowModal(true)}
+                  background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+                  sx={{
+                    fontSize: "14px",
+                    color: "white",
+                    width: "228px",
+                    height: "40px",
+                    marginRight: "15px",
+                  }}
+                >
+                  Adicionar Carreta <IconAdd sx={{ mt: -0.7 }} />
+                </Button>
+                <Input
+                  searches
+                  searchesType={"searches"}
+                  styles={{ minWidth: "350px"}}
+                  placeholder={"Nome, placa..."}
+                  // onChange={(ev) => setEmail(ev.target.value)}
+                  required
+                />               
+              </>
+            )}
+
+             {menu?.historic && (
+              <>
+                <Input
+                  searches
+                  searchesType={"searches"}
+                  styles={{ minWidth: "350px"}}
+                  placeholder={"Nome, placa..."}
+                  // onChange={(ev) => setEmail(ev.target.value)}
+                  required
+                />               
+              </>
+            )}
+
           </Grid>
         </Grid>
 

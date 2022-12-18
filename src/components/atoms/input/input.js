@@ -61,7 +61,7 @@ const Input = ({
               <InputAdornment position="end">
                 {type === "password" &&
                   <IconButton onClick={onClick} edge="end" sx={{ color: "#FFFFFF" }}>
-                    {type === "password" ? <Visibility /> : <VisibilityOff />}                  
+                    {type === "password" ? <Visibility sx={{ color: "#FFFFFF" }} /> : <VisibilityOff  sx={{ color: "#FFFFFF" }}/>}                  
                   </IconButton>                  
                 }
                 {(searchesType === "searches") && <IconSearchIcon sx={{ color: "#F1F3F9" }} /> }

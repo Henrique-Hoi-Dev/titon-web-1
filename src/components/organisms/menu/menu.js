@@ -1,10 +1,11 @@
 import React, { useContext, useEffect } from "react";
-import { Avatar, Grid, List, ListItemText, Tooltip } from "@mui/material";
+import { Avatar, Grid, IconButton, List, ListItemText, Tooltip } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from '../../../store/modules/auth/actions'
 import { templateContext } from "components/templates/main/main";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
+import { FiLogOut } from "react-icons/fi";
 import { 
   Drawer, 
   ListItemCategory, 
@@ -28,9 +29,9 @@ import {
 } from "components/atoms/icons/icons";
 
 import logo from '../../../assets/logo.png'
-import { FiLogOut } from "react-icons/fi";
 
-const Menu = () => {
+
+const Menu = ({ setMenu }) => {
   const user = useSelector((state) => state?.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -112,7 +113,15 @@ const Menu = () => {
       </DrawerHeader>
       <List sx={{ marginTop: "20px", border: "none" }}>
         <ListItemCategory
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/home") || 
+          setMenu((state) => ({ 
+            ...state, 
+            home: true,
+            driver: false,
+            truck: false,
+            cart: false,
+            historic: false,
+          }))}
         >
           <ButtonMenu
             sx={{ 
@@ -133,7 +142,16 @@ const Menu = () => {
         </ListItemCategory>
 
         <ListItemCategory
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/report") ||
+          setMenu((state) => ({ 
+            ...state, 
+            home: false,
+            report: true,
+            driver: false,
+            truck: false,
+            cart: false,
+            historic: false,
+          }))}
         >
           <ButtonMenu 
             sx={{ 
@@ -156,7 +174,16 @@ const Menu = () => {
         </ListItemCategory>
 
         <ListItemCategory
-          onClick={() => navigate("/driver")}
+          onClick={() => navigate("/driver") ||          
+          setMenu((state) => ({ 
+            ...state, 
+            home: false,
+            report: false,
+            driver: true,
+            truck: false,
+            cart: false,
+            historic: false,
+          }))}
         >
           <ButtonMenu 
             sx={{ 
@@ -177,7 +204,16 @@ const Menu = () => {
         </ListItemCategory>
 
         <ListItemCategory 
-          onClick={() => navigate("/truck")}
+          onClick={() => navigate("/truck") ||          
+          setMenu((state) => ({ 
+            ...state, 
+            home: false,
+            report: false,
+            driver: false,
+            truck: true,
+            cart: false,
+            historic: false,
+          }))}
           sx={{ display: 'block' }} 
         >
           <ButtonMenu 
@@ -201,7 +237,16 @@ const Menu = () => {
         </ListItemCategory>
 
         <ListItemCategory 
-          onClick={() => navigate("/cart")}
+          onClick={() => navigate("/cart") ||          
+          setMenu((state) => ({ 
+            ...state, 
+            home: false,
+            report: false,
+            driver: false,
+            truck: false,
+            cart: true,
+            historic: false,
+          }))}
           sx={{ display: 'block' }} 
         >
           <ButtonMenu
@@ -225,7 +270,16 @@ const Menu = () => {
         </ListItemCategory>
 
         <ListItemCategory 
-          onClick={() => navigate("/historic")}
+          onClick={() => navigate("/historic") ||          
+          setMenu((state) => ({ 
+            ...state, 
+            home: false,
+            report: false,
+            driver: false,
+            truck: false,
+            cart: false,
+            historic: true,
+          }))}
           sx={{ 
             display: 'block' 
           }}
@@ -253,6 +307,7 @@ const Menu = () => {
 
       <ListSub>
         <ListItemCategoryUser 
+          onClick={() => navigate("/user")}
           sx={{ 
             display: 'block' 
           }}
@@ -270,11 +325,15 @@ const Menu = () => {
               {user?.data?.userProps?.name} 
             </ListText>
           </ButtonMenu>
-
-          <FiLogOut 
+          
+          <IconButton
             onClick={() => handleLogOut()}
-            style={{ fontSize: "25px" }}
-          />
+            sx={{ color: "#fff" }}
+          >
+            <FiLogOut 
+              style={{ fontSize: "25px" }}
+            />            
+          </IconButton>
         </ListItemCategoryUser>
       </ListSub>
     </Drawer>

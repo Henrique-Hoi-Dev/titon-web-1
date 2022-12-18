@@ -26,8 +26,6 @@ const ModalAddFinancial = (
 
   const user = useSelector((state) => state?.user);
 
-  console.log("user", user)
-
   const [body, setBody] = useState({});
 
   const [truckId, setTruckId] = useState('')

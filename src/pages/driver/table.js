@@ -177,7 +177,7 @@ const Table = (
         <ModalDeleteDriver 
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
-          id={driverId}
+          props={driverId}
           mutate={mutate}
         />
       )}
@@ -186,7 +186,7 @@ const Table = (
         <ModalUpdateDriver 
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
-          driverId={driverId}
+          props={driverId}
           mutate={mutate}
         />
       )}

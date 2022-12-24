@@ -19,8 +19,8 @@ import {
 
 import { 
   IconMenuHome,
-  IconArrowLeft,
-  IconHamburger,
+  // IconArrowLeft,
+  // IconHamburger,
   IconMenuBox,
   IconMenuTruck,
   IconMenuUser,
@@ -31,7 +31,7 @@ import {
 import logo from '../../../assets/logo.png'
 
 
-const Menu = ({ setMenu }) => {
+const Menu = () => {
   const user = useSelector((state) => state?.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -48,6 +48,8 @@ const Menu = ({ setMenu }) => {
   useEffect(() => {
     if (isSmallDesktop) {
       setOpenMenu(false)
+    } else {
+      setOpenMenu(true)
     }
   }, [
     openMenu, 
@@ -58,7 +60,25 @@ const Menu = ({ setMenu }) => {
   return (
     <Drawer variant="permanent" open={openMenu} >
       <DrawerHeader>
-        {!openMenu && (
+        <Grid 
+          item 
+          container 
+          alignItems={"center"}
+          mt={2.5}
+          sx={{
+            display: `${!openMenu && "none" }`,
+          }}
+        >
+          <img 
+            width={"200px"}
+            height={"30px"} 
+            src={logo} 
+            alt="img" 
+            style={{ marginRight: "-15px" }}
+          />        
+        </Grid>
+
+        {/* {!openMenu && (
           <Grid item  sx={{
             ml: `${openMenu ? "268px" : "60px"}`,
           }}>
@@ -79,9 +99,9 @@ const Menu = ({ setMenu }) => {
               }}
             />
           </Grid>
-        )}
+        )} */}
   
-        {openMenu && (
+        {/* {openMenu && (
           <Grid item container alignItems={"center"} sx={{
             ml: `${openMenu ? "0px" : "268px"}`,
           }}>
@@ -109,19 +129,11 @@ const Menu = ({ setMenu }) => {
               }}
             />
         </Grid>
-      )}
+      )} */}
       </DrawerHeader>
       <List sx={{ marginTop: "20px", border: "none" }}>
         <ListItemCategory
-          onClick={() => navigate("/home") || 
-          setMenu((state) => ({ 
-            ...state, 
-            home: true,
-            driver: false,
-            truck: false,
-            cart: false,
-            historic: false,
-          }))}
+          onClick={() => navigate("/home")}
         >
           <ButtonMenu
             sx={{ 
@@ -142,16 +154,7 @@ const Menu = ({ setMenu }) => {
         </ListItemCategory>
 
         <ListItemCategory
-          onClick={() => navigate("/report") ||
-          setMenu((state) => ({ 
-            ...state, 
-            home: false,
-            report: true,
-            driver: false,
-            truck: false,
-            cart: false,
-            historic: false,
-          }))}
+          onClick={() => navigate("/report")}
         >
           <ButtonMenu 
             sx={{ 
@@ -174,16 +177,7 @@ const Menu = ({ setMenu }) => {
         </ListItemCategory>
 
         <ListItemCategory
-          onClick={() => navigate("/driver") ||          
-          setMenu((state) => ({ 
-            ...state, 
-            home: false,
-            report: false,
-            driver: true,
-            truck: false,
-            cart: false,
-            historic: false,
-          }))}
+          onClick={() => navigate("/driver")}
         >
           <ButtonMenu 
             sx={{ 
@@ -204,16 +198,7 @@ const Menu = ({ setMenu }) => {
         </ListItemCategory>
 
         <ListItemCategory 
-          onClick={() => navigate("/truck") ||          
-          setMenu((state) => ({ 
-            ...state, 
-            home: false,
-            report: false,
-            driver: false,
-            truck: true,
-            cart: false,
-            historic: false,
-          }))}
+          onClick={() => navigate("/truck")}
           sx={{ display: 'block' }} 
         >
           <ButtonMenu 
@@ -237,16 +222,7 @@ const Menu = ({ setMenu }) => {
         </ListItemCategory>
 
         <ListItemCategory 
-          onClick={() => navigate("/cart") ||          
-          setMenu((state) => ({ 
-            ...state, 
-            home: false,
-            report: false,
-            driver: false,
-            truck: false,
-            cart: true,
-            historic: false,
-          }))}
+          onClick={() => navigate("/cart")}
           sx={{ display: 'block' }} 
         >
           <ButtonMenu
@@ -270,16 +246,7 @@ const Menu = ({ setMenu }) => {
         </ListItemCategory>
 
         <ListItemCategory 
-          onClick={() => navigate("/historic") ||          
-          setMenu((state) => ({ 
-            ...state, 
-            home: false,
-            report: false,
-            driver: false,
-            truck: false,
-            cart: false,
-            historic: true,
-          }))}
+          onClick={() => navigate("/historic")}
           sx={{ 
             display: 'block' 
           }}

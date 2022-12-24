@@ -6,7 +6,7 @@ const Title = ({ children, sx }) => {
     <>
       {children && (
         <Grid container direction="row">
-          <Typography fontSize="40px" sx={{ ...sx, fontWeight: "700" }}>{children}</Typography>
+          <Typography fontSize="32px" sx={{ ...sx, fontWeight: "500" }}>{children}</Typography>
         </Grid>
       )}
     </>

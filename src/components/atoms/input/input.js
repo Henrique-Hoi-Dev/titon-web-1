@@ -1,7 +1,6 @@
 import React from "react";
 import { TextField, InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { IconSearchIcon } from "../icons/icons";
 
 const Input = ({
   isInvalid,
@@ -12,6 +11,7 @@ const Input = ({
   onClick,
   isPassword,
   placeholder,
+  label,
   type,
   searches,
   searchesType,
@@ -34,18 +34,24 @@ const Input = ({
           error={error}
           size={props.size ? props.size : "small"}
           placeholder={placeholder}
+          label={label}
           sx={{ 
             fontWeight: "bold", 
             ...styles, 
-            background: "#2B2B2C", 
-            border: "1px solid #F1F3F9",
+            background: "#FFFFFF", 
             boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
             borderRadius: "8px",
+            ".css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+              border: "2px solid #2B2B2C!important",
+            },
+            ".css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused": {
+              color: "#2B2B2C!important",
+            },
             ".css-md26zr-MuiInputBase-root-MuiOutlinedInput-root": {
-              color: "#FFFFFF!important" 
+              color: "#2B2B2C!important",
             },
             ".css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root": {
-              color: "#FFFFFF!important" 
+              color: "#2B2B2C!important" 
             }
           }}
           inputProps={{ 
@@ -59,12 +65,12 @@ const Input = ({
             maxLength: `${maxLength}`,
             endAdornment: (isPassword || searches) && (
               <InputAdornment position="end">
-                {type === "password" &&
-                  <IconButton onClick={onClick} edge="end" sx={{ color: "#FFFFFF" }}>
-                    {type === "password" ? <Visibility sx={{ color: "#FFFFFF" }} /> : <VisibilityOff  sx={{ color: "#FFFFFF" }}/>}                  
+                {/* {type === "password" && */}
+                  <IconButton onClick={onClick} edge="end">
+                    {type === "password" ? <Visibility /> : <VisibilityOff />}                  
                   </IconButton>                  
-                }
-                {(searchesType === "searches") && <IconSearchIcon sx={{ color: "#F1F3F9" }} /> }
+                
+                {/* {(searchesType === "searches") && <IconSearchIcon sx={{ color: "#F1F3F9" }} /> } */}
               </InputAdornment>
             ),
           }}

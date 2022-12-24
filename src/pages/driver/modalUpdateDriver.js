@@ -12,7 +12,6 @@ import Modal from "components/molecules/modal/modal";
 import Loading from "components/atoms/loading/loading";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
-import Text from "components/atoms/text/text";
 import PickerDate from "components/atoms/pickerDate/pickerDate";
 
 const ModalUpdateDriver = (
@@ -20,7 +19,7 @@ const ModalUpdateDriver = (
     showModal, 
     setShowModal, 
     mutate, 
-    driverId
+    props
   }) => {
 
   const { t } = useTranslation();
@@ -32,7 +31,7 @@ const ModalUpdateDriver = (
     data: driver,
     isValidating
   } = useGet(
-    `user/driver/${driverId}`, 
+    `user/driver/${props.id}`, 
     []
   );
 
@@ -41,7 +40,7 @@ const ModalUpdateDriver = (
     error: errorSalespointUpdate,
     isFetching
   } = useUpdate(
-    `user/driver/${driverId}`, 
+    `user/driver/${props.id}`, 
     body, 
     "",
     fetch, 
@@ -88,7 +87,6 @@ const ModalUpdateDriver = (
   return (
     <Modal
       open={showModal}
-      showCloseIcon
       onClose={onClose}
       component="form"
       onSubmit={handleSubmit}
@@ -107,8 +105,8 @@ const ModalUpdateDriver = (
           sx={{ minHeight: "300px", justifyContent: "flex-start" }}
         >
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Name</Text>
             <Input
+              label={"Name"}
               styles={{
                 "& .MuiInputBase-input.MuiOutlinedInput-input": {
                   height: "1.4rem",
@@ -125,8 +123,8 @@ const ModalUpdateDriver = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Data da Admissão</Text>
             <PickerDate
+              label={"Data da Admissão"}
               value={body?.date_admission}
               size="medium"
               height="2.4em"
@@ -140,8 +138,8 @@ const ModalUpdateDriver = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Data Nascimento</Text>
             <PickerDate
+              label={"Data Nascimento"}
               value={body?.date_birthday}
               size="medium"
               height="2.4em"
@@ -155,8 +153,8 @@ const ModalUpdateDriver = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>CNH</Text>
             <Input
+              label={"CNH"}
               styles={{
                 "& .MuiInputBase-input.MuiOutlinedInput-input": {
                   height: "1.4rem",
@@ -173,8 +171,8 @@ const ModalUpdateDriver = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>CPF</Text>
             <Input
+              label={"CPF"}
               styles={{
                 "& .MuiInputBase-input.MuiOutlinedInput-input": {
                   height: "1.4rem",
@@ -191,8 +189,8 @@ const ModalUpdateDriver = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Validade CNH</Text>
             <PickerDate
+              label={"Validade CNH"}
               height="2.4em"
               value={body?.valid_cnh}
               size="medium"
@@ -206,8 +204,8 @@ const ModalUpdateDriver = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Validade MOPP</Text>
             <PickerDate
+              label={"Validade MOPP"}
               value={body?.date_valid_mopp}
               size="medium"
               height="2.4em"
@@ -221,8 +219,8 @@ const ModalUpdateDriver = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Validade NR20</Text>
             <PickerDate
+              label={"Validade NR20"}
               value={body?.date_valid_nr20}
               size="medium"
               height="2.4em"
@@ -236,8 +234,8 @@ const ModalUpdateDriver = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Validade NR35</Text>
             <PickerDate
+              label={"Validade NR35"}
               value={body?.date_valid_nr35}
               size="medium"
               height="2.7em"
@@ -250,14 +248,41 @@ const ModalUpdateDriver = (
             />
           </Grid>
 
-          <Grid container item xs={12} md={12} lg={12} spacing={2} mt={2}>
-            <Grid item xs={12} md={12} lg={6}>
-              <Button variant="return" onClick={() => onClose()}>
-                Voltar
-              </Button>
+          <Grid 
+            container 
+            item 
+            xs={12} 
+            md={12} 
+            lg={12} 
+            spacing={2} 
+            mt={2}
+            justifyContent={"flex-end"}
+          >
+            <Grid container item xs={12} md={3} lg={3}>
+              <Button 
+                onClick={() => onClose()}
+                background={"#fff"}
+                sx={{ width: "140px", height: "49px", border: "1px solid #509BFB", color: "#000000" }}
+                variant="text"
+              >
+                CANCELAR
+              </Button>              
             </Grid>
-            <Grid item xs={12} md={12} lg={6}>
-              <Button type="submit" variant="contained" color="success">Confirmar</Button>
+            <Grid container item xs={12} md={3} lg={3} >
+              <Button 
+                type="submit" 
+                color="success"
+                background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+                sx={{
+                  fontSize: "14px",
+                  color: "white",
+                  width: "141px",
+                  height: "49px",
+                  marginRight: "15px",
+                }}
+              >
+                Atualizar
+              </Button>
             </Grid>
           </Grid>
 

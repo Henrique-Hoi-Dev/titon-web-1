@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useCreate } from "services/requests/useCreate";
 import { successNotification } from "utils/notification";
 import { formatMoney } from "utils/masks";
+import { unmaskMoney } from "utils/unmaskMoney";
 
 import Button from "components/atoms/button/button";
 import Input from "components/atoms/input/input";
@@ -11,8 +12,6 @@ import Modal from "components/molecules/modal/modal";
 import Loading from "components/atoms/loading/loading";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
-import Text from "components/atoms/text/text";
-import { unmaskMoney } from "utils/unmaskMoney";
 
 
 const ModalAddDriver = (
@@ -112,9 +111,9 @@ const ModalAddDriver = (
           sx={{ minHeight: "300px", justifyContent: "flex-start" }}
         > 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Nome Completo</Text>
             <Input
               required
+              label={"Nome Completo"}
               styles={{
                 "& .MuiInputBase-input.MuiOutlinedInput-input": {
                   height: "1.4rem",
@@ -131,9 +130,9 @@ const ModalAddDriver = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Nome de usuário</Text>
             <Input
               required
+              label={"Nome de usuário"}
               styles={{
                 "& .MuiInputBase-input.MuiOutlinedInput-input": {
                   height: "1.4rem",
@@ -149,69 +148,10 @@ const ModalAddDriver = (
             />
           </Grid>
 
-          <Grid item xs={12} md={12} lg={12}>
-            <Text sx={{ ml: 1 }}>Valor Diária</Text>
-            <Input
-              required
-              styles={{
-                maxWidth: "274.1px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
-              }}
-            value={formatMoney(body?.daily)}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  daily: ev.target.value,
-                }))
-              }
-            />
-          </Grid>
-
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Remuneração Fixa</Text>
             <Input
               required
-              styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
-              }}
-              value={formatMoney(body?.value_fix)}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  value_fix: ev.target.value,
-                }))
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Remuneração Porcentagem</Text>
-            <Input
-              required
-              type={"number"}
-              styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
-              }}
-              value={body?.percentage ?? 0}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  percentage: ev.target.value,
-                }))
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Senha</Text>
-            <Input
-              required
+              label={"Senha"}
               type={showPassword ? "text" : "password"}
               onClick={() => setShowPassword(!showPassword)}
               isPassword
@@ -233,8 +173,8 @@ const ModalAddDriver = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Confirmar Senha</Text>
             <Input
+              label={"Confirmar Senha"}
               type={showConfirmPassword ? "text" : "password"}
               onChange={(ev) => setConfirmPassword(ev.target.value)}
               isPassword
@@ -244,14 +184,102 @@ const ModalAddDriver = (
             />
           </Grid>
 
-          <Grid container item xs={12} md={12} lg={12} spacing={2} mt={2}>
-            <Grid item xs={12} md={12} lg={6}>
-              <Button variant="return" onClick={() => onClose()}>
-                Voltar
-              </Button>
+          <hr style={{ border: "1px solid #000000", width: "97%", opacity: "0.5", margin: "25px 0px 16px 20px" }} />
+
+          <Grid item xs={12} md={6} lg={6}>
+            <Input
+              required
+              label={"Valor Diária"}
+              styles={{
+                "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                  height: "1.4rem",
+                },
+              }}
+            value={formatMoney(body?.daily)}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  daily: ev.target.value,
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
+            <Input
+              required
+              label={"Remuneração Fixa"}
+              styles={{
+                "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                  height: "1.4rem",
+                },
+              }}
+              value={formatMoney(body?.value_fix)}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  value_fix: ev.target.value,
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={12} lg={12}>
+            <Input
+              required
+              label={"Remuneração Porcentagem"}
+              type={"number"}
+              styles={{
+                maxWidth: "274.1px",
+                "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                  height: "1.4rem",
+                },
+              }}
+              value={body?.percentage ?? 0}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  percentage: ev.target.value,
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid 
+            container 
+            item 
+            xs={12} 
+            md={12} 
+            lg={12} 
+            spacing={2} 
+            mt={2}
+            justifyContent={"flex-end"}
+          >
+            <Grid container item xs={12} md={3} lg={3}>
+              <Button 
+                onClick={() => onClose()}
+                background={"#fff"}
+                sx={{ width: "140px", height: "49px", border: "1px solid #509BFB", color: "#000000" }}
+                variant="text"
+              >
+                CANCELAR
+              </Button>              
             </Grid>
-            <Grid item xs={12} md={12} lg={6}>
-              <Button type="submit" variant="contained" color="success">Confirmar</Button>
+            <Grid container item xs={12} md={3} lg={3} >
+              <Button 
+                type="submit" 
+                color="success"
+                background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+                sx={{
+                  fontSize: "14px",
+                  color: "white",
+                  width: "141px",
+                  height: "49px",
+                  marginRight: "15px",
+                }}
+              >
+                CADASTRAR
+              </Button>
             </Grid>
           </Grid>
         </Grid>

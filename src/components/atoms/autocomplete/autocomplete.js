@@ -24,7 +24,12 @@ const Autocomplete = ({
       renderInput={(params) => (
         <TextField
           {...params}
-          sx={{ background: "white!important" }}
+          sx={{ 
+            background: "white!important",
+            "& .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root": {
+              marginTop: "-5px!important",            
+            }
+          }}
           required={required}
           label={placeholder}
           InputProps={{

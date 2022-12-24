@@ -12,7 +12,7 @@ const ModalDeleteDriver = (
   { 
     showModal, 
     setShowModal, 
-    id, 
+    props, 
     mutate,
   }) => {
 
@@ -24,7 +24,7 @@ const ModalDeleteDriver = (
     error
   } = useDelete(
     "driver",
-    id,
+    props.id,
     fetch,
     setFetch
   );
@@ -56,7 +56,7 @@ const ModalDeleteDriver = (
       onClose={onClose}
       component="form"
       onSubmit={handleSubmit}
-      maxWidth="460px"
+      maxWidth="746px"
     >
       {!isFetching && error && (
         <Grid item container justifyContent="center">
@@ -69,23 +69,46 @@ const ModalDeleteDriver = (
       {!isFetching && (
         <>
           <Grid item container justifyContent="center">
-            <Text fontSize={"30px"}>Deseja Deletar Motorista?</Text>
+            <Text fontSize={"30px"}>Deseja excluir: {props.name}?</Text>
           </Grid>
-          <Grid item xs={12} md={12} lg={6} mt={2}>
-            <Button variant="return" onClick={() => onClose()}>Voltar</Button>
+          <Grid item container xs={12} md={12} lg={12} justifyContent="center" >
+            <Grid item xs={6} md={8.3} lg={8.3} mt={1} sx={{ textAlign: "center" }}>
+              <Text fontSize={"16px"}>
+                Após excluir ele dá plataforma o caminhoneiro não terá mais acesso
+                a sua empresa atraves da LogBook.
+              </Text>            
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={12} lg={6} mt={2}>
-            <Button 
-              type="submit" 
-              sx={{ 
-                background: "red",
-                "&:hover": {
-                  background: "red",
-                }
-              }}
-            >
-              Deletar
-            </Button>
+
+          <Grid 
+            container 
+            item 
+            xs={12} 
+            md={12} 
+            lg={12} 
+            spacing={2} 
+            mt={2}
+          >
+            <Grid container item xs={6} md={6} lg={6} mt={2} justifyContent={"flex-end"}>
+              <Button 
+                onClick={() => onClose()}
+                background={"#509BFB"}
+                sx={{ width: "140px", height: "49px", border: "1px solid #509BFB", color: "#ffff", mr: 3 }}
+                variant="contained"
+              >
+                CANCELAR
+              </Button>
+            </Grid>
+            <Grid container item xs={6} md={6} lg={6} mt={2} justifyContent={"flex-start"}>
+              <Button 
+                type="submit" 
+                background={"#fff"}
+                sx={{ width: "140px", height: "49px", border: "1px solid #F03D3D", color: "#000000" }}
+                variant="text"
+              >
+                EXCLUIR
+              </Button>
+            </Grid>            
           </Grid>
         </>
       )}

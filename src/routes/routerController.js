@@ -26,7 +26,7 @@ const RouterController = () => {
           <Route path="/user" element={<User />} />
           <Route path="/truck" element={<Truck />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/financial" element={<FinancialStatement />} />
+          <Route path="/historic" element={<FinancialStatement />} />
           <Route path="/permission" element={<Permission />} />
         </Route>
       </Route>

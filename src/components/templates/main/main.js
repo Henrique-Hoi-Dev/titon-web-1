@@ -12,8 +12,9 @@ export const templateContext = createContext({});
 
 const MainTemplate = () => {
   const [openMenu, setOpenMenu] = useState(true);
-  const user = useSelector((state) => state.user);
 
+  const user = useSelector((state) => state.user);
+  
   return (
     <ThemeProvider theme={Theme(user)}>
       <templateContext.Provider value={{ Theme, openMenu, setOpenMenu }}>

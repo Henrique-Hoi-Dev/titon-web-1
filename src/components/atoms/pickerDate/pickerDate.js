@@ -21,6 +21,11 @@ const PickerDate = ({
           {...props}
           sx={{
             width: `${minWidth ? minWidth : "100%"}`,
+            ".css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+              border: "2px solid #2B2B2C!important",
+              bottom: "-5px"
+
+            },
             "& .MuiSvgIcon-root": {
               color: "black !important",
               height: `${height}`,

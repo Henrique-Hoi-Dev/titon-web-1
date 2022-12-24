@@ -19,7 +19,7 @@ const Content = () => {
           borderRadius: "8px" 
         }}
         p={"10px"}
-        ml={`${openMenu ? "214px" : "60px"}`}
+        ml={`${openMenu ? "280px" : "20px"}`}
         width={`${openMenu ? "calc(100% - 285px)" : "calc(100% - 100px)"}`}
         height={"calc(100vh - 66px)"}
         component={Paper}

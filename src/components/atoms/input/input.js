@@ -41,16 +41,17 @@ const Input = ({
             background: "#FFFFFF", 
             boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
             borderRadius: "8px",
-            ".css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+            "& .css-igs3ac": { border: "2px solid #2B2B2C!important", },
+            "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
               border: "2px solid #2B2B2C!important",
             },
-            ".css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused": {
+            "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused": {
               color: "#2B2B2C!important",
             },
-            ".css-md26zr-MuiInputBase-root-MuiOutlinedInput-root": {
+            "& .css-md26zr-MuiInputBase-root-MuiOutlinedInput-root": {
               color: "#2B2B2C!important",
             },
-            ".css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root": {
+            "& .css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root": {
               color: "#2B2B2C!important" 
             }
           }}

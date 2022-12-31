@@ -12,8 +12,7 @@ export const Wrapper = styled.div`
 
   background-image: url(${login});
   background-repeat: no-repeat;
-  background-size: 100%;
-  background-position: center;
+  background-position-y: center;
 
   img {
     width: 385px;

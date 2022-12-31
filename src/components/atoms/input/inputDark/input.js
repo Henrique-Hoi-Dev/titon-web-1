@@ -43,6 +43,9 @@ export const InputDark = ({
             "& .css-cktaik": {
               color: "#F1F3F9!important",
             },
+            "& .css-4sxzy6": {
+              color: "#F1F3F9!important",
+            },
             "& .css-u9osun.Mui-focused": {
               color: "#F1F3F9!important",
             },
@@ -50,7 +53,9 @@ export const InputDark = ({
             background: "#2B2B2C", 
             boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
             borderRadius: "8px",
-            "& .css-igs3ac": { border: "2px solid #F1F3F9!important", },
+            "& .css-igs3ac": { 
+              border: "2px solid #F1F3F9!important",
+            },
             "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
               border: "2px solid #F1F3F9!important",
             },

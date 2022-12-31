@@ -7,7 +7,6 @@ import { useLogin } from "services/requests/useLogin";
 import { signInRequest } from "store/modules/auth/actions";
 
 import Button from "components/atoms/button/button";
-import Input from "components/atoms/input/input";
 import Loading from "components/atoms/loading/loading";
 import Text from "components/atoms/text/text";
 import logo from "../../assets/logo.png"
@@ -136,9 +135,8 @@ const Login = () => {
                 />
               </Grid>
               <Grid item>
-                <Input
+                <InputDark
                   label={"Senha"}
-                  dark
                   type={showPassword ? "text" : "password"}
                   styles={{ minWidth: "350px" }}
                   onChange={(ev) => setPassword(ev.target.value)}

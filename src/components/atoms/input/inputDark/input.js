@@ -36,23 +36,19 @@ export const InputDark = ({
           placeholder={placeholder}
           label={label}
           sx={{ 
-            fontWeight: "bold",
+            "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root": {
+              color: "#F1F3F9!important",
+            },
             "& .css-1pysi21-MuiFormLabel-root-MuiInputLabel-root": {
               color: "#F1F3F9!important",
             },
-            "& .css-cktaik": {
-              color: "#F1F3F9!important",
-            },
-            "& .css-4sxzy6": {
-              color: "#F1F3F9!important",
-            },
+            "& .css-1bp1ao6": { color: "#F1F3F9!important" },
+            "& .css-u9osun": { color: "#F1F3F9!important" },
+            "& .css-cktaik": { color: "#F1F3F9!important" },
+            "& .css-4sxzy6": { color: "#F1F3F9!important" },
             "& .css-u9osun.Mui-focused": {
               color: "#F1F3F9!important",
             },
-            ...styles, 
-            background: "#2B2B2C", 
-            boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-            borderRadius: "8px",
             "& .css-igs3ac": { 
               border: "2px solid #F1F3F9!important",
             },
@@ -67,7 +63,12 @@ export const InputDark = ({
             },
             "& .css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root": {
               color: "#F1F3F9!important" 
-            }
+            },
+            ...styles, 
+              fontWeight: "bold",
+            background: "#2B2B2C", 
+            boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+            borderRadius: "8px",
           }}
           inputProps={{ 
             minLength: `${minLength}`, 
@@ -80,12 +81,9 @@ export const InputDark = ({
             maxLength: `${maxLength}`,
             endAdornment: (isPassword || searches) && (
               <InputAdornment position="end">
-                {/* {type === "password" && */}
-                  <IconButton onClick={onClick} edge="end">
-                    {type === "password" ? <Visibility /> : <VisibilityOff />}                  
-                  </IconButton>                  
-                
-                {/* {(searchesType === "searches") && <IconSearchIcon sx={{ color: "#F1F3F9" }} /> } */}
+                <IconButton onClick={onClick} edge="end" sx={{ color: "#FFFFFF!important"}}>
+                  {type === "password" ? <Visibility /> : <VisibilityOff />}                  
+                </IconButton>                  
               </InputAdornment>
             ),
           }}

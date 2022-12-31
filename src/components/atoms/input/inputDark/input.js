@@ -36,7 +36,10 @@ export const InputDark = ({
           placeholder={placeholder}
           label={label}
           sx={{ 
-            fontWeight: "bold", 
+            fontWeight: "bold",
+            "& .css-1pysi21-MuiFormLabel-root-MuiInputLabel-root": {
+              color: "#F1F3F9!important",
+            },
             ...styles, 
             background: "#2B2B2C", 
             boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Grid } from '@mui/material';
 import { IconAdd } from 'components/atoms/icons/icons';
 import { useMediaQuery } from 'react-responsive';
+import { InputSearches } from 'components/atoms/input/inputSearches/input';
 
 import Cards from './cards';
 import Button from 'components/atoms/button/button';
-import Input from 'components/atoms/input/input';
 import ModalAddFinancial from 'pages/financialStatement/modalAddFinancial';
 import CustomizedMenus from 'components/molecules/customizedMenus/customizedMenu';
 
@@ -13,7 +13,6 @@ const Home = () => {
   const [showModalFicha, setShowModalFicha] = useState(false);
 
   const isDesktopBig = useMediaQuery({ maxWidth: "1950px" });
-
 
   return (
     <>
@@ -55,7 +54,7 @@ const Home = () => {
           >
             Adicionar Nova Ficha <IconAdd sx={{ mt: -0.7 }} />
           </Button>
-          <Input
+          <InputSearches
             searches
             searchesType={"searches"}
             styles={{ minWidth: "350px"}}

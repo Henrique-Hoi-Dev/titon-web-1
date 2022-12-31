@@ -13,6 +13,7 @@ import Text from "components/atoms/text/text";
 import logo from "../../assets/logo.png"
 
 import { Wrapper } from './styles'
+import { InputDark } from "components/atoms/input/inputDark/input";
 
 const INITIAL_STATE = {
   username: null,
@@ -126,17 +127,18 @@ const Login = () => {
               width="400px"
             >
               <Grid item>
-                <Input
+                <InputDark
                   type="text"
+                  label={"E-mail"}
                   styles={{ minWidth: "350px" }}
-                  placeholder={"E-mail"}
                   onChange={(ev) => setEmail(ev.target.value)}
                   required
                 />
               </Grid>
               <Grid item>
                 <Input
-                  placeholder={"Senha"}
+                  label={"Senha"}
+                  dark
                   type={showPassword ? "text" : "password"}
                   styles={{ minWidth: "350px" }}
                   onChange={(ev) => setPassword(ev.target.value)}

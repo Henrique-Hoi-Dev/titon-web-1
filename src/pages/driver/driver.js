@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Grid } from "@mui/material";
 import { useGet } from "services/requests/useGet";
 import { IconAdd } from "components/atoms/icons/icons";
+import { InputSearches } from "components/atoms/input/inputSearches/input";
 
 import Table from "./table";
 import ModalAddDriver from "./modalAddDriver";
 import Button from "components/atoms/button/button";
-import Input from "components/atoms/input/input";
 
 const Driver = () => {
   const [showModalDriver, setShowModalDriver] = useState(false);
@@ -60,7 +60,7 @@ const Driver = () => {
         >
           Adicionar Motorista <IconAdd sx={{ mt: -0.7 }} />
         </Button>
-        <Input
+        <InputSearches
           searches
           searchesType={"searches"}
           styles={{ minWidth: "350px"}}

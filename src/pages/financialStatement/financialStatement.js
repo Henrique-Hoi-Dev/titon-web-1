@@ -32,7 +32,6 @@ const FinancialStatement = () => {
       minHeight="88vh"
       padding={1}
       spacing={2}
-      m={2}
     >
       <Grid
         item
@@ -41,7 +40,7 @@ const FinancialStatement = () => {
         alignItems="flex-start"
         justifyContent="flex-start"
       >
-        <Grid item container mr={4} mt={5} justifyContent={"center"} mb={3}>
+        <Grid item container mt={5} justifyContent={"center"} mb={3}>
           <Table
             data={drivers}
             query={driverQuery}

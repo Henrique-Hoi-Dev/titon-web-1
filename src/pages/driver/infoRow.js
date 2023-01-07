@@ -40,7 +40,7 @@ const InfoRow = (props) => {
 
   const handleDelete = (id, name) => {
     setShowModalDelete(true)
-    setDriveId({ id: id, name: name})
+    setDriveId({ id: id, name: name })
     setOpenSettings(false)
   }
   

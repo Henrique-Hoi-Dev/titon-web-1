@@ -38,15 +38,15 @@ const InfoRow = (props) => {
     setAnchorEl(ev.currentTarget);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id, name) => {
     setShowModalDelete(true)
-    setTruckId(id)
+    setTruckId({ id: id, name: name })
     setOpenSettings(false)
   }
   
   const handleUpdate = (id) => {
     setShowModalUpdate(true)
-    setTruckId(id)
+    setTruckId({ id: id })
     setOpenSettings(false)
   }
 
@@ -63,7 +63,6 @@ const InfoRow = (props) => {
           </IconButton>
         </SCell>
 
-        <SCell>{data.id}</SCell>
         <SCell displaywidth={isMobile ? 1 : 0}>{data.truck_name_brand}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.truck_models}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.truck_board}</SCell>
@@ -114,7 +113,7 @@ const InfoRow = (props) => {
         onClose={() => setOpenSettings(!openSettings)}
       >
         <MenuItem onClick={() => handleUpdate(data?.id)}>Editar</MenuItem>
-        <MenuItem onClick={() => handleDelete(data?.id)}>Excluir</MenuItem>
+        <MenuItem onClick={() => handleDelete(data?.id, `${(data?.truck_name_brand + " ") + (data?.truck_models)}`)}>Excluir</MenuItem>
       </Menu>
 
       <SRow 

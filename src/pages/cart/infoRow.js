@@ -73,7 +73,6 @@ const InfoRow = (props) => {
           </IconButton>
         </SCell>
 
-        <SCell>{data?.id}</SCell>
         <SCell displaywidth={isMobile ? 1 : 0}>{data?.cart_brand}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.cart_models}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.cart_board}</SCell>

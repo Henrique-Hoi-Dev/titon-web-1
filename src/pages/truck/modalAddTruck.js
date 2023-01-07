@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Avatar, Grid, IconButton } from "@mui/material";
 import { useCreate } from "services/requests/useCreate";
 import { successNotification, errorNotification } from "utils/notification";
-
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { storage } from 'base';
 
@@ -12,7 +11,6 @@ import Modal from "components/molecules/modal/modal";
 import Loading from "components/atoms/loading/loading";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
-import Text from "components/atoms/text/text";
 import Progress from "components/atoms/progress/progress";
 
 const ModalAddTruck = (
@@ -107,210 +105,253 @@ const ModalAddTruck = (
       component="form"
       onSubmit={handleSubmit}
       maxWidth={"600px"}
-      maxHeight={"800px"}
+      maxHeight={"850px"}
     >
       <ContentHeader mt={2}>
-        <Title>Cadastrar Caminhões</Title>
+        <Title>Cadastro Caminhão</Title>
       </ContentHeader>
 
       {!isFetching && (
-        <Grid
-          container
-          item
-          spacing={2}
-          mt={1}
-          sx={{ minHeight: "300px", justifyContent: "flex-start" }}
-        > 
-          <Grid 
-            item 
-            container 
-            xs={12} 
-            md={12} 
-            lg={12} 
-            mb={2}
-            mr={2} 
-            justifyContent={"center"}
-          >
-            <IconButton 
-              color="info" 
-              aria-label="upload picture" 
-              component="label"
+        <>
+          <Grid
+            container
+            item
+            spacing={2}
+            justifyContent="flex-start"
+            flexWrap={"nowrap"}
+            mr={3}
+            lg={12}
+            md={12}
+            xs={12}
+          > 
+            <Grid 
+              item 
+              container 
+              xs={6} 
+              md={6} 
+              lg={6} 
+              mb={2}
+              mr={2} 
+              justifyContent={"center"}
               sx={{ 
-                background: "#8b8787",
+                cursor: "pointer",
                 "&:hover": {
-                  background: "#3333",
+                  cursor: "pointer"
                 }
               }}
             >
-              <Avatar 
-                alt="img" 
-                sx={{ height: "100px", width: "100px" }} 
-                src={
-                  preview ? preview :
-                  "https://i.pinimg.com/474x/a6/70/05/a67005e9bf90bc529088205650784bba.jpg"  
-                }
+              <IconButton 
+                color="info" 
+                aria-label="upload picture"
+                
+                component="label"
+                sx={{ 
+                  background: "transparent",
+                  "&:hover": {
+                    background: "transparent",
+                  }
+                }}
               >
-              </Avatar>
-              <input hidden accept="image/*" type="file" onChange={handleChange} />
-            </IconButton>
-            {progressPercent > 0 && (
-              <Progress
-                progressPercent={progressPercent}
-                setProgressPercent={setProgressPercent}
-              />
-            )}
+                <input hidden accept="image/*" type="file" onChange={handleChange} />
+                <Avatar 
+                  variant="square"
+                  alt="img" 
+                  sx={{ height: "auto", width: "280px", borderRadius: "8px"}} 
+                  src={
+                    preview ? preview :
+                    "https://i.pinimg.com/474x/a6/70/05/a67005e9bf90bc529088205650784bba.jpg"  
+                  }
+                >
+                </Avatar>
+              </IconButton>
+              {progressPercent > 0 && (
+                <Progress
+                  progressPercent={progressPercent}
+                  setProgressPercent={setProgressPercent}
+                />
+              )}
+            </Grid>
+
+            <Grid container item xs={6} md={6} lg={6} spacing={1.5}>
+              <Grid item xs={12} md={12} lg={12}>
+                <Input
+                  required
+                  label={"Modelo"}
+                  styles={{
+                    "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                      height: "1.4rem",
+                    },
+                  }}
+                  value={body?.truck_models ?? ''}
+                  onChange={(ev) =>
+                    setBody((state) => ({
+                      ...state,
+                      truck_models: ev.target.value,
+                    }))
+                  }
+                />
+              </Grid>
+
+              <Grid item xs={12} md={12} lg={12}>
+                <Input
+                  required
+                  label={"Marca"}
+                  styles={{
+                    maxWidth: "274px",
+                    "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                      height: "1.4rem",
+                    },
+                  }}
+                  value={body?.truck_name_brand ?? ''}
+                  onChange={(ev) =>
+                    setBody((state) => ({
+                      ...state,
+                      truck_name_brand: ev.target.value,
+                    }))
+                  }
+                />
+              </Grid>
+
+              <Grid item xs={12} md={12} lg={12}>
+                <Input
+                  required
+                  label={"Placa"}
+                  styles={{
+                    maxWidth: "274px",
+                    "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                      height: "1.4rem",
+                    },
+                  }}
+                  value={body?.truck_board ?? ''}
+                  onChange={(ev) =>
+                    setBody((state) => ({
+                      ...state,
+                      truck_board: ev.target.value,
+                    }))
+                  }
+                />
+              </Grid>            
+
+              <Grid item xs={12} md={12} lg={12}>
+                <Input
+                  required
+                  label={"Cor"}
+                  styles={{
+                    maxWidth: "274px",
+                    "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                      height: "1.4rem",
+                    },
+                  }}
+                  value={body?.truck_color ?? ''}
+                  onChange={(ev) =>
+                    setBody((state) => ({
+                      ...state,
+                      truck_color: ev.target.value,
+                    }))
+                  }
+                />
+              </Grid>
+
+              <Grid item xs={12} md={12} lg={12}>
+                <Input
+                  required
+                  label={"KM"}
+                  styles={{
+                    maxWidth: "274px",
+                    "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                      height: "1.4rem",
+                    },
+                  }}
+                  value={body?.truck_km ?? ''}
+                  onChange={(ev) =>
+                    setBody((state) => ({
+                      ...state,
+                      truck_km: ev.target.value,
+                    }))
+                  }
+                />
+              </Grid>
+
+              <Grid item xs={12} md={12} lg={12}>
+                <Input
+                  required
+                  label={"Número Chassi"}
+                  styles={{
+                    maxWidth: "274px",
+                    "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                      height: "1.4rem",
+                    },
+                  }}
+                  value={body?.truck_chassis ?? ''}
+                  onChange={(ev) =>
+                    setBody((state) => ({
+                      ...state,
+                      truck_chassis: ev.target.value,
+                    }))
+                  }
+                />
+              </Grid>
+
+              <Grid item xs={12} md={12} lg={12}>
+                <Input
+                  required
+                  label={"Ano Fabricação"}
+                  styles={{
+                    maxWidth: "274px",
+                    "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                      height: "1.4rem",
+                    },
+                  }}
+                  value={body?.truck_year ?? ''}
+                  onChange={(ev) =>
+                    setBody((state) => ({
+                      ...state,
+                      truck_year: ev.target.value,
+                    }))
+                  }
+                />
+              </Grid>
+            </Grid>
           </Grid>
 
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Modelo</Text>
-            <Input
-              required
-              styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
-              }}
-              value={body?.truck_models ?? ''}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  truck_models: ev.target.value,
-                }))
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Marca</Text>
-            <Input
-              required
-              styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
-              }}
-              value={body?.truck_name_brand ?? ''}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  truck_name_brand: ev.target.value,
-                }))
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Placa</Text>
-            <Input
-              required
-              styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
-              }}
-              value={body?.truck_board ?? ''}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  truck_board: ev.target.value,
-                }))
-              }
-            />
-          </Grid>            
-
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Cor</Text>
-            <Input
-              required
-              styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
-              }}
-              value={body?.truck_color ?? ''}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  truck_color: ev.target.value,
-                }))
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>KM</Text>
-            <Input
-              required
-              styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
-              }}
-              value={body?.truck_km ?? ''}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  truck_km: ev.target.value,
-                }))
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Número Chassi</Text>
-            <Input
-              required
-              styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
-              }}
-              value={body?.truck_chassis ?? ''}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  truck_chassis: ev.target.value,
-                }))
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Ano Fabricação</Text>
-            <Input
-              required
-              styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
-              }}
-              value={body?.truck_year ?? ''}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  truck_year: ev.target.value,
-                }))
-              }
-            />
-          </Grid>
-
-          <Grid container item xs={12} md={12} lg={12} spacing={2} mt={2}>
-            <Grid item xs={12} md={12} lg={6}>
-              <Button variant="return" onClick={() => onClose()}>
-                Voltar
+          <Grid 
+            container 
+            item 
+            xs={12} 
+            md={12} 
+            lg={12} 
+            spacing={1} 
+            mt={0.3}
+            justifyContent={"flex-end"}
+          >
+            <Grid container item xs={12} md={3} lg={3}>
+              <Button 
+                onClick={() => onClose()}
+                background={"#fff"}
+                sx={{ width: "140px", height: "49px", border: "1px solid #509BFB", color: "#000000" }}
+                variant="text"
+              >
+                CANCELAR
+              </Button>              
+            </Grid>
+            <Grid container item xs={12} md={3} lg={3}>
+              <Button 
+                type="submit" 
+                color="success"
+                background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+                sx={{
+                  fontSize: "14px",
+                  color: "white",
+                  width: "139px",
+                  height: "49px",
+                  marginRight: "15px",
+                }}
+              >
+                CADASTRAR
               </Button>
             </Grid>
-            <Grid item xs={12} md={12} lg={6}>
-              <Button type="submit" variant="contained" color="success">Confirmar</Button>
-            </Grid>
           </Grid>
-        </Grid>
+        </>
       )}
 
       {isFetching && <Loading />}

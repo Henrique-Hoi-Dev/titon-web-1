@@ -42,6 +42,7 @@ export const InputDark = ({
             "& .css-1pysi21-MuiFormLabel-root-MuiInputLabel-root": {
               color: "#F1F3F9!important",
             },
+            "& .css-segi59": { color: "#F1F3F9!important" },
             "& .css-1bp1ao6": { color: "#F1F3F9!important" },
             "& .css-u9osun": { color: "#F1F3F9!important" },
             "& .css-cktaik": { color: "#F1F3F9!important" },

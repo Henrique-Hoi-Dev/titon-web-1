@@ -19,8 +19,6 @@ import {
 
 import { 
   IconMenuHome,
-  // IconArrowLeft,
-  // IconHamburger,
   IconMenuBox,
   IconMenuTruck,
   IconMenuUser,
@@ -154,9 +152,9 @@ const Menu = () => {
         </ListItemCategory>
 
         <ListItemCategory
-          onClick={() => navigate("/report")}
+          onClick={() => navigate("/")}
         >
-          <ButtonMenu 
+          <ButtonMenu
             sx={{ 
               justifyContent: openMenu ? 'initial' : 'center',
               marginLeft: openMenu ? '25px' : '0px',

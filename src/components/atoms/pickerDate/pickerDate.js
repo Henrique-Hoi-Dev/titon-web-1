@@ -23,8 +23,13 @@ const PickerDate = ({
             width: `${minWidth ? minWidth : "100%"}`,
             "& .css-igs3ac": { border: "2px solid #2B2B2C!important", },
             ".css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
-              // border: "2px solid #2B2B2C!important",
-              // bottom: "-5px"
+              border: "2px solid #2B2B2C!important",
+            },
+            "& .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root": {
+              top: "-6px",
+            },
+            "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused": {
+              color: "black !important",
             },
             "& .MuiSvgIcon-root": {
               color: "black !important",

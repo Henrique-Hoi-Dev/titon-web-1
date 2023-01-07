@@ -57,15 +57,6 @@ const Table = (
               <SCell displaywidth={isDesktop ? 0 : 1}>Info</SCell>
               <SCell>
                 <SLabel
-                  active={query?.sort_field === "id"}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("id")}
-                >
-                  ID
-                </SLabel>
-              </SCell>
-              <SCell>
-                <SLabel
                   active={query?.sort_field === "truck_name_brand"}
                   direction={query?.sort_order?.toLowerCase()}
                   onClick={() => handleSort("truck_name_brand")}
@@ -204,7 +195,7 @@ const Table = (
         <ModalDeleteTruck 
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
-          id={truckId}
+          props={truckId}
           mutate={mutate}
         />
       )}
@@ -213,7 +204,7 @@ const Table = (
         <ModalUpdateTruck 
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
-          truckId={truckId}
+          props={truckId}
           mutate={mutate}
         />
       )}

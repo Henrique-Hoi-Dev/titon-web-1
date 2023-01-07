@@ -56,7 +56,7 @@ const ModalDeleteDriver = (
       onClose={onClose}
       component="form"
       onSubmit={handleSubmit}
-      maxWidth="746px"
+      maxWidth="650px"
     >
       {!isFetching && error && (
         <Grid item container justifyContent="center">
@@ -89,7 +89,7 @@ const ModalDeleteDriver = (
             spacing={2} 
             mt={2}
           >
-            <Grid container item xs={6} md={6} lg={6} mt={2} justifyContent={"flex-end"}>
+            <Grid container item xs={6} md={6} lg={6} justifyContent={"flex-end"}>
               <Button 
                 onClick={() => onClose()}
                 background={"#509BFB"}
@@ -99,7 +99,7 @@ const ModalDeleteDriver = (
                 CANCELAR
               </Button>
             </Grid>
-            <Grid container item xs={6} md={6} lg={6} mt={2} justifyContent={"flex-start"}>
+            <Grid container item xs={6} md={6} lg={6} justifyContent={"flex-start"}>
               <Button 
                 type="submit" 
                 background={"#fff"}

@@ -57,15 +57,6 @@ const Table = (
               <SCell displaywidth={isDesktop ? 0 : 1}>Info</SCell>
               <SCell>
                 <SLabel
-                  active={query?.sort_field === "id"}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("id")}
-                >
-                  ID
-                </SLabel>
-              </SCell>
-              <SCell>
-                <SLabel
                   active={query?.sort_field === "cart_brand"}
                   direction={query?.sort_order?.toLowerCase()}
                   onClick={() => handleSort("cart_brand")}

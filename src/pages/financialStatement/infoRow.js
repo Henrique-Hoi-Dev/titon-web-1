@@ -22,7 +22,6 @@ const InfoRow = (props) => {
     data, 
     index, 
     setShowModalDelete, 
-    setShowModalUpdate,
     setFinancialId, 
   } = props;
 
@@ -54,11 +53,11 @@ const InfoRow = (props) => {
     setOpenSettings(false)
   }
   
-  const handleUpdate = (id) => {
-    setShowModalUpdate(true)
-    setFinancialId(id)
-    setOpenSettings(false)
-  }
+  // const handleUpdate = (id) => {
+  //   setShowModalUpdate(true)
+  //   setFinancialId(id)
+  //   setOpenSettings(false)
+  // }
 
   return (
     <>
@@ -73,7 +72,6 @@ const InfoRow = (props) => {
           </IconButton>
         </SCell>
 
-        <SCell>{data.id}</SCell>
         <SCell displaywidth={isMobile ? 1 : 0}>{data.driver_name}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.truck_models}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.cart_models}</SCell>

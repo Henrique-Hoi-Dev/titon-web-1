@@ -13,6 +13,7 @@ import Loading from "components/atoms/loading/loading";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
 import PickerDate from "components/atoms/pickerDate/pickerDate";
+import InputMaskComponent from "components/atoms/inputMask/inputMask";
 
 const ModalUpdateDriver = (
   { 
@@ -171,11 +172,12 @@ const ModalUpdateDriver = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Input
+            <InputMaskComponent 
               label={"CPF"}
+              mask={"999.999.999-99"}
               styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
+                "& .css-zn7bzk-MuiFormControl-root-MuiTextField-root": {
+                  height: "1.3em",
                 },
               }}
               value={body?.cpf ?? ''}

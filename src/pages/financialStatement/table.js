@@ -62,15 +62,6 @@ const Table = (
                   direction={query?.sort_order?.toLowerCase()}
                   onClick={() => handleSort("id")}
                 >
-                  ID
-                </SLabel>
-              </SCell>
-              <SCell>
-                <SLabel
-                  active={query?.sort_field === "id"}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("id")}
-                >
                   Motorista
                 </SLabel>
               </SCell>

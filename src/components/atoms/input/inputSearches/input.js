@@ -42,6 +42,7 @@ export const InputSearches = ({
             boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
             borderRadius: "8px",
             "& .css-igs3ac": { border: "2px solid #F1F3F9!important", },
+            "& .css-segi59": { color: "#F1F3F9!important", },
             "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
               border: "2px solid #F1F3F9!important",
             },

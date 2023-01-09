@@ -21,7 +21,7 @@ const InfoRow = (props) => {
     data, 
     index, 
     setShowModalDelete, 
-    setShowModalUpdate,
+    // setShowModalUpdate,
     setDriveId, 
   } = props;
 
@@ -44,11 +44,11 @@ const InfoRow = (props) => {
     setOpenSettings(false)
   }
   
-  const handleUpdate = (id) => {
-    setShowModalUpdate(true)
-    setDriveId({ id: id })
-    setOpenSettings(false)
-  }
+  // const handleUpdate = (id) => {
+  //   setShowModalUpdate(true)
+  //   setDriveId({ id: id })
+  //   setOpenSettings(false)
+  // }
 
   return (
     <>
@@ -108,7 +108,7 @@ const InfoRow = (props) => {
         open={openSettings}
         onClose={() => setOpenSettings(!openSettings)}
       >
-        <MenuItem onClick={() => handleUpdate(data?.id)}>Editar</MenuItem>
+        {/* <MenuItem onClick={() => handleUpdate(data?.id)}>Editar</MenuItem> */}
         <MenuItem onClick={() => handleDelete(data?.id, data.name)}>Excluir</MenuItem>
       </Menu>
 

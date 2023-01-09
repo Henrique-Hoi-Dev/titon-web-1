@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { IconAdd } from "components/atoms/icons/icons";
 import { InputSearches } from "components/atoms/input/inputSearches/input";
@@ -11,25 +11,37 @@ import Button from "components/atoms/button/button";
 const Cart = () => {
   const [showModalDriver, setShowModalDriver] = useState(false);
   
-  const INITIAL_STATE_USER = {
+  const INITIAL_STATE_CARD = {
     limit: 10,
     page: 1,
     sort_field: null,
     sort_order: "ASC",
   };
 
-  const [userQuery, setUserQuery] = useState(INITIAL_STATE_USER);
+  const [cardQuery, setCardQuery] = useState(INITIAL_STATE_CARD);
+  const [search, setSearch] = useState('')
 
   const {
-    data: users,
-    error: usersError,
-    isFetching: usersIsFetching,
+    data: cards,
+    error: cardsError,
+    isFetching: cardsIsFetching,
     loading, 
     mutate,
   } = useGet(
     "/carts", 
-    userQuery
+    cardQuery
   );
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCardQuery((state) => ({
+        ...state,
+        search: search,
+      }))    
+    }, 1200); 
+  
+    return () => clearTimeout(timer);
+  }, [search])
 
   return (
     <Grid
@@ -65,8 +77,7 @@ const Cart = () => {
           searchesType={"searches"}
           styles={{ minWidth: "350px"}}
           placeholder={"Nome, placa..."}
-          // onChange={(ev) => setEmail(ev.target.value)}
-          required
+          onChange={(ev) => setSearch(ev.target.value)}
         />   
       </Grid>
       <Grid
@@ -80,11 +91,11 @@ const Cart = () => {
       >
         <Grid item container pl={2} mr={4} mt={5} mb={3} justifyContent={"center"}>
           <Table
-            data={users}
-            query={userQuery}
-            setQuery={setUserQuery}
-            isFetching={usersIsFetching}
-            error={usersError}
+            data={cards}
+            query={cardQuery}
+            setQuery={setCardQuery}
+            isFetching={cardsIsFetching}
+            error={cardsError}
             loading={loading}
             mutate={mutate}
           />

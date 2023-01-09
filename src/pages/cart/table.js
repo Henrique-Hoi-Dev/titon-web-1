@@ -203,7 +203,7 @@ const Table = (
         <ModalDeleteCart 
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
-          id={cartId}
+          props={cartId}
           mutate={mutate}
         />
       )}
@@ -212,7 +212,7 @@ const Table = (
         <ModalUpdateCart 
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
-          cartId={cartId}
+          props={cartId}
           mutate={mutate}
         />
       )}

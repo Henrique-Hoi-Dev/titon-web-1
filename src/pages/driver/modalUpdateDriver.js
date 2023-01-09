@@ -41,12 +41,15 @@ const ModalUpdateDriver = (
     error: errorSalespointUpdate,
     isFetching
   } = useUpdate(
-    `user/driver/${props.id}`, 
+    `user/driver/${driver.dataResult.id}`, 
     body, 
     "",
     fetch, 
     setFetch
   );
+  
+  console.log("id", driver)
+
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
@@ -287,7 +290,6 @@ const ModalUpdateDriver = (
               </Button>
             </Grid>
           </Grid>
-
         </Grid>
       )}
 

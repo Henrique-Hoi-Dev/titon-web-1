@@ -10,14 +10,13 @@ import Modal from "components/molecules/modal/modal";
 import Loading from "components/atoms/loading/loading";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
-import Text from "components/atoms/text/text";
 
 const ModalUpdateCart = (
   { 
     showModal, 
     setShowModal, 
     mutate, 
-    cartId
+    props
   }) => {
 
   const [fetch, setFetch] = useState(false);
@@ -28,7 +27,7 @@ const ModalUpdateCart = (
     data: cart,
     isValidating
   } = useGet(
-    `user/cart/${cartId}`, 
+    `user/cart/${props?.id}`, 
     []
   );
 
@@ -37,7 +36,7 @@ const ModalUpdateCart = (
     error: errorCartUpadate,
     isFetching
   } = useUpdate(
-    `user/cart/${cartId}`, 
+    `user/cart/${props?.id}`, 
     body, 
     "",
     fetch, 
@@ -106,8 +105,8 @@ const ModalUpdateCart = (
         >
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Modelo</Text>
             <Input
+              label={"Modelo"}
               required
               styles={{
                 "& .MuiInputBase-input.MuiOutlinedInput-input": {
@@ -125,8 +124,8 @@ const ModalUpdateCart = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Marca</Text>
             <Input
+              label={"Marca"}
               required
               styles={{
                 maxWidth: "274px",
@@ -146,8 +145,8 @@ const ModalUpdateCart = (
           
           {body?.cart_bodywork === "tank" && (
             <Grid item xs={12} md={6} lg={6}>
-              <Text sx={{ ml: 1 }}>Capacidade de litros</Text>
               <Input
+                label={"Capacidade de litros"}
                 required
                 styles={{
                   maxWidth: "274px",
@@ -172,8 +171,8 @@ const ModalUpdateCart = (
           (body?.cart_bodywork === "bucket")
           ) && (
             <Grid item xs={12} md={6} lg={6}>
-              <Text sx={{ ml: 1 }}>Capacidade de tonelada</Text>
               <Input
+                label={"Capacidade de tonelada"}
                 required
                 styles={{
                   maxWidth: "274px",
@@ -193,8 +192,8 @@ const ModalUpdateCart = (
           )}  
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Cor</Text>
             <Input
+              label={"Cor"}
               required
               styles={{
                 maxWidth: "274px",
@@ -213,8 +212,8 @@ const ModalUpdateCart = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Tara</Text>
             <Input
+              label={"Tara"}
               required
               styles={{
                 maxWidth: "274px",
@@ -233,8 +232,8 @@ const ModalUpdateCart = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Ano Fabricação</Text>
             <Input
+              label={"Ano Fabricação"}
               required
               styles={{
                 maxWidth: "274px",
@@ -252,17 +251,43 @@ const ModalUpdateCart = (
             />
           </Grid>
 
-          <Grid container item xs={12} md={12} lg={12} spacing={2} mt={2}>
-            <Grid item xs={12} md={12} lg={6}>
-              <Button variant="return" onClick={() => onClose()}>
-                Voltar
+          <Grid 
+            container 
+            item 
+            xs={12} 
+            md={12} 
+            lg={12} 
+            spacing={1} 
+            mt={0.3}
+            justifyContent={"flex-end"}
+          >
+            <Grid container item xs={12} md={3} lg={3}>
+              <Button 
+                onClick={() => onClose()}
+                background={"#fff"}
+                sx={{ width: "140px", height: "49px", border: "1px solid #509BFB", color: "#000000" }}
+                variant="text"
+              >
+                CANCELAR
+              </Button>              
+            </Grid>
+            <Grid container item xs={12} md={3} lg={3}>
+              <Button 
+                type="submit" 
+                color="success"
+                background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+                sx={{
+                  fontSize: "14px",
+                  color: "white",
+                  width: "139px",
+                  height: "49px",
+                  marginRight: "15px",
+                }}
+              >
+                Atualizar
               </Button>
             </Grid>
-            <Grid item xs={12} md={12} lg={6}>
-              <Button type="submit" variant="contained" color="success">Confirmar</Button>
-            </Grid>
           </Grid>
-
         </Grid>
       )}
 

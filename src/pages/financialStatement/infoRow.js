@@ -61,7 +61,7 @@ const InfoRow = (props) => {
 
   return (
     <>
-      <SRow key={data.id} alternatingcolors={index} >
+      <SRow key={data?.id} alternatingcolors={index} >
         <SCell minwidth={"0px"}>
           <IconButton
             aria-label="expand row"
@@ -72,15 +72,15 @@ const InfoRow = (props) => {
           </IconButton>
         </SCell>
 
-        <SCell displaywidth={isMobile ? 1 : 0}>{data.driver_name}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.truck_models}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.cart_models}</SCell>
-        <SCell displaywidth={isDesktop ? 1 : 0}>{formatDate(data.start_date)}</SCell>
+        <SCell displaywidth={isMobile ? 1 : 0}>{data?.driver_name}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.truck_models}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.cart_models}</SCell>
+        <SCell displaywidth={isDesktop ? 1 : 0}>{formatDate(data?.start_date)}</SCell>
         <SCell>
           <Avatar
             alt="img" 
             sx={{ height: "40px", width: "40px", marginLeft: "35px" }} 
-            src={data.truck_avatar}
+            src={data?.truck_avatar}
           />
         </SCell>
         <SCell>

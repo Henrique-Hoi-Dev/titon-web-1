@@ -99,7 +99,7 @@ const Table = (
           {!isFetching && data && data?.dataResult?.length > 0 && (
             <>
               <STableBody>
-                {data.dataResult.map((item, index) => (
+                {data?.dataResult.map((item, index) => (
                   <InfoRow
                     key={item.id}
                     data={item}
@@ -116,7 +116,7 @@ const Table = (
 
         {(loading || isFetching) && (
           <Grid container justifyContent="center" alignItems="center" mt={3}>
-            <Loading titulo={t("messages.loading")}/>
+            <Loading />
           </Grid>
         )}
 
@@ -139,7 +139,7 @@ const Table = (
             </Grid>
           )}
 
-          {(data?.total === 0) && !data && !isFetching && (
+          {(data?.dataResult?.length === 0) && !isFetching  && (
             <Grid item justifyContent="center" alignItems="center" pt={5}>
               <Text fontSize={"28px"} center>
                 {t("messages.no_results_found").toUpperCase()}
@@ -156,7 +156,7 @@ const Table = (
           )}
         </Grid>
 
-        {!isFetching && data?.totalPages > 0 && (
+        {!isFetching && data?.dataResult?.length > 0 && (
           <TablePagination
             data={data}
             query={query}

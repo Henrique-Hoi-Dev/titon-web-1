@@ -335,7 +335,7 @@ const ModalUpdateTruck = (
                   marginRight: "15px",
                 }}
               >
-                CADASTRAR
+                Atualizar
               </Button>
             </Grid>
           </Grid>

@@ -9,7 +9,6 @@ import Modal from "components/molecules/modal/modal";
 import Loading from "components/atoms/loading/loading";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
-import Text from "components/atoms/text/text";
 import Autocomplete from "components/atoms/autocomplete/autocomplete";
 
 const ModalAddCart = (
@@ -90,8 +89,8 @@ const ModalAddCart = (
           sx={{ minHeight: "300px", justifyContent: "flex-start" }}
         > 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Modelo</Text>
             <Input
+              label={"Modelo"}
               required
               styles={{
                 "& .MuiInputBase-input.MuiOutlinedInput-input": {
@@ -109,8 +108,8 @@ const ModalAddCart = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Marca</Text>
             <Input
+              label={"Marca"}
               required
               styles={{
                 maxWidth: "274px",
@@ -129,8 +128,8 @@ const ModalAddCart = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Placa</Text>
             <Input
+              label={"Placa"}
               required
               styles={{
                 maxWidth: "274px",
@@ -149,8 +148,8 @@ const ModalAddCart = (
           </Grid>  
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Cor</Text>
             <Input
+              label={"Cor"}
               required
               styles={{
                 maxWidth: "274px",
@@ -169,8 +168,8 @@ const ModalAddCart = (
           </Grid>  
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Tipo Carreta</Text>
-            <Autocomplete 
+            <Autocomplete
+              placeholder={"Tipo Carreta"}
               sx={{
                 "& .MuiAutocomplete-input": {
                   height: "0.4em!important",
@@ -192,8 +191,8 @@ const ModalAddCart = (
           
           {body?.cart_bodyworks === "tank" && (
             <Grid item xs={12} md={6} lg={6}>
-              <Text sx={{ ml: 1 }}>Capacidade de litros</Text>
               <Input
+                label={"Capacidade de litros"}
                 required
                 styles={{
                   maxWidth: "274px",
@@ -218,8 +217,8 @@ const ModalAddCart = (
           (body?.cart_bodyworks === "bucket")
           ) && (
             <Grid item xs={12} md={6} lg={6}>
-              <Text sx={{ ml: 1 }}>Capacidade de tonelada</Text>
               <Input
+                label={"Capacidade de tonelada"}
                 required
                 styles={{
                   maxWidth: "274px",
@@ -239,8 +238,8 @@ const ModalAddCart = (
           )}
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Tara</Text>
             <Input
+              label={"Tara"}
               required
               styles={{
                 maxWidth: "274px",
@@ -259,8 +258,8 @@ const ModalAddCart = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Número Chassi</Text>
             <Input
+              label={"Número Chassi"}
               required
               styles={{
                 maxWidth: "274px",
@@ -279,8 +278,8 @@ const ModalAddCart = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Ano Fabricação</Text>
             <Input
+              label={"Ano Fabricação"}
               required
               styles={{
                 maxWidth: "274px",
@@ -298,14 +297,41 @@ const ModalAddCart = (
             />
           </Grid>
 
-          <Grid container item xs={12} md={12} lg={12} spacing={2} mt={2}>
-            <Grid item xs={12} md={12} lg={6}>
-              <Button variant="return" onClick={() => onClose()}>
-                Voltar
-              </Button>
+          <Grid 
+            container 
+            item 
+            xs={12} 
+            md={12} 
+            lg={12} 
+            spacing={2} 
+            mt={1}
+            justifyContent={"flex-end"}
+          >
+            <Grid container item xs={12} md={3} lg={3}>
+              <Button 
+                onClick={() => onClose()}
+                background={"#fff"}
+                sx={{ width: "140px", height: "49px", border: "1px solid #509BFB", color: "#000000" }}
+                variant="text"
+              >
+                CANCELAR
+              </Button>              
             </Grid>
-            <Grid item xs={12} md={12} lg={6}>
-              <Button type="submit" variant="contained" color="success">Confirmar</Button>
+            <Grid container item xs={12} md={3} lg={3} >
+              <Button 
+                type="submit" 
+                color="success"
+                background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+                sx={{
+                  fontSize: "14px",
+                  color: "white",
+                  width: "141px",
+                  height: "49px",
+                  marginRight: "15px",
+                }}
+              >
+                CADASTRAR
+              </Button>
             </Grid>
           </Grid>
         </Grid>

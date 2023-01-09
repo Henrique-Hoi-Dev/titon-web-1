@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { useGet } from "services/requests/useGet";
 import { IconAdd } from "components/atoms/icons/icons";
@@ -18,18 +18,30 @@ const Truck = () => {
     sort_order: "ASC",
   };
 
-  const [userQuery, setUserQuery] = useState(INITIAL_STATE_USER);
+  const [truckQuery, setTruckQuery] = useState(INITIAL_STATE_USER);
+  const [search, setSearch] = useState('')
 
   const {
-    data: users,
-    error: usersError,
-    isFetching: usersIsFetching,
+    data: trucks,
+    error: trucksError,
+    isFetching: trucksIsFetching,
     loading, 
     mutate,
   } = useGet(
     "trucks", 
-    userQuery
+    truckQuery
   );
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTruckQuery((state) => ({
+        ...state,
+        search: search,
+      }))    
+    }, 1200); 
+  
+    return () => clearTimeout(timer);
+  }, [search])
 
   return (
     <Grid
@@ -65,8 +77,7 @@ const Truck = () => {
           searchesType={"searches"}
           styles={{ minWidth: "350px"}}
           placeholder={"Nome, placa..."}
-          // onChange={(ev) => setEmail(ev.target.value)}
-          required
+          onChange={(ev) => setSearch(ev.target.value)}
         />   
       </Grid>
       <Grid
@@ -80,11 +91,11 @@ const Truck = () => {
       >
         <Grid item container pl={2} mr={4} mt={5} mb={3} justifyContent={"center"}>
           <Table
-            data={users}
-            query={userQuery}
-            setQuery={setUserQuery}
-            isFetching={usersIsFetching}
-            error={usersError}
+            data={trucks}
+            query={truckQuery}
+            setQuery={setTruckQuery}
+            isFetching={trucksIsFetching}
+            error={trucksError}
             loading={loading}
             mutate={mutate}
           />

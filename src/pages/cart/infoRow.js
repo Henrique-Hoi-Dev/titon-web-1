@@ -48,15 +48,15 @@ const InfoRow = (props) => {
     setAnchorEl(ev.currentTarget);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id, name) => {
     setShowModalDelete(true)
-    setCartId(id)
+    setCartId({ id: id, name: name })
     setOpenSettings(false)
   }
   
   const handleUpdate = (id) => {
     setShowModalUpdate(true)
-    setCartId(id)
+    setCartId({ id: id })
     setOpenSettings(false)
   }
 
@@ -117,7 +117,7 @@ const InfoRow = (props) => {
         onClose={() => setOpenSettings(!openSettings)}
       >
         <MenuItem onClick={() => handleUpdate(data?.id)}>Editar</MenuItem>
-        <MenuItem onClick={() => handleDelete(data?.id)}>Excluir</MenuItem>
+        <MenuItem onClick={() => handleDelete(data?.id, data?.cart_models)}>Excluir</MenuItem>
       </Menu>
 
       <SRow 

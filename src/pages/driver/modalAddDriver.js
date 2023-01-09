@@ -138,7 +138,7 @@ const ModalAddDriver = (
                   height: "1.4rem",
                 },
               }}
-            value={body?.name_user ?? ''}
+              value={body?.name_user ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
@@ -195,7 +195,7 @@ const ModalAddDriver = (
                   height: "1.4rem",
                 },
               }}
-            value={formatMoney(body?.daily)}
+              value={formatMoney(body?.daily)}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,

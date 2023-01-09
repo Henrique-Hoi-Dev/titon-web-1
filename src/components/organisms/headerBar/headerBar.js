@@ -5,7 +5,7 @@ import {
   IconButton,
   Menu,
 } from "@mui/material";
-import { IconAdd, IconNotifications } from "components/atoms/icons/icons";
+import { IconNotifications } from "components/atoms/icons/icons";
 import { formatDistance, parseISO } from "date-fns";
 import { useSelector } from "react-redux";
 import { api } from "services/api";
@@ -13,21 +13,9 @@ import { api } from "services/api";
 import Text from "components/atoms/text/text";
 import pt from "date-fns/locale/pt";
 import CommentIcon from '@mui/icons-material/Comment';
-import Input from "components/atoms/input/input";
-import Button from "components/atoms/button/button";
-import ModalAddCart from "pages/cart/modalAddCart";
-import ModalAddDriver from "pages/driver/modalAddDriver";
-import ModalAddTruck from "pages/truck/modalAddTruck";
 
-const HeaderBar = ({ menu }) => {
+const HeaderBar = () => {
   const user = useSelector((state) => state?.user);
-
-  const [showModalReport, setShowModalReport] = useState(false);
-  const [showModalDriver, setShowModalDriver] = useState(false);
-  const [showModalTruck, setShowModalTruck] = useState(false);
-  const [showModalCart, setShowModalCart] = useState(false);
-
-  console.log("menuuuuuuuuu", menu)
 
   const [anchorElTwo, setAnchorElTwo] = useState(false);
   const [fetch, setFetch] = useState(false)
@@ -129,111 +117,6 @@ const HeaderBar = ({ menu }) => {
               <CustomizedMenus />
             )} */}
           </Grid>
-
-          <Grid 
-            item 
-            container
-            xs={12}
-            md={12}
-            lg={12}
-            mr={3}
-            mt={4}
-            alignItems="center"
-            justifyContent="flex-end"
-          >
-
-            {menu?.report && (
-              <>
-                <Button 
-                  onClick={() => setShowModalReport(true)}
-                  background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
-                  sx={{
-                    fontSize: "14px",
-                    color: "white",
-                    width: "228px",
-                    height: "40px",
-                    marginRight: "15px",
-                  }}
-                >
-                  Imprimir DRE
-                </Button>
-                <Input
-                  searches
-                  searchesType={"searches"}
-                  styles={{ minWidth: "350px"}}
-                  placeholder={"Nome, placa..."}
-                  // onChange={(ev) => setEmail(ev.target.value)}
-                  required
-                />               
-              </>
-            )}
-
-             {menu?.truck && (
-              <>
-                <Button 
-                  onClick={() => setShowModalTruck(true)}
-                  background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
-                  sx={{
-                    fontSize: "14px",
-                    color: "white",
-                    width: "228px",
-                    height: "40px",
-                    marginRight: "15px",
-                  }}
-                >
-                  Adicionar Caminhão <IconAdd sx={{ mt: -0.7 }} />
-                </Button>
-                <Input
-                  searches
-                  searchesType={"searches"}
-                  styles={{ minWidth: "350px"}}
-                  placeholder={"Nome, placa..."}
-                  // onChange={(ev) => setEmail(ev.target.value)}
-                  required
-                />               
-              </>
-            )}
-
-             {menu?.cart && (
-              <>
-                <Button 
-                  onClick={() => setShowModalCart(true)}
-                  background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
-                  sx={{
-                    fontSize: "14px",
-                    color: "white",
-                    width: "228px",
-                    height: "40px",
-                    marginRight: "15px",
-                  }}
-                >
-                  Adicionar Carreta <IconAdd sx={{ mt: -0.7 }} />
-                </Button>
-                <Input
-                  searches
-                  searchesType={"searches"}
-                  styles={{ minWidth: "350px"}}
-                  placeholder={"Nome, placa..."}
-                  // onChange={(ev) => setEmail(ev.target.value)}
-                  required
-                />               
-              </>
-            )}
-
-             {menu?.historic && (
-              <>
-                <Input
-                  searches
-                  searchesType={"searches"}
-                  styles={{ minWidth: "350px"}}
-                  placeholder={"Nome, placa..."}
-                  // onChange={(ev) => setEmail(ev.target.value)}
-                  required
-                />               
-              </>
-            )}
-
-          </Grid>
         </Grid>
 
         <Menu
@@ -319,20 +202,6 @@ const HeaderBar = ({ menu }) => {
           )}
         </Menu>
       </Grid>
-
-
-      <ModalAddCart 
-        setShowModal={setShowModalCart}
-        showModal={showModalCart}
-      />
-      <ModalAddDriver 
-        showModal={showModalDriver}
-        setShowModal={setShowModalDriver}
-      />
-      <ModalAddTruck 
-        showModal={showModalTruck}
-        setShowModal={setShowModalTruck}
-      />
     </>
   );
 };

@@ -131,7 +131,6 @@ const Login = () => {
                   label={"E-mail"}
                   styles={{ minWidth: "350px" }}
                   onChange={(ev) => setEmail(ev.target.value)}
-                  required
                 />
               </Grid>
               <Grid item>
@@ -142,7 +141,6 @@ const Login = () => {
                   onChange={(ev) => setPassword(ev.target.value)}
                   isPassword
                   onClick={() => setShowPassword(!showPassword)}
-                  required
                 />
               </Grid>
               {!showLoading && (

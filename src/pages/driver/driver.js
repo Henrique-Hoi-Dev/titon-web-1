@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { useGet } from "services/requests/useGet";
 import { IconAdd } from "components/atoms/icons/icons";
@@ -19,6 +19,7 @@ const Driver = () => {
   };
 
   const [driverQuery, setDriverQuery] = useState(INITIAL_STATE_DRIVER);
+  const [search, setSearch] = useState('')
 
   const {
     data: drivers,
@@ -30,6 +31,17 @@ const Driver = () => {
     "/drivers", 
     driverQuery
   );
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDriverQuery((state) => ({
+        ...state,
+        search: search,
+      }))    
+    }, 1200); 
+  
+    return () => clearTimeout(timer);
+  }, [search])
 
   return (
     <Grid
@@ -65,8 +77,7 @@ const Driver = () => {
           searchesType={"searches"}
           styles={{ minWidth: "350px"}}
           placeholder={"Nome, placa..."}
-          // onChange={(ev) => setEmail(ev.target.value)}
-          required
+          onChange={(ev) => setSearch(ev.target.value)}
         />   
       </Grid>
       <Grid

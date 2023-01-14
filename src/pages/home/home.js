@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import { Grid } from '@mui/material';
-import { IconAdd } from 'components/atoms/icons/icons';
-import { useMediaQuery } from 'react-responsive';
-import { InputSearches } from 'components/atoms/input/inputSearches/input';
+import React, { useState } from "react";
+import { Grid } from "@mui/material";
+import { IconAdd } from "components/atoms/icons/icons";
+import { useMediaQuery } from "react-responsive";
+import { InputSearches } from "components/atoms/input/inputSearches/input";
 
-import Cards from './cards';
-import Button from 'components/atoms/button/button';
-import ModalAddFinancial from 'pages/financialStatement/modalAddFinancial';
-import CustomizedMenus from 'components/molecules/customizedMenus/customizedMenu';
+import Cards from "./cards";
+import Button from "components/atoms/button/button";
+import ModalAddFinancial from "pages/financialStatement/modalAddFinancial";
+import CustomizedMenus from "components/molecules/customizedMenus/customizedMenu";
 
 const Home = () => {
   const [showModalFicha, setShowModalFicha] = useState(false);
+  const [search, setSearch] = useState("");
 
   const isDesktopBig = useMediaQuery({ maxWidth: "1950px" });
 
@@ -22,28 +23,31 @@ const Home = () => {
         minHeight="88vh"
         padding={1}
         spacing={2}
+        alignContent={"flex-start"}
       >
         <Grid
-          item 
-          container 
-          pl={2} 
-          mr={4} 
-          mt={-6.5} 
+          item
+          container
+          pl={2}
+          mr={4}
+          mt={-6.5}
           justifyContent={"flex-end"}
         >
           <Grid
-            item 
-            container 
-            xs={6} 
-            md={isDesktopBig ? 4.2 : 6} 
+            item
+            container
+            xs={6}
+            md={isDesktopBig ? 4.2 : 6}
             lg={isDesktopBig ? 4.2 : 6}
             mt={0.6}
           >
-            <CustomizedMenus />          
+            <CustomizedMenus />
           </Grid>
-          <Button 
+          <Button
             onClick={() => setShowModalFicha(true)}
-            background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+            background={
+              "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+            }
             sx={{
               fontSize: "14px",
               color: "white",
@@ -57,32 +61,32 @@ const Home = () => {
           <InputSearches
             searches
             searchesType={"searches"}
-            styles={{ minWidth: "350px"}}
+            styles={{ minWidth: "350px" }}
             placeholder={"Nome, placa..."}
-            // onChange={(ev) => setEmail(ev.target.value)}
-            required
-          />   
+            onChange={(ev) => setSearch(ev.target.value)}
+          />
         </Grid>
+
         <Grid
           item
           container
           spacing={2}
-          mt={1}
           mb={1}
+          mt={2}
           alignItems="flex-start"
           justifyContent="flex-start"
           sx={{ color: "#fff" }}
         >
-          <Cards />
+          <Cards search={search} setSearch={setSearch} />
         </Grid>
-      </Grid>   
+      </Grid>
 
       <ModalAddFinancial
         showModal={showModalFicha}
         setShowModal={setShowModalFicha}
-      /> 
+      />
     </>
   );
-}
+};
 
 export default Home;

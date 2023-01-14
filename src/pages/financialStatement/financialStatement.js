@@ -5,39 +5,36 @@ import { InputSearches } from "components/atoms/input/inputSearches/input";
 
 import Table from "./table";
 
-const FinancialStatement = () => { 
+const FinancialStatement = () => {
   const INITIAL_STATE_FINANCIAL = {
     limit: 10,
     page: 1,
     sort_field: null,
     sort_order: "ASC",
-    // status: false
+    status: false,
   };
 
   const [financialQuery, setFinancialQuery] = useState(INITIAL_STATE_FINANCIAL);
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState("");
 
   const {
     data: financials,
     error: financialsError,
     isFetching: financialIsFetching,
-    loading, 
+    loading,
     mutate,
-  } = useGet(
-    "financialStatements", 
-    financialQuery
-  );
+  } = useGet("financialStatements", financialQuery);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setFinancialQuery((state) => ({
         ...state,
         search: search,
-      }))    
-    }, 1200); 
-  
+      }));
+    }, 1200);
+
     return () => clearTimeout(timer);
-  }, [search])
+  }, [search]);
 
   return (
     <Grid
@@ -47,22 +44,14 @@ const FinancialStatement = () => {
       padding={1}
       spacing={2}
     >
-      <Grid
-        item 
-        container 
-        pl={2} 
-        mr={4} 
-        mt={-6.5} 
-        justifyContent={"flex-end"}
-      >
+      <Grid item container pl={2} mr={4} mt={-6.5} justifyContent={"flex-end"}>
         <InputSearches
           searches
           searchesType={"searches"}
-          styles={{ minWidth: "350px"}}
+          styles={{ minWidth: "350px" }}
           placeholder={"Nome, placa..."}
-          onChange={(ev) => 
-            setSearch(ev.target.value)}
-        />   
+          onChange={(ev) => setSearch(ev.target.value)}
+        />
       </Grid>
       <Grid
         item
@@ -81,7 +70,7 @@ const FinancialStatement = () => {
             loading={loading}
             mutate={mutate}
           />
-        </Grid>        
+        </Grid>
       </Grid>
     </Grid>
   );

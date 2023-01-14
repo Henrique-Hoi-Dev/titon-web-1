@@ -1,31 +1,30 @@
 import { useEffect, useState } from "react";
 import { STablePagination } from "../table/table";
 
-export const TablePagination = (
-  {
-    data,
-    query,
-    setQuery,
-    allowRowsPerPage,
-    arrayRowPerPage,
-    labelRowsPerPage
-  }) => {
-
+export const TablePagination = ({
+  data,
+  query,
+  setQuery,
+  allowRowsPerPage,
+  arrayRowPerPage,
+  labelRowsPerPage,
+  sx,
+}) => {
   const [page, setPage] = useState(0);
-  
+
   useEffect(() => {
     if (data?.totalPages < data?.page) {
-      if(data?.items === null) {
+      if (data?.items === null) {
         setQuery((state) => ({
           ...state,
-          page:  1 
+          page: 1,
         }));
-      } 
+      }
     }
   }, [data, setQuery, page]);
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage)
+    setPage(newPage);
     setQuery((state) => ({
       ...state,
       page: newPage + 1,
@@ -44,20 +43,19 @@ export const TablePagination = (
     return [25, 50, 100];
   };
 
-  const filterTotal = parseInt(data?.total)
+  const filterTotal = parseInt(data?.total);
 
   return (
     <STablePagination
       color="primary"
-      sx={{ 
-        marginLeft: "auto",
-      }}
+      sx={{ ...sx, marginLeft: "auto" }}
       rowsPerPageOptions={
-        allowRowsPerPage 
-        ? arrayRowPerPage 
+        allowRowsPerPage
           ? arrayRowPerPage
-          : handleRowsPerPage() 
-        : []}
+            ? arrayRowPerPage
+            : handleRowsPerPage()
+          : []
+      }
       count={filterTotal}
       rowsPerPage={query?.limit}
       page={query?.page - 1}

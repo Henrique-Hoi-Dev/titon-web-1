@@ -121,6 +121,9 @@ const Cards = ({ search, searchOrder, searchStatus }) => {
         <Grid item container pl={2} mt={-2}>
           <TablePagination
             sx={{
+              "& .css-1chpzqh": {
+                color: "#F1F3F9!important",
+              },
               "& .css-levciy-MuiTablePagination-displayedRows": {
                 color: "#F1F3F9!important",
               },

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Avatar, Grid, IconButton } from "@mui/material";
 import { useCreate } from "services/requests/useCreate";
 import { successNotification, errorNotification } from "utils/notification";
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { storage } from 'base';
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "base";
 
 import Button from "components/atoms/button/button";
 import Input from "components/atoms/input/input";
@@ -13,36 +13,27 @@ import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
 import Progress from "components/atoms/progress/progress";
 
-const ModalAddTruck = (
-  { 
-    showModal, 
-    setShowModal, 
-    mutate
-  }) => {
-
+const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
   const [body, setBody] = useState({});
 
   const [fetch, setFetch] = useState(false);
 
-  const [preview, setPreview] = useState('');
+  const [preview, setPreview] = useState("");
 
-  const [progressPercent, setProgressPercent] = useState(0)
-  
+  const [progressPercent, setProgressPercent] = useState(0);
+
   const {
     data: user,
     error: errorUser,
     isFetching,
-  } = useCreate(
-    "user/truck", 
-    body, 
-    fetch, 
-    setFetch
-  );
+  } = useCreate("user/truck", body, fetch, setFetch);
 
   const onClose = () => {
     setShowModal(false);
     setBody({});
-    setPreview("https://i.pinimg.com/474x/a6/70/05/a67005e9bf90bc529088205650784bba.jpg")
+    setPreview(
+      "https://i.pinimg.com/474x/a6/70/05/a67005e9bf90bc529088205650784bba.jpg"
+    );
   };
 
   const handleSubmit = (ev) => {
@@ -53,8 +44,8 @@ const ModalAddTruck = (
   useEffect(() => {
     setBody((state) => ({
       ...state,
-      truck_avatar: preview
-    }))
+      truck_avatar: preview,
+    }));
   }, [preview, setPreview]);
 
   useEffect(() => {
@@ -63,39 +54,42 @@ const ModalAddTruck = (
       onClose();
     }
 
-    if(user){
+    if (user) {
       successNotification();
     }
 
-    if(errorUser){
+    if (errorUser) {
       errorNotification(errorUser?.response?.data?.msg);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, errorUser]);
 
   async function handleChange(e) {
-    const file = e.target.files[0]
+    const file = e.target.files[0];
 
     if (!file) return null;
-    const storageRef = ref(storage, `avatar/${file.name}`)
-    const uploadTask = uploadBytesResumable(storageRef, file)
+    const storageRef = ref(storage, `avatar/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on("state_changed",
+    uploadTask.on(
+      "state_changed",
       (snapshot) => {
-        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
-        setProgressPercent(progress)
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgressPercent(progress);
       },
       (error) => {
-        alert(error)
+        alert(error);
       },
       () => {
         // e.target[0].value = ''
         getDownloadURL(storageRef).then((downloadURL) => {
-          console.log("avatar", downloadURL)
-          setPreview(downloadURL)
-        })
+          console.log("avatar", downloadURL);
+          setPreview(downloadURL);
+        });
       }
-    )
+    );
   }
 
   return (
@@ -123,46 +117,50 @@ const ModalAddTruck = (
             lg={12}
             md={12}
             xs={12}
-          > 
-            <Grid 
-              item 
-              container 
-              xs={6} 
-              md={6} 
-              lg={6} 
+          >
+            <Grid
+              item
+              container
+              xs={6}
+              md={6}
+              lg={6}
               mb={2}
-              mr={2} 
+              mr={2}
               justifyContent={"center"}
-              sx={{ 
+              sx={{
                 cursor: "pointer",
                 "&:hover": {
-                  cursor: "pointer"
-                }
+                  cursor: "pointer",
+                },
               }}
             >
-              <IconButton 
-                color="info" 
+              <IconButton
+                color="info"
                 aria-label="upload picture"
-                
                 component="label"
-                sx={{ 
+                sx={{
                   background: "transparent",
                   "&:hover": {
                     background: "transparent",
-                  }
+                  },
                 }}
               >
-                <input hidden accept="image/*" type="file" onChange={handleChange} />
-                <Avatar 
+                <input
+                  hidden
+                  accept="image/*"
+                  type="file"
+                  onChange={handleChange}
+                />
+                <Avatar
                   variant="square"
-                  alt="img" 
-                  sx={{ height: "auto", width: "280px", borderRadius: "8px"}} 
+                  alt="img"
+                  sx={{ height: "auto", width: "280px", borderRadius: "8px" }}
                   src={
-                    preview ? preview :
-                    "https://i.pinimg.com/474x/a6/70/05/a67005e9bf90bc529088205650784bba.jpg"  
+                    preview
+                      ? preview
+                      : "https://i.pinimg.com/474x/a6/70/05/a67005e9bf90bc529088205650784bba.jpg"
                   }
-                >
-                </Avatar>
+                ></Avatar>
               </IconButton>
               {progressPercent > 0 && (
                 <Progress
@@ -176,17 +174,18 @@ const ModalAddTruck = (
               <Grid item xs={12} md={12} lg={12}>
                 <Input
                   required
-                  label={"Modelo"}
+                  label={"Marca"}
                   styles={{
+                    maxWidth: "274px",
                     "& .MuiInputBase-input.MuiOutlinedInput-input": {
                       height: "1.4rem",
                     },
                   }}
-                  value={body?.truck_models ?? ''}
+                  value={body?.truck_name_brand ?? ""}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      truck_models: ev.target.value,
+                      truck_name_brand: ev.target.value,
                     }))
                   }
                 />
@@ -195,18 +194,17 @@ const ModalAddTruck = (
               <Grid item xs={12} md={12} lg={12}>
                 <Input
                   required
-                  label={"Marca"}
+                  label={"Modelo"}
                   styles={{
-                    maxWidth: "274px",
                     "& .MuiInputBase-input.MuiOutlinedInput-input": {
                       height: "1.4rem",
                     },
                   }}
-                  value={body?.truck_name_brand ?? ''}
+                  value={body?.truck_models ?? ""}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      truck_name_brand: ev.target.value,
+                      truck_models: ev.target.value,
                     }))
                   }
                 />
@@ -222,7 +220,7 @@ const ModalAddTruck = (
                       height: "1.4rem",
                     },
                   }}
-                  value={body?.truck_board ?? ''}
+                  value={body?.truck_board ?? ""}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
@@ -230,7 +228,7 @@ const ModalAddTruck = (
                     }))
                   }
                 />
-              </Grid>            
+              </Grid>
 
               <Grid item xs={12} md={12} lg={12}>
                 <Input
@@ -242,7 +240,7 @@ const ModalAddTruck = (
                       height: "1.4rem",
                     },
                   }}
-                  value={body?.truck_color ?? ''}
+                  value={body?.truck_color ?? ""}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
@@ -262,7 +260,7 @@ const ModalAddTruck = (
                       height: "1.4rem",
                     },
                   }}
-                  value={body?.truck_km ?? ''}
+                  value={body?.truck_km ?? ""}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
@@ -282,7 +280,7 @@ const ModalAddTruck = (
                       height: "1.4rem",
                     },
                   }}
-                  value={body?.truck_chassis ?? ''}
+                  value={body?.truck_chassis ?? ""}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
@@ -302,7 +300,7 @@ const ModalAddTruck = (
                       height: "1.4rem",
                     },
                   }}
-                  value={body?.truck_year ?? ''}
+                  value={body?.truck_year ?? ""}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
@@ -314,31 +312,38 @@ const ModalAddTruck = (
             </Grid>
           </Grid>
 
-          <Grid 
-            container 
-            item 
-            xs={12} 
-            md={12} 
-            lg={12} 
-            spacing={1} 
+          <Grid
+            container
+            item
+            xs={12}
+            md={12}
+            lg={12}
+            spacing={1}
             mt={0.3}
             justifyContent={"flex-end"}
           >
             <Grid container item xs={12} md={3} lg={3}>
-              <Button 
+              <Button
                 onClick={() => onClose()}
                 background={"#fff"}
-                sx={{ width: "140px", height: "49px", border: "1px solid #509BFB", color: "#000000" }}
+                sx={{
+                  width: "140px",
+                  height: "49px",
+                  border: "1px solid #509BFB",
+                  color: "#000000",
+                }}
                 variant="text"
               >
                 CANCELAR
-              </Button>              
+              </Button>
             </Grid>
             <Grid container item xs={12} md={3} lg={3}>
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 color="success"
-                background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+                background={
+                  "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+                }
                 sx={{
                   fontSize: "14px",
                   color: "white",

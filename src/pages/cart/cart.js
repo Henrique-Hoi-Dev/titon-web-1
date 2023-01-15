@@ -10,7 +10,7 @@ import Button from "components/atoms/button/button";
 
 const Cart = () => {
   const [showModalDriver, setShowModalDriver] = useState(false);
-  
+
   const INITIAL_STATE_CARD = {
     limit: 10,
     page: 1,
@@ -19,49 +19,42 @@ const Cart = () => {
   };
 
   const [cardQuery, setCardQuery] = useState(INITIAL_STATE_CARD);
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState("");
 
   const {
     data: cards,
     error: cardsError,
     isFetching: cardsIsFetching,
-    loading, 
+    loading,
     mutate,
-  } = useGet(
-    "/carts", 
-    cardQuery
-  );
+  } = useGet("/carts", cardQuery);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setCardQuery((state) => ({
         ...state,
         search: search,
-      }))    
-    }, 1200); 
-  
+      }));
+    }, 1200);
+
     return () => clearTimeout(timer);
-  }, [search])
+  }, [search]);
 
   return (
     <Grid
       container
-      justifyContent="center"
-      minHeight="88vh"
       padding={1}
       spacing={2}
+      minHeight="88vh"
+      justifyContent="center"
+      alignContent={"flex-start"}
     >
-      <Grid
-        item 
-        container 
-        pl={2} 
-        mr={4} 
-        mt={-6.5} 
-        justifyContent={"flex-end"}
-      >
+      <Grid item container pl={2} mr={4} mt={-6.5} justifyContent={"flex-end"}>
         <Button
           onClick={() => setShowModalDriver(true)}
-          background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+          background={
+            "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+          }
           sx={{
             fontSize: "14px",
             color: "white",
@@ -75,21 +68,28 @@ const Cart = () => {
         <InputSearches
           searches
           searchesType={"searches"}
-          styles={{ minWidth: "350px"}}
+          styles={{ minWidth: "350px" }}
           placeholder={"Nome, placa..."}
           onChange={(ev) => setSearch(ev.target.value)}
-        />   
+        />
       </Grid>
       <Grid
         item
         container
-        mt={-20}
         mb={5}
-        minHeight={'100%'}
+        minHeight={"100%"}
         alignItems="flex-start"
         justifyContent="flex-start"
       >
-        <Grid item container pl={2} mr={4} mt={5} mb={3} justifyContent={"center"}>
+        <Grid
+          item
+          container
+          pl={2}
+          mr={4}
+          mt={5}
+          mb={3}
+          justifyContent={"center"}
+        >
           <Table
             data={cards}
             query={cardQuery}
@@ -99,10 +99,10 @@ const Cart = () => {
             loading={loading}
             mutate={mutate}
           />
-        </Grid>        
+        </Grid>
       </Grid>
 
-      <ModalAddCart 
+      <ModalAddCart
         setShowModal={setShowModalDriver}
         showModal={showModalDriver}
         mutate={mutate}

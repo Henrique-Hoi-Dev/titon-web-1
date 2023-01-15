@@ -28,10 +28,11 @@ const User = () => {
   return (
     <Grid
       container
-      justifyContent="center"
-      minHeight="88vh"
       padding={1}
       spacing={2}
+      minHeight="88vh"
+      justifyContent="center"
+      alignContent={"flex-start"}
     >
       <Grid
         item

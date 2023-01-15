@@ -12,9 +12,9 @@ const Truck = () => {
   const [showModalDriver, setShowModalDriver] = useState(false);
 
   const INITIAL_STATE_USER = {
-    limit: 10,
+    limit: 7,
     page: 1,
-    sort_field: null,
+    sort_field: "id",
     sort_order: "ASC",
   };
 
@@ -43,10 +43,11 @@ const Truck = () => {
   return (
     <Grid
       container
-      justifyContent="center"
-      minHeight="88vh"
       padding={1}
       spacing={2}
+      minHeight="88vh"
+      justifyContent="center"
+      alignContent={"flex-start"}
     >
       <Grid item container pl={2} mr={4} mt={-6.5} justifyContent={"flex-end"}>
         <Button
@@ -75,7 +76,6 @@ const Truck = () => {
       <Grid
         item
         container
-        mt={-20}
         mb={5}
         minHeight={"100%"}
         alignItems="flex-start"

@@ -45,8 +45,11 @@ export const TablePagination = ({
 
   return (
     <STablePagination
-      color="primary"
-      sx={{ ...sx, marginLeft: "auto" }}
+      color="secondary"
+      sx={{
+        ...sx,
+        marginLeft: "auto",
+      }}
       rowsPerPageOptions={
         allowRowsPerPage
           ? arrayRowPerPage

@@ -8,25 +8,23 @@ import {
   SRow,
   STable,
   STableBody,
-  SLabel
-} from "components/atoms/table/table"
+  SLabel,
+} from "components/atoms/table/table";
 
 import InfoRow from "./infoRow";
 import Text from "components/atoms/text/text";
 import Loading from "components/atoms/loading/loading";
 import ModalAction from "./modalAction";
-
-const Table = (
-  { 
-    data,
-    query, 
-    setQuery, 
-    isFetching, 
-    mutate, 
-    error, 
-    loading 
-  }) => {
-
+import imgNotFound from "../../../../assets/trist-not-found-table.svg";
+const Table = ({
+  data,
+  query,
+  setQuery,
+  isFetching,
+  mutate,
+  error,
+  loading,
+}) => {
   const { t } = useTranslation();
 
   // const isDesktop = useMediaQuery({ maxWidth: "1400px" });
@@ -35,7 +33,7 @@ const Table = (
 
   const [showModalAction, setShowModalAction] = useState(false);
 
-  const [checkId, setCheckId] = useState(null)
+  const [checkId, setCheckId] = useState(null);
 
   // console.log("state", data)
 
@@ -43,11 +41,11 @@ const Table = (
     setQuery((state) => ({
       ...state,
       sort_field: item,
-      sort_order: `${query?.sort_order === "ASC" ? "DESC" : "ASC"}`
-    }))
+      sort_order: `${query?.sort_order === "ASC" ? "DESC" : "ASC"}`,
+    }));
     return;
   };
-  
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -61,15 +59,6 @@ const Table = (
                   onClick={() => handleSort("status_check_order")}
                 >
                   Status
-                </SLabel>
-              </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
-                <SLabel
-                  active={query?.sort_field === "start_city"}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("start_city")}
-                >
-                  Inicio Frete
                 </SLabel>
               </SCell>
               <SCell displaywidth={isSmallDesktop ? 1 : 0}>
@@ -92,6 +81,15 @@ const Table = (
               </SCell>
               <SCell displaywidth={isSmallDesktop ? 1 : 0}>
                 <SLabel
+                  active={query?.sort_field === "location_of_the_truck"}
+                  direction={query?.sort_order?.toLowerCase()}
+                  onClick={() => handleSort("location_of_the_truck")}
+                >
+                  Data Atual
+                </SLabel>
+              </SCell>
+              <SCell displaywidth={isSmallDesktop ? 1 : 0}>
+                <SLabel
                   active={query?.sort_field === "preview_tonne"}
                   direction={query?.sort_order?.toLowerCase()}
                   onClick={() => handleSort("preview_tonne")}
@@ -99,7 +97,6 @@ const Table = (
                   Frete Bruto
                 </SLabel>
               </SCell>
-              <SCell>Info</SCell>
             </SRow>
           </SHead>
           {!isFetching && data && data?.dataResult?.freigth?.length > 0 && (
@@ -121,7 +118,7 @@ const Table = (
 
         {(loading || isFetching) && (
           <Grid container justifyContent="center" alignItems="center" mt={3}>
-            <Loading/>
+            <Loading />
           </Grid>
         )}
 
@@ -134,12 +131,20 @@ const Table = (
           alignItems="center"
           flexWrap="nowrap"
           justifyContent="center"
-        > 
-
-          {(data?.dataResult?.freigth?.length === 0) && !isFetching && (
+        >
+          {data?.dataResult?.freigth?.length === 0 && !isFetching && (
             <Grid item justifyContent="center" alignItems="center" pt={5}>
               <Text fontSize={"28px"} center>
-                {t("messages.no_results_found").toUpperCase()}
+                RESULTADO NÃO ENCONTRADO...{" "}
+                <img
+                  src={imgNotFound}
+                  alt="img"
+                  width={"30px"}
+                  style={{
+                    verticalAlign: "unset",
+                    marginLeft: "20px",
+                  }}
+                />
               </Text>
             </Grid>
           )}
@@ -152,16 +157,16 @@ const Table = (
             </Grid>
           )}
         </Grid>
-      </TableContainer>   
+      </TableContainer>
 
       {showModalAction && (
-        <ModalAction 
+        <ModalAction
           setShowModal={setShowModalAction}
           showModal={showModalAction}
           checkId={checkId}
           mutate={mutate}
         />
-      )} 
+      )}
     </>
   );
 };

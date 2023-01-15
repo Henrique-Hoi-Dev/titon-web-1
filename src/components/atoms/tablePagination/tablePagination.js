@@ -13,8 +13,8 @@ export const TablePagination = ({
   const [page, setPage] = useState(0);
 
   useEffect(() => {
-    if (data?.totalPages < data?.page) {
-      if (data?.items === null) {
+    if (data?.totalPages < data?.currentPage) {
+      if (data?.dataResult === null) {
         setQuery((state) => ({
           ...state,
           page: 1,
@@ -43,8 +43,6 @@ export const TablePagination = ({
     return [25, 50, 100];
   };
 
-  const filterTotal = parseInt(data?.total);
-
   return (
     <STablePagination
       color="primary"
@@ -56,7 +54,7 @@ export const TablePagination = ({
             : handleRowsPerPage()
           : []
       }
-      count={filterTotal}
+      count={data?.total ?? 0}
       rowsPerPage={query?.limit}
       page={query?.page - 1}
       labelRowsPerPage={labelRowsPerPage}

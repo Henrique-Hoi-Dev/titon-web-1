@@ -9,8 +9,8 @@ import {
   SRow,
   STable,
   STableBody,
-  SLabel
-} from "components/atoms/table/table"
+  SLabel,
+} from "components/atoms/table/table";
 
 import InfoRow from "./infoRow";
 import Text from "components/atoms/text/text";
@@ -18,17 +18,15 @@ import Loading from "components/atoms/loading/loading";
 import ModalDeleteTruck from "./modalDeleteTruck";
 import ModalUpdateTruck from "./modalUpdateTruck";
 
-const Table = (
-  { 
-    data,
-    query, 
-    setQuery, 
-    isFetching, 
-    mutate, 
-    error, 
-    loading 
-  }) => {
-
+const Table = ({
+  data,
+  query,
+  setQuery,
+  isFetching,
+  mutate,
+  error,
+  loading,
+}) => {
   const { t } = useTranslation();
 
   const isDesktop = useMediaQuery({ maxWidth: "1250px" });
@@ -37,17 +35,17 @@ const Table = (
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showModalUpdate, setShowModalUpdate] = useState(false);
 
-  const [truckId, setTruckId] = useState(null)
+  const [truckId, setTruckId] = useState(null);
 
   const handleSort = (item) => {
     setQuery((state) => ({
       ...state,
       sort_field: item,
-      sort_order: `${query?.sort_order === "ASC" ? "DESC" : "ASC"}`
-    }))
+      sort_order: `${query?.sort_order === "ASC" ? "DESC" : "ASC"}`,
+    }));
     return;
   };
-  
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -142,7 +140,7 @@ const Table = (
 
         {(loading || isFetching) && (
           <Grid container justifyContent="center" alignItems="center" mt={3}>
-            <Loading titulo={t("messages.loading")}/>
+            <Loading titulo={t("messages.loading")} />
           </Grid>
         )}
 
@@ -155,17 +153,8 @@ const Table = (
           alignItems="center"
           flexWrap="nowrap"
           justifyContent="center"
-        > 
-
-          {(data?.total === 0) && !isFetching && (
-            <Grid item justifyContent="center" alignItems="center" pt={5}>
-              <Text fontSize={"28px"} center>
-                {t("messages.no_results_found").toUpperCase()}
-              </Text>
-            </Grid>
-          )}
-
-          {(data?.total === 0) && !data && !isFetching && (
+        >
+          {data?.total === 0 && !data && !isFetching && (
             <Grid item justifyContent="center" alignItems="center" pt={5}>
               <Text fontSize={"28px"} center>
                 {t("messages.no_results_found").toUpperCase()}
@@ -183,16 +172,12 @@ const Table = (
         </Grid>
 
         {!isFetching && data?.totalPages > 0 && (
-          <TablePagination
-            data={data}
-            query={query}
-            setQuery={setQuery}
-          />
+          <TablePagination data={data} query={query} setQuery={setQuery} />
         )}
-      </TableContainer>   
+      </TableContainer>
 
       {showModalDelete && (
-        <ModalDeleteTruck 
+        <ModalDeleteTruck
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
           props={truckId}
@@ -201,7 +186,7 @@ const Table = (
       )}
 
       {showModalUpdate && (
-        <ModalUpdateTruck 
+        <ModalUpdateTruck
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
           props={truckId}
@@ -209,7 +194,6 @@ const Table = (
         />
       )}
     </>
-
   );
 };
 

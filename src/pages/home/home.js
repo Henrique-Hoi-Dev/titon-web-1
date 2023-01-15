@@ -4,14 +4,17 @@ import { IconAdd } from "components/atoms/icons/icons";
 import { useMediaQuery } from "react-responsive";
 import { InputSearches } from "components/atoms/input/inputSearches/input";
 
-import Cards from "./cards";
+import Cards from "./card/cards";
 import Button from "components/atoms/button/button";
 import ModalAddFinancial from "pages/financialStatement/modalAddFinancial";
-import CustomizedMenus from "components/molecules/customizedMenus/customizedMenu";
+import SubMenuFilter from "pages/home/subMenuFilter/subMenuFilter";
 
 const Home = () => {
   const [showModalFicha, setShowModalFicha] = useState(false);
+
   const [search, setSearch] = useState("");
+  const [searchOrder, setSearchOrder] = useState("");
+  const [searchStatus, setSearchStatus] = useState("");
 
   const isDesktopBig = useMediaQuery({ maxWidth: "1950px" });
 
@@ -41,7 +44,10 @@ const Home = () => {
             lg={isDesktopBig ? 4.2 : 6}
             mt={0.6}
           >
-            <CustomizedMenus />
+            <SubMenuFilter
+              setSearchOrder={setSearchOrder}
+              setSearchStatus={setSearchStatus}
+            />
           </Grid>
           <Button
             onClick={() => setShowModalFicha(true)}
@@ -77,7 +83,11 @@ const Home = () => {
           justifyContent="flex-start"
           sx={{ color: "#fff" }}
         >
-          <Cards search={search} setSearch={setSearch} />
+          <Cards
+            search={search}
+            searchOrder={searchOrder}
+            searchStatus={searchStatus}
+          />
         </Grid>
       </Grid>
 

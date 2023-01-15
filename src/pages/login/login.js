@@ -9,9 +9,9 @@ import { signInRequest } from "store/modules/auth/actions";
 import Button from "components/atoms/button/button";
 import Loading from "components/atoms/loading/loading";
 import Text from "components/atoms/text/text";
-import logo from "../../assets/logo.png"
+import logo from "../../assets/logo.png";
 
-import { Wrapper } from './styles'
+import { Wrapper } from "./styles";
 import { InputDark } from "components/atoms/input/inputDark/input";
 
 const INITIAL_STATE = {
@@ -20,7 +20,6 @@ const INITIAL_STATE = {
 };
 
 const Login = () => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -34,12 +33,12 @@ const Login = () => {
 
   const auth = useSelector((state) => state.auth);
 
-  const token = auth?.token
-  const loading = auth?.loading
-  
-  const showLoading = loading
-  const showError = error
-  
+  const token = auth?.token;
+  const loading = auth?.loading;
+
+  const showLoading = loading;
+  const showError = error;
+
   useEffect(() => {
     if (token) {
       navigate("/home", { replace: true });
@@ -57,15 +56,15 @@ const Login = () => {
 
   return (
     <Wrapper>
-      <Grid 
-        container 
-        justifyContent="flex-start" 
-        alignItems="center" 
+      <Grid
+        container
+        justifyContent="flex-start"
+        alignItems="center"
         height="100vh"
       >
-        <Paper 
-          elevation={3} 
-          sx={{ 
+        <Paper
+          elevation={3}
+          sx={{
             backgroundColor: "transparent!important",
             boxShadow: "none",
             height: "100%",
@@ -93,25 +92,26 @@ const Login = () => {
           >
             <Text
               id="title"
-              sx={{ 
-                marginBottom: "14px!important", 
+              sx={{
+                marginBottom: "14px!important",
               }}
             >
               <img src={logo} alt="img" />
             </Text>
             <Text
-              fontSize={'14px'}
-              sx={{ 
+              fontSize={"14px"}
+              sx={{
                 width: "360px",
                 height: "32px",
                 fontStyle: "normal",
                 fontWeight: "500",
                 lineHeight: "100%",
                 textAlign: "center",
-                color: "#FFFFFF",
               }}
+              color={"#FFFFFF"}
             >
-              Agora insira as informações da sua empresa e já tenha acesso ao melhor gerenciador de frotda.
+              Agora insira as informações da sua empresa e já tenha acesso ao
+              melhor gerenciador de frotda.
             </Text>
 
             <Grid
@@ -147,7 +147,9 @@ const Login = () => {
                 <Grid item>
                   <Button
                     disableElevation
-                    background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+                    background={
+                      "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+                    }
                     sx={{
                       fontSize: "14px",
                       color: "white",

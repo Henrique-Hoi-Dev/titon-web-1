@@ -11,17 +11,10 @@ import Modal from "components/molecules/modal/modal";
 import Loading from "components/atoms/loading/loading";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
-import Text from "components/atoms/text/text";
 import Autocomplete from "components/atoms/autocomplete/autocomplete";
+import InputMaskComponent from "components/atoms/inputMask/inputMask";
 
-const ModalUpdateUser = (
-  { 
-    showModal, 
-    setShowModal, 
-    mutate, 
-    userId
-  }) => {
-
+const ModalUpdateUser = ({ showModal, setShowModal, mutate, props }) => {
   const users = useSelector((state) => state?.user);
 
   const [fetch, setFetch] = useState(false);
@@ -36,46 +29,35 @@ const ModalUpdateUser = (
     { value: "master", name: "Master" },
     { value: "director", name: "Diretor" },
     { value: "manager", name: "Gerente" },
-    { value: "collaborator", name: "Colaborador" }
-  ]
+    { value: "collaborator", name: "Colaborador" },
+  ];
 
-  const getTypeUser = () => typeUser.find(item => item.value === body?.type_position ) ?? null
+  const getTypeUser = () =>
+    typeUser.find((item) => item.value === body?.type_position) ?? null;
 
-  const {
-    data: user,
-    isValidating
-  } = useGet(
-    `user/${userId}`, 
-    []
-  );
+  const { data: user, isValidating } = useGet(`user/${props.id}`, []);
 
   const {
     data: userUpdate,
     error: errorUserUpadate,
-    isFetching
-  } = useUpdate(
-    `user/${userId}`, 
-    body, 
-    "",
-    fetch, 
-    setFetch
-  );
+    isFetching,
+  } = useUpdate(`user/${props.id}`, body, "", fetch, setFetch);
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
 
-    if(body?.password !== body?.confirmPassword){
-        setPasswordError(true)
-      return
+    if (body?.password !== body?.confirmPassword) {
+      setPasswordError(true);
+      return;
     }
 
     setFetch(true);
-    setPasswordError(false)
+    setPasswordError(false);
   };
 
   const onClose = () => {
     setShowModal(false);
-    setBody({})
+    setBody({});
   };
 
   useEffect(() => {
@@ -85,7 +67,7 @@ const ModalUpdateUser = (
       email: user?.dataResult?.email,
       cpf: user?.dataResult?.cpf,
       type_position: user?.dataResult?.type_position,
-    }))
+    }));
   }, [user]);
 
   useEffect(() => {
@@ -95,7 +77,7 @@ const ModalUpdateUser = (
       successNotification();
     }
 
-    if(errorUserUpadate){
+    if (errorUserUpadate) {
       errorNotification(errorUserUpadate?.response?.data?.msg);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -123,49 +105,26 @@ const ModalUpdateUser = (
           sx={{ minHeight: "300px", justifyContent: "flex-start" }}
         >
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Name</Text>
             <Input
+              label={"Name"}
               styles={{
                 "& .MuiInputBase-input.MuiOutlinedInput-input": {
                   height: "1.4rem",
                 },
               }}
-              value={body?.name ?? ''}
+              value={body?.name ?? ""}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  name: ev.target.value
-                })) 
+                  name: ev.target.value,
+                }))
               }
             />
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>CPF</Text>
             <Input
-              styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
-              }}
-              value={body?.cpf ?? ''}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  cpf: ev.target.value
-                })) 
-              }
-            />
-          </Grid>
-
-          <Grid 
-            item 
-            xs={12} 
-            md={users?.data?.users?.type_position === "master" ? 6 : 12} 
-            lg={users?.data?.users?.type_position === "master" ? 6 : 12}
-          >
-            <Text sx={{ ml: 1 }}>Email</Text>
-            <Input
+              label={"Email"}
               required
               styles={{
                 maxWidth: "274px",
@@ -173,7 +132,7 @@ const ModalUpdateUser = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.email ?? ''}
+              value={body?.email ?? ""}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
@@ -183,35 +142,63 @@ const ModalUpdateUser = (
             />
           </Grid>
 
-          {users?.data?.users?.type_position === "master" && (
+          <Grid
+            item
+            xs={12}
+            md={users?.data?.userProps?.type_role === "MASTER" ? 6 : 12}
+            lg={users?.data?.userProps?.type_role === "MASTER" ? 6 : 12}
+          >
+            <InputMaskComponent
+              label={"CPF"}
+              mask={"999.999.999-99"}
+              styles={{
+                "& .MuiInputBase-input.MuiOutlinedInput-input": {
+                  height: "1.4rem",
+                },
+              }}
+              value={body?.cpf ?? ""}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  cpf: ev.target.value,
+                }))
+              }
+            />
+          </Grid>
+
+          {users?.data?.userProps?.type_role === "MASTER" && (
             <Grid item xs={12} md={6} lg={6}>
-              <Text sx={{ ml: 1 }}>Tipo usuário</Text>
-              <Autocomplete 
+              <Autocomplete
+                placeholder={"Tipo usuário"}
                 sx={{
                   "& .MuiAutocomplete-input": {
                     height: "0.4em!important",
                   },
-                }} 
+                }}
                 options={typeUser ?? []}
-                getOptionLabel={(option) => option.name ?? ''}
-                isOptionEqualToValue={(option, value) => option.value === value.value}
+                getOptionLabel={(option) => option.name ?? ""}
+                isOptionEqualToValue={(option, value) =>
+                  option.value === value.value
+                }
                 value={getTypeUser()}
                 onChange={(event, newValue) => {
                   if (newValue) {
-                    setBody((state) => ({ ...state, type_position: newValue.value }));
+                    setBody((state) => ({
+                      ...state,
+                      type_position: newValue.value,
+                    }));
                   }
                   if (newValue === null) {
-                    setBody((state) => ({ ...state, type_position: '' }));
+                    setBody((state) => ({ ...state, type_position: "" }));
                   }
                 }}
               />
-            </Grid>            
+            </Grid>
           )}
 
-
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Nova Senha</Text>
             <Input
+              label={"Nova Senha"}
               type={showPassword ? "text" : "password"}
               onClick={() => setShowPassword(!showPassword)}
               isPassword
@@ -222,7 +209,7 @@ const ModalUpdateUser = (
               }}
               error={passwordError}
               helperText={passwordError ? "Senhas não conferem" : ""}
-              value={body?.password ?? ''}
+              value={body?.password ?? ""}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
@@ -233,12 +220,12 @@ const ModalUpdateUser = (
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Text sx={{ ml: 1 }}>Confirmar Senha</Text>
             <Input
+              label={"Confirmar Senha"}
               type={showConfirmPassword ? "text" : "password"}
               styles={{
                 "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
+                  height: "1.4em",
                 },
               }}
               isPassword
@@ -248,27 +235,60 @@ const ModalUpdateUser = (
                 setBody((state) => ({
                   ...state,
                   confirmPassword: ev.target.value,
-                }))
+                }));
               }}
             />
           </Grid>
 
-          <Grid container item xs={12} md={12} lg={12} spacing={2} mt={2}>
-            <Grid item xs={12} md={12} lg={6}>
-              <Button variant="return" onClick={() => onClose()}>
-                Voltar
+          <Grid
+            container
+            item
+            xs={12}
+            md={12}
+            lg={12}
+            spacing={1}
+            mt={0.3}
+            justifyContent={"flex-end"}
+          >
+            <Grid container item xs={12} md={3} lg={3}>
+              <Button
+                onClick={() => onClose()}
+                background={"#fff"}
+                sx={{
+                  width: "140px",
+                  height: "49px",
+                  border: "1px solid #509BFB",
+                  color: "#000000",
+                }}
+                variant="text"
+              >
+                CANCELAR
               </Button>
             </Grid>
-            <Grid item xs={12} md={12} lg={6}>
-              <Button type="submit" variant="contained" color="success">Confirmar</Button>
+            <Grid container item xs={12} md={3} lg={3}>
+              <Button
+                type="submit"
+                color="success"
+                background={
+                  "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+                }
+                sx={{
+                  fontSize: "14px",
+                  color: "white",
+                  width: "139px",
+                  height: "49px",
+                  marginRight: "15px",
+                }}
+              >
+                Atualizar
+              </Button>
             </Grid>
           </Grid>
-
         </Grid>
       )}
 
-      {isFetching && <Loading/>}
-      {isValidating && <Loading/>}
+      {isFetching && <Loading />}
+      {isValidating && <Loading />}
     </Modal>
   );
 };

@@ -1,49 +1,49 @@
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import SvgIcon from "@mui/material/SvgIcon";
-import AutorenewIcon from '@mui/icons-material/Autorenew';
+import AutorenewIcon from "@mui/icons-material/Autorenew";
 import { FaUserEdit, FaUserMinus } from "react-icons/fa";
-import { FiFileText } from "react-icons/fi"
-import QrCodeIcon from '@mui/icons-material/QrCode';
-import CloseIcon from '@mui/icons-material/Close';
+import { FiFileText } from "react-icons/fi";
+import QrCodeIcon from "@mui/icons-material/QrCode";
+import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import TextFormatIcon from '@mui/icons-material/TextFormat';
-import ColorLensIcon from '@mui/icons-material/ColorLens';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add';
-import SettingsIcon from '@mui/icons-material/Settings';
-import ListAltIcon from '@mui/icons-material/ListAlt';
-import CasinoIcon from '@mui/icons-material/Casino';
+import TextFormatIcon from "@mui/icons-material/TextFormat";
+import ColorLensIcon from "@mui/icons-material/ColorLens";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import SettingsIcon from "@mui/icons-material/Settings";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import CasinoIcon from "@mui/icons-material/Casino";
 import { GiPayMoney, GiReceiveMoney } from "react-icons/gi";
 import { MdEditCalendar } from "react-icons/md";
 import { IoIosListBox } from "react-icons/io";
-import { VscDeviceMobile} from 'react-icons/vsc';
+import { VscDeviceMobile } from "react-icons/vsc";
 import { GrStatusGoodSmall } from "react-icons/gr";
-import EditIcon from '@mui/icons-material/Edit';
-import ReadMoreIcon from '@mui/icons-material/ReadMore';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import PeopleIcon from '@mui/icons-material/People';
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import EditIcon from "@mui/icons-material/Edit";
+import ReadMoreIcon from "@mui/icons-material/ReadMore";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import PeopleIcon from "@mui/icons-material/People";
+import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import { IoGameController } from "react-icons/io5";
-import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
-import PersonIcon from '@mui/icons-material/Person';
-import AirlineStopsIcon from '@mui/icons-material/AirlineStops';
+import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
+import PersonIcon from "@mui/icons-material/Person";
+import AirlineStopsIcon from "@mui/icons-material/AirlineStops";
 import { HiOutlineTemplate } from "react-icons/hi";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { AiOutlineSearch } from 'react-icons/ai'
-import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
-import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
-import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
-import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
-import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
-import SearchIcon from '@mui/icons-material/Search';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import TrendingDownIcon from '@mui/icons-material/TrendingDown';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { AiOutlineSearch } from "react-icons/ai";
+import ArrowDropDownCircleIcon from "@mui/icons-material/ArrowDropDownCircle";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
+import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
+import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import SearchIcon from "@mui/icons-material/Search";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import { FaTrailer } from "react-icons/fa";
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 
 export const IconSubMenuTrendingDownIcon = (props) => {
   return (
@@ -64,7 +64,7 @@ export const IconSubMenuTrendingUpIcon = (props) => {
 export const IconSearchIcon = (props) => {
   return (
     <SvgIcon {...props}>
-      <SearchIcon/>
+      <SearchIcon />
     </SvgIcon>
   );
 };
@@ -72,7 +72,7 @@ export const IconSearchIcon = (props) => {
 export const IconNotifications = (props) => {
   return (
     <SvgIcon {...props}>
-      <NotificationsOutlinedIcon/>
+      <NotificationsOutlinedIcon />
     </SvgIcon>
   );
 };
@@ -80,7 +80,7 @@ export const IconNotifications = (props) => {
 export const IconMenuTrailer = (props) => {
   return (
     <SvgIcon {...props}>
-      <FaTrailer/>
+      <FaTrailer />
     </SvgIcon>
   );
 };
@@ -88,7 +88,7 @@ export const IconMenuTrailer = (props) => {
 export const IconMenuFile = (props) => {
   return (
     <SvgIcon {...props}>
-      <DescriptionOutlinedIcon/>
+      <DescriptionOutlinedIcon />
     </SvgIcon>
   );
 };
@@ -96,7 +96,7 @@ export const IconMenuFile = (props) => {
 export const IconMenuUser = (props) => {
   return (
     <SvgIcon {...props}>
-      <GroupOutlinedIcon/>
+      <GroupOutlinedIcon />
     </SvgIcon>
   );
 };
@@ -104,7 +104,7 @@ export const IconMenuUser = (props) => {
 export const IconMenuTruck = (props) => {
   return (
     <SvgIcon {...props}>
-      <LocalShippingOutlinedIcon/>
+      <LocalShippingOutlinedIcon />
     </SvgIcon>
   );
 };
@@ -112,7 +112,7 @@ export const IconMenuTruck = (props) => {
 export const IconMenuBox = (props) => {
   return (
     <SvgIcon {...props}>
-      <Inventory2OutlinedIcon/>
+      <Inventory2OutlinedIcon />
     </SvgIcon>
   );
 };
@@ -120,7 +120,7 @@ export const IconMenuBox = (props) => {
 export const IconExit = (props) => {
   return (
     <SvgIcon {...props}>
-      <ExitToAppIcon/>
+      <ExitToAppIcon />
     </SvgIcon>
   );
 };
@@ -128,7 +128,7 @@ export const IconExit = (props) => {
 export const IconActions = (props) => {
   return (
     <SvgIcon {...props}>
-      <ArrowDropDownCircleIcon/>
+      <ArrowDropDownCircleIcon />
     </SvgIcon>
   );
 };
@@ -136,7 +136,7 @@ export const IconActions = (props) => {
 export const IconSearch = (props) => {
   return (
     <SvgIcon {...props}>
-      <AiOutlineSearch/>
+      <AiOutlineSearch />
     </SvgIcon>
   );
 };
@@ -271,7 +271,7 @@ export const IconDelete = (props) => {
 
 export const IconAdd = ({ sx }) => {
   return (
-    <SvgIcon sx={{...sx}}>
+    <SvgIcon sx={{ ...sx }}>
       <AddIcon />
     </SvgIcon>
   );
@@ -341,66 +341,66 @@ export const ExpandListIcon = (props) => {
   );
 };
 
-export const ArrowUpIcon  = (props) => {
+export const ArrowUpIcon = (props) => {
   return (
     <SvgIcon {...props}>
-      <KeyboardArrowUpIcon  />
+      <KeyboardArrowUpIcon />
     </SvgIcon>
   );
 };
 
-export const ArrowDownIcon  = (props) => {
+export const ArrowDownIcon = (props) => {
   return (
     <SvgIcon {...props}>
-      <KeyboardArrowDownIcon  />
+      <KeyboardArrowDownIcon />
     </SvgIcon>
   );
 };
 
-export const IconSellers  = (props) => {
+export const IconSellers = (props) => {
   return (
     <SvgIcon {...props}>
-      <PeopleIcon  />
+      <PeopleIcon />
     </SvgIcon>
   );
-}
+};
 
-export const DeviceIcon  = (props) => {
+export const DeviceIcon = (props) => {
   return (
     <SvgIcon {...props}>
-      <VscDeviceMobile  />
+      <VscDeviceMobile />
     </SvgIcon>
   );
 };
 
 export const PointIcon = ({ color, sx }) => {
   return (
-    <SvgIcon sx={{...sx}}>
+    <SvgIcon sx={{ ...sx }}>
       <GrStatusGoodSmall color={color} />
     </SvgIcon>
   );
 };
 
-export const IconEdit  = (props) => {
+export const IconEdit = (props) => {
   return (
     <SvgIcon {...props}>
-      <EditIcon/>
+      <EditIcon />
     </SvgIcon>
   );
 };
 
-export const IconScratchGames  = (props) => {
+export const IconScratchGames = (props) => {
   return (
     <SvgIcon {...props}>
-      <IoGameController/>
+      <IoGameController />
     </SvgIcon>
   );
 };
 
-export const IconSalespoint  = (props) => {
+export const IconSalespoint = (props) => {
   return (
     <SvgIcon {...props}>
-      <AddLocationAltIcon/>
+      <AddLocationAltIcon />
     </SvgIcon>
   );
 };
@@ -408,7 +408,7 @@ export const IconSalespoint  = (props) => {
 export const IconLine = (props) => {
   return (
     <SvgIcon {...props}>
-      <AirlineStopsIcon/>
+      <AirlineStopsIcon />
     </SvgIcon>
   );
 };

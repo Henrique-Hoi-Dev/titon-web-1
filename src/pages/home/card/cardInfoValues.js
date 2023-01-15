@@ -2,7 +2,7 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import Text from "../../components/atoms/text/text";
+import Text from "../../../components/atoms/text/text";
 
 import { moneyMask } from "utils/masks";
 import { CardMedia, Grid } from "@mui/material";
@@ -10,8 +10,18 @@ import { IconMenuTruck } from "components/atoms/icons/icons";
 import { formatDate } from "utils/formatDate";
 
 const CardInfoValues = ({ props, styles, onClick }) => {
+  const status = [
+    { value: "APPROVAL_PROCESS", label: "ANALISE", color: "#FFCE52" },
+    { value: "APPROVED", label: "APROVADO", color: "#0BB07B" },
+    { value: "DENIED", label: "NEGADO", color: "#F03D3D" },
+    { value: "FINISHED", label: "FINALIZADO", color: "#86878A" },
+  ];
+
+  const getStatus = (res) => status.find((item) => item.value === res) ?? "";
+
   return (
     <Grid
+      item
       sx={{
         minWidth: "264px!important",
         minHeight: "360px!important",
@@ -80,8 +90,11 @@ const CardInfoValues = ({ props, styles, onClick }) => {
               <Text fontSize={"24px"} color="#F1F3F9">
                 {props?.truck_board}
               </Text>
-              <Text fontSize={"19px"} color="#F1F3F9">
-                {props?.freigth[0]?.status_check}
+              <Text
+                fontSize={"19px"}
+                color={getStatus(props?.freigth[0]?.status_check).color}
+              >
+                {getStatus(props?.freigth[0]?.status_check).label}
               </Text>
             </Grid>
             <Text fontSize={"16px"}>
@@ -104,7 +117,7 @@ const CardInfoValues = ({ props, styles, onClick }) => {
               </Text>
             </Text>
             <Text>
-              <IconMenuTruck sx={{ fontSize: "30px" }} />{" "}
+              <IconMenuTruck sx={{ fontSize: "30px", color: "#509BFB" }} />{" "}
               <Text fontSize={"18px"} sx={{ verticalAlign: "super" }}>
                 {props.cart_models}
               </Text>

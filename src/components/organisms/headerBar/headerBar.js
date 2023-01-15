@@ -1,64 +1,63 @@
 import React, { useState, useEffect } from "react";
-import {
-  Badge,
-  Grid,
-  IconButton,
-  Menu,
-} from "@mui/material";
-import { IconNotifications } from "components/atoms/icons/icons";
+import { Badge, Grid, IconButton, Menu } from "@mui/material";
+import { IconNotifications, PointIcon } from "components/atoms/icons/icons";
 import { formatDistance, parseISO } from "date-fns";
 import { useSelector } from "react-redux";
 import { api } from "services/api";
 
 import Text from "components/atoms/text/text";
 import pt from "date-fns/locale/pt";
-import CommentIcon from '@mui/icons-material/Comment';
 
 const HeaderBar = () => {
   const user = useSelector((state) => state?.user);
 
   const [anchorElTwo, setAnchorElTwo] = useState(false);
-  const [fetch, setFetch] = useState(false)
+  const [fetch, setFetch] = useState(false);
 
-  const [notifications, setNotifications] = useState([])
+  const [notifications, setNotifications] = useState([]);
+  const [history, setHistory] = useState([]);
 
   useEffect(() => {
     async function loadNotifications() {
-      const response = await api.get('notifications')
+      const response = await api.get("notifications");
 
-      const data = response.data.dataResult.map(notifications => ({
-        ...notifications,
-        timeDistance: formatDistance(
-          parseISO(notifications.created_at),
-          new Date(),
-          { addSuffix: true, locale: pt }
-        )
-      }))
+      const data = response.data.dataResult.notifications.map(
+        (notifications) => ({
+          ...notifications,
+          timeDistance: formatDistance(
+            parseISO(notifications.created_at),
+            new Date(),
+            { addSuffix: true, locale: pt }
+          ),
+        })
+      );
 
-      setNotifications(data)
+      if (response?.data?.dataResult?.notifications?.length >= 0) {
+        setHistory(response?.data?.dataResult?.history);
+      }
+
+      setNotifications(data);
     }
     if (fetch === true) {
-      if (user?.data.users?.type_role === "MASTER") {
-        return  loadNotifications()        
+      if (user?.data.userProps?.type_role === "MASTER") {
+        loadNotifications();
       }
-      setFetch(false)
+      setFetch(false);
     }
-    
-  }, [fetch, user])
+  }, [fetch, user]);
 
   useEffect(() => {
-    setFetch(true)
-  }, [])
+    setFetch(true);
+  }, []);
 
   async function handleMarkAsRead(id) {
-    await api.put(`notifications/${id}`)
-    setFetch(true)
+    await api.put(`notifications/${id}`);
 
     setNotifications(
-      notifications.map(res => 
-        res.id === id ? { ...res, read: true } : res 
-      )
-    )
+      notifications.map((res) => (res.id === id ? { ...res, read: true } : res))
+    );
+
+    setFetch(true);
   }
 
   const open = Boolean(anchorElTwo);
@@ -85,8 +84,8 @@ const HeaderBar = () => {
         alignItems="center"
         justifyContent={"flex-end"}
       >
-        <Grid 
-          item 
+        <Grid
+          item
           container
           xs={7.5}
           md={7.5}
@@ -95,14 +94,7 @@ const HeaderBar = () => {
           alignItems="center"
           justifyContent={"space-between"}
         >
-          <Grid 
-            item 
-            container
-            xs={12}
-            md={12}
-            lg={12}
-            alignItems="flex-end"
-          >
+          <Grid item container xs={12} md={12} lg={12} alignItems="flex-end">
             <IconButton
               color="error"
               fontSize="12px"
@@ -113,9 +105,6 @@ const HeaderBar = () => {
                 <IconNotifications sx={{ color: "#fff" }} />
               </Badge>
             </IconButton>
-            {/* {menu?.home && (
-              <CustomizedMenus />
-            )} */}
           </Grid>
         </Grid>
 
@@ -128,35 +117,37 @@ const HeaderBar = () => {
           PaperProps={{
             elevation: 0,
             sx: {
-              overflow: 'visible',
-              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+              filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
               mt: 1.5,
-              '& .MuiAvatar-root': {
+              marginTop: "0px!important",
+              marginLeft: "-50px!important",
+              maxHeight: "345px",
+              overflow: "scroll",
+              "& .MuiAvatar-root": {
                 width: 52,
                 height: 32,
-                ml: -0.5,
                 mr: 1,
               },
-              '&:before': {
+              "&:before": {
                 content: '""',
-                display: 'block',
-                position: 'absolute',
+                display: "block",
+                position: "absolute",
                 top: 0,
-                right: 14,
+                left: 24,
                 width: 10,
                 height: 10,
-                bgcolor: 'background.paper',
-                transform: 'translateY(-50%) rotate(45deg)',
+                bgcolor: "background.paper",
+                transform: "translateY(-50%) rotate(45deg)",
                 zIndex: 0,
               },
             },
           }}
-          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+          transformOrigin={{ horizontal: "left", vertical: "top" }}
+          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
-          {notifications.map(res => (
-            <Grid 
-              item 
+          {notifications.map((res) => (
+            <Grid
+              item
               container
               xs={12}
               md={12}
@@ -166,35 +157,88 @@ const HeaderBar = () => {
               key={res.id}
               sx={{ padding: "10px" }}
             >
-              <Grid item container xs={10} md={12} lg={12} flexDirection={'column'}>
-                <Text 
-                  sx={{ 
-                    fontWeight: "900", 
+              <Grid
+                item
+                container
+                xs={10}
+                md={12}
+                lg={12}
+                flexDirection={"column"}
+                onClick={() => setFetch(true) || handleMarkAsRead(res?.id)}
+              >
+                <Text
+                  sx={{
+                    cursor: "pointer",
+                    fontWeight: "900",
                     maxWidth: "380px",
-                    color: `${(res.read === true && "red") || 
-                    (res.read === false && "green")}`   
                   }}
                 >
                   {res?.content}
-                </Text>  
-                <Text fontSize={'12px'}>
-                  {res?.timeDistance}
-                </Text>                 
+                </Text>
+                <Text fontSize={"12px"}>{res?.timeDistance}</Text>
               </Grid>
-              <Grid item container xs={3} md={2} lg={2} justifyContent={"flex-end"}>
-                <IconButton 
-                  onClick={() => handleMarkAsRead(res?.id)}
-                >
-                  <CommentIcon 
-                    color={`${(res.read === true && "error") || 
-                    (res.read === false && "success")}`} 
-                  />
-                </IconButton>                
+              <Grid
+                item
+                container
+                xs={3}
+                md={2}
+                lg={3}
+                justifyContent={"center"}
+              >
+                <PointIcon color={`${res.read === false && "#0BB07B"}`} />
               </Grid>
-            </Grid>          
+            </Grid>
           ))}
-          {notifications?.length === 0 && (
-            <Grid item justifyContent="center" alignItems="center" pt={5} padding={"12px"}>
+          {history.length > 0 &&
+            history.map((res) => (
+              <Grid
+                item
+                container
+                xs={12}
+                md={12}
+                lg={12}
+                flexWrap={"nowrap"}
+                alignItems={"center"}
+                key={res.id}
+                sx={{ padding: "10px" }}
+              >
+                <Grid
+                  item
+                  container
+                  xs={10}
+                  md={12}
+                  lg={12}
+                  flexDirection={"column"}
+                >
+                  <Text
+                    sx={{
+                      fontWeight: "900",
+                      maxWidth: "380px",
+                    }}
+                  >
+                    {res?.content}
+                  </Text>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={3}
+                  md={2}
+                  lg={3}
+                  justifyContent={"center"}
+                >
+                  <PointIcon color={`${res.read === true && "#86878A"}`} />
+                </Grid>
+              </Grid>
+            ))}
+          {notifications?.length === 0 && history?.length === 0 && (
+            <Grid
+              item
+              justifyContent="center"
+              alignItems="center"
+              pt={5}
+              padding={"12px"}
+            >
               <Text fontSize={"18px"} center>
                 Não há Notificações
               </Text>

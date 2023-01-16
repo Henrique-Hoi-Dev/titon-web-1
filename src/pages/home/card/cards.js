@@ -70,7 +70,7 @@ const Cards = ({
           display: "flex",
           flexDirection: "row",
           overflowX: "auto",
-          justifyContent: "center",
+          justifyContent: "flex-start",
           "& > :not(style)": {
             margin: "10px",
             width: 180,

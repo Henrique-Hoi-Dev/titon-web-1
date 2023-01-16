@@ -37,11 +37,11 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
     isFetching,
   } = useCreate("user/financialStatement", body, fetch, setFetch);
 
-  const { data: trucks } = useGet("/trucks-select", {});
+  const { data: trucks, mutate: mutateTruck } = useGet("/trucks-select", {});
 
-  const { data: drivers } = useGet("/drivers-select", {});
+  const { data: drivers, mutate: mutateDriver } = useGet("/drivers-select", {});
 
-  const { data: carts } = useGet("/carts-select", {});
+  const { data: carts, mutate: mutateCart } = useGet("/carts-select", {});
 
   const onClose = () => {
     setShowModal(false);
@@ -71,6 +71,9 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
   useEffect(() => {
     if (newFinancial) {
       mutate();
+      mutateTruck();
+      mutateDriver();
+      mutateCart();
       onClose();
     }
 

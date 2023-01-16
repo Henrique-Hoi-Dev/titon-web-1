@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useCreate } from "services/requests/useCreate";
-import { successNotification } from "utils/notification";
+import { errorNotification, successNotification } from "utils/notification";
 import { formatMoney } from "utils/masks";
 import { unmaskMoney } from "utils/unmaskMoney";
 
@@ -13,16 +13,9 @@ import Loading from "components/atoms/loading/loading";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
 
-
-const ModalAddDriver = (
-  { 
-    showModal, 
-    setShowModal, 
-    mutate
-  }) => {
-
+const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
   const { t } = useTranslation();
-  
+
   const [body, setBody] = useState({});
   const [data, setData] = useState({});
 
@@ -39,12 +32,7 @@ const ModalAddDriver = (
     data: newDevice,
     error: errorNewDevice,
     isFetching,
-  } = useCreate(
-    "driver/register", 
-    data, 
-    fetch, 
-    setFetch
-  );
+  } = useCreate("driver/register", data, fetch, setFetch);
 
   const onClose = () => {
     setShowModal(false);
@@ -54,14 +42,14 @@ const ModalAddDriver = (
   const handleSubmit = (ev) => {
     ev.preventDefault();
 
-    if(body?.password !== confirmPassword){
-        setPasswordError(true)
-      return
+    if (body?.password !== confirmPassword) {
+      setPasswordError(true);
+      return;
     }
 
     setFetch(true);
-    setPasswordError(false)
-    setConfirmPassword('')
+    setPasswordError(false);
+    setConfirmPassword("");
   };
 
   useEffect(() => {
@@ -72,8 +60,8 @@ const ModalAddDriver = (
       password: body?.password,
       percentage: body?.percentage ?? 0,
       daily: unmaskMoney(body?.daily ?? 0),
-      value_fix: unmaskMoney(body?.value_fix?? 0),
-    }))
+      value_fix: unmaskMoney(body?.value_fix ?? 0),
+    }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [body]);
 
@@ -83,8 +71,12 @@ const ModalAddDriver = (
       onClose();
     }
 
-    if(newDevice){
+    if (newDevice) {
       successNotification(t("messages.success_msg"));
+    }
+
+    if (errorNewDevice) {
+      errorNotification(errorNewDevice?.response?.data?.msg);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newDevice, errorNewDevice]);
@@ -109,7 +101,7 @@ const ModalAddDriver = (
           spacing={2}
           mt={1}
           sx={{ minHeight: "300px", justifyContent: "flex-start" }}
-        > 
+        >
           <Grid item xs={12} md={6} lg={6}>
             <Input
               required
@@ -119,7 +111,7 @@ const ModalAddDriver = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.name ?? ''}
+              value={body?.name ?? ""}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
@@ -138,7 +130,7 @@ const ModalAddDriver = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.name_user ?? ''}
+              value={body?.name_user ?? ""}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
@@ -162,7 +154,7 @@ const ModalAddDriver = (
               }}
               error={passwordError}
               helperText={passwordError ? "Senhas não conferem" : ""}
-              value={body?.password ?? ''}
+              value={body?.password ?? ""}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
@@ -184,7 +176,14 @@ const ModalAddDriver = (
             />
           </Grid>
 
-          <hr style={{ border: "1px solid #000000", width: "97%", opacity: "0.5", margin: "25px 0px 16px 20px" }} />
+          <hr
+            style={{
+              border: "1px solid #000000",
+              width: "97%",
+              opacity: "0.5",
+              margin: "25px 0px 16px 20px",
+            }}
+          />
 
           <Grid item xs={12} md={6} lg={6}>
             <Input
@@ -245,31 +244,38 @@ const ModalAddDriver = (
             />
           </Grid>
 
-          <Grid 
-            container 
-            item 
-            xs={12} 
-            md={12} 
-            lg={12} 
-            spacing={2} 
+          <Grid
+            container
+            item
+            xs={12}
+            md={12}
+            lg={12}
+            spacing={2}
             mt={2}
             justifyContent={"flex-end"}
           >
             <Grid container item xs={12} md={3} lg={3}>
-              <Button 
+              <Button
                 onClick={() => onClose()}
                 background={"#fff"}
-                sx={{ width: "140px", height: "49px", border: "1px solid #509BFB", color: "#000000" }}
+                sx={{
+                  width: "140px",
+                  height: "49px",
+                  border: "1px solid #509BFB",
+                  color: "#000000",
+                }}
                 variant="text"
               >
                 CANCELAR
-              </Button>              
+              </Button>
             </Grid>
-            <Grid container item xs={12} md={3} lg={3} >
-              <Button 
-                type="submit" 
+            <Grid container item xs={12} md={3} lg={3}>
+              <Button
+                type="submit"
                 color="success"
-                background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+                background={
+                  "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+                }
                 sx={{
                   fontSize: "14px",
                   color: "white",

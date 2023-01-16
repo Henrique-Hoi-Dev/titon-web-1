@@ -8,21 +8,10 @@ import Loading from "components/atoms/loading/loading";
 import Text from "components/atoms/text/text";
 import Modal from "components/molecules/modal/modal";
 
-const ModalDeleteDriver = (
-  { 
-    showModal, 
-    setShowModal, 
-    props, 
-    mutate,
-  }) => {
-
+const ModalDeleteDriver = ({ showModal, setShowModal, props, mutate }) => {
   const [fetch, setFetch] = useState(false);
 
-  const { 
-    data, 
-    isFetching,
-    error
-  } = useDelete(
+  const { data, isFetching, error } = useDelete(
     "driver",
     props.id,
     fetch,
@@ -35,17 +24,16 @@ const ModalDeleteDriver = (
   };
 
   const onClose = () => {
-    setShowModal(false)
-  }
+    setShowModal(false);
+  };
 
   useEffect(() => {
     if (data?.successStatus === true) {
       mutate();
       onClose();
       successNotification(data?.success?.responseData?.msg);
-    } 
-    else if (error?.response?.data?.httpStatus === 400) {
-      errorNotification(error?.response?.data?.responseData?.msg)
+    } else if (error?.response?.data?.httpStatus === 400) {
+      errorNotification(error?.response?.data?.msg);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, error]);
@@ -71,50 +59,74 @@ const ModalDeleteDriver = (
           <Grid item container justifyContent="center">
             <Text fontSize={"30px"}>Deseja excluir: {props.name}?</Text>
           </Grid>
-          <Grid item container xs={12} md={12} lg={12} justifyContent="center" >
-            <Grid item xs={6} md={8.3} lg={8.3} mt={1} sx={{ textAlign: "center" }}>
+          <Grid item container xs={12} md={12} lg={12} justifyContent="center">
+            <Grid
+              item
+              xs={6}
+              md={8.3}
+              lg={8.3}
+              mt={1}
+              sx={{ textAlign: "center" }}
+            >
               <Text fontSize={"16px"}>
-                Após excluir ele dá plataforma o caminhoneiro não terá mais acesso
-                a sua empresa atraves da LogBook.
-              </Text>            
+                Após excluir ele dá plataforma o caminhoneiro não terá mais
+                acesso a sua empresa atraves da LogBook.
+              </Text>
             </Grid>
           </Grid>
 
-          <Grid 
-            container 
-            item 
-            xs={12} 
-            md={12} 
-            lg={12} 
-            spacing={2} 
-            mt={2}
-          >
-            <Grid container item xs={6} md={6} lg={6} justifyContent={"flex-end"}>
-              <Button 
+          <Grid container item xs={12} md={12} lg={12} spacing={2} mt={2}>
+            <Grid
+              container
+              item
+              xs={6}
+              md={6}
+              lg={6}
+              justifyContent={"flex-end"}
+            >
+              <Button
                 onClick={() => onClose()}
                 background={"#509BFB"}
-                sx={{ width: "140px", height: "49px", border: "1px solid #509BFB", color: "#ffff", mr: 3 }}
+                sx={{
+                  width: "140px",
+                  height: "49px",
+                  border: "1px solid #509BFB",
+                  color: "#ffff",
+                  mr: 3,
+                }}
                 variant="contained"
               >
                 CANCELAR
               </Button>
             </Grid>
-            <Grid container item xs={6} md={6} lg={6} justifyContent={"flex-start"}>
-              <Button 
-                type="submit" 
+            <Grid
+              container
+              item
+              xs={6}
+              md={6}
+              lg={6}
+              justifyContent={"flex-start"}
+            >
+              <Button
+                type="submit"
                 background={"#fff"}
-                sx={{ width: "140px", height: "49px", border: "1px solid #F03D3D", color: "#000000" }}
+                sx={{
+                  width: "140px",
+                  height: "49px",
+                  border: "1px solid #F03D3D",
+                  color: "#000000",
+                }}
                 variant="text"
               >
                 EXCLUIR
               </Button>
-            </Grid>            
+            </Grid>
           </Grid>
         </>
       )}
       {isFetching && (
         <Grid item container>
-          <Loading/>
+          <Loading />
         </Grid>
       )}
     </Modal>

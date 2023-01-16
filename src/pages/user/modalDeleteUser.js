@@ -33,7 +33,7 @@ const ModalDeleteTruck = ({ showModal, setShowModal, props, mutate }) => {
       onClose();
       successNotification(data?.success?.responseData?.msg);
     } else if (error?.response?.data?.httpStatus === 400) {
-      errorNotification(error?.response?.data?.responseData?.msg);
+      errorNotification(error?.response?.data?.msg);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, error]);

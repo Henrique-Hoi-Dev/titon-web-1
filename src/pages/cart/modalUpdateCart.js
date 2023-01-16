@@ -53,6 +53,8 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
     if (cartUpdate) {
       mutate();
       onClose();
+    }
+    if (cartUpdate) {
       successNotification();
     }
 

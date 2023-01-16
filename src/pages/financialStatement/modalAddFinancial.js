@@ -15,23 +15,19 @@ import Title from "components/atoms/title/title";
 import Autocomplete from "components/atoms/autocomplete/autocomplete";
 import PickerDate from "components/atoms/pickerDate/pickerDate";
 
-const ModalAddFinancial = (
-  { 
-    showModal, 
-    setShowModal, 
-    mutate
-  }) => {
-
+const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
   const { t } = useTranslation();
 
   const user = useSelector((state) => state?.user);
 
   const [body, setBody] = useState({});
 
-  const [truckId, setTruckId] = useState('')
-  const [cartId, setCartId] = useState('')
-  const [driverId, setDriverId] = useState('')
-  const [date, setDate] = useState(format(startOfDay(new Date()), "MM-dd-yyyy"))
+  const [truckId, setTruckId] = useState("");
+  const [cartId, setCartId] = useState("");
+  const [driverId, setDriverId] = useState("");
+  const [date, setDate] = useState(
+    format(startOfDay(new Date()), "MM-dd-yyyy")
+  );
 
   const [fetch, setFetch] = useState(false);
 
@@ -39,40 +35,22 @@ const ModalAddFinancial = (
     data: newFinancial,
     error: errorNewFinancial,
     isFetching,
-  } = useCreate(
-    "user/financialStatement", 
-    body, 
-    fetch, 
-    setFetch
-  );
+  } = useCreate("user/financialStatement", body, fetch, setFetch);
 
-  const {
-    data: trucks,
-  } = useGet(
-    "/trucks", 
-    {}, 
-  );
+  console.log("erros", errorNewFinancial?.response?.data);
 
-  const {
-    data: drivers,
-  } = useGet(
-    "/drivers", 
-    {}, 
-  );
+  const { data: trucks } = useGet("/trucks", {});
 
-  const {
-    data: carts,
-  } = useGet(
-    "/carts", 
-    {}, 
-  );
+  const { data: drivers } = useGet("/drivers", {});
+
+  const { data: carts } = useGet("/carts", {});
 
   const onClose = () => {
     setShowModal(false);
-    setBody({})
-    setTruckId('')
-    setDriverId('')
-    setCartId('')
+    setBody({});
+    setTruckId("");
+    setDriverId("");
+    setCartId("");
   };
 
   const handleSubmit = (ev) => {
@@ -88,9 +66,8 @@ const ModalAddFinancial = (
       truck_id: truckId,
       driver_id: driverId,
       cart_id: cartId,
-      creator_user_id: user?.data?.userProps?.id 
-    }))
-
+      creator_user_id: user?.data?.userProps?.id,
+    }));
   }, [truckId, user, driverId, cartId, date]);
 
   useEffect(() => {
@@ -99,11 +76,11 @@ const ModalAddFinancial = (
       onClose();
     }
 
-    if(newFinancial){
+    if (newFinancial) {
       successNotification(t("messages.success_msg"));
     }
     if (errorNewFinancial) {
-      errorNotification(errorNewFinancial?.response?.data?.responseData?.msg)
+      errorNotification(errorNewFinancial?.response?.data?.msg);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newFinancial, errorNewFinancial]);
@@ -116,7 +93,11 @@ const ModalAddFinancial = (
       maxHeight={"500px"}
     >
       <ContentHeader mt={2}>
-        <Title  sx={{ fontFamily: "Poppins, sans-serif!important", fontSize: "32px" }}>Nova Ficha</Title>
+        <Title
+          sx={{ fontFamily: "Poppins, sans-serif!important", fontSize: "32px" }}
+        >
+          Nova Ficha
+        </Title>
       </ContentHeader>
 
       {!isFetching && (
@@ -127,41 +108,41 @@ const ModalAddFinancial = (
           mt={1}
           justifyContent={"flex-start"}
           sx={{ minHeight: "300px" }}
-        > 
+        >
           <Grid item xs={12} md={12} lg={12}>
-            <Autocomplete 
+            <Autocomplete
               sx={{
                 "& .MuiAutocomplete-input": {
                   height: "0.4em!important",
                 },
-              }}  
+              }}
               placeholder={"Caminhão"}
               options={trucks?.dataResult ?? []}
               getOptionLabel={(option) => option.truck_models}
               onChange={(event, newValue) => {
-                setTruckId(newValue?.id)
+                setTruckId(newValue?.id);
               }}
             />
           </Grid>
 
           <Grid item xs={12} md={12} lg={12}>
-            <Autocomplete 
+            <Autocomplete
               sx={{
                 "& .MuiAutocomplete-input": {
                   height: "0.4em!important",
                 },
-              }}  
+              }}
               placeholder={"Motorista"}
               options={drivers?.dataResult ?? []}
               getOptionLabel={(option) => option.name}
               onChange={(event, newValue) => {
-                setDriverId(newValue.id)
+                setDriverId(newValue.id);
               }}
             />
           </Grid>
 
           <Grid item xs={12} md={12} lg={12}>
-            <Autocomplete 
+            <Autocomplete
               sx={{
                 "& .MuiAutocomplete-input": {
                   height: "0.4em!important",
@@ -171,7 +152,7 @@ const ModalAddFinancial = (
               options={carts?.dataResult ?? []}
               getOptionLabel={(option) => option.cart_models}
               onChange={(event, newValue) => {
-                setCartId(newValue.id)
+                setCartId(newValue.id);
               }}
             />
           </Grid>
@@ -181,26 +162,33 @@ const ModalAddFinancial = (
               size="medium"
               height="2.4em"
               onChange={(newValue) => {
-                setDate(format(startOfDay(newValue), "MM-dd-yyyy"))
+                setDate(format(startOfDay(newValue), "MM-dd-yyyy"));
               }}
             />
           </Grid>
 
           <Grid container item xs={12} md={12} lg={12} spacing={2} mt={1} p={2}>
             <Grid item xs={12} md={12} lg={6}>
-              <Button 
+              <Button
                 onClick={() => onClose()}
                 background={"#fff"}
-                sx={{ width: "140px", height: "49px", border: "1px solid #509BFB", color: "#000000" }}
+                sx={{
+                  width: "140px",
+                  height: "49px",
+                  border: "1px solid #509BFB",
+                  color: "#000000",
+                }}
                 variant="text"
               >
                 Voltar
               </Button>
             </Grid>
             <Grid item xs={12} md={12} lg={6}>
-              <Button 
-                onClick={(ev) => handleSubmit(ev)} 
-                background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+              <Button
+                onClick={(ev) => handleSubmit(ev)}
+                background={
+                  "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+                }
                 sx={{ width: "140px", height: "49px" }}
               >
                 Confirmar

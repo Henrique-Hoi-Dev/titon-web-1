@@ -74,6 +74,9 @@ const ModalUpdateUser = ({ showModal, setShowModal, mutate, props }) => {
     if (userUpdate) {
       mutate();
       onClose();
+    }
+
+    if (userUpdate) {
       successNotification();
     }
 

@@ -23,8 +23,8 @@ const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
   const [progressPercent, setProgressPercent] = useState(0);
 
   const {
-    data: user,
-    error: errorUser,
+    data: truck,
+    error: errorTruck,
     isFetching,
   } = useCreate("user/truck", body, fetch, setFetch);
 
@@ -49,20 +49,20 @@ const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
   }, [preview, setPreview]);
 
   useEffect(() => {
-    if (user) {
+    if (truck) {
       mutate();
       onClose();
     }
 
-    if (user) {
+    if (truck) {
       successNotification();
     }
 
-    if (errorUser) {
-      errorNotification(errorUser?.response?.data?.msg);
+    if (errorTruck) {
+      errorNotification(errorTruck?.response?.data?.msg);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, errorUser]);
+  }, [truck, errorTruck]);
 
   async function handleChange(e) {
     const file = e.target.files[0];

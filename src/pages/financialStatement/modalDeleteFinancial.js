@@ -8,21 +8,10 @@ import Loading from "components/atoms/loading/loading";
 import Text from "components/atoms/text/text";
 import Modal from "components/molecules/modal/modal";
 
-const ModalDeleteFinancial = (
-  { 
-    showModal, 
-    setShowModal, 
-    id, 
-    mutate,
-  }) => {
-
+const ModalDeleteFinancial = ({ showModal, setShowModal, id, mutate }) => {
   const [fetch, setFetch] = useState(false);
 
-  const { 
-    data, 
-    isFetching,
-    error
-  } = useDelete(
+  const { data, isFetching, error } = useDelete(
     "user/financialStatement",
     id,
     fetch,
@@ -35,17 +24,16 @@ const ModalDeleteFinancial = (
   };
 
   const onClose = () => {
-    setShowModal(false)
-  }
+    setShowModal(false);
+  };
 
   useEffect(() => {
     if (data?.successStatus === true) {
       mutate();
       onClose();
       successNotification(data?.success?.responseData?.msg);
-    } 
-    else if (error?.response?.data?.httpStatus === 400) {
-      errorNotification(error?.response?.data?.responseData?.msg)
+    } else if (error?.response?.data?.httpStatus === 400) {
+      errorNotification(error?.response?.data?.msg);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, error]);
@@ -72,16 +60,18 @@ const ModalDeleteFinancial = (
             <Text fontSize={"30px"}>Deseja Deletar Ficha?</Text>
           </Grid>
           <Grid item xs={12} md={12} lg={6} mt={2}>
-            <Button variant="return" onClick={() => onClose()}>Voltar</Button>
+            <Button variant="return" onClick={() => onClose()}>
+              Voltar
+            </Button>
           </Grid>
           <Grid item xs={12} md={12} lg={6} mt={2}>
-            <Button 
-              type="submit" 
-              sx={{ 
+            <Button
+              type="submit"
+              sx={{
                 background: "red",
                 "&:hover": {
                   background: "red",
-                }
+                },
               }}
             >
               Deletar
@@ -91,7 +81,7 @@ const ModalDeleteFinancial = (
       )}
       {isFetching && (
         <Grid item container>
-          <Loading/>
+          <Loading />
         </Grid>
       )}
     </Modal>

@@ -37,13 +37,11 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
     isFetching,
   } = useCreate("user/financialStatement", body, fetch, setFetch);
 
-  console.log("erros", errorNewFinancial?.response?.data);
+  const { data: trucks } = useGet("/trucks-select", {});
 
-  const { data: trucks } = useGet("/trucks", {});
+  const { data: drivers } = useGet("/drivers-select", {});
 
-  const { data: drivers } = useGet("/drivers", {});
-
-  const { data: carts } = useGet("/carts", {});
+  const { data: carts } = useGet("/carts-select", {});
 
   const onClose = () => {
     setShowModal(false);
@@ -116,11 +114,11 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
                   height: "0.4em!important",
                 },
               }}
-              placeholder={"Caminhão"}
-              options={trucks?.dataResult ?? []}
-              getOptionLabel={(option) => option.truck_models}
+              placeholder={"Motorista"}
+              options={drivers?.dataResult ?? []}
+              getOptionLabel={(option) => option.name}
               onChange={(event, newValue) => {
-                setTruckId(newValue?.id);
+                setDriverId(newValue.id);
               }}
             />
           </Grid>
@@ -132,11 +130,11 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
                   height: "0.4em!important",
                 },
               }}
-              placeholder={"Motorista"}
-              options={drivers?.dataResult ?? []}
-              getOptionLabel={(option) => option.name}
+              placeholder={"Caminhão"}
+              options={trucks?.dataResult ?? []}
+              getOptionLabel={(option) => option.truck_models}
               onChange={(event, newValue) => {
-                setDriverId(newValue.id);
+                setTruckId(newValue?.id);
               }}
             />
           </Grid>

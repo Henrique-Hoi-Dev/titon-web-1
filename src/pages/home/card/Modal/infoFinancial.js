@@ -30,9 +30,9 @@ export const InfoFinancial = ({ showModal, setShowModal, financialId }) => {
   ];
 
   const notificações = [
-    { label: "Vulcanização de pneu efetuada ", date: "16/11/2022" },
-    { label: "Abastecimento de 50l de Diesel", date: "16/11/2022" },
-    { label: "Troca de oléo do freio", date: "16/11/2022" },
+    { id: 1, label: "Vulcanização de pneu efetuada ", date: "16/11/2022" },
+    { id: 2, label: "Abastecimento de 50l de Diesel", date: "16/11/2022" },
+    { id: 3, label: "Troca de oléo do freio", date: "16/11/2022" },
   ];
 
   const getStatus = (res) => status.find((item) => item.value === res) ?? "";
@@ -252,7 +252,7 @@ export const InfoFinancial = ({ showModal, setShowModal, financialId }) => {
           >
             {notificações.map((item) => (
               <>
-                <Text>{item.label}</Text> <Text>{item.date}</Text>
+                <Text key={item.id}>{item.label}</Text> <Text>{item.date}</Text>
                 <Divider
                   sx={{
                     my: 1,

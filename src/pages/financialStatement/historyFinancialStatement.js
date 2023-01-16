@@ -5,7 +5,7 @@ import { InputSearches } from "components/atoms/input/inputSearches/input";
 
 import Table from "./table";
 
-const FinancialStatement = () => {
+const HistoryFinancialStatement = () => {
   const INITIAL_STATE_FINANCIAL = {
     limit: 10,
     page: 1,
@@ -76,4 +76,4 @@ const FinancialStatement = () => {
   );
 };
 
-export default FinancialStatement;
+export default HistoryFinancialStatement;

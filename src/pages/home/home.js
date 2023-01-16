@@ -6,7 +6,6 @@ import { InputSearches } from "components/atoms/input/inputSearches/input";
 
 import Cards from "./card/cards";
 import Button from "components/atoms/button/button";
-import ModalAddFinancial from "pages/financialStatement/modalAddFinancial";
 import SubMenuFilter from "pages/home/subMenuFilter/subMenuFilter";
 
 const Home = () => {
@@ -87,14 +86,11 @@ const Home = () => {
             search={search}
             searchOrder={searchOrder}
             searchStatus={searchStatus}
+            setShowModalFicha={setShowModalFicha}
+            showModalFicha={showModalFicha}
           />
         </Grid>
       </Grid>
-
-      <ModalAddFinancial
-        showModal={showModalFicha}
-        setShowModal={setShowModalFicha}
-      />
     </>
   );
 };

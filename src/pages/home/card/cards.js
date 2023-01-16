@@ -9,8 +9,15 @@ import imgNotFound from "../../../assets/trist-not-found.svg";
 import CardInfoValues from "pages/home/card/cardInfoValues";
 import Loading from "components/atoms/loading/loading";
 import Text from "components/atoms/text/text";
+import ModalAddFinancial from "pages/home/card/modalAddFinancial";
 
-const Cards = ({ search, searchOrder, searchStatus }) => {
+const Cards = ({
+  search,
+  searchOrder,
+  searchStatus,
+  showModalFicha,
+  setShowModalFicha,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const [financialId, setFinancialId] = useState("");
 
@@ -32,6 +39,7 @@ const Cards = ({ search, searchOrder, searchStatus }) => {
     data: financial,
     loading,
     isValidating,
+    mutate,
   } = useGet("financialStatements", financialQuery);
 
   useEffect(() => {
@@ -142,6 +150,12 @@ const Cards = ({ search, searchOrder, searchStatus }) => {
           financialId={financialId}
         />
       )}
+
+      <ModalAddFinancial
+        mutate={mutate}
+        showModal={showModalFicha}
+        setShowModal={setShowModalFicha}
+      />
     </Grid>
   );
 };

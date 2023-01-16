@@ -8,7 +8,7 @@ import Driver from "pages/driver/driver";
 import User from "pages/user/user";
 import Truck from "pages/truck/truck";
 import Cart from "pages/cart/cart";
-import FinancialStatement from "pages/financialStatement/financialStatement";
+import HistoryFinancialStatement from "pages/financialStatement/historyFinancialStatement";
 
 const RouterController = () => {
   const initialPage = () => {
@@ -25,7 +25,7 @@ const RouterController = () => {
           <Route path="/user" element={<User />} />
           <Route path="/truck" element={<Truck />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/historic" element={<FinancialStatement />} />
+          <Route path="/historic" element={<HistoryFinancialStatement />} />
         </Route>
       </Route>
     </Routes>

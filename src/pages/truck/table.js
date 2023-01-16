@@ -13,6 +13,7 @@ import {
 } from "components/atoms/table/table";
 
 import InfoRow from "./infoRow";
+import imgNotFound from "../../assets/trist-not-found-table.svg";
 import Text from "components/atoms/text/text";
 import Loading from "components/atoms/loading/loading";
 import ModalDeleteTruck from "./modalDeleteTruck";
@@ -150,14 +151,24 @@ const Table = ({
           spacing={2}
           mt={1}
           mb={1}
+          p={"18px"}
           alignItems="center"
           flexWrap="nowrap"
           justifyContent="center"
         >
-          {data?.total === 0 && !data && !isFetching && (
+          {data?.dataResult?.length === 0 && !isFetching && (
             <Grid item justifyContent="center" alignItems="center" pt={5}>
               <Text fontSize={"28px"} center>
-                {t("messages.no_results_found").toUpperCase()}
+                {"RESULTADO NÃO ENCONTRADO..."}
+                <img
+                  src={imgNotFound}
+                  alt="img"
+                  width={"40px"}
+                  style={{
+                    verticalAlign: "bottom",
+                    marginLeft: "24px",
+                  }}
+                />
               </Text>
             </Grid>
           )}
@@ -171,9 +182,13 @@ const Table = ({
           )}
         </Grid>
 
-        {!isFetching && data?.totalPages > 0 && (
-          <TablePagination data={data} query={query} setQuery={setQuery} />
-        )}
+        {!isFetching &&
+          data?.dataResult?.length > 0 &&
+          data?.totalPages > 0 && (
+            <Grid item justifyContent="center" alignItems="center">
+              <TablePagination data={data} query={query} setQuery={setQuery} />
+            </Grid>
+          )}
       </TableContainer>
 
       {showModalDelete && (

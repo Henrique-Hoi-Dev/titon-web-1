@@ -125,18 +125,10 @@ const Table = ({
           flexWrap="nowrap"
           justifyContent="center"
         >
-          {data?.total === 0 && !isFetching && (
+          {data?.dataResult?.length === 0 && !isFetching && (
             <Grid item justifyContent="center" alignItems="center" pt={5}>
               <Text fontSize={"28px"} center>
-                {t("messages.no_results_found").toUpperCase()}
-              </Text>
-            </Grid>
-          )}
-
-          {data?.total === 0 && !data && !isFetching && (
-            <Grid item justifyContent="center" alignItems="center" pt={5}>
-              <Text fontSize={"28px"} center>
-                {t("messages.no_results_found").toUpperCase()}{" "}
+                {"RESULTADO NÃO ENCONTRADO..."}
                 <img
                   src={imgNotFound}
                   alt="img"

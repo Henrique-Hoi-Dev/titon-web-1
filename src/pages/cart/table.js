@@ -9,26 +9,25 @@ import {
   SRow,
   STable,
   STableBody,
-  SLabel
-} from "components/atoms/table/table"
+  SLabel,
+} from "components/atoms/table/table";
 
 import InfoRow from "./infoRow";
 import Text from "components/atoms/text/text";
+import imgNotFound from "../../assets/trist-not-found-table.svg";
 import Loading from "components/atoms/loading/loading";
 import ModalDeleteCart from "./modalDeleteCart";
 import ModalUpdateCart from "./modalUpdateCart";
 
-const Table = (
-  { 
-    data,
-    query, 
-    setQuery, 
-    isFetching, 
-    mutate, 
-    error, 
-    loading 
-  }) => {
-
+const Table = ({
+  data,
+  query,
+  setQuery,
+  isFetching,
+  mutate,
+  error,
+  loading,
+}) => {
   const { t } = useTranslation();
 
   const isDesktop = useMediaQuery({ maxWidth: "1120px" });
@@ -37,17 +36,17 @@ const Table = (
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showModalUpdate, setShowModalUpdate] = useState(false);
 
-  const [cartId, setCartId] = useState(null)
+  const [cartId, setCartId] = useState(null);
 
   const handleSort = (item) => {
     setQuery((state) => ({
       ...state,
       sort_field: item,
-      sort_order: `${query?.sort_order === "ASC" ? "DESC" : "ASC"}`
-    }))
+      sort_order: `${query?.sort_order === "ASC" ? "DESC" : "ASC"}`,
+    }));
     return;
   };
-  
+
   return (
     <>
       <TableContainer component={Paper} sx={{ maxWidth: "1420px" }}>
@@ -150,7 +149,7 @@ const Table = (
 
         {(loading || isFetching) && (
           <Grid container justifyContent="center" alignItems="center" mt={3}>
-            <Loading titulo={t("messages.loading")}/>
+            <Loading titulo={t("messages.loading")} />
           </Grid>
         )}
 
@@ -160,23 +159,24 @@ const Table = (
           spacing={2}
           mt={1}
           mb={1}
+          p="18px"
           alignItems="center"
           flexWrap="nowrap"
           justifyContent="center"
-        > 
-
-          {(data?.total === 0) && !isFetching && (
+        >
+          {data?.dataResult?.length === 0 && !isFetching && (
             <Grid item justifyContent="center" alignItems="center" pt={5}>
               <Text fontSize={"28px"} center>
-                {t("messages.no_results_found").toUpperCase()}
-              </Text>
-            </Grid>
-          )}
-
-          {(data?.total === 0) && !data && !isFetching && (
-            <Grid item justifyContent="center" alignItems="center" pt={5}>
-              <Text fontSize={"28px"} center>
-                {t("messages.no_results_found").toUpperCase()}
+                {"RESULTADO NÃO ENCONTRADO..."}
+                <img
+                  src={imgNotFound}
+                  alt="img"
+                  width={"40px"}
+                  style={{
+                    verticalAlign: "bottom",
+                    marginLeft: "24px",
+                  }}
+                />
               </Text>
             </Grid>
           )}
@@ -190,17 +190,15 @@ const Table = (
           )}
         </Grid>
 
-        {!isFetching && data?.totalPages > 0 && (
-          <TablePagination
-            data={data}
-            query={query}
-            setQuery={setQuery}
-          />
-        )}
-      </TableContainer>   
+        {!isFetching &&
+          data?.dataResult?.length > 0 &&
+          data?.totalPages > 0 && (
+            <TablePagination data={data} query={query} setQuery={setQuery} />
+          )}
+      </TableContainer>
 
       {showModalDelete && (
-        <ModalDeleteCart 
+        <ModalDeleteCart
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
           props={cartId}
@@ -209,7 +207,7 @@ const Table = (
       )}
 
       {showModalUpdate && (
-        <ModalUpdateCart 
+        <ModalUpdateCart
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
           props={cartId}
@@ -217,7 +215,6 @@ const Table = (
         />
       )}
     </>
-
   );
 };
 

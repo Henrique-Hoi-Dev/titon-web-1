@@ -44,6 +44,15 @@ import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import { FaTrailer } from "react-icons/fa";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
+
+export const IconMenuTaskAltIcon = (props) => {
+  return (
+    <SvgIcon {...props}>
+      <TaskAltIcon />
+    </SvgIcon>
+  );
+};
 
 export const IconSubMenuTrendingDownIcon = (props) => {
   return (

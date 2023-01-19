@@ -31,6 +31,7 @@ import {
   IconMenuUser,
   IconMenuFile,
   IconMenuTrailer,
+  IconMenuTaskAltIcon,
 } from "components/atoms/icons/icons";
 
 import logo from "../../../assets/logo.png";
@@ -104,7 +105,7 @@ const Menu = () => {
           </ButtonMenu>
         </ListItemCategory>
 
-        <ListItemCategory onClick={() => navigate("/")}>
+        <ListItemCategory onClick={() => navigate("/report")}>
           <ButtonMenu
             sx={{
               justifyContent: openMenu ? "initial" : "center",
@@ -237,6 +238,36 @@ const Menu = () => {
               }}
             >
               Histórico
+            </ListItemText>
+          </ButtonMenu>
+        </ListItemCategory>
+
+        <ListItemCategory
+          onClick={() => navigate("/check")}
+          sx={{
+            display: "block",
+          }}
+        >
+          <ButtonMenu
+            sx={{
+              justifyContent: openMenu ? "initial" : "center",
+              marginLeft: openMenu ? "25px" : "0px",
+            }}
+          >
+            <Tooltip title="Histórico" placement="top">
+              <IconMenuCategory sx={{ mr: openMenu ? 0.4 : "auto" }}>
+                <IconMenuTaskAltIcon sx={{ fontSize: "30px" }} />
+              </IconMenuCategory>
+            </Tooltip>
+
+            <ListItemText
+              sx={{
+                opacity: openMenu ? 1 : 0,
+                fontSize: "1.2rem",
+                marginTop: "10px",
+              }}
+            >
+              Checklist
             </ListItemText>
           </ButtonMenu>
         </ListItemCategory>

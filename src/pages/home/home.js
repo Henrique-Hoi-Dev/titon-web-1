@@ -6,7 +6,7 @@ import { InputSearches } from "components/atoms/input/inputSearches/input";
 
 import Cards from "./card/cards";
 import Button from "components/atoms/button/button";
-import SubMenuFilter from "pages/home/subMenuFilter/subMenuFilter";
+import SubMenuFilter from "pages/home/subMenuFilter";
 
 const Home = () => {
   const [showModalFicha, setShowModalFicha] = useState(false);

@@ -92,9 +92,9 @@ const CardInfoValues = ({ props, styles, onClick }) => {
               </Text>
               <Text
                 fontSize={"19px"}
-                color={getStatus(props?.freigth[0]?.status_check).color}
+                color={getStatus(props?.freigth[0]?.status).color}
               >
-                {getStatus(props?.freigth[0]?.status_check).label}
+                {getStatus(props?.freigth[0]?.status).label}
               </Text>
             </Grid>
             <Text fontSize={"16px"}>

@@ -32,7 +32,6 @@ const Cards = ({
 
   if (financialQuery.status_check === "") delete financialQuery.status_check;
   if (financialQuery.sort_order === "") delete financialQuery.sort_order;
-  if (financialQuery.status_check === "") delete financialQuery.status_check;
   if (financialQuery.search === "") delete financialQuery.search;
 
   const {

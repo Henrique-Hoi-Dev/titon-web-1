@@ -166,15 +166,13 @@ export const ModalInfoFinancial = ({
                     <Text
                       fontSize={"19px"}
                       color={
-                        getStatus(
-                          financial?.dataResult?.freigth[0]?.status_check
-                        ).color
+                        getStatus(financial?.dataResult?.freigth[0]?.status)
+                          .color
                       }
                     >
                       {
-                        getStatus(
-                          financial?.dataResult?.freigth[0]?.status_check
-                        ).label
+                        getStatus(financial?.dataResult?.freigth[0]?.status)
+                          .label
                       }
                     </Text>
                   </Grid>

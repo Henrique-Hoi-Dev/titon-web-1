@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Avatar, Box, Collapse, IconButton, Menu, MenuItem } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Collapse,
+  IconButton,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import { useMediaQuery } from "react-responsive";
 import { moneyMask } from "utils/masks";
 import { formatDate } from "utils/formatDate";
@@ -17,13 +24,7 @@ import {
 } from "components/atoms/table/table";
 
 const InfoRow = (props) => {
-
-  const { 
-    data, 
-    index, 
-    setShowModalDelete, 
-    setFinancialId, 
-  } = props;
+  const { data, index, setShowModalDelete, setFinancialId } = props;
 
   const [open, setOpen] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
@@ -38,9 +39,9 @@ const InfoRow = (props) => {
     { value: "approved", label: "Aprovado", color: "#1976d2" },
     { value: "denied", label: "Negado", color: "red" },
     { value: "finished", label: "Finalizado", color: "grey" },
-  ]
+  ];
 
-  const getStatus = (res) => status.find(item => item.value === res)
+  const getStatus = (res) => status.find((item) => item.value === res);
 
   const handleClick = (ev) => {
     setOpenSettings(!openSettings);
@@ -48,11 +49,11 @@ const InfoRow = (props) => {
   };
 
   const handleDelete = (id) => {
-    setShowModalDelete(true)
-    setFinancialId(id)
-    setOpenSettings(false)
-  }
-  
+    setShowModalDelete(true);
+    setFinancialId(id);
+    setOpenSettings(false);
+  };
+
   // const handleUpdate = (id) => {
   //   setShowModalUpdate(true)
   //   setFinancialId(id)
@@ -61,7 +62,7 @@ const InfoRow = (props) => {
 
   return (
     <>
-      <SRow key={data?.id} alternatingcolors={index} >
+      <SRow key={data?.id} alternatingcolors={index}>
         <SCell minwidth={"0px"}>
           <IconButton
             aria-label="expand row"
@@ -73,13 +74,17 @@ const InfoRow = (props) => {
         </SCell>
 
         <SCell displaywidth={isMobile ? 1 : 0}>{data?.driver_name}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.truck_models}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>
+          {data?.truck_models}
+        </SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.cart_models}</SCell>
-        <SCell displaywidth={isDesktop ? 1 : 0}>{formatDate(data?.start_date)}</SCell>
+        <SCell displaywidth={isDesktop ? 1 : 0}>
+          {formatDate(data?.start_date)}
+        </SCell>
         <SCell>
           <Avatar
-            alt="img" 
-            sx={{ height: "40px", width: "40px", marginLeft: "35px" }} 
+            alt="img"
+            sx={{ height: "40px", width: "40px", marginLeft: "35px" }}
             src={data?.truck_avatar}
           />
         </SCell>
@@ -122,9 +127,9 @@ const InfoRow = (props) => {
         <MenuItem onClick={() => handleDelete(data?.id)}>Excluir</MenuItem>
       </Menu>
 
-      <SRow 
+      <SRow
         sx={{ backgroundColor: "white" }}
-        displaywidth={(data?.freigth.length > 0 ? 0 : 1)}
+        displaywidth={data?.freigth.length > 0 ? 0 : 1}
       >
         <SCell
           style={{ paddingBottom: 0, paddingTop: 0, border: 0 }}
@@ -145,25 +150,25 @@ const InfoRow = (props) => {
                 </SHead>
                 <STableBody>
                   {data?.freigth.map((res, i) => (
-                    <SRow 
+                    <SRow
                       key={i}
-                      sx={{ backgroundColor: "white" }} 
-                      displaywidth={res?.status_check_order === 'finished' ? 0 : 1}
+                      sx={{ backgroundColor: "white" }}
+                      displaywidth={res?.status === "finished" ? 0 : 1}
                     >
-                      <SCell 
-                        sx={{ 
+                      <SCell
+                        sx={{
                           fontWeight: "900",
-                          color: `${getStatus(res?.status_check_order)?.color}` 
+                          color: `${getStatus(res?.status)?.color}`,
                         }}
                       >
-                        {getStatus(res?.status_check_order)?.label}
+                        {getStatus(res?.status)?.label}
                       </SCell>
                       <SCell>{res?.contractor}</SCell>
                       <SCell>{res?.start_city}</SCell>
                       <SCell>{res?.final_city}</SCell>
                       <SCell>{moneyMask(res?.value_tonne || [0])}</SCell>
                       <SCell>{res?.start_km}Km</SCell>
-                    </SRow>                      
+                    </SRow>
                   ))}
                 </STableBody>
               </STable>

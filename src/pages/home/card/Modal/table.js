@@ -54,9 +54,9 @@ const Table = ({
             <SRow>
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "status_check_order"}
+                  active={query?.sort_field === "status"}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("status_check_order")}
+                  onClick={() => handleSort("status")}
                 >
                   Status
                 </SLabel>

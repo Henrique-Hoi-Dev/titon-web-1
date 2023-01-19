@@ -46,7 +46,7 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
   const handleSubmitActive = (ev) => {
     ev.preventDefault();
     setBody({
-      status_check_order: "approved",
+      status: "approved",
       user_id: user.data.users.id,
       driver_id: 2,
     });
@@ -156,25 +156,18 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
                   sx={{
                     ml: 2,
                     color: `${
-                      getStatus(
-                        checks?.dataResult?.first_check?.status_check_order
-                      )?.color
+                      getStatus(checks?.dataResult?.first_check?.status)?.color
                     }`,
                     fontWeight: "700",
                   }}
                 >
-                  {
-                    getStatus(
-                      checks?.dataResult?.first_check?.status_check_order
-                    ).label
-                  }
+                  {getStatus(checks?.dataResult?.first_check?.status).label}
                 </Text>
               </Grid>
               <Grid item md={3} lg={3}>
                 <Button
                   disabled={
-                    checks?.dataResult?.first_check?.status_check_order ===
-                    "approved"
+                    checks?.dataResult?.first_check?.status === "approved"
                   }
                   type="submit"
                   variant="contained"
@@ -376,18 +369,12 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
                   sx={{
                     ml: 2,
                     color: `${
-                      getStatus(
-                        checks?.dataResult?.first_check?.status_check_order
-                      )?.color
+                      getStatus(checks?.dataResult?.first_check?.status)?.color
                     }`,
                     fontWeight: "700",
                   }}
                 >
-                  {
-                    getStatus(
-                      checks?.dataResult?.first_check?.status_check_order
-                    ).label
-                  }
+                  {getStatus(checks?.dataResult?.first_check?.status).label}
                 </Text>
               </Grid>
             </Grid>

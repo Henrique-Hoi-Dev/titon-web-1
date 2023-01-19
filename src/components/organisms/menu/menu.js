@@ -36,7 +36,7 @@ import {
 
 import logo from "../../../assets/logo.png";
 
-const Menu = () => {
+const Menu = ({ setFetch }) => {
   const user = useSelector((state) => state?.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -80,7 +80,7 @@ const Menu = () => {
         </Grid>
       </DrawerHeader>
       <List sx={{ marginTop: "20px", border: "none" }}>
-        <ListItemCategory onClick={() => navigate("/home")}>
+        <ListItemCategory onClick={() => navigate("/home") || setFetch(true)}>
           <ButtonMenu
             sx={{
               justifyContent: openMenu ? "initial" : "center",
@@ -131,7 +131,7 @@ const Menu = () => {
           </ButtonMenu>
         </ListItemCategory>
 
-        <ListItemCategory onClick={() => navigate("/driver")}>
+        <ListItemCategory onClick={() => navigate("/driver") || setFetch(true)}>
           <ButtonMenu
             sx={{
               justifyContent: openMenu ? "initial" : "center",
@@ -185,7 +185,7 @@ const Menu = () => {
         </ListItemCategory>
 
         <ListItemCategory
-          onClick={() => navigate("/cart")}
+          onClick={() => navigate("/cart") || setFetch(true)}
           sx={{ display: "block" }}
         >
           <ButtonMenu
@@ -243,7 +243,7 @@ const Menu = () => {
         </ListItemCategory>
 
         <ListItemCategory
-          onClick={() => navigate("/check")}
+          onClick={() => navigate("/check") || setFetch(true)}
           sx={{
             display: "block",
           }}

@@ -8,11 +8,10 @@ import { api } from "services/api";
 import Text from "components/atoms/text/text";
 import pt from "date-fns/locale/pt";
 
-const HeaderBar = () => {
+const HeaderBar = ({ setFetch, fetch }) => {
   const user = useSelector((state) => state?.user);
 
   const [anchorElTwo, setAnchorElTwo] = useState(false);
-  const [fetch, setFetch] = useState(false);
 
   const [notifications, setNotifications] = useState([]);
   const [history, setHistory] = useState([]);
@@ -44,11 +43,11 @@ const HeaderBar = () => {
       }
       setFetch(false);
     }
-  }, [fetch, user]);
+  }, [fetch, setFetch, user]);
 
   useEffect(() => {
     setFetch(true);
-  }, []);
+  }, [setFetch]);
 
   async function handleMarkAsRead(id) {
     await api.put(`notifications/${id}`);

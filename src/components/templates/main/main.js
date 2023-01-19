@@ -12,15 +12,16 @@ export const templateContext = createContext({});
 
 const MainTemplate = () => {
   const [openMenu, setOpenMenu] = useState(true);
+  const [fetch, setFetch] = useState(false);
 
   const user = useSelector((state) => state.user);
-  
+
   return (
     <ThemeProvider theme={Theme(user)}>
       <templateContext.Provider value={{ Theme, openMenu, setOpenMenu }}>
         <Box>
-          <HeaderBar />
-          <Menu />
+          <HeaderBar fetch={fetch} setFetch={setFetch} />
+          <Menu fetch={fetch} setFetch={setFetch} />
           <Content />
         </Box>
       </templateContext.Provider>

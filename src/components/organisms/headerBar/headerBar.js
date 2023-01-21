@@ -7,11 +7,15 @@ import { api } from "services/api";
 
 import Text from "components/atoms/text/text";
 import pt from "date-fns/locale/pt";
+import ModalAction from "pages/home/card/Modal/modalAction";
 
 const HeaderBar = ({ setFetch, fetch }) => {
   const user = useSelector((state) => state?.user);
 
   const [anchorElTwo, setAnchorElTwo] = useState(false);
+  const [showModalCheck, setShowModalCheck] = useState(false);
+
+  const [checkId, setCheckId] = useState("");
 
   const [notifications, setNotifications] = useState([]);
   const [history, setHistory] = useState([]);
@@ -31,8 +35,17 @@ const HeaderBar = ({ setFetch, fetch }) => {
         })
       );
 
+      const history = response.data.dataResult.history.map((notifications) => ({
+        ...notifications,
+        timeDistance: formatDistance(
+          parseISO(notifications.created_at),
+          new Date(),
+          { addSuffix: true, locale: pt }
+        ),
+      }));
+
       if (response?.data?.dataResult?.notifications?.length >= 0) {
-        setHistory(response?.data?.dataResult?.history);
+        setHistory(history);
       }
 
       setNotifications(data);
@@ -50,11 +63,14 @@ const HeaderBar = ({ setFetch, fetch }) => {
   }, [setFetch]);
 
   async function handleMarkAsRead(id) {
-    await api.put(`notifications/${id}`);
+    const result = await api.put(`notifications/${id}`);
 
     setNotifications(
       notifications.map((res) => (res.id === id ? { ...res, read: true } : res))
     );
+
+    setCheckId(result.data.dataResult.freight_id);
+    setShowModalCheck(true);
 
     setFetch(true);
   }
@@ -67,6 +83,11 @@ const HeaderBar = ({ setFetch, fetch }) => {
 
   const handleClose = () => {
     setAnchorElTwo(false);
+  };
+
+  const handleCheck = (id) => {
+    setCheckId(id);
+    setShowModalCheck(!showModalCheck);
   };
 
   return (
@@ -163,7 +184,7 @@ const HeaderBar = ({ setFetch, fetch }) => {
                 md={12}
                 lg={12}
                 flexDirection={"column"}
-                onClick={() => setFetch(true) || handleMarkAsRead(res?.id)}
+                onClick={() => handleMarkAsRead(res?.id)}
               >
                 <Text
                   sx={{
@@ -208,15 +229,18 @@ const HeaderBar = ({ setFetch, fetch }) => {
                   md={12}
                   lg={12}
                   flexDirection={"column"}
+                  onClick={() => handleCheck(res?.freight_id)}
                 >
                   <Text
                     sx={{
+                      cursor: "pointer",
                       fontWeight: "900",
                       maxWidth: "380px",
                     }}
                   >
                     {res?.content}
                   </Text>
+                  <Text fontSize={"12px"}>{res?.timeDistance}</Text>
                 </Grid>
                 <Grid
                   item
@@ -245,6 +269,14 @@ const HeaderBar = ({ setFetch, fetch }) => {
           )}
         </Menu>
       </Grid>
+
+      {showModalCheck && (
+        <ModalAction
+          checkId={checkId}
+          showModal={showModalCheck}
+          setShowModal={setShowModalCheck}
+        />
+      )}
     </>
   );
 };

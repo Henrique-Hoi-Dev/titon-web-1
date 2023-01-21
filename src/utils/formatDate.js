@@ -5,9 +5,9 @@ import pt from "date-fns/locale/pt";
 
 export const formatDate = (date, local) => {
   if (date) {
-    if (local) return format(new Date(date), "dd-MM-yyyy");
+    if (local) return format(new Date(date), "dd/MM/yyyy");
     else {
-      return format(utcToZonedTime(new Date(date), ""), "dd-MM-yyyy");
+      return format(utcToZonedTime(new Date(date), ""), "dd/MM/yyyy");
     }
   } else {
     return "-";
@@ -18,13 +18,12 @@ export const formatMMMM = (date, local) => {
   if (date) {
     if (local) return format(new Date(date), "MMMM", { locale: pt });
     else {
-      return format(new Date(date), "MMMM", { locale: pt })
+      return format(new Date(date), "MMMM", { locale: pt });
     }
   } else {
     return "-";
   }
 };
-
 
 export const formatDatePicker = (date, local) => {
   if (date) {

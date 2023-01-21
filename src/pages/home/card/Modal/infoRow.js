@@ -2,6 +2,14 @@ import React from "react";
 import { useMediaQuery } from "react-responsive";
 import { SCell, SRow } from "components/atoms/table/table";
 import { moneyMask } from "utils/masks";
+import { formatDate } from "utils/formatDate";
+
+const status = [
+  { value: "APPROVAL_PROCESS", label: "ANALISE", color: "#FFCE52" },
+  { value: "APPROVED", label: "APROVADO", color: "#0BB07B" },
+  { value: "DENIED", label: "NEGADO", color: "#F03D3D" },
+  { value: "FINISHED", label: "FINALIZADO", color: "#86878A" },
+];
 
 const InfoRow = (props) => {
   const { data, index } = props;
@@ -9,16 +17,25 @@ const InfoRow = (props) => {
   const isSmallDesktop = useMediaQuery({ maxWidth: "1100px" });
   const isMobile = useMediaQuery({ maxWidth: "730px" });
 
+  const getStatus = (res) => status.find((item) => item.value === res) ?? "";
+
   return (
     <>
       <SRow key={data.id} alternatingcolors={index}>
-        <SCell displaywidth={isMobile ? 1 : 0}>{"Em viagem"}</SCell>
-        <SCell displaywidth={isMobile ? 1 : 0}>
-          {data?.start_city ?? "---"}
+        <SCell
+          displaywidth={isMobile ? 1 : 0}
+          color={getStatus(data?.status).color}
+        >
+          {getStatus(data?.status).label}
         </SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.final_city}</SCell>
+        <SCell displaywidth={isMobile ? 1 : 0}>
+          {data?.final_freight_city ?? "---"}
+        </SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>
           {data?.location_of_the_truck}
+        </SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>
+          {formatDate(new Date())}
         </SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>
           {moneyMask(data?.preview_tonne * 100 * (data?.value_tonne / 100))}

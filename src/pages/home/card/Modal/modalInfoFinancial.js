@@ -23,24 +23,24 @@ import Text from "components/atoms/text/text";
 import Button from "components/atoms/button/button";
 import ModalAddFreight from "./modalAddFreight";
 
+const status = [
+  { value: "APPROVAL_PROCESS", label: "ANALISE", color: "#FFCE52" },
+  { value: "APPROVED", label: "APROVADO", color: "#0BB07B" },
+  { value: "DENIED", label: "NEGADO", color: "#F03D3D" },
+  { value: "FINISHED", label: "FINALIZADO", color: "#86878A" },
+];
+
+const notificações = [
+  { id: 1, label: "Vulcanização de pneu efetuada ", date: "16/11/2022" },
+  { id: 2, label: "Abastecimento de 50l de Diesel", date: "16/11/2022" },
+  { id: 3, label: "Troca de oléo do freio", date: "16/11/2022" },
+];
+
 export const ModalInfoFinancial = ({
   showModal,
   setShowModal,
   financialId,
 }) => {
-  const status = [
-    { value: "APPROVAL_PROCESS", label: "ANALISE", color: "#FFCE52" },
-    { value: "APPROVED", label: "APROVADO", color: "#0BB07B" },
-    { value: "DENIED", label: "NEGADO", color: "#F03D3D" },
-    { value: "FINISHED", label: "FINALIZADO", color: "#86878A" },
-  ];
-
-  const notificações = [
-    { id: 1, label: "Vulcanização de pneu efetuada ", date: "16/11/2022" },
-    { id: 2, label: "Abastecimento de 50l de Diesel", date: "16/11/2022" },
-    { id: 3, label: "Troca de oléo do freio", date: "16/11/2022" },
-  ];
-
   const getStatus = (res) => status.find((item) => item.value === res) ?? "";
 
   const INITIAL_STATE_USER = {
@@ -99,7 +99,7 @@ export const ModalInfoFinancial = ({
             container
             flexDirection={"column"}
             alignItems="flex-start"
-            justifyContent="flex-end"
+            justifyContent="flex-start"
             paddingTop={"0!important"}
             sx={{
               borderRight: "1px solid #000000",
@@ -296,6 +296,8 @@ export const ModalInfoFinancial = ({
               container
               alignItems="flex-start"
               justifyContent="flex-start"
+              maxHeight={"280px"}
+              overflow={"scroll"}
             >
               <Table
                 data={financial}
@@ -307,30 +309,29 @@ export const ModalInfoFinancial = ({
                 mutate={mutate}
               />
             </Grid>
+
             <Grid
               item
               container
               justifyContent="flex-end"
               alignItems={"flex-end"}
-              height={"42%"}
+              m={"20px 0 0 0"}
             >
-              <Grid item lg={1}>
-                <IconButton
-                  aria-label="add cards"
-                  onClick={() => setShowModalAddFreight(!showModalAddFreight)}
-                  component="label"
-                  sx={{
-                    color: "#F1F3F9",
+              <IconButton
+                aria-label="add cards"
+                onClick={() => setShowModalAddFreight(!showModalAddFreight)}
+                component="label"
+                sx={{
+                  color: "#F1F3F9",
+                  background: "#1877F2",
+                  "&:hover": {
                     background: "#1877F2",
-                    "&:hover": {
-                      background: "#1877F2",
-                      opacity: "0.8",
-                    },
-                  }}
-                >
-                  <HiOutlinePlusSm fontSize={"42px"} />
-                </IconButton>
-              </Grid>
+                    opacity: "0.8",
+                  },
+                }}
+              >
+                <HiOutlinePlusSm fontSize={"42px"} />
+              </IconButton>
             </Grid>
           </Grid>
         </Grid>

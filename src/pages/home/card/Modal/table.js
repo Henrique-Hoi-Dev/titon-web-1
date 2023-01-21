@@ -8,7 +8,6 @@ import {
   SRow,
   STable,
   STableBody,
-  SLabel,
 } from "components/atoms/table/table";
 
 import InfoRow from "./infoRow";
@@ -35,68 +34,17 @@ const Table = ({
 
   const [checkId, setCheckId] = useState(null);
 
-  // console.log("state", data)
-
-  const handleSort = (item) => {
-    setQuery((state) => ({
-      ...state,
-      sort_field: item,
-      sort_order: `${query?.sort_order === "ASC" ? "DESC" : "ASC"}`,
-    }));
-    return;
-  };
-
   return (
     <>
       <TableContainer component={Paper}>
         <STable>
           <SHead>
             <SRow>
-              <SCell displaywidth={isMobile ? 1 : 0}>
-                <SLabel
-                  active={query?.sort_field === "status"}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("status")}
-                >
-                  Status
-                </SLabel>
-              </SCell>
-              <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-                <SLabel
-                  active={query?.sort_field === "final_city"}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("final_city")}
-                >
-                  Final Frete
-                </SLabel>
-              </SCell>
-              <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-                <SLabel
-                  active={query?.sort_field === "location_of_the_truck"}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("location_of_the_truck")}
-                >
-                  Local Atual
-                </SLabel>
-              </SCell>
-              <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-                <SLabel
-                  active={query?.sort_field === "location_of_the_truck"}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("location_of_the_truck")}
-                >
-                  Data Atual
-                </SLabel>
-              </SCell>
-              <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-                <SLabel
-                  active={query?.sort_field === "preview_tonne"}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("preview_tonne")}
-                >
-                  Frete Bruto
-                </SLabel>
-              </SCell>
+              <SCell displaywidth={isMobile ? 1 : 0}>Status</SCell>
+              <SCell displaywidth={isSmallDesktop ? 1 : 0}>Final Frete</SCell>
+              <SCell displaywidth={isSmallDesktop ? 1 : 0}>Local Atual</SCell>
+              <SCell displaywidth={isSmallDesktop ? 1 : 0}>Data Atual</SCell>
+              <SCell displaywidth={isSmallDesktop ? 1 : 0}>Frete Bruto</SCell>
             </SRow>
           </SHead>
           {!isFetching && data && data?.dataResult?.freigth?.length > 0 && (

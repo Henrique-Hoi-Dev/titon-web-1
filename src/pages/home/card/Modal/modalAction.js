@@ -30,15 +30,12 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
 
   const getStatus = (res) => status.find((item) => item.value === res) ?? null;
 
-  const { data: checks, isValidating } = useGet(
-    `user/freight/${checkId.id}`,
-    []
-  );
+  const { data: checks, isValidating } = useGet(`user/freight/${checkId}`, []);
 
   const { data, isFetching, error } = useUpdate(
     "user/freight",
     body,
-    checkId.id,
+    checkId,
     fetch,
     setFetch
   );

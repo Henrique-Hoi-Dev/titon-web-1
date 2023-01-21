@@ -30,10 +30,14 @@ export const SLabel = styled(TableSortLabel)(({ theme, hideSortIcon }) => ({
   },
 }));
 
-export const STable = styled(Table)(({ theme }) => ({}));
+export const STable = styled(Table)(({ display }) => ({
+  display: `${display ? "" : "table"}`,
+  overflow: "auto",
+}));
 
 export const SHead = styled(TableHead)(
-  ({ color, backgroundColor, fontweight, displaywidth }) => ({
+  ({ color, backgroundColor, fontweight, displaywidth, tableLayout }) => ({
+    tableLayout: `${tableLayout}`,
     display: `${displaywidth ? "none" : ""}`,
     fontSize: 18,
     backgroundColor: `${

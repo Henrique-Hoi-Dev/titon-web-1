@@ -3,6 +3,7 @@ import { useMediaQuery } from "react-responsive";
 import { SCell, SRow } from "components/atoms/table/table";
 import { moneyMask } from "utils/masks";
 import { formatDate } from "utils/formatDate";
+import { Button } from "@mui/material";
 
 const status = [
   { value: "APPROVAL_PROCESS", label: "ANALISE", color: "#FFCE52" },
@@ -22,11 +23,10 @@ const InfoRow = (props) => {
   return (
     <>
       <SRow key={data.id} alternatingcolors={index}>
-        <SCell
-          displaywidth={isMobile ? 1 : 0}
-          color={getStatus(data?.status).color}
-        >
-          {getStatus(data?.status).label}
+        <SCell displaywidth={isMobile ? 1 : 0}>
+          <Button style={{ color: getStatus(data?.status).color }}>
+            {getStatus(data?.status).label}
+          </Button>
         </SCell>
         <SCell displaywidth={isMobile ? 1 : 0}>
           {data?.final_freight_city ?? "---"}

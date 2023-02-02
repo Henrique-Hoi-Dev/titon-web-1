@@ -33,10 +33,18 @@ export const SLabel = styled(TableSortLabel)(({ theme, hideSortIcon }) => ({
 export const STable = styled(Table)(({ display }) => ({
   display: `${display ? "" : "table"}`,
   overflow: "auto",
+  borderRadius: "8px",
 }));
 
 export const SHead = styled(TableHead)(
-  ({ color, backgroundColor, fontweight, displaywidth, tableLayout }) => ({
+  ({
+    color,
+    backgroundColor,
+    fontweight,
+    displaywidth,
+    tableLayout,
+    border,
+  }) => ({
     tableLayout: `${tableLayout}`,
     display: `${displaywidth ? "none" : ""}`,
     fontSize: 18,
@@ -103,7 +111,10 @@ export const SCellTwoHead = styled(TableCell)(
   })
 );
 
-export const STableBody = styled(TableBody)(({ theme }) => ({}));
+export const STableBody = styled(TableBody)(({ theme, border }) => ({
+  border: `${border ? "2px solid #000000" : ""}`,
+  borderTop: `${border ? "none" : ""}`,
+}));
 
 export const STablePagination = styled(TablePagination)(({ theme }) => ({
   "& .MuiIconButton-root": {

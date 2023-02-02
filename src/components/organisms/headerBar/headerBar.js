@@ -7,7 +7,7 @@ import { api } from "services/api";
 
 import Text from "components/atoms/text/text";
 import pt from "date-fns/locale/pt";
-import ModalAction from "pages/home/card/Modal/modalAction";
+import ModalCheck from "pages/home/card/Modal/modalCheck";
 
 const HeaderBar = ({ setFetch, fetch }) => {
   const user = useSelector((state) => state?.user);
@@ -271,7 +271,7 @@ const HeaderBar = ({ setFetch, fetch }) => {
       </Grid>
 
       {showModalCheck && (
-        <ModalAction
+        <ModalCheck
           checkId={checkId}
           showModal={showModalCheck}
           setShowModal={setShowModalCheck}

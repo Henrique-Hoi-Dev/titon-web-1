@@ -48,7 +48,7 @@ const Table = ({
             </SRow>
           </SHead>
           {!isFetching && data && data?.dataResult?.freigth?.length > 0 && (
-            <STableBody>
+            <STableBody border>
               {data?.dataResult?.freigth?.map((item, index) => (
                 <InfoRow
                   key={item.id}

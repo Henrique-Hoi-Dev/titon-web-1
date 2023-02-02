@@ -26,7 +26,6 @@ import {
 
 import {
   IconMenuHome,
-  IconMenuBox,
   IconMenuTruck,
   IconMenuUser,
   IconMenuFile,
@@ -101,32 +100,6 @@ const Menu = ({ setFetch }) => {
               }}
             >
               Home
-            </ListItemText>
-          </ButtonMenu>
-        </ListItemCategory>
-
-        <ListItemCategory onClick={() => navigate("/report")}>
-          <ButtonMenu
-            sx={{
-              justifyContent: openMenu ? "initial" : "center",
-              marginLeft: openMenu ? "25px" : "0px",
-            }}
-          >
-            <Tooltip title={"Relatórios"} placement="top">
-              <IconMenuCategory sx={{ mr: openMenu ? 0.4 : "auto" }}>
-                <IconMenuFile sx={{ fontSize: "30px" }} />
-              </IconMenuCategory>
-            </Tooltip>
-
-            <ListItemText
-              sx={{
-                opacity: openMenu ? 1 : 0,
-                fontSize: "1.2rem",
-                marginTop: "10px",
-                fontWeight: "400!important",
-              }}
-            >
-              Relatórios
             </ListItemText>
           </ButtonMenu>
         </ListItemCategory>
@@ -212,21 +185,16 @@ const Menu = ({ setFetch }) => {
           </ButtonMenu>
         </ListItemCategory>
 
-        <ListItemCategory
-          onClick={() => navigate("/historic")}
-          sx={{
-            display: "block",
-          }}
-        >
+        <ListItemCategory onClick={() => navigate("/report")}>
           <ButtonMenu
             sx={{
               justifyContent: openMenu ? "initial" : "center",
               marginLeft: openMenu ? "25px" : "0px",
             }}
           >
-            <Tooltip title="Histórico" placement="top">
+            <Tooltip title={"Relatórios"} placement="top">
               <IconMenuCategory sx={{ mr: openMenu ? 0.4 : "auto" }}>
-                <IconMenuBox sx={{ fontSize: "30px" }} />
+                <IconMenuFile sx={{ fontSize: "30px" }} />
               </IconMenuCategory>
             </Tooltip>
 
@@ -235,9 +203,10 @@ const Menu = ({ setFetch }) => {
                 opacity: openMenu ? 1 : 0,
                 fontSize: "1.2rem",
                 marginTop: "10px",
+                fontWeight: "400!important",
               }}
             >
-              Histórico
+              Relatórios
             </ListItemText>
           </ButtonMenu>
         </ListItemCategory>

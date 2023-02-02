@@ -1,8 +1,7 @@
 import React from "react";
 import { Grid } from "@mui/material";
 
-
-const ContentHeader = ({ children, mt }) => {
+const ContentHeader = ({ children, mt, sx }) => {
   return (
     <>
       <Grid
@@ -11,7 +10,7 @@ const ContentHeader = ({ children, mt }) => {
         mt={mt}
         justifyContent="flex-start"
         alignItems="center"
-        sx={{ width: "100%" }}
+        sx={{ ...sx, width: "100%" }}
       >
         {children}
       </Grid>

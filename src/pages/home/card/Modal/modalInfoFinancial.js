@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -275,9 +275,8 @@ export const ModalInfoFinancial = ({
               }}
             >
               {notificações.map((item) => (
-                <>
-                  <Text key={item.id}>{item.label}</Text>{" "}
-                  <Text>{item.date}</Text>
+                <React.Fragment key={item.id}>
+                  <Text>{item.label}</Text> <Text>{item.date}</Text>
                   <Divider
                     sx={{
                       my: 1,
@@ -287,7 +286,7 @@ export const ModalInfoFinancial = ({
                       background: "#2B2B2C",
                     }}
                   />
-                </>
+                </React.Fragment>
               ))}
             </Grid>
 

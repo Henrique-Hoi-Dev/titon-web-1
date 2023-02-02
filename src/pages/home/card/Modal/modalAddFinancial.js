@@ -158,7 +158,7 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
             />
           </Grid>
 
-          <Grid item xs={12} md={12} lg={12}>
+          <Grid container item xs={12} md={12} lg={12}>
             <PickerDate
               size="medium"
               height="2.4em"
@@ -184,7 +184,7 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
                 Voltar
               </Button>
             </Grid>
-            <Grid item xs={12} md={12} lg={6}>
+            <Grid container item xs={12} md={12} lg={6}>
               <Button
                 onClick={(ev) => handleSubmit(ev)}
                 background={

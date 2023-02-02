@@ -86,7 +86,7 @@ const ModalAddFreight = ({ showModal, setShowModal, mutate, financialId }) => {
   const leavingForCitys = [...new Set(leavingFor.map((res) => res.nome))] ?? [];
   const forStateCitys = [...new Set(forState.map((res) => res.nome))] ?? [];
 
-  console.log("localidade ", matchCitys, leavingForCitys, forStateCitys);
+  // console.log("localidade ", matchCitys, leavingForCitys, forStateCitys);
 
   useEffect(() => {
     if (user) {
@@ -151,7 +151,7 @@ const ModalAddFreight = ({ showModal, setShowModal, mutate, financialId }) => {
           spacing={2}
           sx={{ minHeight: "300px", justifyContent: "flex-start" }}
         >
-          <Grid item xs={12} md={12} lg={12}>
+          <Grid container item xs={12} md={12} lg={12}>
             <RRadioGroup
               labelOne={"XML CTE"}
               labelTwo={"Manual"}

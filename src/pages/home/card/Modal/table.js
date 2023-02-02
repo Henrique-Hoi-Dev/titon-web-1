@@ -48,7 +48,7 @@ const Table = ({
             </SRow>
           </SHead>
           {!isFetching && data && data?.dataResult?.freigth?.length > 0 && (
-            <STableBody border>
+            <STableBody border={"true"}>
               {data?.dataResult?.freigth?.map((item, index) => (
                 <InfoRow
                   key={item.id}
@@ -65,7 +65,13 @@ const Table = ({
         </STable>
 
         {(loading || isFetching) && (
-          <Grid container justifyContent="center" alignItems="center" mt={3}>
+          <Grid
+            container
+            item
+            justifyContent="center"
+            alignItems="center"
+            mt={3}
+          >
             <Loading />
           </Grid>
         )}
@@ -81,7 +87,13 @@ const Table = ({
           justifyContent="center"
         >
           {data?.dataResult?.freigth?.length === 0 && !isFetching && (
-            <Grid item justifyContent="center" alignItems="center" pt={5}>
+            <Grid
+              container
+              item
+              justifyContent="center"
+              alignItems="center"
+              pt={5}
+            >
               <Text fontSize={"28px"} center>
                 RESULTADO NÃO ENCONTRADO...{" "}
                 <img
@@ -98,7 +110,13 @@ const Table = ({
           )}
 
           {error && (
-            <Grid item justifyContent="center" alignItems="center" pt={5}>
+            <Grid
+              container
+              item
+              justifyContent="center"
+              alignItems="center"
+              pt={5}
+            >
               <Text fontSize={"28px"} center>
                 {t("messages.unknown_error").toUpperCase()}
               </Text>

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { SCell, SRow } from "components/atoms/table/table";
 import { moneyMask } from "utils/masks";
 import { formatDate } from "utils/formatDate";
 import { Button } from "@mui/material";
+import ModalAction from "./modalAction";
 
 const status = [
   { value: "APPROVAL_PROCESS", label: "ANALISE", color: "#FFCE52" },
@@ -15,16 +16,25 @@ const status = [
 const InfoRow = (props) => {
   const { data, index } = props;
 
+  const [showModal, setShowModal] = useState(false);
+
   const isSmallDesktop = useMediaQuery({ maxWidth: "1100px" });
   const isMobile = useMediaQuery({ maxWidth: "730px" });
 
   const getStatus = (res) => status.find((item) => item.value === res) ?? "";
 
+  const handleAction = () => {
+    setShowModal(!showModal);
+  };
+
   return (
     <>
       <SRow key={data.id} alternatingcolors={index}>
         <SCell displaywidth={isMobile ? 1 : 0}>
-          <Button style={{ color: getStatus(data?.status).color }}>
+          <Button
+            style={{ color: getStatus(data?.status).color }}
+            onClick={handleAction}
+          >
             {getStatus(data?.status).label}
           </Button>
         </SCell>
@@ -103,6 +113,8 @@ const InfoRow = (props) => {
           </Collapse>
         </SCell>
       </SRow> */}
+
+      <ModalAction setShowModal={setShowModal} showModal={showModal} />
     </>
   );
 };

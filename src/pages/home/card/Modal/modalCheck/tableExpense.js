@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Grid, Paper, TableContainer } from "@mui/material";
 import { useMediaQuery } from "react-responsive";
 import {
@@ -9,22 +9,15 @@ import {
   STableBody,
 } from "components/atoms/table/table";
 
-import InfoRow from "./infoRow";
+import TableRowExpense from "./tableRowExpense";
 import Text from "components/atoms/text/text";
 import Loading from "components/atoms/loading/loading";
-import ModalAction from "./modalAction";
-import imgNotFound from "../../../../assets/trist-not-found-table.svg";
+import imgNotFound from "../../../../../assets/trist-not-found-table.svg";
 
-const Table = ({ data, isFetching, mutate, error, loading }) => {
+export const TableExpense = ({ data, isFetching, mutate, error, loading }) => {
   // const isDesktop = useMediaQuery({ maxWidth: "1400px" });
   const isSmallDesktop = useMediaQuery({ maxWidth: "1100px" });
   const isMobile = useMediaQuery({ maxWidth: "730px" });
-
-  const [showModalAction, setShowModalAction] = useState(false);
-
-  const [checkId, setCheckId] = useState();
-
-  console.log("tabela", checkId);
 
   return (
     <>
@@ -32,26 +25,23 @@ const Table = ({ data, isFetching, mutate, error, loading }) => {
         <STable>
           <SHead>
             <SRow>
-              <SCell displaywidth={isMobile ? 1 : 0}>Status</SCell>
-              <SCell displaywidth={isSmallDesktop ? 1 : 0}>Final Frete</SCell>
-              <SCell displaywidth={isSmallDesktop ? 1 : 0}>Local Atual</SCell>
-              <SCell displaywidth={isSmallDesktop ? 1 : 0}>Data Atual</SCell>
-              <SCell displaywidth={isSmallDesktop ? 1 : 0}>Frete Bruto</SCell>
+              <SCell displaywidth={isMobile ? 1 : 0}>Data</SCell>
+              <SCell displaywidth={isSmallDesktop ? 1 : 0}>Hora</SCell>
+              <SCell displaywidth={isSmallDesktop ? 1 : 0}>Local</SCell>
+              <SCell displaywidth={isSmallDesktop ? 1 : 0}>Descrição</SCell>
+              <SCell displaywidth={isSmallDesktop ? 1 : 0}>Preço Total</SCell>
+              <SCell displaywidth={isSmallDesktop ? 1 : 0}>Pagamento</SCell>
             </SRow>
           </SHead>
-          {!isFetching && data && data?.dataResult?.freigth?.length > 0 && (
-            <STableBody border={"true"}>
-              {data?.dataResult?.freigth?.map((item, index) => (
-                <InfoRow
-                  key={item.id}
-                  data={item}
-                  index={index}
-                  setCheckId={setCheckId}
-                  setShowModalAction={setShowModalAction}
-                />
-              ))}
-            </STableBody>
-          )}
+          {!isFetching &&
+            data &&
+            data?.dataResult?.travel_expense?.length > 0 && (
+              <STableBody>
+                {data?.dataResult?.travel_expense?.map((item, i) => (
+                  <TableRowExpense key={i} data={item} index={i} />
+                ))}
+              </STableBody>
+            )}
         </STable>
 
         {(loading || isFetching) && (
@@ -76,7 +66,7 @@ const Table = ({ data, isFetching, mutate, error, loading }) => {
           flexWrap="nowrap"
           justifyContent="center"
         >
-          {data?.dataResult?.freigth?.length === 0 && !isFetching && (
+          {data?.dataResult?.travel_expense?.length === 0 && !isFetching && (
             <Grid
               container
               item
@@ -114,15 +104,6 @@ const Table = ({ data, isFetching, mutate, error, loading }) => {
           )}
         </Grid>
       </TableContainer>
-
-      <ModalAction
-        setShowModal={setShowModalAction}
-        showModal={showModalAction}
-        checkId={checkId}
-        mutate={mutate}
-      />
     </>
   );
 };
-
-export default Table;

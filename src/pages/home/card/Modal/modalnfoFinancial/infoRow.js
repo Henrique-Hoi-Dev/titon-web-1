@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useMediaQuery } from "react-responsive";
 import { SCell, SRow } from "components/atoms/table/table";
 import { moneyMask } from "utils/masks";
 import { formatDate } from "utils/formatDate";
 import { Button } from "@mui/material";
-import ModalAction from "./modalAction";
 
 const status = [
   { value: "APPROVAL_PROCESS", label: "ANALISE", color: "#FFCE52" },
@@ -14,9 +13,7 @@ const status = [
 ];
 
 const InfoRow = (props) => {
-  const { data, index, setCheckId } = props;
-
-  const [showModal, setShowModal] = useState(false);
+  const { data, index, setCheckId, setShowModalAction } = props;
 
   const isSmallDesktop = useMediaQuery({ maxWidth: "1100px" });
   const isMobile = useMediaQuery({ maxWidth: "730px" });
@@ -26,7 +23,7 @@ const InfoRow = (props) => {
   const handleAction = (ev, id) => {
     ev.preventDefault();
     setCheckId(id);
-    setShowModal(true);
+    setShowModalAction(true);
   };
 
   return (
@@ -115,8 +112,6 @@ const InfoRow = (props) => {
           </Collapse>
         </SCell>
       </SRow> */}
-
-      <ModalAction setShowModal={setShowModal} showModal={showModal} />
     </>
   );
 };

@@ -3,14 +3,17 @@ import { Box, Grid, Tab, Tabs, Typography } from "@mui/material";
 import { successNotification, errorNotification } from "utils/notification";
 import { useUpdate } from "services/requests/useUpdate";
 import { useGet } from "services/requests/useGet";
+import { TableStocked } from "./tableStocked";
+import { TableExpense } from "./tableExpense";
+import { TableDeposit } from "./tableDeposit";
 
 import Button from "components/atoms/button/button";
-// import Loading from "components/atoms/loading/loading";
 import Text from "components/atoms/text/text";
 import Modal from "components/molecules/modal/modal";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import Loading from "components/atoms/loading/loading";
 
 const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
   const [fetch, setFetch] = useState(false);
@@ -25,7 +28,7 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
     checkId ? false : true
   );
 
-  const { data, isFetching, error } = useUpdate(
+  const { data, error } = useUpdate(
     "user/freight",
     "body",
     checkId,
@@ -33,7 +36,7 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
     setFetch
   );
 
-  console.log("check", checkId);
+  console.log("check", check);
 
   // const handleSubmitActive = (ev) => {
   //   ev.preventDefault();
@@ -76,9 +79,21 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
         {...other}
       >
         {value === index && (
-          <Box sx={{ p: 4 }}>
-            <Typography>{children}</Typography>
-          </Box>
+          <>
+            {!isValidating && (
+              <Box
+                sx={{
+                  p: 2,
+                  background: `${value === index && "#CCD6EB"}`,
+                  borderRadius: "8px",
+                }}
+              >
+                <Typography>{children}</Typography>
+              </Box>
+            )}
+
+            {isValidating && <Loading />}
+          </>
         )}
       </div>
     );
@@ -92,7 +107,13 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
   }
 
   return (
-    <Modal open={showModal} onClose={onClose} component="form" maxWidth="770px">
+    <Modal
+      open={showModal}
+      onClose={onClose}
+      component="form"
+      maxWidth=" 800px"
+      sxGridModal={{ marginLeft: 0 }}
+    >
       <ContentHeader
         mt={2}
         sx={{
@@ -101,14 +122,14 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
           width: "96%",
         }}
       >
-        <Title>
+        <Title sxGridText={{ justifyContent: "center" }}>
           {check?.dataResult?.first_check?.start_freight_city.toUpperCase()}{" "}
           <ArrowForwardIcon style={{ verticalAlign: "middle" }} />{" "}
           {check?.dataResult?.first_check?.final_freight_city.toUpperCase()}
         </Title>
       </ContentHeader>
 
-      {!isFetching && error && (
+      {!isValidating && error && (
         <Grid item container justifyContent="center">
           <Text sx={{ color: "red" }}>
             {`Erro: ${error?.response?.data?.dataResult?.msg}`}
@@ -175,105 +196,102 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
       </Box>
 
       <TabPanel value={value} index={0}>
-        {!isFetching && !isValidating && (
-          <>
-            <Grid
-              container
-              item
-              spacing={2}
-              mt={1}
-              justifyContent="center"
-              sx={{ minHeight: "200px" }}
-            >
-              {/* {isFetching && <Loading />}
+        <Grid
+          item
+          container
+          alignItems="flex-start"
+          justifyContent="flex-start"
+          minWidth={"730px"}
+          maxHeight="230px"
+          minHeight="230px"
+        >
+          {/* {isFetching && <Loading />}
               {loading && <Loading />} */}
-            </Grid>
-          </>
-        )}
+        </Grid>
       </TabPanel>
 
       <TabPanel value={value} index={1}>
-        {!isFetching && !isValidating && (
-          <Grid
-            container
-            item
-            spacing={2}
-            mt={1}
-            sx={{ minHeight: "200px", justifyContent: "flex-start" }}
-          >
-            etapa 2
-          </Grid>
-        )}
+        <Grid
+          item
+          container
+          alignItems="flex-start"
+          justifyContent="flex-start"
+          minWidth={"730px"}
+          minHeight="230px"
+          maxHeight="230px"
+          overflow={"auto"}
+        >
+          <TableStocked data={check} />
+        </Grid>
       </TabPanel>
 
       <TabPanel value={value} index={2}>
-        {!isFetching && !isValidating && (
-          <Grid
-            container
-            item
-            spacing={2}
-            mt={1}
-            sx={{ minHeight: "200px", justifyContent: "flex-start" }}
-          >
-            etapa 3
-          </Grid>
-        )}
+        <Grid
+          item
+          container
+          alignItems="flex-start"
+          justifyContent="flex-start"
+          minWidth={"730px"}
+          maxHeight="230px"
+          minHeight="230px"
+        >
+          <TableExpense data={check} />
+        </Grid>
       </TabPanel>
 
       <TabPanel value={value} index={3}>
-        {!isFetching && !isValidating && (
-          <>
-            <Grid
-              container
-              item
-              spacing={2}
-              mt={1}
-              sx={{ minHeight: "200px", justifyContent: "flex-start" }}
-            >
-              etapa 4
-            </Grid>
-          </>
-        )}
+        <Grid
+          item
+          container
+          alignItems="flex-start"
+          justifyContent="flex-start"
+          minWidth={"730px"}
+          maxHeight="230px"
+          minHeight="230px"
+        >
+          <TableDeposit data={check} />
+        </Grid>
       </TabPanel>
 
-      {!isFetching && !isValidating && (
-        <Grid container item spacing={2} mt={1} justifyContent="flex-end">
-          <Grid container item xs={12} md={3} lg={3}>
-            <Button
-              background={"#fff"}
-              variant="text"
-              sx={{
-                fontSize: "14px",
-                width: "141px",
-                height: "49px",
-                marginRight: "15px",
-                border: "1px solid #F03D3D",
-                color: "#000000",
-              }}
-            >
-              REPROVAR
-            </Button>
+      {check?.dataResult?.first_check?.status === "APPROVAL_PROCESS" &&
+        !isValidating && (
+          <Grid container item spacing={2} mt={1} justifyContent="flex-end">
+            <Grid container item xs={12} md={3} lg={3}>
+              <Button
+                background={"#fff"}
+                variant="text"
+                sx={{
+                  fontSize: "14px",
+                  width: "141px",
+                  height: "49px",
+                  marginRight: "15px",
+                  border: "1px solid #F03D3D",
+                  color: "#000000",
+                }}
+              >
+                REPROVAR
+              </Button>
+            </Grid>
+            <Grid container item xs={12} md={3} lg={3}>
+              <Button
+                type="submit"
+                color="success"
+                background={
+                  "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+                }
+                sx={{
+                  fontSize: "14px",
+                  color: "white",
+                  width: "141px",
+                  height: "49px",
+                  marginRight: "15px",
+                }}
+              >
+                APROVAR
+              </Button>
+            </Grid>
           </Grid>
-          <Grid container item xs={12} md={3} lg={3}>
-            <Button
-              type="submit"
-              color="success"
-              background={
-                "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
-              }
-              sx={{
-                fontSize: "14px",
-                color: "white",
-                width: "141px",
-                height: "49px",
-                marginRight: "15px",
-              }}
-            >
-              APROVAR
-            </Button>
-          </Grid>
-        </Grid>
-      )}
+        )}
     </Modal>
   );
 };

@@ -13,7 +13,7 @@ import { moneyMask } from "utils/masks";
 import { IconMenuTruck } from "components/atoms/icons/icons";
 import { formatDate } from "utils/formatDate";
 import { HiOutlinePlusSm } from "react-icons/hi";
-import { ModalFinalizeRecord } from "./modalFinalizeRecord";
+import { ModalFinalizeRecord } from "../modalFinalizeRecord";
 
 import Table from "./table";
 import Title from "components/atoms/title/title";
@@ -21,7 +21,7 @@ import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Modal from "components/molecules/modal/modal";
 import Text from "components/atoms/text/text";
 import Button from "components/atoms/button/button";
-import ModalAddFreight from "./modalAddFreight";
+import ModalAddFreight from "../modalAddFreight";
 
 const status = [
   { value: "APPROVAL_PROCESS", label: "ANALISE", color: "#FFCE52" },

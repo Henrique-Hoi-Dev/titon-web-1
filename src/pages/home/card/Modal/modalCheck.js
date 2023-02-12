@@ -71,7 +71,7 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
           width: "96% !important",
         }}
       >
-        <Title>
+        <Title sxGridText={{ justifyContent: "center" }}>
           {checks?.responseData?.start_freight_city.toUpperCase()}{" "}
           <ArrowForwardIcon style={{ verticalAlign: "middle" }} />{" "}
           {checks?.responseData?.final_freight_city.toUpperCase()}

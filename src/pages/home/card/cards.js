@@ -3,7 +3,7 @@ import { Box, Grid } from "@mui/material";
 import { useGet } from "services/requests/useGet";
 import { useState } from "react";
 import { TablePagination } from "components/atoms/tablePagination/tablePagination";
-import { ModalInfoFinancial } from "./Modal/modalInfoFinancial";
+import { ModalInfoFinancial } from "./Modal/modalnfoFinancial/modalInfoFinancial";
 
 import imgNotFound from "../../../assets/trist-not-found.svg";
 import CardInfoValues from "pages/home/card/cardInfoValues";

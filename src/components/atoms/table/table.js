@@ -39,7 +39,7 @@ export const STable = styled(Table)(({ display }) => ({
 export const SHead = styled(TableHead)(
   ({
     color,
-    backgroundColor,
+    backgroundcolor,
     fontweight,
     displaywidth,
     tableLayout,
@@ -48,9 +48,7 @@ export const SHead = styled(TableHead)(
     tableLayout: `${tableLayout}`,
     display: `${displaywidth ? "none" : ""}`,
     fontSize: 18,
-    backgroundColor: `${
-      backgroundColor ? backgroundColor : "##CCD6EB!important"
-    }`,
+    backgroundColor: `${backgroundcolor ? backgroundcolor : "#CCD6EB"}`,
     "& :hover": { color: "black" },
     "& .MuiTableCell-root": {
       color: `${color ? "black" : "black"}`,

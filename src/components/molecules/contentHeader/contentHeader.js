@@ -3,18 +3,16 @@ import { Grid } from "@mui/material";
 
 const ContentHeader = ({ children, mt, sx }) => {
   return (
-    <>
-      <Grid
-        container
-        paddingLeft={3}
-        mt={mt}
-        justifyContent="center"
-        alignItems="center"
-        sx={{ ...sx }}
-      >
-        {children}
-      </Grid>
-    </>
+    <Grid
+      container
+      paddingLeft={3}
+      mt={mt}
+      justifyContent="center"
+      alignItems="center"
+      sx={{ ...sx }}
+    >
+      {children}
+    </Grid>
   );
 };
 

@@ -18,6 +18,7 @@ const Modal = ({
   height,
   maxWidth,
   maxHeight,
+  sxGridModal,
 }) => {
   const { t } = useTranslation();
 
@@ -49,7 +50,6 @@ const Modal = ({
           borderRadius: "20px",
         }}
         direction="column"
-        justifyContent="space-between"
         component={component}
         onSubmit={onSubmit}
       >
@@ -60,7 +60,7 @@ const Modal = ({
           direction="row"
           spacing={1}
           p={1}
-          sx={{ overflowY: "auto" }}
+          sx={{ ...sxGridModal, overflowY: "auto" }}
         >
           {showCloseIcon && (
             <Grid

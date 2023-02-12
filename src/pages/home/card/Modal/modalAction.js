@@ -3,52 +3,47 @@ import { Box, Grid, Tab, Tabs, Typography } from "@mui/material";
 import { successNotification, errorNotification } from "utils/notification";
 import { useUpdate } from "services/requests/useUpdate";
 import { useGet } from "services/requests/useGet";
-import { moneyMask } from "utils/masks";
-import { useSelector } from "react-redux";
 
 import Button from "components/atoms/button/button";
-import Loading from "components/atoms/loading/loading";
+// import Loading from "components/atoms/loading/loading";
 import Text from "components/atoms/text/text";
 import Modal from "components/molecules/modal/modal";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
   const [fetch, setFetch] = useState(false);
-  const [body, setBody] = useState({});
 
   const [value, setValue] = useState(0);
 
-  const user = useSelector((state) => state?.user);
+  // const user = useSelector((state) => state?.user);
 
-  const status = [
-    { value: "APPROVAL_PROCESS", label: "ANALISE", color: "#FFCE52" },
-    { value: "APPROVED", label: "APROVADO", color: "#0BB07B" },
-    { value: "DENIED", label: "NEGADO", color: "#F03D3D" },
-    { value: "FINISHED", label: "FINALIZADO", color: "#86878A" },
-  ];
-
-  const getStatus = (res) => status.find((item) => item.value === res) ?? null;
-
-  const { data: checks, isValidating } = useGet(`user/freight/${checkId}`, []);
+  const { data: check, isValidating } = useGet(
+    `user/freight/${checkId}`,
+    "",
+    checkId ? false : true
+  );
 
   const { data, isFetching, error } = useUpdate(
     "user/freight",
-    body,
+    "body",
     checkId,
     fetch,
     setFetch
   );
 
-  const handleSubmitActive = (ev) => {
-    ev.preventDefault();
-    setBody({
-      status: "approved",
-      user_id: user.data.users.id,
-      driver_id: 2,
-    });
-    setFetch(true);
-  };
+  console.log("check", checkId);
+
+  // const handleSubmitActive = (ev) => {
+  //   ev.preventDefault();
+  //   setBody({
+  //     status: "approved",
+  //     user_id: user.data.users.id,
+  //     driver_id: 2,
+  //   });
+  //   setFetch(true);
+  // };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -81,7 +76,7 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
         {...other}
       >
         {value === index && (
-          <Box sx={{ p: 3 }}>
+          <Box sx={{ p: 4 }}>
             <Typography>{children}</Typography>
           </Box>
         )}
@@ -98,8 +93,19 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
 
   return (
     <Modal open={showModal} onClose={onClose} component="form" maxWidth="770px">
-      <ContentHeader mt={2}>
-        <Title>Informações Frete</Title>
+      <ContentHeader
+        mt={2}
+        sx={{
+          borderBottom: "2px solid #000",
+          marginBottom: "15px",
+          width: "96%",
+        }}
+      >
+        <Title>
+          {check?.dataResult?.first_check?.start_freight_city.toUpperCase()}{" "}
+          <ArrowForwardIcon style={{ verticalAlign: "middle" }} />{" "}
+          {check?.dataResult?.first_check?.final_freight_city.toUpperCase()}
+        </Title>
       </ContentHeader>
 
       {!isFetching && error && (
@@ -110,36 +116,79 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
         </Grid>
       )}
 
-      <Box sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}>
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+          width: "100%",
+          "& .css-heg063-MuiTabs-flexContainer": {
+            justifyContent: "center",
+          },
+        }}
+      >
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
         >
           <Tab
-            sx={{ fontWeight: "700" }}
-            label="Primeiro Check"
+            sx={{
+              fontWeight: "700",
+              borderTopRightRadius: "8px",
+              borderTopLeftRadius: "8px",
+              background: `${value === 0 && "#CCD6EB"}`,
+            }}
+            label="COTAÇÃO"
             {...a11yProps(0)}
           />
           <Tab
-            sx={{ fontWeight: "700" }}
-            label="Segundo Check"
+            sx={{
+              fontWeight: "700",
+              borderTopRightRadius: "8px",
+              borderTopLeftRadius: "8px",
+              background: `${value === 1 && "#CCD6EB"}`,
+            }}
+            label="ABASTECIDAS"
             {...a11yProps(1)}
+          />
+          <Tab
+            sx={{
+              fontWeight: "700",
+              borderTopRightRadius: "8px",
+              borderTopLeftRadius: "8px",
+              background: `${value === 2 && "#CCD6EB"}`,
+            }}
+            label="DESPESAS"
+            {...a11yProps(2)}
+          />
+          <Tab
+            sx={{
+              fontWeight: "700",
+              borderTopRightRadius: "8px",
+              borderTopLeftRadius: "8px",
+              background: `${value === 3 && "#CCD6EB"}`,
+            }}
+            label="DEPOSITOS"
+            {...a11yProps(3)}
           />
         </Tabs>
       </Box>
 
       <TabPanel value={value} index={0}>
         {!isFetching && !isValidating && (
-          <Grid
-            container
-            item
-            spacing={2}
-            mt={1}
-            sx={{ minHeight: "300px", justifyContent: "flex-start" }}
-          >
-            etapa 1
-          </Grid>
+          <>
+            <Grid
+              container
+              item
+              spacing={2}
+              mt={1}
+              justifyContent="center"
+              sx={{ minHeight: "200px" }}
+            >
+              {/* {isFetching && <Loading />}
+              {loading && <Loading />} */}
+            </Grid>
+          </>
         )}
       </TabPanel>
 
@@ -150,15 +199,81 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
             item
             spacing={2}
             mt={1}
-            sx={{ minHeight: "300px", justifyContent: "flex-start" }}
+            sx={{ minHeight: "200px", justifyContent: "flex-start" }}
           >
             etapa 2
           </Grid>
         )}
       </TabPanel>
 
-      {isFetching && <Loading />}
-      {isValidating && <Loading />}
+      <TabPanel value={value} index={2}>
+        {!isFetching && !isValidating && (
+          <Grid
+            container
+            item
+            spacing={2}
+            mt={1}
+            sx={{ minHeight: "200px", justifyContent: "flex-start" }}
+          >
+            etapa 3
+          </Grid>
+        )}
+      </TabPanel>
+
+      <TabPanel value={value} index={3}>
+        {!isFetching && !isValidating && (
+          <>
+            <Grid
+              container
+              item
+              spacing={2}
+              mt={1}
+              sx={{ minHeight: "200px", justifyContent: "flex-start" }}
+            >
+              etapa 4
+            </Grid>
+          </>
+        )}
+      </TabPanel>
+
+      {!isFetching && !isValidating && (
+        <Grid container item spacing={2} mt={1} justifyContent="flex-end">
+          <Grid container item xs={12} md={3} lg={3}>
+            <Button
+              background={"#fff"}
+              variant="text"
+              sx={{
+                fontSize: "14px",
+                width: "141px",
+                height: "49px",
+                marginRight: "15px",
+                border: "1px solid #F03D3D",
+                color: "#000000",
+              }}
+            >
+              REPROVAR
+            </Button>
+          </Grid>
+          <Grid container item xs={12} md={3} lg={3}>
+            <Button
+              type="submit"
+              color="success"
+              background={
+                "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+              }
+              sx={{
+                fontSize: "14px",
+                color: "white",
+                width: "141px",
+                height: "49px",
+                marginRight: "15px",
+              }}
+            >
+              APROVAR
+            </Button>
+          </Grid>
+        </Grid>
+      )}
     </Modal>
   );
 };

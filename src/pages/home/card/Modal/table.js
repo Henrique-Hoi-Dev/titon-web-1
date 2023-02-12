@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Grid, Paper, TableContainer } from "@mui/material";
-import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import {
   SCell,
@@ -15,24 +14,17 @@ import Text from "components/atoms/text/text";
 import Loading from "components/atoms/loading/loading";
 import ModalAction from "./modalAction";
 import imgNotFound from "../../../../assets/trist-not-found-table.svg";
-const Table = ({
-  data,
-  query,
-  setQuery,
-  isFetching,
-  mutate,
-  error,
-  loading,
-}) => {
-  const { t } = useTranslation();
 
+const Table = ({ data, isFetching, mutate, error, loading }) => {
   // const isDesktop = useMediaQuery({ maxWidth: "1400px" });
   const isSmallDesktop = useMediaQuery({ maxWidth: "1100px" });
   const isMobile = useMediaQuery({ maxWidth: "730px" });
 
   const [showModalAction, setShowModalAction] = useState(false);
 
-  const [checkId, setCheckId] = useState(null);
+  const [checkId, setCheckId] = useState();
+
+  console.log("tabela", checkId);
 
   return (
     <>
@@ -56,8 +48,6 @@ const Table = ({
                   index={index}
                   setCheckId={setCheckId}
                   setShowModalAction={setShowModalAction}
-                  query={query}
-                  setQuery={setQuery}
                 />
               ))}
             </STableBody>
@@ -118,21 +108,19 @@ const Table = ({
               pt={5}
             >
               <Text fontSize={"28px"} center>
-                {t("messages.unknown_error").toUpperCase()}
+                ERRO
               </Text>
             </Grid>
           )}
         </Grid>
       </TableContainer>
 
-      {showModalAction && (
-        <ModalAction
-          setShowModal={setShowModalAction}
-          showModal={showModalAction}
-          checkId={checkId}
-          mutate={mutate}
-        />
-      )}
+      <ModalAction
+        setShowModal={setShowModalAction}
+        showModal={showModalAction}
+        checkId={checkId}
+        mutate={mutate}
+      />
     </>
   );
 };

@@ -14,7 +14,7 @@ const status = [
 ];
 
 const InfoRow = (props) => {
-  const { data, index } = props;
+  const { data, index, setCheckId } = props;
 
   const [showModal, setShowModal] = useState(false);
 
@@ -23,8 +23,10 @@ const InfoRow = (props) => {
 
   const getStatus = (res) => status.find((item) => item.value === res) ?? "";
 
-  const handleAction = () => {
-    setShowModal(!showModal);
+  const handleAction = (ev, id) => {
+    ev.preventDefault();
+    setCheckId(id);
+    setShowModal(true);
   };
 
   return (
@@ -33,7 +35,7 @@ const InfoRow = (props) => {
         <SCell displaywidth={isMobile ? 1 : 0}>
           <Button
             style={{ color: getStatus(data?.status).color }}
-            onClick={handleAction}
+            onClick={(ev) => handleAction(ev, data?.id)}
           >
             {getStatus(data?.status).label}
           </Button>

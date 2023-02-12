@@ -346,6 +346,9 @@ export const ModalInfoFinancial = ({
 
       {showModalFinalizeRecord && (
         <ModalFinalizeRecord
+          mutate={mutate}
+          financialId={financialId?.id}
+          props={financial}
           setShowModal={setShowModalFinalizeRecord}
           showModal={showModalFinalizeRecord}
         />

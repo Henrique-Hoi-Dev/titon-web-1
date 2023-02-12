@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { api } from "services/api";
 
-export const useUpdate = (url, body, id, fetch, setFetch) => {
+export const useUpdatePatch = (url, body, id, fetch, setFetch) => {
   const auth = useSelector((state) => state.auth);
   const token = auth?.token;
 
@@ -13,7 +13,7 @@ export const useUpdate = (url, body, id, fetch, setFetch) => {
     if (fetch) {
       setIsFetching(true);
       api
-        .put(`/${url}/${id}`, body, {
+        .patch(`/${url}/${id}`, body, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {

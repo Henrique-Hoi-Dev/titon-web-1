@@ -26,6 +26,7 @@ const Cards = ({
     page: 1,
     sort_field: "id",
     sort_order: "ASC",
+    status: true,
   };
 
   const [financialQuery, setFinancialQuery] = useState(INITIAL_STATE_FINANCIAL);

@@ -69,7 +69,10 @@ const HeaderBar = ({ setFetch, fetch }) => {
       notifications.map((res) => (res.id === id ? { ...res, read: true } : res))
     );
 
-    setCheckId(result.data.dataResult.freight_id);
+    setCheckId({
+      freightId: result.data.dataResult.freight_id,
+      driverId: result.data.dataResult.driver_id,
+    });
     setShowModalCheck(true);
 
     setFetch(true);
@@ -85,8 +88,8 @@ const HeaderBar = ({ setFetch, fetch }) => {
     setAnchorElTwo(false);
   };
 
-  const handleCheck = (id) => {
-    setCheckId(id);
+  const handleCheck = (freightId, driverId) => {
+    setCheckId({ freightId: freightId, driverId: driverId });
     setShowModalCheck(!showModalCheck);
   };
 
@@ -229,7 +232,7 @@ const HeaderBar = ({ setFetch, fetch }) => {
                   md={12}
                   lg={12}
                   flexDirection={"column"}
-                  onClick={() => handleCheck(res?.freight_id)}
+                  onClick={() => handleCheck(res?.freight_id, res?.driver_id)}
                 >
                   <Text
                     sx={{

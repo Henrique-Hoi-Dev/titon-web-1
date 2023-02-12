@@ -8,9 +8,9 @@ const ContentHeader = ({ children, mt, sx }) => {
         container
         paddingLeft={3}
         mt={mt}
-        justifyContent="flex-start"
+        justifyContent="center"
         alignItems="center"
-        sx={{ ...sx, width: "100%" }}
+        sx={{ ...sx }}
       >
         {children}
       </Grid>

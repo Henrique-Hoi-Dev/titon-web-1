@@ -145,6 +145,9 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
           "& .css-heg063-MuiTabs-flexContainer": {
             justifyContent: "center",
           },
+          "& .css-k008qs": {
+            justifyContent: "center",
+          },
         }}
       >
         <Tabs

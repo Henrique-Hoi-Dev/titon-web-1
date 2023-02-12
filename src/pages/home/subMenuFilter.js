@@ -102,7 +102,7 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
           Organizar por:
         </Grid>
         <MenuItem
-          onClick={handleClear}
+          onClick={() => handleClear() || handleClose()}
           disableRipple
           sx={{ ml: 2, width: "80%", lineHeight: "unset", fontWeight: "700" }}
         >
@@ -110,7 +110,7 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
         </MenuItem>
         <Divider sx={{ my: 0.3, width: "85%", ml: 2, mt: -2 }} />
         <MenuItem
-          onClick={() => setSearchOrder("ASC")}
+          onClick={() => setSearchOrder("ASC") || handleClose()}
           disableRipple
           sx={{ ml: 2, width: "80%", lineHeight: "unset", fontWeight: "700" }}
         >
@@ -118,7 +118,7 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
         </MenuItem>
         <Divider sx={{ my: 0.3, width: "85%", ml: 2, mt: -2 }} />
         <MenuItem
-          onClick={() => setSearchOrder("DESC")}
+          onClick={() => setSearchOrder("DESC") || handleClose()}
           disableRipple
           sx={{ ml: 2, width: "85%", lineHeight: "unset", fontWeight: "700" }}
         >
@@ -142,7 +142,7 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
         </MenuItem>
         <Divider sx={{ my: 0.3, width: "85%", ml: 2 }} />
         <MenuItem
-          onClick={() => setSearchStatus("APPROVAL_PROCESS")}
+          onClick={() => setSearchStatus("APPROVAL_PROCESS") || handleClose()}
           disableRipple
           sx={{ ml: 2, width: "85%", lineHeight: "unset", fontWeight: "700" }}
         >
@@ -158,7 +158,7 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
         </MenuItem>
         <Divider sx={{ my: 0.3, width: "85%", ml: 2 }} />
         <MenuItem
-          onClick={() => setSearchStatus("APPROVED")}
+          onClick={() => setSearchStatus("APPROVED") || handleClose()}
           disableRipple
           sx={{ ml: 2, width: "85%", lineHeight: "unset", fontWeight: "700" }}
         >
@@ -174,7 +174,7 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
         </MenuItem>
         <Divider sx={{ my: 0.3, width: "85%", ml: 2 }} />
         <MenuItem
-          onClick={() => setSearchStatus("DENIED")}
+          onClick={() => setSearchStatus("DENIED") || handleClose()}
           disableRipple
           sx={{ ml: 2, width: "85%", lineHeight: "unset", fontWeight: "700" }}
         >
@@ -190,7 +190,7 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
         </MenuItem>
         <Divider sx={{ my: 0.3, width: "85%", ml: 2 }} />
         <MenuItem
-          onClick={() => setSearchStatus("FINISHED")}
+          onClick={() => setSearchStatus("FINISHED") || handleClose()}
           disableRipple
           sx={{ ml: 2, width: "85%", lineHeight: "unset", fontWeight: "700" }}
         >

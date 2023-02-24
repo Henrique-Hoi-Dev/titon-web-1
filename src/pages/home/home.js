@@ -80,7 +80,7 @@ const Home = () => {
           mt={2}
           alignItems="flex-start"
           justifyContent="flex-start"
-          sx={{ color: "#fff" }}
+          sx={{ color: "#fff", borderBottom: "1px solid #F1F3F9" }}
         >
           <Cards
             search={search}

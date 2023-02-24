@@ -4,6 +4,7 @@ import { useGet } from "services/requests/useGet";
 import { useState } from "react";
 import { TablePagination } from "components/atoms/tablePagination/tablePagination";
 import { ModalInfoFinancial } from "./Modal/modalnfoFinancial/modalInfoFinancial";
+import { useMediaQuery } from "react-responsive";
 
 import imgNotFound from "../../../assets/trist-not-found.svg";
 import CardInfoValues from "pages/home/card/cardInfoValues";
@@ -21,8 +22,10 @@ const Cards = ({
   const [showModal, setShowModal] = useState(false);
   const [financialId, setFinancialId] = useState("");
 
+  const isDesktop = useMediaQuery({ minWidth: "2000px" });
+
   const INITIAL_STATE_FINANCIAL = {
-    limit: 4,
+    limit: isDesktop ? 10 : 4,
     page: 1,
     sort_field: "id",
     sort_order: "ASC",

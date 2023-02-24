@@ -9,7 +9,7 @@ import {
   STableBody,
 } from "components/atoms/table/table";
 
-import TableRowExpense from "./tableRowExpense";
+import RowExpense from "./rowExpense";
 import Text from "components/atoms/text/text";
 import Loading from "components/atoms/loading/loading";
 import imgNotFound from "../../../../../assets/trist-not-found-table.svg";
@@ -24,7 +24,7 @@ export const TableExpense = ({ data, isFetching, mutate, error, loading }) => {
       <TableContainer component={Paper}>
         <STable>
           <SHead>
-            <SRow>
+            <SRow alternatingcolors={0}>
               <SCell displaywidth={isMobile ? 1 : 0}>Data</SCell>
               <SCell displaywidth={isSmallDesktop ? 1 : 0}>Hora</SCell>
               <SCell displaywidth={isSmallDesktop ? 1 : 0}>Local</SCell>
@@ -38,7 +38,7 @@ export const TableExpense = ({ data, isFetching, mutate, error, loading }) => {
             data?.dataResult?.travel_expense?.length > 0 && (
               <STableBody>
                 {data?.dataResult?.travel_expense?.map((item, i) => (
-                  <TableRowExpense key={i} data={item} index={i} />
+                  <RowExpense key={i} data={item} index={i} />
                 ))}
               </STableBody>
             )}

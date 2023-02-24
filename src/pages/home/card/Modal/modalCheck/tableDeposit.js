@@ -9,7 +9,7 @@ import {
   STableBody,
 } from "components/atoms/table/table";
 
-import TableRowDeposit from "./tableRowDeposit";
+import RowDeposit from "./rowDeposit";
 import Text from "components/atoms/text/text";
 import Loading from "components/atoms/loading/loading";
 import imgNotFound from "../../../../../assets/trist-not-found-table.svg";
@@ -24,7 +24,7 @@ export const TableDeposit = ({ data, isFetching, mutate, error, loading }) => {
       <TableContainer component={Paper}>
         <STable>
           <SHead>
-            <SRow>
+            <SRow alternatingcolors={0}>
               <SCell displaywidth={isMobile ? 1 : 0}>Data</SCell>
               <SCell displaywidth={isSmallDesktop ? 1 : 0}>Hora</SCell>
               <SCell displaywidth={isSmallDesktop ? 1 : 0}>Local</SCell>
@@ -38,7 +38,7 @@ export const TableDeposit = ({ data, isFetching, mutate, error, loading }) => {
             data?.dataResult?.deposit_money?.length > 0 && (
               <STableBody>
                 {data?.dataResult?.deposit_money?.map((item, i) => (
-                  <TableRowDeposit key={i} data={item} index={i} />
+                  <RowDeposit key={i} data={item} index={i} />
                 ))}
               </STableBody>
             )}

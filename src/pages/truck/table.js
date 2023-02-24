@@ -139,49 +139,6 @@ const Table = ({
           )}
         </STable>
 
-        {(loading || isFetching) && (
-          <Grid container justifyContent="center" alignItems="center" mt={3}>
-            <Loading titulo={t("messages.loading")} />
-          </Grid>
-        )}
-
-        <Grid
-          item
-          container
-          spacing={2}
-          mt={1}
-          mb={1}
-          p={"18px"}
-          alignItems="center"
-          flexWrap="nowrap"
-          justifyContent="center"
-        >
-          {data?.dataResult?.length === 0 && !isFetching && (
-            <Grid item justifyContent="center" alignItems="center" pt={5}>
-              <Text fontSize={"28px"} center>
-                {"RESULTADO NÃO ENCONTRADO..."}
-                <img
-                  src={imgNotFound}
-                  alt="img"
-                  width={"40px"}
-                  style={{
-                    verticalAlign: "bottom",
-                    marginLeft: "24px",
-                  }}
-                />
-              </Text>
-            </Grid>
-          )}
-
-          {error && (
-            <Grid item justifyContent="center" alignItems="center" pt={5}>
-              <Text fontSize={"28px"} center>
-                {t("messages.unknown_error").toUpperCase()}
-              </Text>
-            </Grid>
-          )}
-        </Grid>
-
         {!isFetching &&
           data?.dataResult?.length > 0 &&
           data?.totalPages > 0 && (
@@ -189,6 +146,37 @@ const Table = ({
               <TablePagination data={data} query={query} setQuery={setQuery} />
             </Grid>
           )}
+
+        {(loading || isFetching) && (
+          <Grid container justifyContent="center" alignItems="center" mt={3}>
+            <Loading titulo={t("messages.loading")} />
+          </Grid>
+        )}
+
+        {data?.dataResult?.length === 0 && !isFetching && (
+          <Grid item justifyContent="center" alignItems="center" pt={5}>
+            <Text fontSize={"28px"} center>
+              {"RESULTADO NÃO ENCONTRADO..."}
+              <img
+                src={imgNotFound}
+                alt="img"
+                width={"40px"}
+                style={{
+                  verticalAlign: "bottom",
+                  marginLeft: "24px",
+                }}
+              />
+            </Text>
+          </Grid>
+        )}
+
+        {error && (
+          <Grid item justifyContent="center" alignItems="center" pt={5}>
+            <Text fontSize={"28px"} center>
+              {t("messages.unknown_error").toUpperCase()}
+            </Text>
+          </Grid>
+        )}
       </TableContainer>
 
       {showModalDelete && (

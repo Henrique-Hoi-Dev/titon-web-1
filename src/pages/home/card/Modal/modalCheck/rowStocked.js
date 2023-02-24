@@ -4,7 +4,7 @@ import { SCell, SRow } from "components/atoms/table/table";
 import { moneyMask } from "utils/masks";
 import { formatDate } from "utils/formatDate";
 
-const InfoRow = (props) => {
+const RowStocked = (props) => {
   const { data, index } = props;
 
   const isSmallDesktop = useMediaQuery({ maxWidth: "1100px" });
@@ -95,4 +95,4 @@ const InfoRow = (props) => {
   );
 };
 
-export default InfoRow;
+export default RowStocked;

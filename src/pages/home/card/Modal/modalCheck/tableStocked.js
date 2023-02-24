@@ -9,7 +9,7 @@ import {
   STableBody,
 } from "components/atoms/table/table";
 
-import TableRowStocked from "./tableRowStocked";
+import RowStocked from "./rowStocked";
 import Text from "components/atoms/text/text";
 import Loading from "components/atoms/loading/loading";
 import imgNotFound from "../../../../../assets/trist-not-found-table.svg";
@@ -24,7 +24,7 @@ export const TableStocked = ({ data, isFetching, mutate, error, loading }) => {
       <TableContainer component={Paper}>
         <STable>
           <SHead>
-            <SRow>
+            <SRow alternatingcolors={0}>
               <SCell displaywidth={isMobile ? 1 : 0}>Data</SCell>
               <SCell displaywidth={isSmallDesktop ? 1 : 0}>Hora</SCell>
               <SCell displaywidth={isSmallDesktop ? 1 : 0}>Local</SCell>
@@ -37,7 +37,7 @@ export const TableStocked = ({ data, isFetching, mutate, error, loading }) => {
           {!isFetching && data && data?.dataResult?.restock?.length > 0 && (
             <STableBody>
               {data?.dataResult?.restock?.map((item, i) => (
-                <TableRowStocked key={i} data={item} index={i} />
+                <RowStocked key={i} data={item} index={i} />
               ))}
             </STableBody>
           )}

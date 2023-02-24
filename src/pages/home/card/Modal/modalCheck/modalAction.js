@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Grid, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Divider, Grid, Tab, Tabs, Typography } from "@mui/material";
 import { successNotification, errorNotification } from "utils/notification";
 import { useUpdate } from "services/requests/useUpdate";
 import { useGet } from "services/requests/useGet";
@@ -14,11 +14,16 @@ import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Loading from "components/atoms/loading/loading";
+import NestedList from "components/atoms/nestedList/nestedList";
 
 const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
   const [fetch, setFetch] = useState(false);
 
   const [value, setValue] = useState(0);
+  const [
+    statusSecondCheck,
+    // setStatusSecondCheck
+  ] = useState(true);
 
   // const user = useSelector((state) => state?.user);
 
@@ -106,12 +111,22 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
     };
   }
 
+  const valuesFirstCheck = {
+    value: {
+      liter: 1800,
+      fuelValue: 300000,
+    },
+    value2: 14000,
+    value3: 2430000,
+  };
+
   return (
     <Modal
       open={showModal}
       onClose={onClose}
       component="form"
-      maxWidth=" 800px"
+      maxWidth="800px"
+      height={"558px"}
       sxGridModal={{ marginLeft: 0 }}
     >
       <ContentHeader
@@ -157,12 +172,13 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
         >
           <Tab
             sx={{
-              fontWeight: "700",
+              fontWeight: "bold",
               borderTopRightRadius: "8px",
               borderTopLeftRadius: "8px",
               background: `${value === 0 && "#CCD6EB"}`,
+              color: `${value === 0 && "#000000 !important"}`,
             }}
-            label="COTAÇÃO"
+            label={statusSecondCheck ? "COTAÇÃO X ATUALIZAÇÃO" : "COTAÇÃO"}
             {...a11yProps(0)}
           />
           <Tab
@@ -171,6 +187,7 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
               borderTopRightRadius: "8px",
               borderTopLeftRadius: "8px",
               background: `${value === 1 && "#CCD6EB"}`,
+              color: `${value === 1 && "#000000 !important"}`,
             }}
             label="ABASTECIDAS"
             {...a11yProps(1)}
@@ -181,6 +198,7 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
               borderTopRightRadius: "8px",
               borderTopLeftRadius: "8px",
               background: `${value === 2 && "#CCD6EB"}`,
+              color: `${value === 2 && "#000000 !important"}`,
             }}
             label="DESPESAS"
             {...a11yProps(2)}
@@ -191,6 +209,7 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
               borderTopRightRadius: "8px",
               borderTopLeftRadius: "8px",
               background: `${value === 3 && "#CCD6EB"}`,
+              color: `${value === 3 && "#000000 !important"}`,
             }}
             label="DEPOSITOS"
             {...a11yProps(3)}
@@ -202,14 +221,110 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
         <Grid
           item
           container
-          alignItems="flex-start"
-          justifyContent="flex-start"
+          alignItems="center"
+          justifyContent={statusSecondCheck ? "flex-start" : "center"}
           minWidth={"730px"}
-          maxHeight="230px"
-          minHeight="230px"
+          maxHeight="365px"
+          minHeight="365px"
+          flexDirection={"row"}
+          flexWrap={"nowrap"}
         >
-          {/* {isFetching && <Loading />}
-              {loading && <Loading />} */}
+          {statusSecondCheck && (
+            <>
+              <Grid
+                item
+                container
+                flexDirection={"column"}
+                alignItems={"center"}
+                width="45%"
+              >
+                <Text sx={{ marginBottom: "-15px", fontWeight: "800" }}>
+                  Cotação
+                </Text>
+                <NestedList
+                  maxwidth={"200px"}
+                  sx={{}}
+                  titleOne={"Frete Total"}
+                  subTitleOne={valuesFirstCheck}
+                  valorOne={"R$ 22.117,10"}
+                  titleTwo={"Frete Líquido"}
+                  valorTwo={"R$ 8.977,10"}
+                  statusSecondCheck={statusSecondCheck}
+                />
+              </Grid>
+              <ArrowForwardIcon style={{ verticalAlign: "middle" }} />
+            </>
+          )}
+          <Grid
+            item
+            container
+            flexDirection={"column"}
+            alignItems={"center"}
+            width="45%"
+          >
+            {statusSecondCheck && (
+              <Text sx={{ marginBottom: "-15px", fontWeight: "800" }}>
+                Realizado
+              </Text>
+            )}
+            <NestedList
+              statusSecondCheck={statusSecondCheck}
+              maxwidth={statusSecondCheck ? "220px" : "360px"}
+              titleOne={"Frete Total"}
+              subTitleOne={valuesFirstCheck}
+              valorOne={"R$ 22.117,10"}
+              titleTwo={"Frete Líquido"}
+              valorTwo={"R$ 8.977,10"}
+            />
+          </Grid>
+          {statusSecondCheck && (
+            <>
+              <Divider
+                sx={{
+                  borderColor: "rgba(0, 0, 0, 0.32)",
+                  width: "49%",
+                  ml: 2,
+                  transform: "rotate(90deg)",
+                  position: "absolute",
+                  right: "48px",
+                }}
+              />
+              <Grid
+                item
+                md={4}
+                lg={4}
+                marginLeft={2}
+                container
+                flexDirection={"column"}
+                spacing={2}
+              >
+                <Grid item container flexDirection={"column"}>
+                  <Text fontsize={"12px"} sx={{ opacity: 0.5 }}>
+                    Débito/Crédito
+                  </Text>
+                  <Text fontsize={"16px"}>{"- R$ 100,00"}</Text>
+                </Grid>
+                <Grid item container flexDirection={"column"}>
+                  <Text fontsize={"12px"} sx={{ opacity: 0.5 }}>
+                    Local de descarga
+                  </Text>
+                  <Text fontsize={"16px"}>{"Paránagua - PR"}</Text>
+                </Grid>
+                <Grid item container flexDirection={"column"}>
+                  <Text fontsize={"12px"} sx={{ opacity: 0.5 }}>
+                    Data de descarga
+                  </Text>
+                  <Text fontsize={"16px"}>{"05/11/2022"}</Text>
+                </Grid>
+                <Grid item container flexDirection={"column"}>
+                  <Text fontsize={"12px"} sx={{ opacity: 0.5 }}>
+                    Hora de descarga
+                  </Text>
+                  <Text fontsize={"16px"}>{"16:35"}</Text>
+                </Grid>
+              </Grid>
+            </>
+          )}
         </Grid>
       </TabPanel>
 
@@ -220,8 +335,8 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
           alignItems="flex-start"
           justifyContent="flex-start"
           minWidth={"730px"}
-          minHeight="230px"
-          maxHeight="230px"
+          maxHeight="365px"
+          minHeight="365px"
           overflow={"auto"}
         >
           <TableStocked data={check} />
@@ -235,8 +350,8 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
           alignItems="flex-start"
           justifyContent="flex-start"
           minWidth={"730px"}
-          maxHeight="230px"
-          minHeight="230px"
+          maxHeight="365px"
+          minHeight="365px"
         >
           <TableExpense data={check} />
         </Grid>
@@ -249,8 +364,8 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
           alignItems="flex-start"
           justifyContent="flex-start"
           minWidth={"730px"}
-          maxHeight="230px"
-          minHeight="230px"
+          maxHeight="365px"
+          minHeight="365px"
         >
           <TableDeposit data={check} />
         </Grid>

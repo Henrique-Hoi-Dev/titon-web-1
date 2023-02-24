@@ -4,7 +4,7 @@ import { SCell, SRow } from "components/atoms/table/table";
 import { moneyMask } from "utils/masks";
 import { formatDate } from "utils/formatDate";
 
-const InfoRow = (props) => {
+const RowExpense = (props) => {
   const { data, index } = props;
 
   const isSmallDesktop = useMediaQuery({ maxWidth: "1100px" });
@@ -21,12 +21,11 @@ const InfoRow = (props) => {
         </SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.city}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-          {data?.liters_fuel ?? "---"} L
+          {data?.liters_fuel ?? "---"}
         </SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>
           {moneyMask(data?.value_fuel)}
         </SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{"---"}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{"---"}</SCell>
       </SRow>
 
@@ -95,4 +94,4 @@ const InfoRow = (props) => {
   );
 };
 
-export default InfoRow;
+export default RowExpense;

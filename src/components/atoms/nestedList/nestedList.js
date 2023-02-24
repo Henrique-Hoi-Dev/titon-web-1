@@ -179,7 +179,7 @@ export default function NestedList({
               "& .css-mbfek": {
                 fontWeight: "500",
                 fontSize: "18px",
-                color: "#1877F2",
+                color: "#0BB07B",
               },
             }}
           />

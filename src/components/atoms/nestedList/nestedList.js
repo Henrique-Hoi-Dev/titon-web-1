@@ -62,6 +62,16 @@ export default function NestedList({
                 fontSize: "18px",
                 color: "#1877F2",
               },
+
+              "& .css-yb0lig": {
+                fontSize: "24px",
+                fontWeight: "500!important",
+              },
+              "& .css-mbfek": {
+                fontWeight: "500",
+                fontSize: "18px",
+                color: "#1877F2",
+              },
             }}
           />
           {openOne ? <ExpandLess /> : <ExpandMore />}
@@ -160,6 +170,16 @@ export default function NestedList({
                 fontWeight: "500",
                 fontSize: "18px",
                 color: "#0BB07B",
+              },
+
+              "& .css-yb0lig": {
+                fontSize: "24px",
+                fontWeight: "500!important",
+              },
+              "& .css-mbfek": {
+                fontWeight: "500",
+                fontSize: "18px",
+                color: "#1877F2",
               },
             }}
           />

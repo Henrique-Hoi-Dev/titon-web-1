@@ -123,7 +123,7 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
 
           <Grid item md={4} lg={4} container flexDirection={"column"}>
             <Text>Consumo</Text>
-            <Text fontsize={"24px"}>{checks?.responseData?.consumption} L</Text>
+            <Text fontsize={"24px"}>{checks?.responseData?.consumption}</Text>
           </Grid>
           <Grid item md={4} lg={4} container flexDirection={"column"}>
             <Text>Comissão motorista</Text>
@@ -138,7 +138,7 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
 
           <Grid item md={4} lg={4} container flexDirection={"column"}>
             <Text>Preço KM</Text>
-            <Text fontsize={"24px"}>{checks?.responseData?.KM_price} km</Text>
+            <Text fontsize={"24px"}>{checks?.responseData?.KM_price}</Text>
           </Grid>
           <Grid item md={4} lg={4} container flexDirection={"column"}>
             <Text>Frete Liquido</Text>

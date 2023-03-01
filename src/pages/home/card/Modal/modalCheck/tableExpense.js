@@ -35,9 +35,9 @@ export const TableExpense = ({ data, isFetching, mutate, error, loading }) => {
           </SHead>
           {!isFetching &&
             data &&
-            data?.dataResult?.travel_expense?.length > 0 && (
+            data?.dataResult?.travelExpenses?.length > 0 && (
               <STableBody>
-                {data?.dataResult?.travel_expense?.map((item, i) => (
+                {data?.dataResult?.travelExpenses?.map((item, i) => (
                   <RowExpense key={i} data={item} index={i} />
                 ))}
               </STableBody>
@@ -66,7 +66,7 @@ export const TableExpense = ({ data, isFetching, mutate, error, loading }) => {
           flexWrap="nowrap"
           justifyContent="center"
         >
-          {data?.dataResult?.travel_expense?.length === 0 && !isFetching && (
+          {data?.dataResult?.travelExpenses?.length === 0 && !isFetching && (
             <Grid
               container
               item

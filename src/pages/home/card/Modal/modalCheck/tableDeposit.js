@@ -35,9 +35,9 @@ export const TableDeposit = ({ data, isFetching, mutate, error, loading }) => {
           </SHead>
           {!isFetching &&
             data &&
-            data?.dataResult?.deposit_money?.length > 0 && (
+            data?.dataResult?.depositMoney?.length > 0 && (
               <STableBody>
-                {data?.dataResult?.deposit_money?.map((item, i) => (
+                {data?.dataResult?.depositMoney?.map((item, i) => (
                   <RowDeposit key={i} data={item} index={i} />
                 ))}
               </STableBody>
@@ -66,7 +66,7 @@ export const TableDeposit = ({ data, isFetching, mutate, error, loading }) => {
           flexWrap="nowrap"
           justifyContent="center"
         >
-          {data?.dataResult?.deposit_money?.length === 0 && !isFetching && (
+          {data?.dataResult?.depositMoney?.length === 0 && !isFetching && (
             <Grid
               container
               item

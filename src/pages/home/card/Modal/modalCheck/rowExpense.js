@@ -1,7 +1,6 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
 import { SCell, SRow } from "components/atoms/table/table";
-import { moneyMask } from "utils/masks";
 import { formatDate } from "utils/formatDate";
 
 const RowExpense = (props) => {
@@ -16,17 +15,17 @@ const RowExpense = (props) => {
         <SCell displaywidth={isMobile ? 1 : 0}>
           {formatDate(data?.date) ?? "---"}
         </SCell>
-        <SCell displaywidth={isMobile ? 1 : 0}>
-          {formatDate(data?.date) ?? "---"}
-        </SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.city}</SCell>
+        <SCell displaywidth={isMobile ? 1 : 0}>{data?.time ?? "---"}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.local}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-          {data?.liters_fuel ?? "---"}
+          {data?.expenseDescription ?? "---"}
         </SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-          {moneyMask(data?.value_fuel)}
+          {data?.payment?.value}
         </SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{"---"}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>
+          {data?.payment?.modo ?? "---"}
+        </SCell>
       </SRow>
 
       {/* <SRow 

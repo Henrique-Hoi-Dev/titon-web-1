@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { successNotification, errorNotification } from "utils/notification";
 import { useGet } from "services/requests/useGet";
-import { moneyMask } from "utils/masks";
 import { useSelector } from "react-redux";
 import { useUpdatePatch } from "services/requests/useUpdatePatch";
 
@@ -97,16 +96,13 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
           <Grid item md={4} lg={4} container flexDirection={"column"}>
             <Text>Estimativa combustivel</Text>
             <Text fontsize={"24px"} color="#F03D3D">
-              {moneyMask(checks?.responseData?.fuel_estimate)}
+              {checks?.responseData?.fuel_estimate}
             </Text>
           </Grid>
           <Grid item md={3} lg={3} container flexDirection={"column"}>
             <Text>Sobra Liquida</Text>
             <Text fontsize={"24px"} color="#0BB07B">
-              {moneyMask(
-                checks?.responseData?.full_freight -
-                  checks?.responseData?.driver_commission
-              )}
+              {checks?.responseData?.net_freight}
             </Text>
           </Grid>
 
@@ -117,7 +113,7 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
           <Grid item md={4} lg={4} container flexDirection={"column"}>
             <Text>Frete Total</Text>
             <Text fontsize={"24px"} color="#0BB07B">
-              {moneyMask(checks?.responseData?.full_freight)}
+              {checks?.responseData?.full_freight}
             </Text>
           </Grid>
           <Grid item md={3} lg={3} container flexDirection={"column"}>
@@ -132,7 +128,7 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
           <Grid item md={4} lg={4} container flexDirection={"column"}>
             <Text>Comissão motorista</Text>
             <Text fontsize={"24px"} color="#F03D3D">
-              {moneyMask(checks?.responseData?.driver_commission)}
+              {checks?.responseData?.driver_commission}
             </Text>
           </Grid>
           <Grid item md={3} lg={3} container flexDirection={"column"}>
@@ -142,14 +138,12 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
 
           <Grid item md={4} lg={4} container flexDirection={"column"}>
             <Text>Preço KM</Text>
-            <Text fontsize={"24px"}>
-              {moneyMask(checks?.responseData?.KM_price)} km
-            </Text>
+            <Text fontsize={"24px"}>{checks?.responseData?.KM_price} km</Text>
           </Grid>
           <Grid item md={4} lg={4} container flexDirection={"column"}>
             <Text>Frete Liquido</Text>
             <Text fontsize={"24px"} color="#0BB07B">
-              {moneyMask(checks?.responseData?.full_freight)}
+              {checks?.responseData?.full_freight}
             </Text>
           </Grid>
           <Grid item md={3} lg={3} container flexDirection={"column"}>

@@ -20,12 +20,7 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
   const [fetch, setFetch] = useState(false);
 
   const [value, setValue] = useState(0);
-  const [
-    statusSecondCheck,
-    // setStatusSecondCheck
-  ] = useState(true);
-
-  // const user = useSelector((state) => state?.user);
+  const [statusSecondCheck, setStatusSecondCheck] = useState(false);
 
   const { data: check, isValidating } = useGet(
     `user/freight/${checkId}`,
@@ -60,6 +55,13 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
   const onClose = () => {
     setShowModal(false);
   };
+
+  useEffect(() => {
+    if (check?.dataResult?.status === "STARTING_TRIP") {
+      setStatusSecondCheck(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [check]);
 
   useEffect(() => {
     if (data) {
@@ -113,11 +115,11 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
 
   const valuesFirstCheck = {
     value: {
-      liter: 1800,
-      fuelValue: 300000,
+      liter: check?.dataResult?.totalLiters,
+      fuelValue: check?.dataResult?.fuelValueTotal,
     },
-    value2: 14000,
-    value3: 2430000,
+    value2: check?.dataResult?.expenses,
+    value3: check?.dataResult?.totalDriver,
   };
 
   return (
@@ -138,9 +140,9 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
         }}
       >
         <Title sxGridText={{ justifyContent: "center" }}>
-          {check?.dataResult?.first_check?.start_freight_city.toUpperCase()}{" "}
+          {check?.dataResult?.startCity?.toUpperCase()}{" "}
           <ArrowForwardIcon style={{ verticalAlign: "middle" }} />{" "}
-          {check?.dataResult?.first_check?.final_freight_city.toUpperCase()}
+          {check?.dataResult?.finalCity?.toUpperCase()}
         </Title>
       </ContentHeader>
 
@@ -245,10 +247,10 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
                   maxwidth={"200px"}
                   sx={{}}
                   titleOne={"Frete Total"}
-                  subTitleOne={valuesFirstCheck}
-                  valorOne={"R$ 22.117,10"}
+                  valorOne={check?.dataResult?.freightTotal}
                   titleTwo={"Frete Líquido"}
-                  valorTwo={"R$ 8.977,10"}
+                  valorTwo={check?.dataResult?.totalNetFreight}
+                  valuesFirstCheck={valuesFirstCheck}
                   statusSecondCheck={statusSecondCheck}
                 />
               </Grid>
@@ -268,13 +270,13 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
               </Text>
             )}
             <NestedList
-              statusSecondCheck={statusSecondCheck}
               maxwidth={statusSecondCheck ? "220px" : "360px"}
               titleOne={"Frete Total"}
-              subTitleOne={valuesFirstCheck}
-              valorOne={"R$ 22.117,10"}
+              valorOne={check?.dataResult?.freightTotal}
               titleTwo={"Frete Líquido"}
-              valorTwo={"R$ 8.977,10"}
+              valorTwo={check?.dataResult?.totalNetFreight}
+              valuesFirstCheck={valuesFirstCheck}
+              statusSecondCheck={statusSecondCheck}
             />
           </Grid>
           {statusSecondCheck && (
@@ -371,45 +373,44 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
         </Grid>
       </TabPanel>
 
-      {check?.dataResult?.first_check?.status === "APPROVAL_PROCESS" &&
-        !isValidating && (
-          <Grid container item spacing={2} mt={1} justifyContent="flex-end">
-            <Grid container item xs={12} md={3} lg={3}>
-              <Button
-                background={"#fff"}
-                variant="text"
-                sx={{
-                  fontSize: "14px",
-                  width: "141px",
-                  height: "49px",
-                  marginRight: "15px",
-                  border: "1px solid #F03D3D",
-                  color: "#000000",
-                }}
-              >
-                REPROVAR
-              </Button>
-            </Grid>
-            <Grid container item xs={12} md={3} lg={3}>
-              <Button
-                type="submit"
-                color="success"
-                background={
-                  "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
-                }
-                sx={{
-                  fontSize: "14px",
-                  color: "white",
-                  width: "141px",
-                  height: "49px",
-                  marginRight: "15px",
-                }}
-              >
-                APROVAR
-              </Button>
-            </Grid>
+      {check?.dataResult?.status === "FINISHED" && !isValidating && (
+        <Grid container item spacing={2} mt={1} justifyContent="flex-end">
+          <Grid container item xs={12} md={3} lg={3}>
+            <Button
+              background={"#fff"}
+              variant="text"
+              sx={{
+                fontSize: "14px",
+                width: "141px",
+                height: "49px",
+                marginRight: "15px",
+                border: "1px solid #F03D3D",
+                color: "#000000",
+              }}
+            >
+              REPROVAR
+            </Button>
           </Grid>
-        )}
+          <Grid container item xs={12} md={3} lg={3}>
+            <Button
+              type="submit"
+              color="success"
+              background={
+                "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+              }
+              sx={{
+                fontSize: "14px",
+                color: "white",
+                width: "141px",
+                height: "49px",
+                marginRight: "15px",
+              }}
+            >
+              APROVAR
+            </Button>
+          </Grid>
+        </Grid>
+      )}
     </Modal>
   );
 };

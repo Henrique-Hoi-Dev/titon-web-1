@@ -166,12 +166,12 @@ export const ModalInfoFinancial = ({
                     <Text
                       fontSize={"19px"}
                       color={
-                        getStatus(financial?.dataResult?.freigth[0]?.status)
+                        getStatus(financial?.dataResult?.freight[0]?.status)
                           .color
                       }
                     >
                       {
-                        getStatus(financial?.dataResult?.freigth[0]?.status)
+                        getStatus(financial?.dataResult?.freight[0]?.status)
                           .label
                       }
                     </Text>
@@ -191,7 +191,7 @@ export const ModalInfoFinancial = ({
                   <Text fontSize={"16px"}>
                     Destino:{" "}
                     <Text fontSize={"16px"}>
-                      {financial?.dataResult?.freigth[0]?.final_freight_city}
+                      {financial?.dataResult?.freight[0]?.final_freight_city}
                     </Text>
                   </Text>
                   <Text fontSize={"16px"}>

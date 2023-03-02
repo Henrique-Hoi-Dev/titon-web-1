@@ -1,5 +1,4 @@
 import * as React from "react";
-import { moneyMask } from "utils/masks";
 import { ListItem } from "@mui/material";
 
 import List from "@mui/material/List";
@@ -15,22 +14,16 @@ export default function NestedList({
   valorOne,
   valorTwo,
   titleTwo,
-  subTitleOne,
-  subTitleTwo,
+  valuesFirstCheck,
   statusSecondCheck,
   maxwidth,
   sx,
 }) {
   const [openOne, setOpenOne] = React.useState(false);
-  // const [openTwo, setOpenTwo] = React.useState(false);
 
   const handleClickOne = () => {
     setOpenOne(!openOne);
   };
-
-  // const handleClickOneTwo = () => {
-  //   setOpenTwo(!openTwo);
-  // };
 
   return (
     <>
@@ -108,9 +101,7 @@ export default function NestedList({
                     alignItems: statusSecondCheck ? "center" : "flex-start",
                   }}
                 >
-                  {`${subTitleOne.value.liter}L / ${moneyMask(
-                    subTitleOne.value.fuelValue
-                  )}`}
+                  {`${valuesFirstCheck?.value?.liter}L / ${valuesFirstCheck?.value?.fuelValue}`}
                 </Text>
               </ListItem>
               <ListItem
@@ -130,7 +121,7 @@ export default function NestedList({
                     alignItems: statusSecondCheck ? "center" : "flex-start",
                   }}
                 >
-                  {`${moneyMask(subTitleOne.value2)}`}
+                  {valuesFirstCheck?.value2}
                 </Text>
               </ListItem>
               <ListItem
@@ -150,7 +141,7 @@ export default function NestedList({
                     alignItems: statusSecondCheck ? "center" : "flex-start",
                   }}
                 >
-                  {`${moneyMask(subTitleOne.value3)}`}
+                  {valuesFirstCheck?.value3}
                 </Text>
               </ListItem>
             </ListItemButton>
@@ -183,19 +174,7 @@ export default function NestedList({
               },
             }}
           />
-          {/* {openTwo ? <ExpandLess /> : <ExpandMore />} */}
         </ListItemButton>
-
-        {/* <Collapse in={"openTwo"} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }}>
-              <ListItemIcon>
-                <StarBorder />
-              </ListItemIcon>
-              <ListItemText primary={subTitleTwo} />
-            </ListItemButton>
-          </List>
-        </Collapse> */}
       </List>
     </>
   );

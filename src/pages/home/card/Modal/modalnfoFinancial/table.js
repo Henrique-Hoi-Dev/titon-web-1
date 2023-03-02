@@ -37,13 +37,13 @@ const Table = ({ data, isFetching, mutate, error, loading }) => {
               <SCell displaywidth={isSmallDesktop ? 1 : 0}>Frete Bruto</SCell>
             </SRow>
           </SHead>
-          {!isFetching && data && data?.dataResult?.freigth?.length > 0 && (
+          {!isFetching && data && data?.dataResult?.freight?.length > 0 && (
             <STableBody border={"true"}>
-              {data?.dataResult?.freigth?.map((item, index) => (
+              {data?.dataResult?.freight?.map((item, i) => (
                 <InfoRow
-                  key={item.id}
+                  key={i}
                   data={item}
-                  index={index}
+                  index={i}
                   setCheckId={setCheckId}
                   setShowModalAction={setShowModalAction}
                 />
@@ -74,7 +74,7 @@ const Table = ({ data, isFetching, mutate, error, loading }) => {
           flexWrap="nowrap"
           justifyContent="center"
         >
-          {data?.dataResult?.freigth?.length === 0 && !isFetching && (
+          {data?.dataResult?.freight?.length === 0 && !isFetching && (
             <Grid
               container
               item

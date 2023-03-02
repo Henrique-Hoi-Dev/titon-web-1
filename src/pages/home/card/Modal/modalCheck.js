@@ -180,7 +180,7 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
             <Grid container item xs={12} md={3} lg={3}>
               <Button
                 onClick={(ev) =>
-                  setBody((state) => ({ ...state, status: "APPROVED" })) ||
+                  setBody((state) => ({ ...state, status: "STARTING_TRIP" })) ||
                   handleSubmit(ev)
                 }
                 type="submit"

@@ -1,13 +1,13 @@
 import React from "react";
 import { useMediaQuery } from "react-responsive";
 import { SCell, SRow } from "components/atoms/table/table";
-import { moneyMask } from "utils/masks";
 import { formatDate } from "utils/formatDate";
 import { Button } from "@mui/material";
 
 const status = [
   { value: "APPROVAL_PROCESS", label: "ANALISE", color: "#FFCE52" },
   { value: "APPROVED", label: "APROVADO", color: "#0BB07B" },
+  { value: "STARTING_TRIP", label: "EM VIAGEM", color: "#1877F2" },
   { value: "DENIED", label: "NEGADO", color: "#F03D3D" },
   { value: "FINISHED", label: "FINALIZADO", color: "#86878A" },
 ];
@@ -38,16 +38,16 @@ const InfoRow = (props) => {
           </Button>
         </SCell>
         <SCell displaywidth={isMobile ? 1 : 0}>
-          {data?.final_freight_city ?? "---"}
+          {data?.finalFreightCity.toUpperCase() ?? "---"}
         </SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-          {data?.location_of_the_truck}
+          {data?.locationTruck.toUpperCase()}
         </SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-          {formatDate(new Date())}
+          {formatDate(data?.date)}
         </SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-          {moneyMask(data?.preview_tonne * 100 * (data?.value_tonne / 100))}
+          {data?.totalFreight}
         </SCell>
       </SRow>
 

@@ -82,7 +82,7 @@ const ModalAddFreight = ({ showModal, setShowModal, mutate, financialId }) => {
     }
   }
 
-  const matchCitys = [...new Set(match.map((res, i) => res.nome))] ?? [];
+  // const matchCitys = [...new Set(match.map((res, i) => res.nome))] ?? [];
   const leavingForCitys = [...new Set(leavingFor.map((res) => res.nome))] ?? [];
   const forStateCitys = [...new Set(forState.map((res) => res.nome))] ?? [];
 

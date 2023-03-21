@@ -143,7 +143,7 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
           <Grid item md={4} lg={4} container flexDirection={"column"}>
             <Text>Frete Liquido</Text>
             <Text fontsize={"24px"} color="#0BB07B">
-              {checks?.responseData?.full_freight}
+              {checks?.responseData?.leftover_liquid}
             </Text>
           </Grid>
           <Grid item md={3} lg={3} container flexDirection={"column"}>
@@ -180,7 +180,7 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
             <Grid container item xs={12} md={3} lg={3}>
               <Button
                 onClick={(ev) =>
-                  setBody((state) => ({ ...state, status: "STARTING_TRIP" })) ||
+                  setBody((state) => ({ ...state, status: "APPROVED" })) ||
                   handleSubmit(ev)
                 }
                 type="submit"

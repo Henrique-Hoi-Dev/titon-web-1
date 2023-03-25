@@ -36,17 +36,7 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
     setFetch
   );
 
-  console.log("check", check);
-
-  // const handleSubmitActive = (ev) => {
-  //   ev.preventDefault();
-  //   setBody({
-  //     status: "approved",
-  //     user_id: user.data.users.id,
-  //     driver_id: 2,
-  //   });
-  //   setFetch(true);
-  // };
+  console.log("check", check?.dataResult?.status);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -59,9 +49,10 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
   useEffect(() => {
     if (check?.dataResult?.status === "STARTING_TRIP") {
       setStatusSecondCheck(true);
+    } else {
+      setStatusSecondCheck(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [check]);
+  }, [check, setStatusSecondCheck]);
 
   useEffect(() => {
     if (data) {

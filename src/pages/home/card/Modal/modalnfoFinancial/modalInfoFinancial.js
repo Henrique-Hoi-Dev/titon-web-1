@@ -30,12 +30,6 @@ const status = [
   { value: "FINISHED", label: "FINALIZADO", color: "#86878A" },
 ];
 
-const notificações = [
-  { id: 1, label: "Vulcanização de pneu efetuada ", date: "16/11/2022" },
-  { id: 2, label: "Abastecimento de 50l de Diesel", date: "16/11/2022" },
-  { id: 3, label: "Troca de oléo do freio", date: "16/11/2022" },
-];
-
 export const ModalInfoFinancial = ({
   showModal,
   setShowModal,
@@ -274,9 +268,10 @@ export const ModalInfoFinancial = ({
                 background: "#CCD6EB",
               }}
             >
-              {notificações.map((item) => (
-                <React.Fragment key={item.id}>
-                  <Text>{item.label}</Text> <Text>{item.date}</Text>
+              {financial?.dataResult?.notifications?.map((item) => (
+                <React.Fragment key={item?.id}>
+                  <Text sx={{ maxWidth: "690px" }}>{item?.content}</Text>{" "}
+                  <Text>{formatDate(item?.createdAt)}</Text>
                   <Divider
                     sx={{
                       my: 1,

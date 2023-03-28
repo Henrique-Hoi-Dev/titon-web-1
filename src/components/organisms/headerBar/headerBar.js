@@ -24,18 +24,7 @@ const HeaderBar = ({ setFetch, fetch }) => {
     async function loadNotifications() {
       const response = await api.get("notifications");
 
-      const data = response.data.dataResult.notifications.map(
-        (notifications) => ({
-          ...notifications,
-          timeDistance: formatDistance(
-            parseISO(notifications.created_at),
-            new Date(),
-            { addSuffix: true, locale: pt }
-          ),
-        })
-      );
-
-      const history = response.data.dataResult.history.map((notifications) => ({
+      const data = response.data.notifications.map((notifications) => ({
         ...notifications,
         timeDistance: formatDistance(
           parseISO(notifications.created_at),
@@ -44,7 +33,16 @@ const HeaderBar = ({ setFetch, fetch }) => {
         ),
       }));
 
-      if (response?.data?.dataResult?.notifications?.length >= 0) {
+      const history = response.data.history.map((notifications) => ({
+        ...notifications,
+        timeDistance: formatDistance(
+          parseISO(notifications.created_at),
+          new Date(),
+          { addSuffix: true, locale: pt }
+        ),
+      }));
+
+      if (response?.data?.notifications?.length >= 0) {
         setHistory(history);
       }
 
@@ -65,13 +63,17 @@ const HeaderBar = ({ setFetch, fetch }) => {
   async function handleMarkAsRead(id) {
     const result = await api.put(`notifications/${id}`);
 
+    console.log(
+      "🚀 ~ file: headerBar.js:70 ~ handleMarkAsRead ~ result:",
+      result
+    );
     setNotifications(
       notifications.map((res) => (res.id === id ? { ...res, read: true } : res))
     );
 
     setCheckId({
-      freightId: result.data.dataResult.freight_id,
-      driverId: result.data.dataResult.driver_id,
+      freightId: result.data.freight_id,
+      driverId: result.data.driver_id,
     });
     setShowModalCheck(true);
 

@@ -26,7 +26,7 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
   );
 
   const { data, isFetching, error } = useUpdatePatch(
-    "user/freight-approved",
+    "user/freight",
     body,
     checkId?.freightId,
     fetch,

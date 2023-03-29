@@ -13,7 +13,7 @@ import InfoRow from "./infoRow";
 import Text from "components/atoms/text/text";
 import Loading from "components/atoms/loading/loading";
 import ModalAction from "../modalCheck/modalAction";
-import imgNotFound from "../../../../../assets/trist-not-found-table.svg";
+import imgNotFound from "../../../../../assets/NotFound.png";
 
 const Table = ({ data, isFetching, mutate, error, loading }) => {
   // const isDesktop = useMediaQuery({ maxWidth: "1400px" });
@@ -87,9 +87,9 @@ const Table = ({ data, isFetching, mutate, error, loading }) => {
                 <img
                   src={imgNotFound}
                   alt="img"
-                  width={"30px"}
+                  width={"60px"}
                   style={{
-                    verticalAlign: "unset",
+                    verticalAlign: "middle",
                     marginLeft: "20px",
                   }}
                 />

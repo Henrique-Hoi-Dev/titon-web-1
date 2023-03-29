@@ -8,6 +8,7 @@ import {
   TablePagination,
   TableSortLabel,
 } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 
 export const SLabel = styled(TableSortLabel)(({ theme, hideSortIcon }) => ({
   "&:hover": {
@@ -28,6 +29,12 @@ export const SLabel = styled(TableSortLabel)(({ theme, hideSortIcon }) => ({
   "& .MuiButtonBase.Mui-active": {
     color: "#CCCCCC",
   },
+}));
+
+export const STableGrid = styled(DataGrid)(({ display }) => ({
+  display: `${display ? "" : "table"}`,
+  overflow: "auto",
+  borderRadius: "8px",
 }));
 
 export const STable = styled(Table)(({ display }) => ({

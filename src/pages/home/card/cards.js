@@ -6,7 +6,7 @@ import { TablePagination } from "components/atoms/tablePagination/tablePaginatio
 import { ModalInfoFinancial } from "./Modal/modalnfoFinancial/modalInfoFinancial";
 import { useMediaQuery } from "react-responsive";
 
-import imgNotFound from "../../../assets/trist-not-found.svg";
+import imgNotFound from "../../../assets/NotFound.png";
 import CardInfoValues from "pages/home/card/cardInfoValues";
 import Loading from "components/atoms/loading/loading";
 import Text from "components/atoms/text/text";

@@ -63,10 +63,6 @@ const HeaderBar = ({ setFetch, fetch }) => {
   async function handleMarkAsRead(id) {
     const result = await api.put(`notifications/${id}`);
 
-    console.log(
-      "🚀 ~ file: headerBar.js:70 ~ handleMarkAsRead ~ result:",
-      result
-    );
     setNotifications(
       notifications.map((res) => (res.id === id ? { ...res, read: true } : res))
     );

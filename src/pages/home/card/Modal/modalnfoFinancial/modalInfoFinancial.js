@@ -22,6 +22,7 @@ import Modal from "components/molecules/modal/modal";
 import Text from "components/atoms/text/text";
 import Button from "components/atoms/button/button";
 import ModalAddFreight from "../modalAddFreight";
+import imgNotFound from "../../../../../assets/NotFound.png";
 
 const status = [
   { value: "APPROVAL_PROCESS", label: "ANALISE", color: "#FFCE52" },
@@ -259,15 +260,36 @@ export const ModalInfoFinancial = ({
             <Grid
               item
               container
-              alignItems="flex-start"
-              justifyContent="space-between"
+              alignItems="center"
+              justifyContent={
+                financial?.dataResult?.notifications.length > 0
+                  ? "space-between"
+                  : "center"
+              }
               borderRadius={"4px"}
               padding={2}
               m={"12px 0 40px"}
               sx={{
                 background: "#CCD6EB",
+                overflow: "auto",
+                maxHeight: "180px",
+                height: "180px",
               }}
             >
+              {financial?.dataResult?.notifications.length === 0 && (
+                <Text fontSize={"28px"} center>
+                  NÃO HÁ NOTIFICAÇÔES...{" "}
+                  <img
+                    src={imgNotFound}
+                    alt="img"
+                    width={"60px"}
+                    style={{
+                      verticalAlign: "middle",
+                      marginLeft: "20px",
+                    }}
+                  />
+                </Text>
+              )}
               {financial?.dataResult?.notifications?.map((item) => (
                 <React.Fragment key={item?.id}>
                   <Text sx={{ maxWidth: "690px" }}>{item?.content}</Text>{" "}
@@ -290,8 +312,9 @@ export const ModalInfoFinancial = ({
               container
               alignItems="flex-start"
               justifyContent="flex-start"
-              maxHeight={"280px"}
-              overflow={"scroll"}
+              maxHeight={"270px"}
+              height={"270px"}
+              overflow={"auto"}
             >
               <Table
                 data={financial}

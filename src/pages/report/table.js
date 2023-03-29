@@ -8,6 +8,7 @@ import {
   SHead,
   SRow,
   STable,
+  STableGrid,
   STableBody,
   SLabel,
 } from "components/atoms/table/table";
@@ -15,7 +16,7 @@ import {
 import InfoRow from "./infoRow";
 import Text from "components/atoms/text/text";
 import Loading from "components/atoms/loading/loading";
-import imgNotFound from "../../assets/trist-not-found-table.svg";
+import imgNotFound from "../../assets/NotFound.png";
 
 const Table = ({ data, query, setQuery, isFetching, error, loading }) => {
   const { t } = useTranslation();
@@ -33,13 +34,53 @@ const Table = ({ data, query, setQuery, isFetching, error, loading }) => {
     return;
   };
 
+  const columns = [
+    { field: "id", headerName: "ID", width: 70 },
+    { field: "firstName", headerName: "First name", width: 130 },
+    { field: "lastName", headerName: "Last name", width: 130 },
+    {
+      field: "age",
+      headerName: "Age",
+      type: "number",
+      width: 90,
+    },
+    {
+      field: "fullName",
+      headerName: "Full name",
+      description: "This column has a value getter and is not sortable.",
+      sortable: false,
+      width: 160,
+      valueGetter: (params) =>
+        `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+    },
+  ];
+
+  const rows = [
+    { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
+    { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
+    { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
+    { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
+    { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
+    { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
+    { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
+    { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
+    { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
+  ];
+
   return (
     <>
-      <TableContainer component={Paper}>
+      <STableGrid
+        component={Paper}
+        rows={rows}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        checkboxSelection
+      >
         <STable>
           <SHead>
             <SRow>
-              <SCell>
+              {/* <SCell>
                 <Checkbox
                   color="primary"
                   // indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -49,7 +90,7 @@ const Table = ({ data, query, setQuery, isFetching, error, loading }) => {
                     "aria-label": "select all desserts",
                   }}
                 />
-              </SCell>
+              </SCell> */}
               <SCell>
                 <SLabel
                   active={query?.sort_field === "id"}
@@ -110,15 +151,21 @@ const Table = ({ data, query, setQuery, isFetching, error, loading }) => {
         )}
 
         {data?.dataResult?.length === 0 && !isFetching && (
-          <Grid item justifyContent="center" alignItems="center" pt={5}>
+          <Grid
+            item
+            container
+            justifyContent="center"
+            alignItems="center"
+            p={5}
+          >
             <Text fontSize={"28px"} center>
               {"RESULTADO NÃO ENCONTRADO..."}
               <img
                 src={imgNotFound}
                 alt="img"
-                width={"40px"}
+                width={"60px"}
                 style={{
-                  verticalAlign: "bottom",
+                  verticalAlign: "middle",
                   marginLeft: "24px",
                 }}
               />
@@ -133,7 +180,7 @@ const Table = ({ data, query, setQuery, isFetching, error, loading }) => {
             </Text>
           </Grid>
         )}
-      </TableContainer>
+      </STableGrid>
     </>
   );
 };

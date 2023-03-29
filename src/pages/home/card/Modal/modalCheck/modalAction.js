@@ -36,8 +36,6 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
     setFetch
   );
 
-  console.log("check", check?.dataResult?.status);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

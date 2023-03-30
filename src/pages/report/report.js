@@ -3,7 +3,7 @@ import { useGet } from "services/requests/useGet";
 import { Grid } from "@mui/material";
 import { InputSearches } from "components/atoms/input/inputSearches/input";
 
-import Table from "./table";
+import TableCheck from "./table";
 
 export const Report = () => {
   const INITIAL_STATE_FINANCIAL = {
@@ -11,7 +11,7 @@ export const Report = () => {
     page: 1,
     sort_field: null,
     sort_order: "ASC",
-    status: false,
+    // status: false,
   };
 
   const [financialQuery, setFinancialQuery] = useState(INITIAL_STATE_FINANCIAL);
@@ -24,6 +24,7 @@ export const Report = () => {
     loading,
     mutate,
   } = useGet("financialStatements", financialQuery);
+  console.log("🚀 ~ file: report.js:27 ~ Report ~ financials:", financials);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -60,7 +61,7 @@ export const Report = () => {
         alignItems="flex-start"
         justifyContent="flex-start"
       >
-        <Table
+        <TableCheck
           data={financials}
           query={financialQuery}
           setQuery={setFinancialQuery}

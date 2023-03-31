@@ -3,6 +3,7 @@ import { CircularProgress, Grid } from "@mui/material";
 
 const Loading = ({ sx, color }) => (
   <Grid
+    item
     container
     alignItems="center"
     justifyContent="center"

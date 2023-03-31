@@ -4,6 +4,7 @@ import { Grid } from "@mui/material";
 const ContentHeader = ({ children, mt, sx }) => {
   return (
     <Grid
+      item
       container
       paddingLeft={3}
       mt={mt}

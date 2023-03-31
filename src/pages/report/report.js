@@ -2,17 +2,20 @@ import { useEffect, useState } from "react";
 import { useGet } from "services/requests/useGet";
 import { Grid } from "@mui/material";
 import { InputSearches } from "components/atoms/input/inputSearches/input";
+import { IconAdd } from "components/atoms/icons/icons";
 
 import TableCheck from "./table";
+import Button from "components/atoms/button/button";
 
 export const Report = () => {
   const INITIAL_STATE_FINANCIAL = {
     limit: 10,
     page: 1,
-    sort_field: null,
+    sort_field: "id",
     sort_order: "ASC",
-    // status: false,
+    status: false,
   };
+  const [showModalReport, setShowModalReport] = useState(false);
 
   const [financialQuery, setFinancialQuery] = useState(INITIAL_STATE_FINANCIAL);
   const [search, setSearch] = useState("");
@@ -24,7 +27,6 @@ export const Report = () => {
     loading,
     mutate,
   } = useGet("financialStatements", financialQuery);
-  console.log("🚀 ~ file: report.js:27 ~ Report ~ financials:", financials);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -46,6 +48,21 @@ export const Report = () => {
       spacing={2}
     >
       <Grid item container pl={2} mr={4} mt={-6.5} justifyContent={"flex-end"}>
+        <Button
+          onClick={() => setShowModalReport(true)}
+          background={
+            "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+          }
+          sx={{
+            fontSize: "14px",
+            color: "white",
+            width: "228px",
+            height: "40px",
+            marginRight: "15px",
+          }}
+        >
+          Emitir Relatório <IconAdd sx={{ mt: -0.7 }} />
+        </Button>
         <InputSearches
           searches
           searchesType={"searches"}

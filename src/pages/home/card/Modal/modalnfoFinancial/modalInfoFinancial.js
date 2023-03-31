@@ -61,6 +61,7 @@ export const ModalInfoFinancial = ({
     [],
     financialId ? false : true
   );
+  console.log("🚀 ~ file: modalInfoFinancial.js:60 ~ financial:", financial);
 
   const onClose = () => {
     setShowModal(false);
@@ -77,7 +78,7 @@ export const ModalInfoFinancial = ({
         maxHeight={"760px"}
       >
         <ContentHeader mt={2}>
-          <Title>{financial?.dataResult.truck_board}</Title>
+          <Title>{financial?.dataResult?.truck_board.toUpperCase()}</Title>
         </ContentHeader>
 
         <Grid
@@ -186,7 +187,7 @@ export const ModalInfoFinancial = ({
                   <Text fontSize={"16px"}>
                     Destino:{" "}
                     <Text fontSize={"16px"}>
-                      {financial?.dataResult?.freight[0]?.final_freight_city}
+                      {financial?.dataResult?.freight[0]?.finalFreightCity?.toUpperCase()}
                     </Text>
                   </Text>
                   <Text fontSize={"16px"}>
@@ -200,7 +201,7 @@ export const ModalInfoFinancial = ({
                       sx={{ fontSize: "30px", color: "#509BFB" }}
                     />{" "}
                     <Text fontSize={"18px"} sx={{ verticalAlign: "super" }}>
-                      {financial?.dataResult.cart_models}
+                      {financial?.dataResult.cart_models.toUpperCase()}
                     </Text>
                   </Text>
                 </Grid>

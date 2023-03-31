@@ -8,8 +8,8 @@ import Table from "./table";
 import ModalAddTruck from "./modalAddTruck";
 import Button from "components/atoms/button/button";
 
-const Truck = () => {
-  const [showModalDriver, setShowModalDriver] = useState(false);
+export const Truck = () => {
+  const [showModalTruck, setShowModalTruck] = useState(false);
 
   const INITIAL_STATE_USER = {
     limit: 7,
@@ -51,7 +51,7 @@ const Truck = () => {
     >
       <Grid item container pl={2} mr={4} mt={-6.5} justifyContent={"flex-end"}>
         <Button
-          onClick={() => setShowModalDriver(true)}
+          onClick={() => setShowModalTruck(true)}
           background={
             "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
           }
@@ -103,12 +103,10 @@ const Truck = () => {
       </Grid>
 
       <ModalAddTruck
-        setShowModal={setShowModalDriver}
-        showModal={showModalDriver}
+        setShowModal={setShowModalTruck}
+        showModal={showModalTruck}
         mutate={mutate}
       />
     </Grid>
   );
 };
-
-export default Truck;

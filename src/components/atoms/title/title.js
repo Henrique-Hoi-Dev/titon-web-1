@@ -5,7 +5,7 @@ const Title = ({ children, sx, sxGridText }) => {
   return (
     <>
       {children && (
-        <Grid container direction="row" sx={{ ...sxGridText }}>
+        <Grid item container direction="row" sx={{ ...sxGridText }}>
           <Typography fontSize="32px" sx={{ ...sx, fontWeight: "500" }}>
             {children}
           </Typography>

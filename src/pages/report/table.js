@@ -89,15 +89,6 @@ function EnhancedTableHead(props) {
   );
 }
 
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
-
 function EnhancedTableToolbar(props) {
   const { numSelected } = props;
 
@@ -164,8 +155,6 @@ export default function TableCheck({
   error,
   loading,
 }) {
-  console.log("🚀 ~ file: table.js:166 ~ data:", data);
-
   function createData(id, driver, date, truck, cart) {
     return {
       id,
@@ -176,17 +165,17 @@ export default function TableCheck({
     };
   }
 
-  const rows = data?.dataResult?.map((item) =>
-    createData(
-      item.id,
-      item.driver_name,
-      formatDate(item.start_date),
-      item.truck_models,
-      item.cart_models
-    )
-  );
+  const rows =
+    data?.dataResult?.map((item) =>
+      createData(
+        item?.id,
+        item?.driver_name,
+        formatDate(item?.start_date),
+        item?.truck_models,
+        item?.cart_models
+      )
+    ) ?? [];
 
-  console.log("🚀 ~ file: table.js:190 ~ rows:", rows);
   const [selected, setSelected] = React.useState([]);
   const [visibleRows, setVisibleRows] = React.useState(null);
 
@@ -203,7 +192,7 @@ export default function TableCheck({
 
     setVisibleRows(rowsOnMount);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [data]);
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -244,7 +233,7 @@ export default function TableCheck({
             <EnhancedTableHead
               numSelected={selected.length}
               onSelectAllClick={handleSelectAllClick}
-              rowCount={rows.length}
+              rowCount={rows?.length}
             />
             <STableBody>
               {visibleRows
@@ -259,7 +248,7 @@ export default function TableCheck({
                         role="checkbox"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
-                        key={row.name}
+                        key={row.id}
                         selected={isItemSelected}
                         sx={{ cursor: "pointer" }}
                         alternatingcolors={index}

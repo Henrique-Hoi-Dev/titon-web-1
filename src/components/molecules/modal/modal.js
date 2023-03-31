@@ -30,6 +30,7 @@ const Modal = ({
   return (
     <MuiModal open={open} onClose={onClose} onBackdropClick={onClose}>
       <Grid
+        item
         container
         sx={{
           m: "0 10px 0 10px",

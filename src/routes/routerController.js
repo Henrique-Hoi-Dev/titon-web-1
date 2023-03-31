@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Report } from "pages/report/report";
+import { Truck } from "pages/truck/truck";
 import { Check } from "pages/check/check";
 
 import MainTemplate from "components/templates/main/main";
@@ -8,7 +9,6 @@ import Login from "pages/login/login";
 import Home from "pages/home/home";
 import Driver from "pages/driver/driver";
 import User from "pages/user/user";
-import Truck from "pages/truck/truck";
 import Cart from "pages/cart/cart";
 import History from "pages/history/historyFinancialStatement";
 

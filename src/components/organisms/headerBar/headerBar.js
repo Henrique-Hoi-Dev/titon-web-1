@@ -94,6 +94,7 @@ const HeaderBar = ({ setFetch, fetch }) => {
   return (
     <>
       <Grid
+        item
         container
         xs={6}
         md={6}

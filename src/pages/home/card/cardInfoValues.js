@@ -108,7 +108,7 @@ const CardInfoValues = ({ props, styles, onClick }) => {
             <Text fontSize={"16px"}>
               Destino:{" "}
               <Text fontSize={"16px"}>
-                {props?.freigth[0]?.final_freight_city}
+                {props?.freigth[0]?.final_freight_city.toUpperCase()}
               </Text>
             </Text>
             <Text fontSize={"16px"}>

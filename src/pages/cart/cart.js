@@ -42,6 +42,7 @@ const Cart = () => {
 
   return (
     <Grid
+      item
       container
       padding={1}
       spacing={2}

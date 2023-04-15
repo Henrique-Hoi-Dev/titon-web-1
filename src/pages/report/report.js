@@ -75,18 +75,29 @@ export const Report = () => {
         item
         container
         mb={5}
+        minHeight={"100%"}
         alignItems="flex-start"
         justifyContent="flex-start"
       >
-        <TableCheck
-          data={financials}
-          query={financialQuery}
-          setQuery={setFinancialQuery}
-          isFetching={financialIsFetching}
-          error={financialsError}
-          loading={loading}
-          mutate={mutate}
-        />
+        <Grid
+          item
+          container
+          pl={2}
+          mr={4}
+          mt={5}
+          mb={3}
+          justifyContent={"center"}
+        >
+          <TableCheck
+            data={financials}
+            query={financialQuery}
+            setQuery={setFinancialQuery}
+            isFetching={financialIsFetching}
+            error={financialsError}
+            loading={loading}
+            mutate={mutate}
+          />
+        </Grid>
       </Grid>
     </Grid>
   );

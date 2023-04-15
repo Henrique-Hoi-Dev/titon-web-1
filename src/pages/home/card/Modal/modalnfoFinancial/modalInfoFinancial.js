@@ -61,7 +61,6 @@ export const ModalInfoFinancial = ({
     [],
     financialId ? false : true
   );
-  console.log("🚀 ~ file: modalInfoFinancial.js:60 ~ financial:", financial);
 
   const onClose = () => {
     setShowModal(false);

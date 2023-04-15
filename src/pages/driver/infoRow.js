@@ -16,14 +16,8 @@ import {
 } from "components/atoms/table/table";
 
 const InfoRow = (props) => {
-
-  const { 
-    data, 
-    index, 
-    setShowModalDelete, 
-    // setShowModalUpdate,
-    setDriveId, 
-  } = props;
+  const { data, index, setShowModalDelete, setShowModalUpdate, setDriveId } =
+    props;
 
   const [open, setOpen] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
@@ -39,20 +33,20 @@ const InfoRow = (props) => {
   };
 
   const handleDelete = (id, name) => {
-    setShowModalDelete(true)
-    setDriveId({ id: id, name: name })
-    setOpenSettings(false)
-  }
-  
-  // const handleUpdate = (id) => {
-  //   setShowModalUpdate(true)
-  //   setDriveId({ id: id })
-  //   setOpenSettings(false)
-  // }
+    setShowModalDelete(true);
+    setDriveId({ id: id, name: name });
+    setOpenSettings(false);
+  };
+
+  const handleUpdate = (id) => {
+    setShowModalUpdate(true);
+    setDriveId({ id: id });
+    setOpenSettings(false);
+  };
 
   return (
     <>
-      <SRow key={data.id} alternatingcolors={index} >
+      <SRow key={data.id} alternatingcolors={index}>
         <SCell minwidth={"0px"} displaywidth={isDesktop ? 0 : 1}>
           <IconButton
             aria-label="expand row"
@@ -65,14 +59,22 @@ const InfoRow = (props) => {
 
         <SCell>{data.id}</SCell>
         <SCell displaywidth={isMobile ? 1 : 0}>{data.name}</SCell>
-        <SCell 
-          sx={{ color: `${(data.credit > 0 && "green") || (data.credit < 0 && "red")}` }}
+        <SCell
+          sx={{
+            color: `${
+              (data.credit > 0 && "green") || (data.credit < 0 && "red")
+            }`,
+          }}
           displaywidth={isSmallDesktop ? 1 : 0}
         >
           {moneyMask(data.credit || [0])}
         </SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.truck}</SCell>
-        <SCell displaywidth={isDesktop ? 1 : 0}>{data.cart}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>
+          {data.truck?.toUpperCase() ?? "--"}
+        </SCell>
+        <SCell displaywidth={isDesktop ? 1 : 0}>
+          {data.cart?.toUpperCase() ?? "--"}
+        </SCell>
         <SCell>
           <IconButton
             color="inherit"
@@ -108,13 +110,13 @@ const InfoRow = (props) => {
         open={openSettings}
         onClose={() => setOpenSettings(!openSettings)}
       >
-        {/* <MenuItem onClick={() => handleUpdate(data?.id)}>Editar</MenuItem> */}
-        <MenuItem onClick={() => handleDelete(data?.id, data.name)}>Excluir</MenuItem>
+        <MenuItem onClick={() => handleUpdate(data?.id)}>Editar</MenuItem>
+        <MenuItem onClick={() => handleDelete(data?.id, data.name)}>
+          Excluir
+        </MenuItem>
       </Menu>
 
-      <SRow 
-        displaywidth={isDesktop ? 0 : 1} 
-        sx={{ backgroundColor: "white" }}>
+      <SRow displaywidth={isDesktop ? 0 : 1} sx={{ backgroundColor: "white" }}>
         <SCell
           style={{ paddingBottom: 0, paddingTop: 0, border: 0 }}
           colSpan={6}
@@ -124,10 +126,9 @@ const InfoRow = (props) => {
               <STable aria-label="purchases">
                 <Box sx={{ display: "flex", flexWrap: "wrap" }}>
                   <STableBody>
-
-                   <SRow sx={{ backgroundColor: "white" }}>
+                    <SRow sx={{ backgroundColor: "white" }}>
                       <SCellTwoHead displaywidth={isMobile ? 0 : 1}>
-                        ID 
+                        ID
                       </SCellTwoHead>
                       <SCell displaywidth={isMobile ? 0 : 1}>
                         {data.roomid}
@@ -136,7 +137,7 @@ const InfoRow = (props) => {
 
                     <SRow sx={{ backgroundColor: "white" }}>
                       <SCellTwoHead displaywidth={isSmallDesktop ? 0 : 1}>
-                        ID 
+                        ID
                       </SCellTwoHead>
                       <SCell displaywidth={isSmallDesktop ? 0 : 1}>
                         {data.userid}
@@ -148,7 +149,7 @@ const InfoRow = (props) => {
                         value
                       </SCellTwoHead>
                       <SCell displaywidth={isSmallDesktop ? 0 : 1}>
-                          {moneyMask(data.value || [0])}
+                        {moneyMask(data.value || [0])}
                       </SCell>
                     </SRow>
 

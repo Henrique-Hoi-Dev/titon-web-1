@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
-import { useTranslation } from "react-i18next";
 import { errorNotification, successNotification } from "utils/notification";
 import { useGet } from "services/requests/useGet";
 import { useUpdate } from "services/requests/useUpdate";
@@ -16,32 +15,25 @@ import PickerDate from "components/atoms/pickerDate/pickerDate";
 import InputMaskComponent from "components/atoms/inputMask/inputMask";
 
 const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
-  const { t } = useTranslation();
-
   const [fetch, setFetch] = useState(false);
   const [body, setBody] = useState([]);
 
   const { data: driver, isValidating } = useGet(`user/driver/${props.id}`, []);
 
-  const {
-    data: salespointUpdate,
-    error: errorSalespointUpdate,
-    isFetching,
-  } = useUpdate(
-    `user/driver/${driver.dataResult.id}`,
+  const { data, error, isFetching } = useUpdate(
+    `user/driver/${driver?.dataResult?.id}`,
     body,
     "",
     fetch,
     setFetch
   );
 
-  console.log("id", driver);
-
   const handleSubmit = (ev) => {
     ev.preventDefault();
     setFetch(true);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const onClose = () => {
     setShowModal(false);
     setBody({});
@@ -51,7 +43,7 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
     setBody((state) => ({
       ...state,
       name: driver?.dataResult?.name,
-      number_cnh: Number(driver?.dataResult?.number_cnh),
+      number_cnh: driver?.dataResult?.number_cnh,
       valid_cnh: driver?.dataResult?.valid_cnh,
       date_valid_mopp: driver?.dataResult?.date_valid_mopp,
       date_valid_nr20: driver?.dataResult?.date_valid_nr20,
@@ -63,20 +55,15 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
   }, [driver]);
 
   useEffect(() => {
-    if (salespointUpdate) {
+    if (data) {
       mutate();
       onClose();
-      successNotification(t("messages.success_msg"));
+      successNotification("Edição bem sucedida");
     }
-    if (salespointUpdate) {
-      successNotification(t("messages.success_msg"));
+    if (error) {
+      errorNotification(error?.response?.data?.msg);
     }
-
-    if (errorSalespointUpdate) {
-      errorNotification(errorSalespointUpdate?.response?.data?.msg);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [salespointUpdate, errorSalespointUpdate]);
+  }, [data, error, mutate, onClose]);
 
   return (
     <Modal
@@ -158,7 +145,7 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  number_cnh: Number(ev.target.value),
+                  number_cnh: ev.target.value,
                 }))
               }
             />

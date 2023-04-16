@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import login from '../../assets/background-login.png'
+import styled from "styled-components";
+import login from "../../assets/background-login.png";
 
 export const Wrapper = styled.div`
   height: 100%;
@@ -11,13 +11,14 @@ export const Wrapper = styled.div`
   padding: 0 40px;
 
   background-image: url(${login});
+
   background-repeat: no-repeat;
-  background-size: 100%;
-  background-position: center;
+  background-position-y: center;
+  background-position-x: center;
+  background-size: 100% 100%;
 
   img {
     width: 385px;
     height: 54px;
   }
 `;
-

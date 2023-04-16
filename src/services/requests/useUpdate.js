@@ -4,8 +4,8 @@ import { api } from "services/api";
 
 export const useUpdate = (url, body, id, fetch, setFetch) => {
   const auth = useSelector((state) => state.auth);
-  const token = auth?.token
-  
+  const token = auth?.token;
+
   const [data, setData] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState(null);
@@ -27,4 +27,4 @@ export const useUpdate = (url, body, id, fetch, setFetch) => {
   }, [fetch]);
 
   return { data, error, isFetching };
-}
+};

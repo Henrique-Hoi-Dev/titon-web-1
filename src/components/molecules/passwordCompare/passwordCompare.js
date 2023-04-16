@@ -17,7 +17,7 @@ const PasswordCompare = ({
 
   return (
     <>
-      <Grid item xs={12} md={12} lg={12}>
+      <Grid item container xs={12} md={12} lg={12}>
         <Input
           holder={t("field.password")}
           type={showPassword ? "text" : "password"}
@@ -28,7 +28,7 @@ const PasswordCompare = ({
           required={required}
         />
       </Grid>
-      <Grid item xs={12} md={12} lg={12}>
+      <Grid item container xs={12} md={12} lg={12}>
         <Input
           holder={t("field.confirm_password")}
           type={showConfirmPassword ? "text" : "password"}

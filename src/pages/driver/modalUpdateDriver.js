@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { successNotification } from "utils/notification";
+import { errorNotification, successNotification } from "utils/notification";
 import { useGet } from "services/requests/useGet";
 import { useUpdate } from "services/requests/useUpdate";
 import { formatDatePicker } from "utils/formatDate";
@@ -13,37 +12,19 @@ import Loading from "components/atoms/loading/loading";
 import ContentHeader from "components/molecules/contentHeader/contentHeader";
 import Title from "components/atoms/title/title";
 import PickerDate from "components/atoms/pickerDate/pickerDate";
+import InputMaskComponent from "components/atoms/inputMask/inputMask";
 
-const ModalUpdateDriver = (
-  { 
-    showModal, 
-    setShowModal, 
-    mutate, 
-    props
-  }) => {
-
-  const { t } = useTranslation();
-
+const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
   const [fetch, setFetch] = useState(false);
   const [body, setBody] = useState([]);
 
-  const {
-    data: driver,
-    isValidating
-  } = useGet(
-    `user/driver/${props.id}`, 
-    []
-  );
+  const { data: driver, isValidating } = useGet(`user/driver/${props.id}`, []);
 
-  const {
-    data: salespointUpdate,
-    error: errorSalespointUpdate,
-    isFetching
-  } = useUpdate(
-    `user/driver/${props.id}`, 
-    body, 
+  const { data, error, isFetching } = useUpdate(
+    `user/driver/${driver?.dataResult?.id}`,
+    body,
     "",
-    fetch, 
+    fetch,
     setFetch
   );
 
@@ -52,16 +33,17 @@ const ModalUpdateDriver = (
     setFetch(true);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const onClose = () => {
     setShowModal(false);
-    setBody({})
+    setBody({});
   };
 
   useEffect(() => {
     setBody((state) => ({
       ...state,
       name: driver?.dataResult?.name,
-      number_cnh: Number(driver?.dataResult?.number_cnh),
+      number_cnh: driver?.dataResult?.number_cnh,
       valid_cnh: driver?.dataResult?.valid_cnh,
       date_valid_mopp: driver?.dataResult?.date_valid_mopp,
       date_valid_nr20: driver?.dataResult?.date_valid_nr20,
@@ -69,20 +51,19 @@ const ModalUpdateDriver = (
       cpf: driver?.dataResult?.cpf,
       date_admission: driver?.dataResult?.date_admission,
       date_birthday: driver?.dataResult?.date_birthday,
-    }))
+    }));
   }, [driver]);
 
   useEffect(() => {
-    if (salespointUpdate) {
+    if (data) {
       mutate();
       onClose();
-      successNotification(t("messages.success_msg"));
+      successNotification("Edição bem sucedida");
     }
-    if(salespointUpdate){
-      successNotification(t("messages.success_msg"));
+    if (error) {
+      errorNotification(error?.response?.data?.msg);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [salespointUpdate, errorSalespointUpdate]);
+  }, [data, error, mutate, onClose]);
 
   return (
     <Modal
@@ -112,12 +93,12 @@ const ModalUpdateDriver = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.name ?? ''}
+              value={body?.name ?? ""}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  name: ev.target.value
-                })) 
+                  name: ev.target.value,
+                }))
               }
             />
           </Grid>
@@ -131,8 +112,8 @@ const ModalUpdateDriver = (
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,
-                  date_admission: formatDatePicker(newValue)
-                })) 
+                  date_admission: formatDatePicker(newValue),
+                }))
               }
             />
           </Grid>
@@ -146,8 +127,8 @@ const ModalUpdateDriver = (
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,
-                  date_birthday: formatDatePicker(newValue)
-                })) 
+                  date_birthday: formatDatePicker(newValue),
+                }))
               }
             />
           </Grid>
@@ -160,30 +141,31 @@ const ModalUpdateDriver = (
                   height: "1.4rem",
                 },
               }}
-              value={body?.number_cnh ?? ''}
+              value={body?.number_cnh ?? ""}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  number_cnh: Number(ev.target.value)
-                })) 
+                  number_cnh: ev.target.value,
+                }))
               }
             />
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Input
+            <InputMaskComponent
               label={"CPF"}
+              mask={"999.999.999-99"}
               styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
+                "& .css-zn7bzk-MuiFormControl-root-MuiTextField-root": {
+                  height: "1.3em",
                 },
               }}
-              value={body?.cpf ?? ''}
+              value={body?.cpf ?? ""}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cpf: ev.target.value
-                })) 
+                  cpf: ev.target.value,
+                }))
               }
             />
           </Grid>
@@ -197,8 +179,8 @@ const ModalUpdateDriver = (
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,
-                  valid_cnh: formatDatePicker(newValue)
-                })) 
+                  valid_cnh: formatDatePicker(newValue),
+                }))
               }
             />
           </Grid>
@@ -212,8 +194,8 @@ const ModalUpdateDriver = (
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,
-                  date_valid_mopp: formatDatePicker(newValue)
-                })) 
+                  date_valid_mopp: formatDatePicker(newValue),
+                }))
               }
             />
           </Grid>
@@ -227,8 +209,8 @@ const ModalUpdateDriver = (
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,
-                  date_valid_nr20: formatDatePicker(newValue)
-                })) 
+                  date_valid_nr20: formatDatePicker(newValue),
+                }))
               }
             />
           </Grid>
@@ -242,37 +224,44 @@ const ModalUpdateDriver = (
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,
-                  date_valid_nr35: formatDatePicker(newValue)
-                })) 
+                  date_valid_nr35: formatDatePicker(newValue),
+                }))
               }
             />
           </Grid>
 
-          <Grid 
-            container 
-            item 
-            xs={12} 
-            md={12} 
-            lg={12} 
-            spacing={2} 
+          <Grid
+            container
+            item
+            xs={12}
+            md={12}
+            lg={12}
+            spacing={2}
             mt={2}
             justifyContent={"flex-end"}
           >
             <Grid container item xs={12} md={3} lg={3}>
-              <Button 
+              <Button
                 onClick={() => onClose()}
                 background={"#fff"}
-                sx={{ width: "140px", height: "49px", border: "1px solid #509BFB", color: "#000000" }}
+                sx={{
+                  width: "140px",
+                  height: "49px",
+                  border: "1px solid #509BFB",
+                  color: "#000000",
+                }}
                 variant="text"
               >
                 CANCELAR
-              </Button>              
+              </Button>
             </Grid>
-            <Grid container item xs={12} md={3} lg={3} >
-              <Button 
-                type="submit" 
+            <Grid container item xs={12} md={3} lg={3}>
+              <Button
+                type="submit"
                 color="success"
-                background={"linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"}
+                background={
+                  "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+                }
                 sx={{
                   fontSize: "14px",
                   color: "white",
@@ -285,12 +274,11 @@ const ModalUpdateDriver = (
               </Button>
             </Grid>
           </Grid>
-
         </Grid>
       )}
 
-      {isFetching && <Loading/>}
-      {isValidating && <Loading/>}
+      {isFetching && <Loading />}
+      {isValidating && <Loading />}
     </Modal>
   );
 };

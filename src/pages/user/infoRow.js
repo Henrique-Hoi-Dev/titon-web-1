@@ -15,15 +15,9 @@ import {
   SCellTwoHead,
 } from "components/atoms/table/table";
 
-const InfoRow = (props) => {
-
-  const { 
-    data, 
-    index, 
-    setShowModalDelete, 
-    setShowModalUpdate,
-    setUserId, 
-  } = props;
+export default function InfoRow(props) {
+  const { data, index, setShowModalDelete, setShowModalUpdate, setUserId } =
+    props;
 
   const [open, setOpen] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
@@ -38,21 +32,21 @@ const InfoRow = (props) => {
     setAnchorEl(ev.currentTarget);
   };
 
-  const handleDelete = (id) => {
-    setShowModalDelete(true)
-    setUserId(id)
-    setOpenSettings(false)
-  }
-  
+  const handleDelete = (id, name) => {
+    setShowModalDelete(true);
+    setUserId({ id: id, name: name });
+    setOpenSettings(false);
+  };
+
   const handleUpdate = (id) => {
-    setShowModalUpdate(true)
-    setUserId(id)
-    setOpenSettings(false)
-  }
+    setShowModalUpdate(true);
+    setUserId({ id: id });
+    setOpenSettings(false);
+  };
 
   return (
     <>
-      <SRow key={data.id} alternatingcolors={index} >
+      <SRow key={data.id} alternatingcolors={index}>
         <SCell minwidth={"0px"} displaywidth={isDesktop ? 0 : 1}>
           <IconButton
             aria-label="expand row"
@@ -66,7 +60,7 @@ const InfoRow = (props) => {
         <SCell>{data.id}</SCell>
         <SCell displaywidth={isMobile ? 1 : 0}>{data.name}</SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.email}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.type_positions}</SCell>
+        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.type_role}</SCell>
         <SCell>
           <IconButton
             color="inherit"
@@ -103,12 +97,12 @@ const InfoRow = (props) => {
         onClose={() => setOpenSettings(!openSettings)}
       >
         <MenuItem onClick={() => handleUpdate(data?.id)}>Editar</MenuItem>
-        <MenuItem onClick={() => handleDelete(data?.id)}>Excluir</MenuItem>
+        <MenuItem onClick={() => handleDelete(data?.id, data.name)}>
+          Excluir
+        </MenuItem>
       </Menu>
 
-      <SRow 
-        displaywidth={isDesktop ? 0 : 1} 
-        sx={{ backgroundColor: "white" }}>
+      <SRow displaywidth={isDesktop ? 0 : 1} sx={{ backgroundColor: "white" }}>
         <SCell
           style={{ paddingBottom: 0, paddingTop: 0, border: 0 }}
           colSpan={6}
@@ -118,10 +112,9 @@ const InfoRow = (props) => {
               <STable aria-label="purchases">
                 <Box sx={{ display: "flex", flexWrap: "wrap" }}>
                   <STableBody>
-
-                   <SRow sx={{ backgroundColor: "white" }}>
+                    <SRow sx={{ backgroundColor: "white" }}>
                       <SCellTwoHead displaywidth={isMobile ? 0 : 1}>
-                        ID 
+                        ID
                       </SCellTwoHead>
                       <SCell displaywidth={isMobile ? 0 : 1}>
                         {data.roomid}
@@ -130,7 +123,7 @@ const InfoRow = (props) => {
 
                     <SRow sx={{ backgroundColor: "white" }}>
                       <SCellTwoHead displaywidth={isSmallDesktop ? 0 : 1}>
-                        ID 
+                        ID
                       </SCellTwoHead>
                       <SCell displaywidth={isSmallDesktop ? 0 : 1}>
                         {data.userid}
@@ -142,7 +135,7 @@ const InfoRow = (props) => {
                         value
                       </SCellTwoHead>
                       <SCell displaywidth={isSmallDesktop ? 0 : 1}>
-                          {moneyMask(data.value || [0])}
+                        {moneyMask(data.value || [0])}
                       </SCell>
                     </SRow>
 
@@ -163,6 +156,4 @@ const InfoRow = (props) => {
       </SRow>
     </>
   );
-};
-
-export default InfoRow;
+}

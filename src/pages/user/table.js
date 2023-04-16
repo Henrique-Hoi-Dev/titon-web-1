@@ -9,26 +9,25 @@ import {
   SRow,
   STable,
   STableBody,
-  SLabel
-} from "components/atoms/table/table"
+  SLabel,
+} from "components/atoms/table/table";
 
+import imgNotFound from "../../assets/trist-not-found-table.svg";
 import InfoRow from "./infoRow";
 import Text from "components/atoms/text/text";
 import Loading from "components/atoms/loading/loading";
 import ModalDeleteUser from "./modalDeleteUser";
 import ModalUpdateUser from "./modalUpdateUser";
 
-const Table = (
-  { 
-    data,
-    query, 
-    setQuery, 
-    isFetching, 
-    mutate, 
-    error, 
-    loading 
-  }) => {
-
+const Table = ({
+  data,
+  query,
+  setQuery,
+  isFetching,
+  mutate,
+  error,
+  loading,
+}) => {
   const { t } = useTranslation();
 
   const isDesktop = useMediaQuery({ maxWidth: "1250px" });
@@ -37,17 +36,17 @@ const Table = (
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showModalUpdate, setShowModalUpdate] = useState(false);
 
-  const [userId, setUserId] = useState(null)
+  const [userId, setUserId] = useState(null);
 
   const handleSort = (item) => {
     setQuery((state) => ({
       ...state,
       sort_field: item,
-      sort_order: `${query?.sort_order === "ASC" ? "DESC" : "ASC"}`
-    }))
+      sort_order: `${query?.sort_order === "ASC" ? "DESC" : "ASC"}`,
+    }));
     return;
   };
-  
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -95,26 +94,24 @@ const Table = (
             </SRow>
           </SHead>
           {!isFetching && data && data?.dataResult?.length > 0 && (
-            <>
-              <STableBody>
-                {data.dataResult.map((item, index) => (
-                  <InfoRow
-                    key={item.id}
-                    data={item}
-                    index={index}
-                    setUserId={setUserId}
-                    setShowModalDelete={setShowModalDelete}
-                    setShowModalUpdate={setShowModalUpdate}
-                  />
-                ))}
-              </STableBody>
-            </>
+            <STableBody>
+              {data.dataResult.map((item, index) => (
+                <InfoRow
+                  key={item.id}
+                  data={item}
+                  index={index}
+                  setUserId={setUserId}
+                  setShowModalDelete={setShowModalDelete}
+                  setShowModalUpdate={setShowModalUpdate}
+                />
+              ))}
+            </STableBody>
           )}
         </STable>
 
         {(loading || isFetching) && (
           <Grid container justifyContent="center" alignItems="center" mt={3}>
-            <Loading titulo={t("messages.loading")}/>
+            <Loading titulo={t("messages.loading")} />
           </Grid>
         )}
 
@@ -127,20 +124,20 @@ const Table = (
           alignItems="center"
           flexWrap="nowrap"
           justifyContent="center"
-        > 
-
-          {(data?.total === 0) && !isFetching && (
+        >
+          {data?.dataResult?.length === 0 && !isFetching && (
             <Grid item justifyContent="center" alignItems="center" pt={5}>
               <Text fontSize={"28px"} center>
-                {t("messages.no_results_found").toUpperCase()}
-              </Text>
-            </Grid>
-          )}
-
-          {(data?.total === 0) && !data && !isFetching && (
-            <Grid item justifyContent="center" alignItems="center" pt={5}>
-              <Text fontSize={"28px"} center>
-                {t("messages.no_results_found").toUpperCase()}
+                {"RESULTADO NÃO ENCONTRADO..."}
+                <img
+                  src={imgNotFound}
+                  alt="img"
+                  width={"40px"}
+                  style={{
+                    verticalAlign: "bottom",
+                    marginLeft: "24px",
+                  }}
+                />
               </Text>
             </Grid>
           )}
@@ -155,33 +152,28 @@ const Table = (
         </Grid>
 
         {!isFetching && data?.totalPages > 0 && (
-          <TablePagination
-            data={data}
-            query={query}
-            setQuery={setQuery}
-          />
+          <TablePagination data={data} query={query} setQuery={setQuery} />
         )}
-      </TableContainer>   
+      </TableContainer>
 
       {showModalDelete && (
-        <ModalDeleteUser 
+        <ModalDeleteUser
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
-          id={userId}
+          props={userId}
           mutate={mutate}
         />
       )}
 
       {showModalUpdate && (
-        <ModalUpdateUser 
+        <ModalUpdateUser
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
-          userId={userId}
+          props={userId}
           mutate={mutate}
         />
       )}
     </>
-
   );
 };
 

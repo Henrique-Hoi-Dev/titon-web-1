@@ -47,6 +47,10 @@ const Input = ({
             "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
               border: `2px solid ${dark ? "#FFFFFF!important" : "#2B2B2C!important"}`,
             },
+            "& .css-u9osun.Mui-focused": {
+              color: `${dark ? "#FFFFFF!important" : "#2B2B2C!important"}`,
+            },
+
             "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused": {
               color: `${dark ? "#FFFFFF!important" : "#2B2B2C!important"}`,
             },

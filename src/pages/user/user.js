@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Grid } from "@mui/material";
 import { useGet } from "services/requests/useGet";
 
@@ -6,16 +6,8 @@ import Table from "./table";
 import ModalAddUser from "./modalAddUser";
 
 const User = () => {
-  const [open, setOpen] = useState(false);
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
-
-  const [userId, setUserId] = useState(null);
-
   const [showModalDriver, setShowModalDriver] = useState(false);
-  
+
   const INITIAL_STATE_USER = {
     limit: 10,
     page: 1,
@@ -29,39 +21,35 @@ const User = () => {
     data: users,
     error: usersError,
     isFetching: usersIsFetching,
-    loading, 
+    loading,
     mutate,
-  } = useGet(
-    "/users", 
-    userQuery
-  );
-
-  useEffect(() => {
-    setUserQuery((state) => ({
-      ...state,
-      userId: userId,
-    }));
-  }, [userId]);
+  } = useGet("/users", userQuery);
 
   return (
     <Grid
       container
-      justifyContent="center"
-      minHeight="88vh"
       padding={1}
       spacing={2}
-      m={2}
+      minHeight="88vh"
+      justifyContent="center"
+      alignContent={"flex-start"}
     >
       <Grid
         item
         container
         mb={5}
-        minHeight={'100%'}
         alignItems="flex-start"
         justifyContent="flex-start"
-        width={`calc(100% - 50px)`}
       >
-        <Grid item container pl={2} mr={4} mt={5} mb={3} justifyContent={"center"}>
+        <Grid
+          item
+          container
+          pl={2}
+          mr={4}
+          mt={5}
+          mb={3}
+          justifyContent={"center"}
+        >
           <Table
             data={users}
             query={userQuery}
@@ -71,10 +59,10 @@ const User = () => {
             loading={loading}
             mutate={mutate}
           />
-        </Grid>        
+        </Grid>
       </Grid>
 
-      <ModalAddUser 
+      <ModalAddUser
         setShowModal={setShowModalDriver}
         showModal={showModalDriver}
         mutate={mutate}

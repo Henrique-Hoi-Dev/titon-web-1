@@ -9,10 +9,10 @@ const Autocomplete = ({
   disabled,
   onChange,
   required,
+  dark,
   loading,
   ...props
 }) => {
-  
   return (
     <MuiAutocomplete
       sx={sx}
@@ -24,11 +24,36 @@ const Autocomplete = ({
       renderInput={(params) => (
         <TextField
           {...params}
-          sx={{ 
+          sx={{
             background: "white!important",
+            "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused": {
+              color: "black!important",
+            },
+            "& .css-igs3ac": {
+              border: `2px solid ${
+                dark ? "#FFFFFF!important" : "#2B2B2C!important"
+              }`,
+            },
+            "& .css-p0rm37": {
+              top: "-6px",
+            },
+            " .css-u9osun.Mui-focused": {
+              color: "black!important",
+            },
+            "& .css-segi59.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              border: `2px solid ${
+                dark ? "#FFFFFF!important" : "#2B2B2C!important"
+              }`,
+              color: "black!important",
+            },
+            "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+              border: `2px solid ${
+                dark ? "#FFFFFF!important" : "#2B2B2C!important"
+              }`,
+            },
             "& .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root": {
-              marginTop: "-5px!important",            
-            }
+              marginTop: "-5px!important",
+            },
           }}
           required={required}
           label={placeholder}

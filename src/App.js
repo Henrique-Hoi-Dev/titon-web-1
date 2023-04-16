@@ -13,29 +13,28 @@ function App() {
   api.interceptors.response.use(
     (response) => response,
     (error) => {
-      const statusText = error.response.statusText
+      const statusText = error.response;
 
       if (
-       statusText === "Unauthorized"|| 
-        statusText === "jwt expired" || 
-        statusText === "invalid token"
+        statusText?.data?.error === "Unauthorized" ||
+        statusText?.data?.error === "jwt expired" ||
+        statusText?.data?.error === "invalid token" ||
+        statusText?.data?.error === "User token invalid"
       ) {
-        dispatch(signOut())
+        dispatch(signOut());
         navigate("/login");
         window.location.reload();
       }
 
-      if (statusText) {
-        errorNotification(statusText)
+      if (statusText?.data?.error) {
+        errorNotification(statusText?.data?.error);
       }
 
       return Promise.reject(error);
-    },
+    }
   );
 
-  return (
-    <RouterController />
-  );
+  return <RouterController />;
 }
 
 export default App;

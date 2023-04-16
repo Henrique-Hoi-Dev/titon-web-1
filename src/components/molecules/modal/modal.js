@@ -17,18 +17,20 @@ const Modal = ({
   showCloseIcon,
   height,
   maxWidth,
-  maxHeight
+  maxHeight,
+  sxGridModal,
 }) => {
   const { t } = useTranslation();
 
   const isDesktop = useMediaQuery({ maxWidth: "1400px" });
   const isSmallDesktop = useMediaQuery({ maxWidth: "910px" });
-  const isTable = useMediaQuery({ maxWidth: "610px" })
+  const isTable = useMediaQuery({ maxWidth: "610px" });
   const isMobile = useMediaQuery({ maxWidth: "430px" });
 
   return (
     <MuiModal open={open} onClose={onClose} onBackdropClick={onClose}>
       <Grid
+        item
         container
         sx={{
           m: "0 10px 0 10px",
@@ -38,16 +40,17 @@ const Modal = ({
           transform: "translate(-50%, -50%)",
           backgroundColor: "white",
           height: `${height ? height : "auto"}`,
-          maxWidth:`${(isMobile ? "370px" : maxWidth ?? "1100px") ||
-          (isTable ? "470px" : maxWidth ?? "1100px")|| 
-          (isSmallDesktop ? "700px" : maxWidth ?? "1100px") || 
-          (isDesktop ? "1000px" : maxWidth ?? "1100px")}`,
-          maxHeight:`${(isDesktop ? "530px" : maxHeight ?? "600px")}`,
+          maxWidth: `${
+            (isMobile ? "370px" : maxWidth ?? "1100px") ||
+            (isTable ? "470px" : maxWidth ?? "1100px") ||
+            (isSmallDesktop ? "700px" : maxWidth ?? "1100px") ||
+            (isDesktop ? "1000px" : maxWidth ?? "1100px")
+          }`,
+          maxHeight: `${isDesktop ? "530px" : maxHeight ?? "600px"}`,
           padding: "10px",
           borderRadius: "20px",
         }}
         direction="column"
-        justifyContent="space-between"
         component={component}
         onSubmit={onSubmit}
       >
@@ -58,15 +61,19 @@ const Modal = ({
           direction="row"
           spacing={1}
           p={1}
-          sx={{ overflowY: "auto"}}
+          sx={{ ...sxGridModal, overflowY: "auto" }}
         >
           {showCloseIcon && (
-            <Grid item p={1} sx={{ 
-              display: `${isMobile ? "none" : ""}`,
-              position: "absolute",
-              top: `${isMobile ? "3px" : "10px"}`,
-              right: `${isMobile ? 0 : "20px"}`,
-            }}> 
+            <Grid
+              item
+              p={1}
+              sx={{
+                display: `${isMobile ? "none" : ""}`,
+                position: "absolute",
+                top: `${isMobile ? "3px" : "10px"}`,
+                right: `${isMobile ? 0 : "20px"}`,
+              }}
+            >
               <Button
                 sx={{
                   height: "40px",
@@ -85,7 +92,7 @@ const Modal = ({
           <Grid item container>
             <Text>{title}</Text>
           </Grid>
-          <Grid item container spacing={2}>
+          <Grid item container spacing={2} justifyContent="center">
             {children}
           </Grid>
         </Grid>

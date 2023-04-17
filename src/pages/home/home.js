@@ -7,6 +7,7 @@ import { InputSearches } from "components/atoms/input/inputSearches/input";
 import Cards from "./card/cards";
 import Button from "components/atoms/button/button";
 import SubMenuFilter from "pages/home/subMenuFilter";
+import Graphic from "components/molecules/graphic/graphic";
 
 const Home = () => {
   const [showModalFicha, setShowModalFicha] = useState(false);
@@ -71,7 +72,6 @@ const Home = () => {
             onChange={(ev) => setSearch(ev.target.value)}
           />
         </Grid>
-
         <Grid
           item
           container
@@ -89,6 +89,9 @@ const Home = () => {
             setShowModalFicha={setShowModalFicha}
             showModalFicha={showModalFicha}
           />
+        </Grid>
+        <Grid item container>
+          <Graphic />
         </Grid>
       </Grid>
     </>

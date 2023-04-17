@@ -32,7 +32,8 @@ const ModalDeleteDriver = ({ showModal, setShowModal, props, mutate }) => {
       mutate();
       onClose();
       successNotification(data?.success?.responseData?.msg);
-    } else if (error?.response?.data?.httpStatus === 400) {
+    }
+    if (error?.response?.data?.httpStatus === 400) {
       errorNotification(error?.response?.data?.msg);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

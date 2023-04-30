@@ -90,7 +90,7 @@ const Home = () => {
             showModalFicha={showModalFicha}
           />
         </Grid>
-        <Grid item container>
+        <Grid item container height={"430px"}>
           <Graphic />
         </Grid>
       </Grid>

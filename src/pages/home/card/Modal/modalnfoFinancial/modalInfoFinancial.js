@@ -14,6 +14,7 @@ import { IconMenuTruck } from "components/atoms/icons/icons";
 import { formatDate } from "utils/formatDate";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import { ModalFinalizeRecord } from "../modalFinalizeRecord";
+import { status } from "utils/status";
 
 import Table from "./table";
 import Title from "components/atoms/title/title";
@@ -24,20 +25,11 @@ import Button from "components/atoms/button/button";
 import ModalAddFreight from "../modalAddFreight";
 import imgNotFound from "../../../../../assets/NotFound.png";
 
-const status = [
-  { value: "APPROVAL_PROCESS", label: "ANALISE", color: "#FFCE52" },
-  { value: "APPROVED", label: "APROVADO", color: "#0BB07B" },
-  { value: "DENIED", label: "NEGADO", color: "#F03D3D" },
-  { value: "FINISHED", label: "FINALIZADO", color: "#86878A" },
-];
-
 export const ModalInfoFinancial = ({
   showModal,
   setShowModal,
   financialId,
 }) => {
-  const getStatus = (res) => status.find((item) => item.value === res) ?? "";
-
   const INITIAL_STATE_USER = {
     limit: 10,
     page: 1,
@@ -64,6 +56,48 @@ export const ModalInfoFinancial = ({
 
   const onClose = () => {
     setShowModal(false);
+  };
+
+  const getStatus = (res) => {
+    const firstStatus =
+      res?.find((item) => item.status === "STARTING_TRIP") ?? "";
+    const firstStatusProps =
+      status.find((item) => item.value === firstStatus?.status) ?? "";
+
+    const secondStatus =
+      res?.find((item) => item.status === "APPROVAL_PROCESS") ?? "";
+    const secondStatusProps =
+      status.find((item) => item.value === secondStatus?.status) ?? "";
+
+    const thirdStatus = res?.find((item) => item.status === "APPROVED") ?? "";
+    const thirdStatusProps =
+      status.find((item) => item.value === thirdStatus?.status) ?? "";
+
+    const fourthStatus = res?.find((item) => item.status === "DENIED") ?? "";
+    const fourthStatusProps =
+      status.find((item) => item.value === fourthStatus?.status) ?? "";
+
+    const fifthStatus = res?.find((item) => item.status === "DENIED") ?? "";
+    const fifthStatusProps =
+      status.find((item) => item.value === fifthStatus?.status) ?? "";
+
+    const nonEmptyStatus = status.find((item) => item.value === "") ?? "";
+
+    if (firstStatus) {
+      return firstStatusProps;
+    } else if (secondStatus) {
+      return secondStatusProps;
+    } else if (thirdStatus) {
+      return thirdStatusProps;
+    } else if (fourthStatus) {
+      return fourthStatusProps;
+    } else if (fifthStatus) {
+      return fifthStatusProps;
+    } else if (nonEmptyStatus) {
+      return nonEmptyStatus;
+    } else {
+      return "";
+    }
   };
 
   return (
@@ -160,15 +194,9 @@ export const ModalInfoFinancial = ({
                   >
                     <Text
                       fontSize={"19px"}
-                      color={
-                        getStatus(financial?.dataResult?.freight[0]?.status)
-                          .color
-                      }
+                      color={getStatus(financial?.dataResult?.freight).color}
                     >
-                      {
-                        getStatus(financial?.dataResult?.freight[0]?.status)
-                          .label
-                      }
+                      {getStatus(financial?.dataResult?.freight).label}
                     </Text>
                   </Grid>
                   <Text fontSize={"16px"}>
@@ -192,7 +220,7 @@ export const ModalInfoFinancial = ({
                   <Text fontSize={"16px"}>
                     Crédito:{" "}
                     <Text fontSize={"16px"}>
-                      {moneyMask(financial?.dataResult?.total_value || [0])}
+                      {moneyMask(financial?.dataResult?.driver?.credit || [0])}
                     </Text>
                   </Text>
                   <Text>
@@ -213,7 +241,7 @@ export const ModalInfoFinancial = ({
                 >
                   Faturamento:{" "}
                   <Text fontSize={"24px"} sx={{ fontWeight: "500" }}>
-                    R$ 8.000
+                    {moneyMask(financial?.dataResult?.total_value || [0])}
                   </Text>
                 </Text>
                 <Button

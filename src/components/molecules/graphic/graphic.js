@@ -78,13 +78,13 @@ class Graphic extends React.Component {
 
   render() {
     return (
-      <div id="chart">
+      <div id="chart" style={{ height: "430px" }}>
         <ReactApexChart
           options={this.state.options}
           series={this.state.series}
           type="bar"
           height={350}
-          width={720}
+          width={520}
         />
       </div>
     );

@@ -9,15 +9,15 @@ class Graphic extends React.Component {
       series: [
         {
           name: "Renda",
-          data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
+          data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 66, 66, 66],
         },
         {
           name: "Gastos",
-          data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
+          data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 114, 114, 32],
         },
         {
           name: "Lucro líquido",
-          data: [35, 41, 36, 26, 45, 48, 52, 53, 41],
+          data: [35, 41, 36, 26, 45, 48, 52, 53, 41, 41, 41, 41],
         },
       ],
       options: {
@@ -25,6 +25,18 @@ class Graphic extends React.Component {
         chart: {
           type: "bar",
           height: 350,
+        },
+        legend: {
+          position: "bottom",
+          offsetY: 10,
+          colors: ["#fff"], // cores das legendas
+
+          labels: {
+            colors: ["#fff"], // cores das legendas
+            style: {
+              fontSize: "14px",
+            },
+          },
         },
         plotOptions: {
           bar: {
@@ -42,6 +54,25 @@ class Graphic extends React.Component {
           colors: ["transparent"],
         },
         xaxis: {
+          labels: {
+            style: {
+              fontSize: "14px",
+              colors: [
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+                "#fff",
+              ], // cores das legendas
+            },
+          },
           categories: [
             "JAN",
             "FEV",
@@ -58,8 +89,11 @@ class Graphic extends React.Component {
           ],
         },
         yaxis: {
-          title: {
-            text: "$ (thousands)",
+          labels: {
+            style: {
+              colors: ["#fff"],
+              fontSize: "14px",
+            },
           },
         },
         fill: {
@@ -68,7 +102,7 @@ class Graphic extends React.Component {
         tooltip: {
           y: {
             formatter: function (val) {
-              return "$ " + val + " thousands";
+              return "R$: " + val + ",00";
             },
           },
         },

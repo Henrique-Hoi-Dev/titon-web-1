@@ -150,7 +150,7 @@ const CardInfoValues = ({ props, styles, onClick }) => {
             <Text>
               <IconMenuTruck sx={{ fontSize: "30px", color: "#509BFB" }} />{" "}
               <Text fontSize={"18px"} sx={{ verticalAlign: "super" }}>
-                {props.cart_models}
+                {props.cart_models.toUpperCase()}
               </Text>
             </Text>
           </Grid>

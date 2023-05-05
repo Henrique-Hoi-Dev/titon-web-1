@@ -4,12 +4,15 @@ import { successNotification, errorNotification } from "utils/notification";
 import { useCreate } from "services/requests/useCreate";
 import { formatMoney } from "utils/masks";
 import { unmaskMoney } from "utils/unmaskMoney";
+import { useGet } from "services/requests/useGet";
 
 import Button from "components/atoms/button/button";
 import Loading from "components/atoms/loading/loading";
 import Text from "components/atoms/text/text";
 import Modal from "components/molecules/modal/modal";
 import Input from "components/atoms/input/input";
+import TableBankStatement from "./tableBankStatement";
+import SelectWithInput from "components/molecules/selectWithInput/selectWithInput";
 
 const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
   const [fetch, setFetch] = useState(false);
@@ -22,6 +25,8 @@ const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
     error: creditError,
     isFetching,
   } = useCreate(`user/credit`, body, fetch, setFetch);
+
+  const { data, isValidating } = useGet(`user/driver/${props.id}`, []);
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
@@ -51,8 +56,9 @@ const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
       component="form"
       onSubmit={handleSubmit}
       maxWidth="650px"
+      height="650px"
     >
-      {creditError && !isFetching && (
+      {creditError && !isFetching && !isValidating && (
         <Grid item container justifyContent="center">
           <Text type="warning">
             {`messages: ${creditError?.response?.data?.responseData?.msg}`}
@@ -60,7 +66,7 @@ const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
         </Grid>
       )}
 
-      {!isFetching && (
+      {!isFetching && !isValidating && (
         <>
           <Grid item container justifyContent="center">
             <Text fontsize={"23px"}>Registro crédito para: {props.name}?</Text>
@@ -82,15 +88,25 @@ const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
               sx={{ textAlign: "center" }}
             >
               <Grid item xs={12} md={6} lg={6}>
-                <Input
-                  label={"Valor"}
+                <SelectWithInput
+                  placeholder={"Valor"}
                   styles={{
                     "& .MuiInputBase-input.MuiOutlinedInput-input": {
                       height: "1.4rem",
                     },
                   }}
-                  value={formatMoney(body?.value)}
-                  onChange={(ev) =>
+                  inputValue={formatMoney(body?.value)}
+                  options={[
+                    { label: "Credit", value: "credit" },
+                    { label: "Debti", value: "debti" },
+                  ]}
+                  setSelectValue={(ev, newValue) =>
+                    setBody((state) => ({
+                      ...state,
+                      value1: newValue,
+                    }))
+                  }
+                  setInputValue={(ev) =>
                     setBody((state) => ({
                       ...state,
                       value: unmaskMoney(ev.target.value),
@@ -115,6 +131,9 @@ const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
                   }
                 />
               </Grid>
+            </Grid>
+            <Grid item xs={12} md={12} lg={12} mt={2}>
+              <TableBankStatement data={data} />
             </Grid>
           </Grid>
 
@@ -171,6 +190,11 @@ const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
             </Grid>
           </Grid>
         </>
+      )}
+      {isValidating && (
+        <Grid item container>
+          <Loading />
+        </Grid>
       )}
       {isFetching && (
         <Grid item container>

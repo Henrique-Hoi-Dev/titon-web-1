@@ -8,6 +8,7 @@ import { useMediaQuery } from "react-responsive";
 
 const Modal = ({
   title,
+  sx,
   open,
   onClose,
   showReturn,
@@ -33,6 +34,7 @@ const Modal = ({
         item
         container
         sx={{
+          ...sx,
           m: "0 10px 0 10px",
           position: "absolute",
           top: "50%",
@@ -46,7 +48,7 @@ const Modal = ({
             (isSmallDesktop ? "700px" : maxWidth ?? "1100px") ||
             (isDesktop ? "1000px" : maxWidth ?? "1100px")
           }`,
-          maxHeight: `${isDesktop ? "530px" : maxHeight ?? "600px"}`,
+          maxHeight: `${isDesktop ? "650px" : maxHeight ?? "600px"}`,
           padding: "10px",
           borderRadius: "20px",
         }}

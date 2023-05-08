@@ -23,8 +23,8 @@ const columns = [
   { id: "date", label: "Data", minWidth: 170, align: "right" },
 ];
 
-function createData(typeTransactions, value, date) {
-  return { typeTransactions, value, date };
+function createData(typeTransactions, value, type, date) {
+  return { typeTransactions, value, type, date };
 }
 
 export default function TableBankStatement({ data }) {
@@ -33,6 +33,7 @@ export default function TableBankStatement({ data }) {
       createData(
         item.typeTransactions,
         moneyMask(item.value),
+        item.type === "DEBT" ? "Débito" : "Crédito",
         formatDate(item.date)
       )
     ) ?? [];

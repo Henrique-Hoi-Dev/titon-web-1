@@ -69,7 +69,9 @@ const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
       {!isFetching && !isValidating && (
         <>
           <Grid item container justifyContent="center">
-            <Text fontsize={"23px"}>Registro crédito para: {props.name}?</Text>
+            <Text fontsize={"23px"}>
+              Registro crédito / débito para: {props.name}?
+            </Text>
           </Grid>
           <Grid
             item

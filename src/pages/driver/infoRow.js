@@ -123,7 +123,7 @@ const InfoRow = (props) => {
         onClose={() => setOpenSettings(!openSettings)}
       >
         <MenuItem onClick={() => handleCredit(data?.id, data.name)}>
-          Crédito
+          Crédito/Débito
         </MenuItem>
         <MenuItem onClick={() => handleUpdate(data?.id)}>Editar</MenuItem>
         <MenuItem onClick={() => handleDelete(data?.id, data.name)}>

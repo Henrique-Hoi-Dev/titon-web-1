@@ -69,18 +69,9 @@ const ModalAddCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
       {!isFetching && (
         <>
           <Grid item container justifyContent="center">
-            <Text fontsize={"23px"}>
-              Registro crédito / débito para: {props.name}?
-            </Text>
+            <Text fontsize={"23px"}>Registro crédito / débito</Text>
           </Grid>
-          <Grid
-            item
-            container
-            xs={12}
-            md={12}
-            lg={12}
-            justifyContent="flex-end"
-          >
+          <Grid item container xs={12} md={12} lg={12} justifyContent="center">
             <Grid
               item
               xs={6}
@@ -97,19 +88,20 @@ const ModalAddCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
                   placeholder={"Valor"}
                   styles={{
                     "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                      height: "1.4rem",
+                      height: "0.5em",
                     },
                   }}
                   options={[
-                    { label: "Credit", value: "credit" },
-                    { label: "Debti", value: "debti" },
+                    { label: "Crédito", value: "CREDIT" },
+                    { label: "Débito", value: "DEBIT" },
                   ]}
-                  setSelectValue={(ev, newValue) =>
+                  onChangeSelect={(ev, newValue) =>
                     setBody((state) => ({
                       ...state,
-                      value1: newValue,
+                      type_method: newValue.value,
                     }))
                   }
+                  //input
                   value={formatMoney(body?.value)}
                   onChange={(ev) =>
                     setBody((state) => ({
@@ -119,14 +111,10 @@ const ModalAddCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
                   }
                 />
               </Grid>
-              <Grid item xs={12} md={6} lg={6} mt={2}>
+
+              <Grid item xs={12} md={12} lg={12} mt={2}>
                 <Input
                   label={"Motivo"}
-                  styles={{
-                    "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                      height: "1.4rem",
-                    },
-                  }}
                   value={body?.description ?? ""}
                   onChange={(ev) =>
                     setBody((state) => ({
@@ -156,7 +144,7 @@ const ModalAddCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
                   height: "49px",
                   border: "1px solid #F03D3D",
                   color: "#ffff",
-                  mr: 3,
+                  mf: 1,
                   "&:hover": {
                     background: "#F03D3D",
                   },

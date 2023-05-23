@@ -9,8 +9,8 @@ import Modal from "components/molecules/modal/modal";
 import TableBankStatement from "./tableBankStatement";
 import ModalAddCreditDriver from "./modalAddCreditDriver";
 
-const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
-  const { data, isValidating } = useGet(`user/driver/${props.id}`, []);
+const ModalCreditDriver = ({ showModal, setShowModal, props }) => {
+  const { data, isValidating, mutate } = useGet(`user/driver/${props.id}`, []);
 
   const [showModalAddCredit, setShowModalAddCredit] = useState(false);
 
@@ -35,11 +35,12 @@ const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
             lg={12}
             justifyContent="flex-end"
           >
-            <IconButton color="primary" aria-label="add to shopping cart">
-              <BiPlus
-                size={"35px"}
-                onClick={() => setShowModalAddCredit(true)}
-              />
+            <IconButton
+              onClick={() => setShowModalAddCredit(true)}
+              color="primary"
+              aria-label="add to shopping cart"
+            >
+              <BiPlus size={"35px"} />
             </IconButton>
             <Grid item xs={12} md={12} lg={12} mt={2}>
               <TableBankStatement data={data} />

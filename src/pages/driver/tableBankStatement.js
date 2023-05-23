@@ -5,10 +5,11 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-
+import Text from "components/atoms/text/text";
+import imgNotFound from "../../assets/trist-not-found-table.svg";
 import TableRow from "@mui/material/TableRow";
 
-import { TablePagination } from "@mui/material";
+import { Grid, TablePagination } from "@mui/material";
 import { formatDate } from "../../utils/formatDate";
 import { moneyMask } from "utils/masks";
 
@@ -33,7 +34,7 @@ export default function TableBankStatement({ data }) {
       createData(
         item.typeTransactions,
         moneyMask(item.value),
-        item.type === "DEBT" ? "Débito" : "Crédito",
+        item.type_method === "DEBIT" ? "Débito" : "Crédito",
         formatDate(item.date)
       )
     ) ?? [];
@@ -74,9 +75,9 @@ export default function TableBankStatement({ data }) {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((row, i) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={i}>
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
@@ -92,6 +93,32 @@ export default function TableBankStatement({ data }) {
               })}
           </TableBody>
         </Table>
+
+        {rows?.length === 0 && (
+          <Grid
+            container
+            item
+            xs={12}
+            md={12}
+            lg={12}
+            justifyContent={"center"}
+            alignItems={"center"}
+            height={"300px"}
+          >
+            <Text fontSize={"28px"} center>
+              {"RESULTADO NÃO ENCONTRADO..."}
+              <img
+                src={imgNotFound}
+                alt="img"
+                width={"40px"}
+                style={{
+                  verticalAlign: "bottom",
+                  marginLeft: "24px",
+                }}
+              />
+            </Text>
+          </Grid>
+        )}
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}

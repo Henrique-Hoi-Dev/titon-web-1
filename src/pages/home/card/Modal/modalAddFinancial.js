@@ -5,7 +5,7 @@ import { useCreate } from "services/requests/useCreate";
 import { errorNotification, successNotification } from "utils/notification";
 import { useGet } from "services/requests/useGet";
 import { useSelector } from "react-redux";
-import { format, startOfDay } from "date-fns";
+import { zonedTimeToUtc } from "date-fns-tz";
 
 import Button from "components/atoms/button/button";
 import Modal from "components/molecules/modal/modal";
@@ -19,15 +19,15 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
   const { t } = useTranslation();
 
   const user = useSelector((state) => state?.user);
+  const saoPauloTimezone = "America/Sao_Paulo";
+  const currentDate = zonedTimeToUtc(new Date(), saoPauloTimezone);
 
   const [body, setBody] = useState({});
 
   const [truckId, setTruckId] = useState("");
   const [cartId, setCartId] = useState("");
   const [driverId, setDriverId] = useState("");
-  const [date, setDate] = useState(
-    format(startOfDay(new Date()), "MM-dd-yyyy")
-  );
+  const [date, setDate] = useState(currentDate);
 
   const [fetch, setFetch] = useState(false);
 
@@ -81,7 +81,7 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
       successNotification(t("messages.success_msg"));
     }
     if (errorNewFinancial) {
-      errorNotification(errorNewFinancial?.response?.data?.msg);
+      errorNotification(errorNewFinancial?.response?.data?.mgs);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newFinancial, errorNewFinancial]);
@@ -163,7 +163,7 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
               size="medium"
               height="2.4em"
               onChange={(newValue) => {
-                setDate(format(startOfDay(newValue), "MM-dd-yyyy"));
+                setDate(newValue);
               }}
             />
           </Grid>

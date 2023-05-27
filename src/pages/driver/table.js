@@ -18,6 +18,7 @@ import Text from "components/atoms/text/text";
 import Loading from "components/atoms/loading/loading";
 import ModalDeleteDriver from "./modalDeleteDriver";
 import ModalUpdateDriver from "./modalUpdateDriver";
+import ModalCreditDriver from "./modalCreditDriver";
 
 const Table = ({
   data,
@@ -36,6 +37,7 @@ const Table = ({
 
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showModalUpdate, setShowModalUpdate] = useState(false);
+  const [showModalCredit, setShowModalCredit] = useState(false);
 
   const [driverId, setDriveId] = useState(null);
 
@@ -114,6 +116,7 @@ const Table = ({
                     setDriveId={setDriveId}
                     setShowModalDelete={setShowModalDelete}
                     setShowModalUpdate={setShowModalUpdate}
+                    setShowModalCredit={setShowModalCredit}
                   />
                 ))}
               </STableBody>
@@ -172,6 +175,15 @@ const Table = ({
         <ModalUpdateDriver
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
+          props={driverId}
+          mutate={mutate}
+        />
+      )}
+
+      {showModalCredit && (
+        <ModalCreditDriver
+          setShowModal={setShowModalCredit}
+          showModal={showModalCredit}
           props={driverId}
           mutate={mutate}
         />

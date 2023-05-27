@@ -8,17 +8,50 @@ import { moneyMask } from "utils/masks";
 import { CardMedia, Grid } from "@mui/material";
 import { IconMenuTruck } from "components/atoms/icons/icons";
 import { formatDate } from "utils/formatDate";
+import { status } from "utils/status";
 
 const CardInfoValues = ({ props, styles, onClick }) => {
-  const status = [
-    { value: "APPROVAL_PROCESS", label: "ANALISE", color: "#FFCE52" },
-    { value: "APPROVED", label: "APROVADO", color: "#0BB07B" },
-    { value: "STARTING_TRIP", label: "EM VIAGEM", color: "#1877F2" },
-    { value: "DENIED", label: "NEGADO", color: "#F03D3D" },
-    { value: "FINISHED", label: "FINALIZADO", color: "#86878A" },
-  ];
+  const getStatus = (res) => {
+    const firstStatus =
+      res.find((item) => item.status === "STARTING_TRIP") ?? "";
+    const firstStatusProps =
+      status.find((item) => item.value === firstStatus?.status) ?? "";
 
-  const getStatus = (res) => status.find((item) => item.value === res) ?? "";
+    const secondStatus =
+      res.find((item) => item.status === "APPROVAL_PROCESS") ?? "";
+    const secondStatusProps =
+      status.find((item) => item.value === secondStatus?.status) ?? "";
+
+    const thirdStatus = res.find((item) => item.status === "APPROVED") ?? "";
+    const thirdStatusProps =
+      status.find((item) => item.value === thirdStatus?.status) ?? "";
+
+    const fourthStatus = res.find((item) => item.status === "DENIED") ?? "";
+    const fourthStatusProps =
+      status.find((item) => item.value === fourthStatus?.status) ?? "";
+
+    const fifthStatus = res.find((item) => item.status === "DENIED") ?? "";
+    const fifthStatusProps =
+      status.find((item) => item.value === fifthStatus?.status) ?? "";
+
+    const nonEmptyStatus = status.find((item) => item.value === "") ?? "";
+
+    if (firstStatus) {
+      return firstStatusProps;
+    } else if (secondStatus) {
+      return secondStatusProps;
+    } else if (thirdStatus) {
+      return thirdStatusProps;
+    } else if (fourthStatus) {
+      return fourthStatusProps;
+    } else if (fifthStatus) {
+      return fifthStatusProps;
+    } else if (nonEmptyStatus) {
+      return nonEmptyStatus;
+    } else {
+      return "";
+    }
+  };
 
   return (
     <Grid
@@ -89,13 +122,10 @@ const CardInfoValues = ({ props, styles, onClick }) => {
               justifyContent={"space-between"}
             >
               <Text fontSize={"24px"} color="#F1F3F9">
-                {props?.truck_board}
+                {props?.truck_board.toUpperCase()}
               </Text>
-              <Text
-                fontSize={"19px"}
-                color={getStatus(props?.freigth[0]?.status).color}
-              >
-                {getStatus(props?.freigth[0]?.status).label}
+              <Text fontSize={"19px"} color={getStatus(props?.freigth).color}>
+                {getStatus(props?.freigth).label}
               </Text>
             </Grid>
             <Text fontSize={"16px"}>
@@ -114,13 +144,13 @@ const CardInfoValues = ({ props, styles, onClick }) => {
             <Text fontSize={"16px"}>
               Crédito:{" "}
               <Text fontSize={"16px"}>
-                {moneyMask(props?.total_value || [0])}
+                {moneyMask(props?.driver.credit || [0])}
               </Text>
             </Text>
             <Text>
               <IconMenuTruck sx={{ fontSize: "30px", color: "#509BFB" }} />{" "}
               <Text fontSize={"18px"} sx={{ verticalAlign: "super" }}>
-                {props.cart_models}
+                {props.cart_models.toUpperCase()}
               </Text>
             </Text>
           </Grid>

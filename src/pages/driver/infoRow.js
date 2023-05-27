@@ -16,8 +16,14 @@ import {
 } from "components/atoms/table/table";
 
 const InfoRow = (props) => {
-  const { data, index, setShowModalDelete, setShowModalUpdate, setDriveId } =
-    props;
+  const {
+    data,
+    index,
+    setShowModalDelete,
+    setShowModalUpdate,
+    setShowModalCredit,
+    setDriveId,
+  } = props;
 
   const [open, setOpen] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
@@ -41,6 +47,12 @@ const InfoRow = (props) => {
   const handleUpdate = (id) => {
     setShowModalUpdate(true);
     setDriveId({ id: id });
+    setOpenSettings(false);
+  };
+
+  const handleCredit = (id, name) => {
+    setShowModalCredit(true);
+    setDriveId({ id: id, name: name });
     setOpenSettings(false);
   };
 
@@ -110,6 +122,9 @@ const InfoRow = (props) => {
         open={openSettings}
         onClose={() => setOpenSettings(!openSettings)}
       >
+        <MenuItem onClick={() => handleCredit(data?.id, data.name)}>
+          Crédito/Débito
+        </MenuItem>
         <MenuItem onClick={() => handleUpdate(data?.id)}>Editar</MenuItem>
         <MenuItem onClick={() => handleDelete(data?.id, data.name)}>
           Excluir

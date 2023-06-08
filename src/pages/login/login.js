@@ -127,6 +127,7 @@ const Login = () => {
             >
               <Grid item>
                 <InputDark
+                  required
                   type="text"
                   label={"E-mail"}
                   styles={{ minWidth: "350px" }}
@@ -135,6 +136,7 @@ const Login = () => {
               </Grid>
               <Grid item>
                 <InputDark
+                  required
                   label={"Senha"}
                   type={showPassword ? "text" : "password"}
                   styles={{ minWidth: "350px" }}

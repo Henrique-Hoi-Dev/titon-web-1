@@ -16,11 +16,8 @@ const ModalAddCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
   const [fetch, setFetch] = useState(false);
   const [body, setBody] = useState({
     driver_id: props,
+    description: "",
   });
-  console.log(
-    "🚀 ~ file: modalAddCreditDriver.js:20 ~ ModalAddCreditDriver ~ body:",
-    body
-  );
 
   const {
     data: credit,
@@ -114,6 +111,7 @@ const ModalAddCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
 
               <Grid item xs={12} md={12} lg={12} mt={2}>
                 <Input
+                  required
                   label={"Motivo"}
                   value={body?.description ?? ""}
                   onChange={(ev) =>
@@ -164,6 +162,7 @@ const ModalAddCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
               <Button
                 onClick={(ev) => handleSubmit(ev)}
                 color="success"
+                disabled={body?.description?.length < 5}
                 background={
                   "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
                 }

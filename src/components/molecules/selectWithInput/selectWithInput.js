@@ -48,7 +48,7 @@ const SelectWithInput = ({
             }`,
           },
           "& .css-segi59": {
-            paddingRight: "60px",
+            paddingRight: "60px !important",
           },
           "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
             width: "110px !important",

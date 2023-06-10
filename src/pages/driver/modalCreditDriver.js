@@ -9,8 +9,12 @@ import Modal from "components/molecules/modal/modal";
 import TableBankStatement from "./tableBankStatement";
 import ModalAddCreditDriver from "./modalAddCreditDriver";
 
-const ModalCreditDriver = ({ showModal, setShowModal, props }) => {
-  const { data, isValidating, mutate } = useGet(`user/driver/${props.id}`, []);
+const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
+  const {
+    data,
+    isValidating,
+    mutate: mutateDriverId,
+  } = useGet(`user/driver/${props.id}`, []);
 
   const [showModalAddCredit, setShowModalAddCredit] = useState(false);
 
@@ -59,6 +63,7 @@ const ModalCreditDriver = ({ showModal, setShowModal, props }) => {
           setShowModal={setShowModalAddCredit}
           showModal={showModalAddCredit}
           props={props.id}
+          mutateDriverId={mutateDriverId}
           mutate={mutate}
         />
       )}

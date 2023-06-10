@@ -12,7 +12,13 @@ import Modal from "components/molecules/modal/modal";
 import Input from "components/atoms/input/input";
 import SelectWithInput from "components/molecules/selectWithInput/selectWithInput";
 
-const ModalAddCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
+const ModalAddCreditDriver = ({
+  showModal,
+  setShowModal,
+  props,
+  mutateDriverId,
+  mutate,
+}) => {
   const [fetch, setFetch] = useState(false);
   const [body, setBody] = useState({
     driver_id: props,
@@ -36,6 +42,7 @@ const ModalAddCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
 
   useEffect(() => {
     if (credit) {
+      mutateDriverId();
       mutate();
       onClose();
       successNotification();

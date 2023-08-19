@@ -62,7 +62,7 @@ const Home = () => {
               marginRight: "15px",
             }}
           >
-            Adicionar Nova Ficha <IconAdd sx={{ mt: -0.7 }} />
+            Nova Ficha <IconAdd sx={{ mt: -0.2, ml: "10px" }} />
           </Button>
           <InputSearches
             searches

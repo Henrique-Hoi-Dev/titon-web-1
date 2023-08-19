@@ -103,7 +103,7 @@ const Cards = ({
       )}
 
       {financial?.dataResult?.length === 0 && (
-        <Grid item pt={5}>
+        <Grid item p={10}>
           <Text fontSize={"28px"} center>
             FICHAS NÃO ENCONTRADA...{" "}
             <img

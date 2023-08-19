@@ -137,7 +137,7 @@ const Table = ({
         )}
 
         {data?.dataResult?.length === 0 && !isFetching && (
-          <Grid item justifyContent="center" alignItems="center" pt={5}>
+          <Grid container justifyContent="center" alignItems="center" p={5}>
             <Text fontSize={"28px"} center>
               {"RESULTADO NÃO ENCONTRADO..."}
               <img
@@ -154,7 +154,7 @@ const Table = ({
         )}
 
         {error && (
-          <Grid item justifyContent="center" alignItems="center" pt={5}>
+          <Grid container justifyContent="center" alignItems="center" p={5}>
             <Text fontSize={"28px"} center>
               {t("messages.unknown_error").toUpperCase()}
             </Text>

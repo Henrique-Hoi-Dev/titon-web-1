@@ -61,7 +61,7 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
       successNotification("Edição bem sucedida");
     }
     if (error) {
-      errorNotification(error?.response?.data?.msg);
+      errorNotification(error?.response?.data?.mgs);
     }
   }, [data, error, mutate, onClose]);
 

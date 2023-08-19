@@ -293,25 +293,25 @@ const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
                   <Text fontsize={"12px"} sx={{ opacity: 0.5 }}>
                     Débito/Crédito
                   </Text>
-                  <Text fontsize={"16px"}>{"- R$ 100,00"}</Text>
+                  <Text fontsize={"16px"}>{""}</Text>
                 </Grid>
                 <Grid item container flexDirection={"column"}>
                   <Text fontsize={"12px"} sx={{ opacity: 0.5 }}>
                     Local de descarga
                   </Text>
-                  <Text fontsize={"16px"}>{"Paránagua - PR"}</Text>
+                  <Text fontsize={"16px"}>{""}</Text>
                 </Grid>
                 <Grid item container flexDirection={"column"}>
                   <Text fontsize={"12px"} sx={{ opacity: 0.5 }}>
                     Data de descarga
                   </Text>
-                  <Text fontsize={"16px"}>{"05/11/2022"}</Text>
+                  <Text fontsize={"16px"}>{""}</Text>
                 </Grid>
                 <Grid item container flexDirection={"column"}>
                   <Text fontsize={"12px"} sx={{ opacity: 0.5 }}>
                     Hora de descarga
                   </Text>
-                  <Text fontsize={"16px"}>{"16:35"}</Text>
+                  <Text fontsize={"16px"}>{""}</Text>
                 </Grid>
               </Grid>
             </>

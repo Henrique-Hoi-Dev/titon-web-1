@@ -1,9 +1,10 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import mgsError from "./error/en.json";
 
 const successNotification = (successMessage, msg) => {
   const customId = successMessage;
-  const massage = "Operação realizada com sucesso!" ?? msg
+  const massage = "Operação realizada com sucesso!" ?? msg;
 
   return toast.success(successMessage ?? massage, {
     position: "top-right",
@@ -20,7 +21,12 @@ const successNotification = (successMessage, msg) => {
 const errorNotification = (errorMessage) => {
   const customId = errorMessage;
 
-  return toast.error(errorMessage, {
+  console.log(
+    "🚀 ~ file: notification.js:25 ~ errorNotification ~ mgsError.THIS_CPF_ALREADY_EXISTS:",
+    mgsError.THIS_CPF_ALREADY_EXISTS
+  );
+
+  return toast.error(mgsError[errorMessage], {
     position: "top-right",
     autoClose: 5000,
     toastId: customId,
@@ -32,4 +38,4 @@ const errorNotification = (errorMessage) => {
   });
 };
 
-export { errorNotification, successNotification};
+export { errorNotification, successNotification };

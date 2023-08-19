@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useCreate } from "services/requests/useCreate";
 import { errorNotification, successNotification } from "utils/notification";
-import { formatMoney } from "utils/masks";
+import { formatMoney, maskCPF } from "utils/masks";
 import { unmaskMoney } from "utils/unmaskMoney";
 
 import Button from "components/atoms/button/button";
@@ -32,7 +32,7 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
     data: newDevice,
     error: errorNewDevice,
     isFetching,
-  } = useCreate("driver/register", data, fetch, setFetch);
+  } = useCreate("driver/signup", data, fetch, setFetch);
 
   const onClose = () => {
     setShowModal(false);
@@ -56,7 +56,7 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
     setData((state) => ({
       ...state,
       name: body?.name,
-      name_user: body?.name_user,
+      cpf: body?.cpf?.replace(/\D/g, ""),
       password: body?.password,
       percentage: body?.percentage ?? 0,
       daily: unmaskMoney(body?.daily ?? 0),
@@ -66,17 +66,14 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
   }, [body]);
 
   useEffect(() => {
-    if (newDevice || errorNewDevice) {
+    if (newDevice) {
       mutate();
       onClose();
-    }
-
-    if (newDevice) {
       successNotification(t("messages.success_msg"));
     }
 
     if (errorNewDevice) {
-      errorNotification(errorNewDevice?.response?.data?.msg);
+      errorNotification(errorNewDevice?.response?.data?.mgs);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newDevice, errorNewDevice]);
@@ -124,17 +121,18 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
           <Grid item xs={12} md={6} lg={6}>
             <Input
               required
-              label={"Nome de usuário"}
+              label={t("field.cpf")}
+              maxLength={14}
               styles={{
                 "& .MuiInputBase-input.MuiOutlinedInput-input": {
                   height: "1.4rem",
                 },
               }}
-              value={body?.name_user ?? ""}
+              value={body?.cpf ?? ""}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  name_user: ev.target.value,
+                  cpf: maskCPF(ev.target.value),
                 }))
               }
             />

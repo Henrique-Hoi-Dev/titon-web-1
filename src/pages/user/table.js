@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { Grid, Paper, TableContainer } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { TablePagination } from "components/atoms/tablePagination/tablePagination";
-import { useMediaQuery } from "react-responsive";
+import React, { useState } from 'react'
+import { Grid, Paper, TableContainer } from '@mui/material'
+import { useTranslation } from 'react-i18next'
+import { TablePagination } from 'components/atoms/tablePagination/tablePagination'
+import { useMediaQuery } from 'react-responsive'
 import {
   SCell,
   SHead,
   SRow,
   STable,
   STableBody,
-  SLabel,
-} from "components/atoms/table/table";
+  SLabel
+} from 'components/atoms/BaseTable/BaseTable'
 
-import imgNotFound from "../../assets/trist-not-found-table.svg";
-import InfoRow from "./infoRow";
-import Text from "components/atoms/text/text";
-import Loading from "components/atoms/loading/loading";
-import ModalDeleteUser from "./modalDeleteUser";
-import ModalUpdateUser from "./modalUpdateUser";
+import imgNotFound from '../../assets/trist-not-found-table.svg'
+import InfoRow from './infoRow'
+import Text from 'components/atoms/BaseText/BaseText'
+import Loading from 'components/atoms/loading/loading'
+import ModalDeleteUser from './modalDeleteUser'
+import ModalUpdateUser from './modalUpdateUser'
 
 const Table = ({
   data,
@@ -26,66 +26,73 @@ const Table = ({
   isFetching,
   mutate,
   error,
-  loading,
+  loading
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const isDesktop = useMediaQuery({ maxWidth: "1250px" });
-  const isMobile = useMediaQuery({ maxWidth: "730px" });
+  const isDesktop = useMediaQuery({ maxWidth: '1250px' })
+  const isMobile = useMediaQuery({ maxWidth: '730px' })
 
-  const [showModalDelete, setShowModalDelete] = useState(false);
-  const [showModalUpdate, setShowModalUpdate] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false)
+  const [showModalUpdate, setShowModalUpdate] = useState(false)
 
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(null)
 
   const handleSort = (item) => {
     setQuery((state) => ({
       ...state,
       sort_field: item,
-      sort_order: `${query?.sort_order === "ASC" ? "DESC" : "ASC"}`,
-    }));
-    return;
-  };
+      sort_order: `${query?.sort_order === 'ASC' ? 'DESC' : 'ASC'}`
+    }))
+    return
+  }
 
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer
+        component={Paper}
+        sx={{
+          background: '#3A3A3A',
+          boxShadow: 'none!important',
+          borderRadius: '16px'
+        }}
+      >
         <STable>
           <SHead>
             <SRow>
               <SCell displaywidth={isDesktop ? 0 : 1}>Info</SCell>
               <SCell>
                 <SLabel
-                  active={query?.sort_field === "id"}
+                  active={query?.sort_field === 'id'}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("id")}
+                  onClick={() => handleSort('id')}
                 >
                   ID
                 </SLabel>
               </SCell>
               <SCell>
                 <SLabel
-                  active={query?.sort_field === "name"}
+                  active={query?.sort_field === 'name'}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("name")}
+                  onClick={() => handleSort('name')}
                 >
                   Usuário
                 </SLabel>
               </SCell>
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "email"}
+                  active={query?.sort_field === 'email'}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("email")}
+                  onClick={() => handleSort('email')}
                 >
                   Email
                 </SLabel>
               </SCell>
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "type_position"}
+                  active={query?.sort_field === 'type_position'}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("type_position")}
+                  onClick={() => handleSort('type_position')}
                 >
                   Tipo Usuário
                 </SLabel>
@@ -111,7 +118,7 @@ const Table = ({
 
         {(loading || isFetching) && (
           <Grid container justifyContent="center" alignItems="center" mt={3}>
-            <Loading titulo={t("messages.loading")} />
+            <Loading titulo={t('messages.loading')} />
           </Grid>
         )}
 
@@ -126,16 +133,22 @@ const Table = ({
           justifyContent="center"
         >
           {data?.dataResult?.length === 0 && !isFetching && (
-            <Grid item justifyContent="center" alignItems="center" pt={5}>
-              <Text fontSize={"28px"} center>
-                {"RESULTADO NÃO ENCONTRADO..."}
+            <Grid
+              item
+              justifyContent="center"
+              alignItems="center"
+              pt={5}
+              sx={{ background: '#3A3A3A' }}
+            >
+              <Text fontSize={'28px'} center color={'#939395'}>
+                {t('messages.result_not_found')}
                 <img
                   src={imgNotFound}
                   alt="img"
-                  width={"40px"}
+                  width={'40px'}
                   style={{
-                    verticalAlign: "bottom",
-                    marginLeft: "24px",
+                    verticalAlign: 'bottom',
+                    marginLeft: '24px'
                   }}
                 />
               </Text>
@@ -144,8 +157,8 @@ const Table = ({
 
           {error && (
             <Grid item justifyContent="center" alignItems="center" pt={5}>
-              <Text fontSize={"28px"} center>
-                {t("messages.unknown_error").toUpperCase()}
+              <Text fontSize={'28px'} center>
+                {t('messages.unknown_error').toUpperCase()}
               </Text>
             </Grid>
           )}
@@ -174,7 +187,7 @@ const Table = ({
         />
       )}
     </>
-  );
-};
+  )
+}
 
-export default Table;
+export default Table

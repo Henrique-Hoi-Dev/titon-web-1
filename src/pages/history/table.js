@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { Grid, Paper, TableContainer } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { TablePagination } from "components/atoms/tablePagination/tablePagination";
-import { useMediaQuery } from "react-responsive";
+import React, { useState } from 'react'
+import { Grid, Paper, TableContainer } from '@mui/material'
+import { useTranslation } from 'react-i18next'
+import { TablePagination } from 'components/atoms/tablePagination/tablePagination'
+import { useMediaQuery } from 'react-responsive'
 import {
   SCell,
   SHead,
   SRow,
   STable,
   STableBody,
-  SLabel,
-} from "components/atoms/table/table";
+  SLabel
+} from 'components/atoms/BaseTable/BaseTable'
 
-import InfoRow from "./infoRow";
-import Text from "components/atoms/text/text";
-import Loading from "components/atoms/loading/loading";
-import ModalDeleteFinancial from "./modalDeleteFinancial";
-import ModalUpdateFinancial from "./modalUpdateFinancial";
-import imgNotFound from "../../assets/trist-not-found-table.svg";
+import InfoRow from './infoRow'
+import Text from 'components/atoms/BaseText/BaseText'
+import Loading from 'components/atoms/loading/loading'
+import ModalDeleteFinancial from './modalDeleteFinancial'
+import ModalUpdateFinancial from './modalUpdateFinancial'
+import imgNotFound from '../../assets/trist-not-found-table.svg'
 
 const Table = ({
   data,
@@ -26,27 +26,27 @@ const Table = ({
   isFetching,
   mutate,
   error,
-  loading,
+  loading
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const isDesktop = useMediaQuery({ maxWidth: "1250px" });
-  const isSmallDesktop = useMediaQuery({ maxWidth: "1100px" });
-  const isMobile = useMediaQuery({ maxWidth: "730px" });
+  const isDesktop = useMediaQuery({ maxWidth: '1250px' })
+  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' })
+  const isMobile = useMediaQuery({ maxWidth: '730px' })
 
-  const [showModalDelete, setShowModalDelete] = useState(false);
-  const [showModalUpdate, setShowModalUpdate] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false)
+  const [showModalUpdate, setShowModalUpdate] = useState(false)
 
-  const [financialId, setFinancialId] = useState(null);
+  const [financialId, setFinancialId] = useState(null)
 
   const handleSort = (item) => {
     setQuery((state) => ({
       ...state,
       sort_field: item,
-      sort_order: `${query?.sort_order === "ASC" ? "DESC" : "ASC"}`,
-    }));
-    return;
-  };
+      sort_order: `${query?.sort_order === 'ASC' ? 'DESC' : 'ASC'}`
+    }))
+    return
+  }
 
   return (
     <>
@@ -57,36 +57,36 @@ const Table = ({
               <SCell>Info</SCell>
               <SCell>
                 <SLabel
-                  active={query?.sort_field === "id"}
+                  active={query?.sort_field === 'id'}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("id")}
+                  onClick={() => handleSort('id')}
                 >
                   Motorista
                 </SLabel>
               </SCell>
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "truck_models"}
+                  active={query?.sort_field === 'truck_models'}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("truck_models")}
+                  onClick={() => handleSort('truck_models')}
                 >
                   Caminhão
                 </SLabel>
               </SCell>
               <SCell displaywidth={isSmallDesktop ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "cart_models"}
+                  active={query?.sort_field === 'cart_models'}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_models")}
+                  onClick={() => handleSort('cart_models')}
                 >
                   Carreta
                 </SLabel>
               </SCell>
               <SCell displaywidth={isSmallDesktop ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "start_date"}
+                  active={query?.sort_field === 'start_date'}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("start_date")}
+                  onClick={() => handleSort('start_date')}
                 >
                   Inici da Ficha
                 </SLabel>
@@ -125,22 +125,22 @@ const Table = ({
           spacing={2}
           mt={1}
           mb={1}
-          p={"18px"}
+          p={'18px'}
           alignItems="center"
           flexWrap="nowrap"
           justifyContent="center"
         >
           {data?.dataResult?.length === 0 && !isFetching && (
             <Grid item justifyContent="center" alignItems="center" pt={5}>
-              <Text fontSize={"28px"} center>
-                {"RESULTADO NÃO ENCONTRADO..."}
+              <Text fontSize={'28px'} center>
+                {'RESULTADO NÃO ENCONTRADO...'}
                 <img
                   src={imgNotFound}
                   alt="img"
-                  width={"40px"}
+                  width={'40px'}
                   style={{
-                    verticalAlign: "bottom",
-                    marginLeft: "24px",
+                    verticalAlign: 'bottom',
+                    marginLeft: '24px'
                   }}
                 />
               </Text>
@@ -149,8 +149,8 @@ const Table = ({
 
           {error && (
             <Grid item justifyContent="center" alignItems="center" pt={5}>
-              <Text fontSize={"28px"} center>
-                {t("messages.unknown_error").toUpperCase()}
+              <Text fontSize={'28px'} center>
+                {t('messages.unknown_error').toUpperCase()}
               </Text>
             </Grid>
           )}
@@ -179,7 +179,7 @@ const Table = ({
         />
       )}
     </>
-  );
-};
+  )
+}
 
-export default Table;
+export default Table

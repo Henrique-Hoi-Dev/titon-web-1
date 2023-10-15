@@ -1,33 +1,33 @@
-import { Grid, IconButton } from "@mui/material";
-import { useGet } from "services/requests/useGet";
-import { BiPlus } from "react-icons/bi";
-import { useState } from "react";
+import { Grid, IconButton } from '@mui/material'
+import { useGet } from 'services/requests/useGet'
+import { BiPlus } from 'react-icons/bi'
+import { useState } from 'react'
 
-import Loading from "components/atoms/loading/loading";
-import Text from "components/atoms/text/text";
-import Modal from "components/molecules/modal/modal";
-import TableBankStatement from "./tableBankStatement";
-import ModalAddCreditDriver from "./modalAddCreditDriver";
+import Loading from 'components/atoms/loading/loading'
+import Text from 'components/atoms/BaseText/BaseText'
+import Modal from 'components/molecules/BaseModal/BaseModal'
+import TableBankStatement from './tableBankStatement'
+import ModalAddCreditDriver from './modalAddCreditDriver'
 
 const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
   const {
     data,
     isValidating,
-    mutate: mutateDriverId,
-  } = useGet(`user/driver/${props.id}`, []);
+    mutate: mutateDriverId
+  } = useGet(`user/driver/${props.id}`, [])
 
-  const [showModalAddCredit, setShowModalAddCredit] = useState(false);
+  const [showModalAddCredit, setShowModalAddCredit] = useState(false)
 
   const onClose = () => {
-    setShowModal(false);
-  };
+    setShowModal(false)
+  }
 
   return (
     <Modal open={showModal} onClose={onClose} maxWidth="650px" height="580px">
       {!isValidating && (
         <>
           <Grid item container justifyContent="center">
-            <Text fontsize={"23px"}>
+            <Text fontsize={'23px'}>
               Registro crédito / débito para: {props.name}?
             </Text>
           </Grid>
@@ -44,7 +44,7 @@ const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
               color="primary"
               aria-label="add to shopping cart"
             >
-              <BiPlus size={"35px"} />
+              <BiPlus size={'35px'} />
             </IconButton>
             <Grid item xs={12} md={12} lg={12} mt={2}>
               <TableBankStatement data={data} />
@@ -68,7 +68,7 @@ const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
         />
       )}
     </Modal>
-  );
-};
+  )
+}
 
-export default ModalCreditDriver;
+export default ModalCreditDriver

@@ -1,58 +1,54 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 import {
   Avatar,
   Box,
   Collapse,
   IconButton,
   Menu,
-  MenuItem,
-} from "@mui/material";
-import { useMediaQuery } from "react-responsive";
-import { moneyMask } from "utils/masks";
-import { formatDate } from "utils/formatDate";
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  IconActions,
-} from "components/atoms/icons/icons";
+  MenuItem
+} from '@mui/material'
+import { useMediaQuery } from 'react-responsive'
+import { moneyMask } from 'utils/masks'
+import { formatDate } from 'utils/formatDate'
+import { ArrowDownIcon, ArrowUpIcon, IconActions } from 'assets/icons/icons'
 import {
   SCell,
   SRow,
   STable,
   STableBody,
-  SHead,
-} from "components/atoms/table/table";
+  SHead
+} from 'components/atoms/BaseTable/BaseTable'
 
 const InfoRow = (props) => {
-  const { data, index, setShowModalDelete, setFinancialId } = props;
+  const { data, index, setShowModalDelete, setFinancialId } = props
 
-  const [open, setOpen] = useState(false);
-  const [openSettings, setOpenSettings] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(false);
+  const [open, setOpen] = useState(false)
+  const [openSettings, setOpenSettings] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(false)
 
-  const isDesktop = useMediaQuery({ maxWidth: "1250px" });
-  const isSmallDesktop = useMediaQuery({ maxWidth: "1100px" });
-  const isMobile = useMediaQuery({ maxWidth: "730px" });
+  const isDesktop = useMediaQuery({ maxWidth: '1250px' })
+  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' })
+  const isMobile = useMediaQuery({ maxWidth: '730px' })
 
   const status = [
-    { value: "approval_process", label: "Em processo", color: "green" },
-    { value: "approved", label: "Aprovado", color: "#1976d2" },
-    { value: "denied", label: "Negado", color: "red" },
-    { value: "finished", label: "Finalizado", color: "grey" },
-  ];
+    { value: 'approval_process', label: 'Em processo', color: 'green' },
+    { value: 'approved', label: 'Aprovado', color: '#1976d2' },
+    { value: 'denied', label: 'Negado', color: 'red' },
+    { value: 'finished', label: 'Finalizado', color: 'grey' }
+  ]
 
-  const getStatus = (res) => status.find((item) => item.value === res);
+  const getStatus = (res) => status.find((item) => item.value === res)
 
   const handleClick = (ev) => {
-    setOpenSettings(!openSettings);
-    setAnchorEl(ev.currentTarget);
-  };
+    setOpenSettings(!openSettings)
+    setAnchorEl(ev.currentTarget)
+  }
 
   const handleDelete = (id) => {
-    setShowModalDelete(true);
-    setFinancialId(id);
-    setOpenSettings(false);
-  };
+    setShowModalDelete(true)
+    setFinancialId(id)
+    setOpenSettings(false)
+  }
 
   // const handleUpdate = (id) => {
   //   setShowModalUpdate(true)
@@ -63,7 +59,7 @@ const InfoRow = (props) => {
   return (
     <>
       <SRow key={data?.id} alternatingcolors={index}>
-        <SCell minwidth={"0px"}>
+        <SCell minwidth={'0px'}>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -84,7 +80,7 @@ const InfoRow = (props) => {
         <SCell>
           <Avatar
             alt="img"
-            sx={{ height: "40px", width: "40px", marginLeft: "35px" }}
+            sx={{ height: '40px', width: '40px', marginLeft: '35px' }}
             src={data?.truck_avatar}
           />
         </SCell>
@@ -97,9 +93,9 @@ const InfoRow = (props) => {
           >
             <IconActions
               sx={{
-                color: "#ff443a",
-                height: "30px",
-                width: "30px",
+                color: '#ff443a',
+                height: '30px',
+                width: '30px'
               }}
             />
           </IconButton>
@@ -109,16 +105,16 @@ const InfoRow = (props) => {
       <Menu
         anchorEl={anchorEl}
         anchorOrigin={{
-          vertical: "top",
-          horizontal: "center",
+          vertical: 'top',
+          horizontal: 'center'
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
+          vertical: 'top',
+          horizontal: 'center'
         }}
         sx={{
           zIndex: 4444,
-          mt: 5,
+          mt: 5
         }}
         open={openSettings}
         onClose={() => setOpenSettings(!openSettings)}
@@ -128,7 +124,7 @@ const InfoRow = (props) => {
       </Menu>
 
       <SRow
-        sx={{ backgroundColor: "white" }}
+        sx={{ backgroundColor: 'white' }}
         displaywidth={data?.freigth.length > 0 ? 0 : 1}
       >
         <SCell
@@ -137,7 +133,7 @@ const InfoRow = (props) => {
         >
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <STable aria-label="purchases" sx={{ borderRadius: "8px" }}>
+              <STable aria-label="purchases" sx={{ borderRadius: '8px' }}>
                 <SHead>
                   <SRow>
                     <SCell>Status Check</SCell>
@@ -152,13 +148,13 @@ const InfoRow = (props) => {
                   {data?.freigth.map((res, i) => (
                     <SRow
                       key={i}
-                      sx={{ backgroundColor: "white" }}
-                      displaywidth={res?.status === "finished" ? 0 : 1}
+                      sx={{ backgroundColor: 'white' }}
+                      displaywidth={res?.status === 'finished' ? 0 : 1}
                     >
                       <SCell
                         sx={{
-                          fontWeight: "900",
-                          color: `${getStatus(res?.status)?.color}`,
+                          fontWeight: '900',
+                          color: `${getStatus(res?.status)?.color}`
                         }}
                       >
                         {getStatus(res?.status)?.label}
@@ -177,7 +173,7 @@ const InfoRow = (props) => {
         </SCell>
       </SRow>
     </>
-  );
-};
+  )
+}
 
-export default InfoRow;
+export default InfoRow

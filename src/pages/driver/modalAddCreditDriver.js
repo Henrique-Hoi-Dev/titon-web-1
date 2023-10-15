@@ -1,57 +1,57 @@
-import { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import { successNotification, errorNotification } from "utils/notification";
-import { useCreate } from "services/requests/useCreate";
-import { formatMoney } from "utils/masks";
-import { unmaskMoney } from "utils/unmaskMoney";
+import { useEffect, useState } from 'react'
+import { Grid } from '@mui/material'
+import { successNotification, errorNotification } from 'utils/notification'
+import { useCreate } from 'services/requests/useCreate'
+import { formatMoney } from 'utils/masks'
+import { unmaskMoney } from 'utils/unmaskMoney'
 
-import Button from "components/atoms/button/button";
-import Loading from "components/atoms/loading/loading";
-import Text from "components/atoms/text/text";
-import Modal from "components/molecules/modal/modal";
-import Input from "components/atoms/input/input";
-import SelectWithInput from "components/molecules/selectWithInput/selectWithInput";
+import Button from 'components/atoms/BaseButton/BaseButton'
+import Loading from 'components/atoms/loading/loading'
+import Text from 'components/atoms/BaseText/BaseText'
+import Modal from 'components/molecules/BaseModal/BaseModal'
+import Input from 'components/atoms/input/BaseInput'
+import SelectWithInput from 'components/molecules/selectWithInput/selectWithInput'
 
 const ModalAddCreditDriver = ({
   showModal,
   setShowModal,
   props,
   mutateDriverId,
-  mutate,
+  mutate
 }) => {
-  const [fetch, setFetch] = useState(false);
+  const [fetch, setFetch] = useState(false)
   const [body, setBody] = useState({
     driver_id: props,
-    description: "",
-  });
+    description: ''
+  })
 
   const {
     data: credit,
     error: creditError,
-    isFetching,
-  } = useCreate(`user/credit`, body, fetch, setFetch);
+    isFetching
+  } = useCreate(`user/credit`, body, fetch, setFetch)
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
-    setFetch(true);
-  };
+    ev.preventDefault()
+    setFetch(true)
+  }
 
   const onClose = () => {
-    setShowModal(false);
-  };
+    setShowModal(false)
+  }
 
   useEffect(() => {
     if (credit) {
-      mutateDriverId();
-      mutate();
-      onClose();
-      successNotification();
+      mutateDriverId()
+      mutate()
+      onClose()
+      successNotification()
     }
     if (creditError) {
-      errorNotification(creditError?.response?.data?.mgs);
+      errorNotification(creditError?.response?.data?.mgs)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [credit, creditError]);
+  }, [credit, creditError])
 
   return (
     <Modal
@@ -73,7 +73,7 @@ const ModalAddCreditDriver = ({
       {!isFetching && (
         <>
           <Grid item container justifyContent="center">
-            <Text fontsize={"23px"}>Registro crédito / débito</Text>
+            <Text fontsize={'23px'}>Registro crédito / débito</Text>
           </Grid>
           <Grid item container xs={12} md={12} lg={12} justifyContent="center">
             <Grid
@@ -82,27 +82,27 @@ const ModalAddCreditDriver = ({
               md={8.3}
               lg={8.3}
               mt={1}
-              sx={{ textAlign: "center" }}
+              sx={{ textAlign: 'center' }}
             >
               <Grid item xs={12} md={12} lg={12}>
                 <SelectWithInput
                   xs={12}
                   md={12}
                   lg={12}
-                  placeholder={"Valor"}
+                  placeholder={'Valor'}
                   styles={{
-                    "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                      height: "0.5em",
-                    },
+                    '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                      height: '0.5em'
+                    }
                   }}
                   options={[
-                    { label: "Crédito", value: "CREDIT" },
-                    { label: "Débito", value: "DEBIT" },
+                    { label: 'Crédito', value: 'CREDIT' },
+                    { label: 'Débito', value: 'DEBIT' }
                   ]}
                   onChangeSelect={(ev, newValue) =>
                     setBody((state) => ({
                       ...state,
-                      type_method: newValue.value,
+                      type_method: newValue.value
                     }))
                   }
                   //input
@@ -110,7 +110,7 @@ const ModalAddCreditDriver = ({
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      value: unmaskMoney(ev.target.value),
+                      value: unmaskMoney(ev.target.value)
                     }))
                   }
                 />
@@ -119,12 +119,12 @@ const ModalAddCreditDriver = ({
               <Grid item xs={12} md={12} lg={12} mt={2}>
                 <Input
                   required
-                  label={"Motivo"}
-                  value={body?.description ?? ""}
+                  label={'Motivo'}
+                  value={body?.description ?? ''}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      description: ev.target.value,
+                      description: ev.target.value
                     }))
                   }
                 />
@@ -139,20 +139,20 @@ const ModalAddCreditDriver = ({
               xs={6}
               md={6}
               lg={6}
-              justifyContent={"flex-end"}
+              justifyContent={'flex-end'}
             >
               <Button
                 onClick={() => onClose()}
-                background={"#F03D3D"}
+                background={'#F03D3D'}
                 sx={{
-                  width: "140px",
-                  height: "49px",
-                  border: "1px solid #F03D3D",
-                  color: "#ffff",
+                  width: '140px',
+                  height: '49px',
+                  border: '1px solid #F03D3D',
+                  color: '#ffff',
                   mf: 1,
-                  "&:hover": {
-                    background: "#F03D3D",
-                  },
+                  '&:hover': {
+                    background: '#F03D3D'
+                  }
                 }}
               >
                 CANCELAR
@@ -164,21 +164,21 @@ const ModalAddCreditDriver = ({
               xs={6}
               md={6}
               lg={6}
-              justifyContent={"flex-start"}
+              justifyContent={'flex-start'}
             >
               <Button
                 onClick={(ev) => handleSubmit(ev)}
                 color="success"
                 disabled={body?.description?.length < 5}
                 background={
-                  "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+                  'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
                 }
                 sx={{
-                  fontSize: "14px",
-                  color: "white",
-                  width: "141px",
-                  height: "49px",
-                  marginRight: "15px",
+                  fontSize: '14px',
+                  color: 'white',
+                  width: '141px',
+                  height: '49px',
+                  marginRight: '15px'
                 }}
               >
                 REGISTRAR
@@ -193,7 +193,7 @@ const ModalAddCreditDriver = ({
         </Grid>
       )}
     </Modal>
-  );
-};
+  )
+}
 
-export default ModalAddCreditDriver;
+export default ModalAddCreditDriver

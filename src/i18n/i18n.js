@@ -15,7 +15,7 @@ i18n
   .use(initReactI18next)
   .use(LanguageDetector)
   .init({
-    fallbackLng: "en",
+    fallbackLng: "pt",
     // debug: true,
     detection: {
       order: ["path", "localStorage", "htmlTag", "cookie"],

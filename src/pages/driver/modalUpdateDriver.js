@@ -1,43 +1,43 @@
-import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import { errorNotification, successNotification } from "utils/notification";
-import { useGet } from "services/requests/useGet";
-import { useUpdate } from "services/requests/useUpdate";
-import { formatDatePicker } from "utils/formatDate";
+import React, { useEffect, useState } from 'react'
+import { Grid } from '@mui/material'
+import { errorNotification, successNotification } from 'utils/notification'
+import { useGet } from 'services/requests/useGet'
+import { useUpdate } from 'services/requests/useUpdate'
+import { formatDatePicker } from 'utils/formatDate'
 
-import Button from "components/atoms/button/button";
-import Input from "components/atoms/input/input";
-import Modal from "components/molecules/modal/modal";
-import Loading from "components/atoms/loading/loading";
-import ContentHeader from "components/molecules/contentHeader/contentHeader";
-import Title from "components/atoms/title/title";
-import PickerDate from "components/atoms/pickerDate/pickerDate";
-import InputMaskComponent from "components/atoms/inputMask/inputMask";
+import Button from 'components/atoms/BaseButton/BaseButton'
+import Input from 'components/atoms/input/BaseInput'
+import Modal from 'components/molecules/BaseModal/BaseModal'
+import Loading from 'components/atoms/loading/loading'
+import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
+import Title from 'components/atoms/BaseTitle/BaseTitle'
+import PickerDate from 'components/atoms/pickerDate/pickerDate'
+import InputMaskComponent from 'components/atoms/inputMask/inputMask'
 
 const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
-  const [fetch, setFetch] = useState(false);
-  const [body, setBody] = useState([]);
+  const [fetch, setFetch] = useState(false)
+  const [body, setBody] = useState([])
 
-  const { data: driver, isValidating } = useGet(`user/driver/${props.id}`, []);
+  const { data: driver, isValidating } = useGet(`user/driver/${props.id}`, [])
 
   const { data, error, isFetching } = useUpdate(
     `user/driver/${driver?.dataResult?.id}`,
     body,
-    "",
+    '',
     fetch,
     setFetch
-  );
+  )
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
-    setFetch(true);
-  };
+    ev.preventDefault()
+    setFetch(true)
+  }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const onClose = () => {
-    setShowModal(false);
-    setBody({});
-  };
+    setShowModal(false)
+    setBody({})
+  }
 
   useEffect(() => {
     setBody((state) => ({
@@ -50,20 +50,20 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
       date_valid_nr35: driver?.dataResult?.date_valid_nr35,
       cpf: driver?.dataResult?.cpf,
       date_admission: driver?.dataResult?.date_admission,
-      date_birthday: driver?.dataResult?.date_birthday,
-    }));
-  }, [driver]);
+      date_birthday: driver?.dataResult?.date_birthday
+    }))
+  }, [driver])
 
   useEffect(() => {
     if (data) {
-      mutate();
-      onClose();
-      successNotification("Edição bem sucedida");
+      mutate()
+      onClose()
+      successNotification('Edição bem sucedida')
     }
     if (error) {
-      errorNotification(error?.response?.data?.mgs);
+      errorNotification(error?.response?.data?.mgs)
     }
-  }, [data, error, mutate, onClose]);
+  }, [data, error, mutate, onClose])
 
   return (
     <Modal
@@ -71,7 +71,7 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
       onClose={onClose}
       component="form"
       onSubmit={handleSubmit}
-      maxWidth={"600px"}
+      maxWidth={'600px'}
     >
       <ContentHeader>
         <Title>Editar Motorista</Title>
@@ -83,21 +83,21 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
           item
           spacing={2}
           mt={1}
-          sx={{ minHeight: "300px", justifyContent: "flex-start" }}
+          sx={{ minHeight: '300px', justifyContent: 'flex-start' }}
         >
           <Grid item xs={12} md={6} lg={6}>
             <Input
-              label={"Name"}
+              label={'Name'}
               styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
-              value={body?.name ?? ""}
+              value={body?.name ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  name: ev.target.value,
+                  name: ev.target.value
                 }))
               }
             />
@@ -105,14 +105,14 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <PickerDate
-              label={"Data da Admissão"}
+              label={'Data da Admissão'}
               value={body?.date_admission}
               size="medium"
               height="2.4em"
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,
-                  date_admission: formatDatePicker(newValue),
+                  date_admission: formatDatePicker(newValue)
                 }))
               }
             />
@@ -120,14 +120,14 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <PickerDate
-              label={"Data Nascimento"}
+              label={'Data Nascimento'}
               value={body?.date_birthday}
               size="medium"
               height="2.4em"
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,
-                  date_birthday: formatDatePicker(newValue),
+                  date_birthday: formatDatePicker(newValue)
                 }))
               }
             />
@@ -135,17 +135,17 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <Input
-              label={"CNH"}
+              label={'CNH'}
               styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
-              value={body?.number_cnh ?? ""}
+              value={body?.number_cnh ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  number_cnh: ev.target.value,
+                  number_cnh: ev.target.value
                 }))
               }
             />
@@ -153,18 +153,18 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <InputMaskComponent
-              label={"CPF"}
-              mask={"999.999.999-99"}
+              label={'CPF'}
+              mask={'999.999.999-99'}
               styles={{
-                "& .css-zn7bzk-MuiFormControl-root-MuiTextField-root": {
-                  height: "1.3em",
-                },
+                '& .css-zn7bzk-MuiFormControl-root-MuiTextField-root': {
+                  height: '1.3em'
+                }
               }}
-              value={body?.cpf ?? ""}
+              value={body?.cpf ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cpf: ev.target.value,
+                  cpf: ev.target.value
                 }))
               }
             />
@@ -172,14 +172,14 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <PickerDate
-              label={"Validade CNH"}
+              label={'Validade CNH'}
               height="2.4em"
               value={body?.valid_cnh}
               size="medium"
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,
-                  valid_cnh: formatDatePicker(newValue),
+                  valid_cnh: formatDatePicker(newValue)
                 }))
               }
             />
@@ -187,14 +187,14 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <PickerDate
-              label={"Validade MOPP"}
+              label={'Validade MOPP'}
               value={body?.date_valid_mopp}
               size="medium"
               height="2.4em"
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,
-                  date_valid_mopp: formatDatePicker(newValue),
+                  date_valid_mopp: formatDatePicker(newValue)
                 }))
               }
             />
@@ -202,14 +202,14 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <PickerDate
-              label={"Validade NR20"}
+              label={'Validade NR20'}
               value={body?.date_valid_nr20}
               size="medium"
               height="2.4em"
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,
-                  date_valid_nr20: formatDatePicker(newValue),
+                  date_valid_nr20: formatDatePicker(newValue)
                 }))
               }
             />
@@ -217,14 +217,14 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <PickerDate
-              label={"Validade NR35"}
+              label={'Validade NR35'}
               value={body?.date_valid_nr35}
               size="medium"
               height="2.7em"
               onChange={(newValue) =>
                 setBody((state) => ({
                   ...state,
-                  date_valid_nr35: formatDatePicker(newValue),
+                  date_valid_nr35: formatDatePicker(newValue)
                 }))
               }
             />
@@ -238,17 +238,17 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
             lg={12}
             spacing={2}
             mt={2}
-            justifyContent={"flex-end"}
+            justifyContent={'flex-end'}
           >
             <Grid container item xs={12} md={3} lg={3}>
               <Button
                 onClick={() => onClose()}
-                background={"#fff"}
+                background={'#fff'}
                 sx={{
-                  width: "140px",
-                  height: "49px",
-                  border: "1px solid #509BFB",
-                  color: "#000000",
+                  width: '140px',
+                  height: '49px',
+                  border: '1px solid #509BFB',
+                  color: '#000000'
                 }}
                 variant="text"
               >
@@ -260,14 +260,14 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
                 type="submit"
                 color="success"
                 background={
-                  "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+                  'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
                 }
                 sx={{
-                  fontSize: "14px",
-                  color: "white",
-                  width: "141px",
-                  height: "49px",
-                  marginRight: "15px",
+                  fontSize: '14px',
+                  color: 'white',
+                  width: '141px',
+                  height: '49px',
+                  marginRight: '15px'
                 }}
               >
                 Atualizar
@@ -280,7 +280,7 @@ const ModalUpdateDriver = ({ showModal, setShowModal, mutate, props }) => {
       {isFetching && <Loading />}
       {isValidating && <Loading />}
     </Modal>
-  );
-};
+  )
+}
 
-export default ModalUpdateDriver;
+export default ModalUpdateDriver

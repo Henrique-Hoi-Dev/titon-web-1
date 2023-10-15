@@ -1,31 +1,31 @@
-import * as React from "react";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import Text from "components/atoms/text/text";
-import imgNotFound from "../../assets/trist-not-found-table.svg";
-import TableRow from "@mui/material/TableRow";
+import * as React from 'react'
+import Paper from '@mui/material/Paper'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import Text from 'components/atoms/BaseText/BaseText'
+import imgNotFound from '../../assets/trist-not-found-table.svg'
+import TableRow from '@mui/material/TableRow'
 
-import { Grid, TablePagination } from "@mui/material";
-import { formatDate } from "../../utils/formatDate";
-import { moneyMask } from "utils/masks";
+import { Grid, TablePagination } from '@mui/material'
+import { formatDate } from '../../utils/formatDate'
+import { moneyMask } from 'utils/masks'
 
 const columns = [
-  { id: "typeTransactions", label: "Motivo", minWidth: 170 },
-  { id: "value", label: "Valor", minWidth: 140 },
+  { id: 'typeTransactions', label: 'Motivo', minWidth: 170 },
+  { id: 'value', label: 'Valor', minWidth: 140 },
   {
-    id: "type",
-    label: "Tipo",
-    minWidth: 100,
+    id: 'type',
+    label: 'Tipo',
+    minWidth: 100
   },
-  { id: "date", label: "Data", minWidth: 170, align: "right" },
-];
+  { id: 'date', label: 'Data', minWidth: 170, align: 'right' }
+]
 
 function createData(typeTransactions, value, type, date) {
-  return { typeTransactions, value, type, date };
+  return { typeTransactions, value, type, date }
 }
 
 export default function TableBankStatement({ data }) {
@@ -34,25 +34,25 @@ export default function TableBankStatement({ data }) {
       createData(
         item.typeTransactions,
         moneyMask(item.value),
-        item.type_method === "DEBIT" ? "Débito" : "Crédito",
+        item.type_method === 'DEBIT' ? 'Débito' : 'Crédito',
         formatDate(item.date)
       )
-    ) ?? [];
+    ) ?? []
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = React.useState(0)
+  const [rowsPerPage, setRowsPerPage] = React.useState(10)
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+    setPage(newPage)
+  }
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+    setRowsPerPage(+event.target.value)
+    setPage(0)
+  }
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
+    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440, height: 370 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -63,8 +63,8 @@ export default function TableBankStatement({ data }) {
                   align={column.align}
                   style={{
                     minWidth: column.minWidth,
-                    background: "#CCD6EB",
-                    fontWeight: 600,
+                    background: '#CCD6EB',
+                    fontWeight: 600
                   }}
                 >
                   {column.label}
@@ -79,25 +79,23 @@ export default function TableBankStatement({ data }) {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={i}>
                     {columns.map((column) => {
-                      const value = row[column.id];
+                      const value = row[column.id]
                       return (
                         <TableCell
                           key={column.id}
                           align={column.align}
                           style={{
-                            color: `${
-                              row.type === "Crédito" ? "green" : "red"
-                            }`,
+                            color: `${row.type === 'Crédito' ? 'green' : 'red'}`
                           }}
                         >
-                          {column.format && typeof value === "number"
+                          {column.format && typeof value === 'number'
                             ? column.format(value)
                             : value}
                         </TableCell>
-                      );
+                      )
                     })}
                   </TableRow>
-                );
+                )
               })}
           </TableBody>
         </Table>
@@ -109,19 +107,19 @@ export default function TableBankStatement({ data }) {
             xs={12}
             md={12}
             lg={12}
-            justifyContent={"center"}
-            alignItems={"center"}
-            height={"300px"}
+            justifyContent={'center'}
+            alignItems={'center'}
+            height={'300px'}
           >
-            <Text fontSize={"28px"} center>
-              {"RESULTADO NÃO ENCONTRADO..."}
+            <Text fontSize={'28px'} center>
+              {'RESULTADO NÃO ENCONTRADO...'}
               <img
                 src={imgNotFound}
                 alt="img"
-                width={"40px"}
+                width={'40px'}
                 style={{
-                  verticalAlign: "bottom",
-                  marginLeft: "24px",
+                  verticalAlign: 'bottom',
+                  marginLeft: '24px'
                 }}
               />
             </Text>
@@ -138,5 +136,5 @@ export default function TableBankStatement({ data }) {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
-  );
+  )
 }

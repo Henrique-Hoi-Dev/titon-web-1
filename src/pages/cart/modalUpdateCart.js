@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import { errorNotification, successNotification } from "utils/notification";
-import { useGet } from "services/requests/useGet";
-import { useUpdate } from "services/requests/useUpdate";
+import React, { useEffect, useState } from 'react'
+import { Grid } from '@mui/material'
+import { errorNotification, successNotification } from 'utils/notification'
+import { useGet } from 'services/requests/useGet'
+import { useUpdate } from 'services/requests/useUpdate'
 
-import Button from "components/atoms/button/button";
-import Input from "components/atoms/input/input";
-import Modal from "components/molecules/modal/modal";
-import Loading from "components/atoms/loading/loading";
-import ContentHeader from "components/molecules/contentHeader/contentHeader";
-import Title from "components/atoms/title/title";
+import Button from 'components/atoms/BaseButton/BaseButton'
+import Input from 'components/atoms/input/BaseInput'
+import Modal from 'components/molecules/BaseModal/BaseModal'
+import Loading from 'components/atoms/loading/loading'
+import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
+import Title from 'components/atoms/BaseTitle/BaseTitle'
 
 const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
-  const [fetch, setFetch] = useState(false);
+  const [fetch, setFetch] = useState(false)
 
-  const [body, setBody] = useState([]);
+  const [body, setBody] = useState([])
 
-  const { data: cart, isValidating } = useGet(`user/cart/${props?.id}`, []);
+  const { data: cart, isValidating } = useGet(`user/cart/${props?.id}`, [])
 
   const {
     data: cartUpdate,
     error: errorCartUpadate,
-    isFetching,
-  } = useUpdate(`user/cart/${props?.id}`, body, "", fetch, setFetch);
+    isFetching
+  } = useUpdate(`user/cart/${props?.id}`, body, '', fetch, setFetch)
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
+    ev.preventDefault()
 
-    setFetch(true);
-  };
+    setFetch(true)
+  }
 
   const onClose = () => {
-    setShowModal(false);
-    setBody({});
-  };
+    setShowModal(false)
+    setBody({})
+  }
 
   useEffect(() => {
     setBody((state) => ({
@@ -45,24 +45,24 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
       cart_bodywork: cart?.dataResult?.cart_bodywork,
       cart_year: cart?.dataResult?.cart_year,
       cart_liter_capacity: cart?.dataResult?.cart_liter_capacity,
-      cart_ton_capacity: cart?.dataResult?.cart_ton_capacity,
-    }));
-  }, [cart]);
+      cart_ton_capacity: cart?.dataResult?.cart_ton_capacity
+    }))
+  }, [cart])
 
   useEffect(() => {
     if (cartUpdate) {
-      mutate();
-      onClose();
+      mutate()
+      onClose()
     }
     if (cartUpdate) {
-      successNotification();
+      successNotification()
     }
 
     if (errorCartUpadate) {
-      errorNotification(errorCartUpadate?.response?.data?.msg);
+      errorNotification(errorCartUpadate?.response?.data?.msg)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cartUpdate, errorCartUpadate]);
+  }, [cartUpdate, errorCartUpadate])
 
   return (
     <Modal
@@ -71,7 +71,7 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
       onClose={onClose}
       component="form"
       onSubmit={handleSubmit}
-      maxWidth={"600px"}
+      maxWidth={'600px'}
     >
       <ContentHeader>
         <Title>Editar Carreta</Title>
@@ -83,23 +83,23 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
           item
           spacing={2}
           mt={1}
-          sx={{ minHeight: "300px", justifyContent: "flex-start" }}
+          sx={{ minHeight: '300px', justifyContent: 'flex-start' }}
         >
           <Grid item xs={12} md={6} lg={6}>
             <Input
-              label={"Marca"}
+              label={'Marca'}
               required
               styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
-              value={body?.cart_brand ?? ""}
+              value={body?.cart_brand ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_brand: ev.target.value,
+                  cart_brand: ev.target.value
                 }))
               }
             />
@@ -107,64 +107,64 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <Input
-              label={"Modelo"}
+              label={'Modelo'}
               required
               styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
-              value={body?.cart_models ?? ""}
+              value={body?.cart_models ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_models: ev.target.value,
+                  cart_models: ev.target.value
                 }))
               }
             />
           </Grid>
 
-          {body?.cart_bodywork === "tank" && (
+          {body?.cart_bodywork === 'tank' && (
             <Grid item xs={12} md={6} lg={6}>
               <Input
-                label={"Capacidade de litros"}
+                label={'Capacidade de litros'}
                 required
                 styles={{
-                  maxWidth: "274px",
-                  "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                    height: "1.4rem",
-                  },
+                  maxWidth: '274px',
+                  '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                    height: '1.4rem'
+                  }
                 }}
-                value={body?.cart_liter_capacity ?? ""}
+                value={body?.cart_liter_capacity ?? ''}
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    cart_liter_capacity: ev.target.value,
+                    cart_liter_capacity: ev.target.value
                   }))
                 }
               />
             </Grid>
           )}
 
-          {(body?.cart_bodywork === "bulkCarrier" ||
-            body?.cart_bodywork === "sider" ||
-            body?.cart_bodywork === "chest" ||
-            body?.cart_bodywork === "bucket") && (
+          {(body?.cart_bodywork === 'bulkCarrier' ||
+            body?.cart_bodywork === 'sider' ||
+            body?.cart_bodywork === 'chest' ||
+            body?.cart_bodywork === 'bucket') && (
             <Grid item xs={12} md={6} lg={6}>
               <Input
-                label={"Capacidade de tonelada"}
+                label={'Capacidade de tonelada'}
                 required
                 styles={{
-                  maxWidth: "274px",
-                  "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                    height: "1.4rem",
-                  },
+                  maxWidth: '274px',
+                  '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                    height: '1.4rem'
+                  }
                 }}
-                value={body?.cart_ton_capacity ?? ""}
+                value={body?.cart_ton_capacity ?? ''}
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    cart_ton_capacity: ev.target.value,
+                    cart_ton_capacity: ev.target.value
                   }))
                 }
               />
@@ -173,19 +173,19 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <Input
-              label={"Cor"}
+              label={'Cor'}
               required
               styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
-              value={body?.cart_color ?? ""}
+              value={body?.cart_color ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_color: ev.target.value,
+                  cart_color: ev.target.value
                 }))
               }
             />
@@ -193,19 +193,19 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <Input
-              label={"Tara"}
+              label={'Tara'}
               required
               styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
-              value={body?.cart_tara ?? ""}
+              value={body?.cart_tara ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_tara: ev.target.value,
+                  cart_tara: ev.target.value
                 }))
               }
             />
@@ -213,19 +213,19 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <Input
-              label={"Ano Fabricação"}
+              label={'Ano Fabricação'}
               required
               styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
-              value={body?.cart_year ?? ""}
+              value={body?.cart_year ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_year: ev.target.value,
+                  cart_year: ev.target.value
                 }))
               }
             />
@@ -239,17 +239,17 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
             lg={12}
             spacing={1}
             mt={0.3}
-            justifyContent={"flex-end"}
+            justifyContent={'flex-end'}
           >
             <Grid container item xs={12} md={3} lg={3}>
               <Button
                 onClick={() => onClose()}
-                background={"#fff"}
+                background={'#fff'}
                 sx={{
-                  width: "140px",
-                  height: "49px",
-                  border: "1px solid #509BFB",
-                  color: "#000000",
+                  width: '140px',
+                  height: '49px',
+                  border: '1px solid #509BFB',
+                  color: '#000000'
                 }}
                 variant="text"
               >
@@ -261,14 +261,14 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
                 type="submit"
                 color="success"
                 background={
-                  "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+                  'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
                 }
                 sx={{
-                  fontSize: "14px",
-                  color: "white",
-                  width: "139px",
-                  height: "49px",
-                  marginRight: "15px",
+                  fontSize: '14px',
+                  color: 'white',
+                  width: '139px',
+                  height: '49px',
+                  marginRight: '15px'
                 }}
               >
                 Atualizar
@@ -281,7 +281,7 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
       {isFetching && <Loading />}
       {isValidating && <Loading />}
     </Modal>
-  );
-};
+  )
+}
 
-export default ModalUpdateCart;
+export default ModalUpdateCart

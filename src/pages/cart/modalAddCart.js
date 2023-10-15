@@ -1,60 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import { useCreate } from "services/requests/useCreate";
-import { successNotification, errorNotification } from "utils/notification";
+import React, { useEffect, useState } from 'react'
+import { Grid } from '@mui/material'
+import { useCreate } from 'services/requests/useCreate'
+import { successNotification, errorNotification } from 'utils/notification'
 
-import Button from "components/atoms/button/button";
-import Input from "components/atoms/input/input";
-import Modal from "components/molecules/modal/modal";
-import Loading from "components/atoms/loading/loading";
-import ContentHeader from "components/molecules/contentHeader/contentHeader";
-import Title from "components/atoms/title/title";
-import Autocomplete from "components/atoms/autocomplete/autocomplete";
+import Button from 'components/atoms/BaseButton/BaseButton'
+import Input from 'components/atoms/input/BaseInput'
+import Modal from 'components/molecules/BaseModal/BaseModal'
+import Loading from 'components/atoms/loading/loading'
+import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
+import Title from 'components/atoms/BaseTitle/BaseTitle'
+import Autocomplete from 'components/atoms/BaseAutocomplete/BaseAutocomplete'
 
 const ModalAddCart = ({ showModal, setShowModal, mutate }) => {
-  const [body, setBody] = useState({});
+  const [body, setBody] = useState({})
 
-  const [fetch, setFetch] = useState(false);
+  const [fetch, setFetch] = useState(false)
 
   const typeCart = [
-    { value: "tank", label: "Tanque" },
-    { value: "bulkCarrier", label: "Graneleiro" },
-    { value: "sider", label: "Sider" },
-    { value: "chest", label: "Baú" },
-    { value: "bucket", label: "Caçamba" },
-  ];
+    { value: 'tank', label: 'Tanque' },
+    { value: 'bulkCarrier', label: 'Graneleiro' },
+    { value: 'sider', label: 'Sider' },
+    { value: 'chest', label: 'Baú' },
+    { value: 'bucket', label: 'Caçamba' }
+  ]
 
   const {
     data: cart,
     error: errorCart,
-    isFetching,
-  } = useCreate("user/cart", body, fetch, setFetch);
+    isFetching
+  } = useCreate('user/cart', body, fetch, setFetch)
 
   const onClose = () => {
-    setShowModal(false);
-    setBody({});
-  };
+    setShowModal(false)
+    setBody({})
+  }
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
-    setFetch(true);
-  };
+    ev.preventDefault()
+    setFetch(true)
+  }
 
   useEffect(() => {
     if (cart) {
-      mutate();
-      onClose();
+      mutate()
+      onClose()
     }
 
     if (cart) {
-      successNotification();
+      successNotification()
     }
 
     if (errorCart) {
-      errorNotification(errorCart?.response?.data?.msg);
+      errorNotification(errorCart?.response?.data?.msg)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart, errorCart]);
+  }, [cart, errorCart])
 
   return (
     <Modal
@@ -62,8 +62,8 @@ const ModalAddCart = ({ showModal, setShowModal, mutate }) => {
       onClose={onClose}
       component="form"
       onSubmit={handleSubmit}
-      maxWidth={"600px"}
-      maxHeight={"800px"}
+      maxWidth={'600px'}
+      maxHeight={'800px'}
     >
       <ContentHeader mt={2}>
         <Title>Cadastrar Carreta</Title>
@@ -75,23 +75,23 @@ const ModalAddCart = ({ showModal, setShowModal, mutate }) => {
           item
           spacing={2}
           mt={1}
-          sx={{ minHeight: "300px", justifyContent: "flex-start" }}
+          sx={{ minHeight: '300px', justifyContent: 'flex-start' }}
         >
           <Grid item xs={12} md={6} lg={6}>
             <Input
-              label={"Marca"}
+              label={'Marca'}
               required
               styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
-              value={body?.cart_brand ?? ""}
+              value={body?.cart_brand ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_brand: ev.target.value,
+                  cart_brand: ev.target.value
                 }))
               }
             />
@@ -99,18 +99,18 @@ const ModalAddCart = ({ showModal, setShowModal, mutate }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <Input
-              label={"Modelo"}
+              label={'Modelo'}
               required
               styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
-              value={body?.cart_models ?? ""}
+              value={body?.cart_models ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_models: ev.target.value,
+                  cart_models: ev.target.value
                 }))
               }
             />
@@ -118,19 +118,19 @@ const ModalAddCart = ({ showModal, setShowModal, mutate }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <Input
-              label={"Placa"}
+              label={'Placa'}
               required
               styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
-              value={body?.cart_board ?? ""}
+              value={body?.cart_board ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_board: ev.target.value,
+                  cart_board: ev.target.value
                 }))
               }
             />
@@ -138,19 +138,19 @@ const ModalAddCart = ({ showModal, setShowModal, mutate }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <Input
-              label={"Cor"}
+              label={'Cor'}
               required
               styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
-              value={body?.cart_color ?? ""}
+              value={body?.cart_color ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_color: ev.target.value,
+                  cart_color: ev.target.value
                 }))
               }
             />
@@ -158,14 +158,14 @@ const ModalAddCart = ({ showModal, setShowModal, mutate }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <Autocomplete
-              placeholder={"Tipo Carreta"}
+              placeholder={'Tipo Carreta'}
               sx={{
-                "& .MuiAutocomplete-input": {
-                  height: "0.4em!important",
-                },
+                '& .MuiAutocomplete-input': {
+                  height: '0.4em!important'
+                }
               }}
               options={typeCart ?? []}
-              getOptionLabel={(option) => option.label ?? ""}
+              getOptionLabel={(option) => option.label ?? ''}
               isOptionEqualToValue={(option, value) =>
                 option.value === value.value
               }
@@ -173,57 +173,57 @@ const ModalAddCart = ({ showModal, setShowModal, mutate }) => {
                 if (newValue) {
                   setBody((state) => ({
                     ...state,
-                    cart_bodyworks: newValue.value,
-                  }));
+                    cart_bodyworks: newValue.value
+                  }))
                 }
                 if (newValue === null) {
-                  setBody((state) => ({ ...state, cart_bodyworks: "" }));
+                  setBody((state) => ({ ...state, cart_bodyworks: '' }))
                 }
               }}
             />
           </Grid>
 
-          {body?.cart_bodyworks === "tank" && (
+          {body?.cart_bodyworks === 'tank' && (
             <Grid item xs={12} md={6} lg={6}>
               <Input
-                label={"Capacidade de litros"}
+                label={'Capacidade de litros'}
                 required
                 styles={{
-                  maxWidth: "274px",
-                  "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                    height: "1.4rem",
-                  },
+                  maxWidth: '274px',
+                  '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                    height: '1.4rem'
+                  }
                 }}
-                value={body?.cart_liter_capacity ?? ""}
+                value={body?.cart_liter_capacity ?? ''}
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    cart_liter_capacity: ev.target.value,
+                    cart_liter_capacity: ev.target.value
                   }))
                 }
               />
             </Grid>
           )}
 
-          {(body?.cart_bodyworks === "bulkCarrier" ||
-            body?.cart_bodyworks === "sider" ||
-            body?.cart_bodyworks === "chest" ||
-            body?.cart_bodyworks === "bucket") && (
+          {(body?.cart_bodyworks === 'bulkCarrier' ||
+            body?.cart_bodyworks === 'sider' ||
+            body?.cart_bodyworks === 'chest' ||
+            body?.cart_bodyworks === 'bucket') && (
             <Grid item xs={12} md={6} lg={6}>
               <Input
-                label={"Capacidade de tonelada"}
+                label={'Capacidade de tonelada'}
                 required
                 styles={{
-                  maxWidth: "274px",
-                  "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                    height: "1.4rem",
-                  },
+                  maxWidth: '274px',
+                  '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                    height: '1.4rem'
+                  }
                 }}
-                value={body?.cart_ton_capacity ?? ""}
+                value={body?.cart_ton_capacity ?? ''}
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    cart_ton_capacity: ev.target.value,
+                    cart_ton_capacity: ev.target.value
                   }))
                 }
               />
@@ -232,19 +232,19 @@ const ModalAddCart = ({ showModal, setShowModal, mutate }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <Input
-              label={"Tara"}
+              label={'Tara'}
               required
               styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
-              value={body?.cart_tara ?? ""}
+              value={body?.cart_tara ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_tara: ev.target.value,
+                  cart_tara: ev.target.value
                 }))
               }
             />
@@ -252,19 +252,19 @@ const ModalAddCart = ({ showModal, setShowModal, mutate }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <Input
-              label={"Número Chassi"}
+              label={'Número Chassi'}
               required
               styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
-              value={body?.cart_chassis ?? ""}
+              value={body?.cart_chassis ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_chassis: ev.target.value,
+                  cart_chassis: ev.target.value
                 }))
               }
             />
@@ -272,19 +272,19 @@ const ModalAddCart = ({ showModal, setShowModal, mutate }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <Input
-              label={"Ano Fabricação"}
+              label={'Ano Fabricação'}
               required
               styles={{
-                maxWidth: "274px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
-              value={body?.cart_year ?? ""}
+              value={body?.cart_year ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cart_year: ev.target.value,
+                  cart_year: ev.target.value
                 }))
               }
             />
@@ -298,17 +298,17 @@ const ModalAddCart = ({ showModal, setShowModal, mutate }) => {
             lg={12}
             spacing={2}
             mt={1}
-            justifyContent={"flex-end"}
+            justifyContent={'flex-end'}
           >
             <Grid container item xs={12} md={3} lg={3}>
               <Button
                 onClick={() => onClose()}
-                background={"#fff"}
+                background={'#fff'}
                 sx={{
-                  width: "140px",
-                  height: "49px",
-                  border: "1px solid #509BFB",
-                  color: "#000000",
+                  width: '140px',
+                  height: '49px',
+                  border: '1px solid #509BFB',
+                  color: '#000000'
                 }}
                 variant="text"
               >
@@ -320,14 +320,14 @@ const ModalAddCart = ({ showModal, setShowModal, mutate }) => {
                 type="submit"
                 color="success"
                 background={
-                  "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+                  'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
                 }
                 sx={{
-                  fontSize: "14px",
-                  color: "white",
-                  width: "141px",
-                  height: "49px",
-                  marginRight: "15px",
+                  fontSize: '14px',
+                  color: 'white',
+                  width: '141px',
+                  height: '49px',
+                  marginRight: '15px'
                 }}
               >
                 CADASTRAR
@@ -339,7 +339,7 @@ const ModalAddCart = ({ showModal, setShowModal, mutate }) => {
 
       {isFetching && <Loading />}
     </Modal>
-  );
-};
+  )
+}
 
-export default ModalAddCart;
+export default ModalAddCart

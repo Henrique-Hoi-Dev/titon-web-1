@@ -1,82 +1,82 @@
-import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { useCreate } from "services/requests/useCreate";
-import { errorNotification, successNotification } from "utils/notification";
-import { formatMoney, maskCPF } from "utils/masks";
-import { unmaskMoney } from "utils/unmaskMoney";
+import React, { useEffect, useState } from 'react'
+import { Grid } from '@mui/material'
+import { useTranslation } from 'react-i18next'
+import { useCreate } from 'services/requests/useCreate'
+import { errorNotification, successNotification } from 'utils/notification'
+import { formatMoney, maskCPF } from 'utils/masks'
+import { unmaskMoney } from 'utils/unmaskMoney'
 
-import Button from "components/atoms/button/button";
-import Input from "components/atoms/input/input";
-import Modal from "components/molecules/modal/modal";
-import Loading from "components/atoms/loading/loading";
-import ContentHeader from "components/molecules/contentHeader/contentHeader";
-import Title from "components/atoms/title/title";
+import Button from 'components/atoms/BaseButton/BaseButton'
+import Input from 'components/atoms/input/BaseInput'
+import Modal from 'components/molecules/BaseModal/BaseModal'
+import Loading from 'components/atoms/loading/loading'
+import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
+import Title from 'components/atoms/BaseTitle/BaseTitle'
 
 const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const [body, setBody] = useState({});
-  const [data, setData] = useState({});
+  const [body, setBody] = useState({})
+  const [data, setData] = useState({})
 
-  const [fetch, setFetch] = useState(false);
+  const [fetch, setFetch] = useState(false)
 
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState('')
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-  const [passwordError, setPasswordError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false)
 
   const {
     data: newDevice,
     error: errorNewDevice,
-    isFetching,
-  } = useCreate("driver/signup", data, fetch, setFetch);
+    isFetching
+  } = useCreate('driver/signup', data, fetch, setFetch)
 
   const onClose = () => {
-    setShowModal(false);
-    setBody({});
-  };
+    setShowModal(false)
+    setBody({})
+  }
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
+    ev.preventDefault()
 
     if (body?.password !== confirmPassword) {
-      setPasswordError(true);
-      return;
+      setPasswordError(true)
+      return
     }
 
-    setFetch(true);
-    setPasswordError(false);
-    setConfirmPassword("");
-  };
+    setFetch(true)
+    setPasswordError(false)
+    setConfirmPassword('')
+  }
 
   useEffect(() => {
     setData((state) => ({
       ...state,
       name: body?.name,
-      cpf: body?.cpf?.replace(/\D/g, ""),
+      cpf: body?.cpf?.replace(/\D/g, ''),
       password: body?.password,
       percentage: body?.percentage ?? 0,
       daily: unmaskMoney(body?.daily ?? 0),
-      value_fix: unmaskMoney(body?.value_fix ?? 0),
-    }));
+      value_fix: unmaskMoney(body?.value_fix ?? 0)
+    }))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [body]);
+  }, [body])
 
   useEffect(() => {
     if (newDevice) {
-      mutate();
-      onClose();
-      successNotification(t("messages.success_msg"));
+      mutate()
+      onClose()
+      successNotification(t('messages.success_msg'))
     }
 
     if (errorNewDevice) {
-      errorNotification(errorNewDevice?.response?.data?.mgs);
+      errorNotification(errorNewDevice?.response?.data?.mgs)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newDevice, errorNewDevice]);
+  }, [newDevice, errorNewDevice])
 
   return (
     <Modal
@@ -84,8 +84,8 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
       onClose={onClose}
       component="form"
       onSubmit={handleSubmit}
-      maxWidth={"600px"}
-      maxHeight={"800px"}
+      maxWidth={'600px'}
+      maxHeight={'800px'}
     >
       <ContentHeader mt={2}>
         <Title>Cadastro Motorista</Title>
@@ -97,22 +97,22 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
           item
           spacing={2}
           mt={1}
-          sx={{ minHeight: "300px", justifyContent: "flex-start" }}
+          sx={{ minHeight: '300px', justifyContent: 'flex-start' }}
         >
           <Grid item xs={12} md={6} lg={6}>
             <Input
               required
-              label={"Nome Completo"}
+              label={'Nome Completo'}
               styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
-              value={body?.name ?? ""}
+              value={body?.name ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  name: ev.target.value,
+                  name: ev.target.value
                 }))
               }
             />
@@ -121,18 +121,18 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
           <Grid item xs={12} md={6} lg={6}>
             <Input
               required
-              label={t("field.cpf")}
+              label={t('field.cpf')}
               maxLength={14}
               styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
-              value={body?.cpf ?? ""}
+              value={body?.cpf ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cpf: maskCPF(ev.target.value),
+                  cpf: maskCPF(ev.target.value)
                 }))
               }
             />
@@ -141,22 +141,22 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
           <Grid item xs={12} md={6} lg={6}>
             <Input
               required
-              label={"Senha"}
-              type={showPassword ? "text" : "password"}
+              label={'Senha'}
+              type={showPassword ? 'text' : 'password'}
               onClick={() => setShowPassword(!showPassword)}
               isPassword
               styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
               error={passwordError}
-              helperText={passwordError ? "Senhas não conferem" : ""}
-              value={body?.password ?? ""}
+              helperText={passwordError ? 'Senhas não conferem' : ''}
+              value={body?.password ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  password: ev.target.value,
+                  password: ev.target.value
                 }))
               }
             />
@@ -164,11 +164,11 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
 
           <Grid item xs={12} md={6} lg={6}>
             <Input
-              label={"Confirmar Senha"}
-              type={showConfirmPassword ? "text" : "password"}
+              label={'Confirmar Senha'}
+              type={showConfirmPassword ? 'text' : 'password'}
               onChange={(ev) => setConfirmPassword(ev.target.value)}
               isPassword
-              value={confirmPassword ?? ""}
+              value={confirmPassword ?? ''}
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               required
             />
@@ -176,27 +176,27 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
 
           <hr
             style={{
-              border: "1px solid #000000",
-              width: "97%",
-              opacity: "0.5",
-              margin: "25px 0px 16px 20px",
+              border: '1px solid #000000',
+              width: '97%',
+              opacity: '0.5',
+              margin: '25px 0px 16px 20px'
             }}
           />
 
           <Grid item xs={12} md={6} lg={6}>
             <Input
               required
-              label={"Valor Diária"}
+              label={'Valor Diária'}
               styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
               value={formatMoney(body?.daily)}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  daily: ev.target.value,
+                  daily: ev.target.value
                 }))
               }
             />
@@ -205,17 +205,17 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
           <Grid item xs={12} md={6} lg={6}>
             <Input
               required
-              label={"Remuneração Fixa"}
+              label={'Remuneração Fixa'}
               styles={{
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
               value={formatMoney(body?.value_fix)}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  value_fix: ev.target.value,
+                  value_fix: ev.target.value
                 }))
               }
             />
@@ -224,19 +224,19 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
           <Grid item xs={12} md={12} lg={12}>
             <Input
               required
-              label={"Remuneração Porcentagem"}
-              type={"number"}
+              label={'Remuneração Porcentagem'}
+              type={'number'}
               styles={{
-                maxWidth: "274.1px",
-                "& .MuiInputBase-input.MuiOutlinedInput-input": {
-                  height: "1.4rem",
-                },
+                maxWidth: '274.1px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
               }}
               value={body?.percentage ?? 0}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  percentage: ev.target.value,
+                  percentage: ev.target.value
                 }))
               }
             />
@@ -250,17 +250,17 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
             lg={12}
             spacing={2}
             mt={2}
-            justifyContent={"flex-end"}
+            justifyContent={'flex-end'}
           >
             <Grid container item xs={12} md={3} lg={3}>
               <Button
                 onClick={() => onClose()}
-                background={"#fff"}
+                background={'#fff'}
                 sx={{
-                  width: "140px",
-                  height: "49px",
-                  border: "1px solid #509BFB",
-                  color: "#000000",
+                  width: '140px',
+                  height: '49px',
+                  border: '1px solid #509BFB',
+                  color: '#000000'
                 }}
                 variant="text"
               >
@@ -272,14 +272,14 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
                 type="submit"
                 color="success"
                 background={
-                  "linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+                  'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
                 }
                 sx={{
-                  fontSize: "14px",
-                  color: "white",
-                  width: "141px",
-                  height: "49px",
-                  marginRight: "15px",
+                  fontSize: '14px',
+                  color: 'white',
+                  width: '141px',
+                  height: '49px',
+                  marginRight: '15px'
                 }}
               >
                 CADASTRAR
@@ -291,7 +291,7 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
 
       {isFetching && <Loading />}
     </Modal>
-  );
-};
+  )
+}
 
-export default ModalAddDriver;
+export default ModalAddDriver

@@ -93,7 +93,7 @@
     "line": "Linha",
     "prize_total": "Prêmio Total",
     "auto_increment": "Auto Incremento",
-    "type":"Tipo",
+    "type": "Tipo",
     "draw_amount": "Qtd Sorteio",
     "interval": "Intervalo",
     "hours": "Horas",
@@ -132,7 +132,7 @@
     "housecut_total": "Housecut",
     "ticket_total": "Ticket",
     "balance_total": "Saldo",
-    "canceled_total": "Cancelado"  
+    "canceled_total": "Cancelado"
   },
   "modal": {
     "add": "Adicionar",
@@ -143,7 +143,8 @@
   "button": {
     "return": "Voltar",
     "confirm": "Confirmar",
-    "create": "Criar"
+    "create": "Criar",
+    "add_new_listing": "Adicionar Nova Ficha"
   },
   "components": {
     "button_default": "Botão Padrão",
@@ -160,18 +161,96 @@
     "add_logo": "Adicionar logo",
     "min_interval": "Intervalo mínimo de 10 minutos",
     "success_msg": "Operação realizada com sucesso!",
-    "select_room": "Selecione uma sala", 
+    "select_room": "Selecione uma sala",
     "select_game_instance_or_status": "Selecione uma local ou status",
     "select_game_instance": "Selecione uma local",
     "select_template": "Selecione um template",
     "unknown_error": "Erro desconhecido",
     "loading": "Carregando",
     "number_of_draws_added": "Número de sorteios adicionados",
-    "there_are_no_sweepstakes": "Não há sorteios"
+    "there_are_no_sweepstakes": "Não há sorteios",
+    "result_not_found": "Resultado não encontrado",
+    "error": "Error"
   },
   "error": {
     "passwords_not_match": "Senhas não coincidem",
     "there_is_already_a_draw_at_this_time": "Já existe sorteio nesse horário!",
     "minimum_break_is_10_minutes": "Mínimo intervalo é de 10 minutos!"
-   }
+  },
+  "driver": {
+    "title": "Motoristas",
+    "button": {
+      "title": "Adicionar Motorista"
+    },
+    "table": {
+      "label1": "ID",
+      "label2": "Motorista",
+      "label3": "Crédito/Débito",
+      "label4": "Caminhão",
+      "label5": "Carreta",
+      "label6": "Ações"
+    }
+  },
+  "truck": {
+    "title": "Caminhões",
+    "button": {
+      "title": "Adicionar Caminhão"
+    },
+    "table": {
+      "label1": "Marca",
+      "label2": "Modelo",
+      "label3": "Placa",
+      "label4": "Cor",
+      "label5": "Caminhão/KM",
+      "label6": "Chassi",
+      "label7": "Caminhão/Ano",
+      "label8": "Ações"
+    }
+  },
+  "cart": {
+    "title": "Carretas",
+    "button": {
+      "title": "Adicionar Carretas"
+    },
+    "table": {
+      "label1": "Marca",
+      "label2": "Modelo",
+      "label3": "Placa",
+      "label4": "Cor",
+      "label5": "Tara",
+      "label6": "Carretas/Tipo",
+      "label7": "Chassi",
+      "label8": "Carreta/Ano",
+      "label9": "Ações"
+    }
+  },
+  "report": {
+    "title": "Relatórios",
+    "button": {
+      "title": "Emitir Relatório"
+    }
+  },
+  "check": {
+    "title": "Check List",
+    "button": {
+      "title": "Adicionar modelo Check List"
+    }
+  },
+  "info_financial": {
+    "driver": "Motorista",
+    "startDate": "Data inicio",
+    "endDate": "Data final",
+    "destiny": "Destino",
+    "credit": "Crédito",
+    "invoicing": "Faturamento",
+    "notifications": "Notificações",
+    "notFoundNotifications": "NÃO HÁ NOTIFICAÇÔES...",
+    "button": { "finalize_form": "Finalizar Ficha" },
+    "table": {
+      "status": "Status",
+      "current_location": "Local atual",
+      "creation_date": "Data de criação",
+      "gross_value": "Valor bruto"
+    }
+  }
 }

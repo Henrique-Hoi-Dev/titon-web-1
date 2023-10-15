@@ -3,7 +3,6 @@ import { useMediaQuery } from 'react-responsive'
 import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable'
 import { formatDate } from 'utils/formatDate'
 import { status } from 'utils/status'
-import { Opacity } from '@mui/icons-material'
 
 const InfoRow = (props) => {
   const { data, index, setCheckId, setShowModalAction } = props

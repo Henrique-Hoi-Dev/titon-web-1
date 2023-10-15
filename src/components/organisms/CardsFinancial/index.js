@@ -3,7 +3,6 @@ import { Box, Grid } from '@mui/material'
 import { useGet } from 'services/requests/useGet'
 import { useState } from 'react'
 import { TablePagination } from 'components/atoms/tablePagination/tablePagination'
-import { ModalInfoFinancial } from '../ModalInfoFinancial'
 import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router-dom'
 
@@ -21,9 +20,6 @@ const Cards = ({
   setShowModalFicha
 }) => {
   const navigate = useNavigate()
-
-  const [showModal, setShowModal] = useState(false)
-  const [financialId, setFinancialId] = useState('')
 
   const isDesktop = useMediaQuery({ minWidth: '2000px' })
 
@@ -93,13 +89,7 @@ const Cards = ({
             <CardInfoValues
               key={financial?.id}
               props={financial}
-              onClick={() =>
-                navigate(`/home/info-financial/${financial?.id}`) ||
-                setFinancialId({
-                  id: financial?.id,
-                  truck_board: financial?.truck_board
-                })
-              }
+              onClick={() => navigate(`/home/info-financial/${financial?.id}`)}
             />
           ))}
         </Box>

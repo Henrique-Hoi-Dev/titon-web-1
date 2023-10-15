@@ -11,7 +11,7 @@ import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseConten
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
 
 export const Report = () => {
-  const [showModalReport, setShowModalReport] = useState(false)
+  const [, setShowModalReport] = useState(false)
   const { t } = useTranslation()
 
   const INITIAL_STATE_FINANCIAL = {

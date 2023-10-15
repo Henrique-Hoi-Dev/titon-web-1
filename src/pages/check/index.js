@@ -9,8 +9,8 @@ import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
 import BaseButton from 'components/atoms/BaseButton/BaseButton'
 
 export const Check = () => {
-  const [showModalChck, setShowModalCheck] = useState()
-  const [checkQuery, setCheckQuery] = useState()
+  const [, setShowModalCheck] = useState()
+  const [, setCheckQuery] = useState()
   const [search, setSearch] = useState('')
   const { t } = useTranslation()
 

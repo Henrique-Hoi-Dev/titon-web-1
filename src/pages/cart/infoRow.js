@@ -1,15 +1,8 @@
 import React, { useState } from 'react'
-import { Box, Collapse, IconButton, Menu, MenuItem } from '@mui/material'
+import { IconButton, Menu, MenuItem } from '@mui/material'
 import { useMediaQuery } from 'react-responsive'
-import { moneyMask } from 'utils/masks'
 import { ArrowDownIcon, ArrowUpIcon, IconActions } from 'assets/icons/icons'
-import {
-  SCell,
-  SRow,
-  STable,
-  STableBody,
-  SCellTwoHead
-} from 'components/atoms/BaseTable/BaseTable'
+import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable'
 
 const InfoRow = (props) => {
   const { data, index, setShowModalDelete, setShowModalUpdate, setCartId } =

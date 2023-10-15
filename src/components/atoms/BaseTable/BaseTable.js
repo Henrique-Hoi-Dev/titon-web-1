@@ -121,7 +121,7 @@ export const SCellTwoHead = styled(TableCell)(
   })
 )
 
-export const STableBody = styled(TableBody)(({}) => ({
+export const STableBody = styled(TableBody)(({ border }) => ({
   border: `0.5px solid #545454`,
   backgroundColor: `#3A3A3A`
 }))

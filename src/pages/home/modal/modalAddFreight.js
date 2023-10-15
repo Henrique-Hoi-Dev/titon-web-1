@@ -27,11 +27,11 @@ export const ModalAddFreight = ({
 
   const [localityUf, setLocalityUf] = useState([])
 
-  const [match, setMatch] = useState([])
+  const [, setMatch] = useState([])
   const [leavingFor, setLeavingFor] = useState([])
   const [forState, setForState] = useState([])
 
-  const [matchUF, setMatchUF] = useState('')
+  const [matchUF] = useState('')
   const [leavingForUF, setLeavingForUF] = useState('')
   const [forStateUF, setForStateUF] = useState('')
 

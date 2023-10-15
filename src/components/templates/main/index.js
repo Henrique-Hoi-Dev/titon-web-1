@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux'
 import { createContext, useState } from 'react'
 
 import Theme from 'theme/theme'
-import HeaderBar from 'components/organisms/headerBar'
-import Menu from 'components/organisms/menu'
-import Content from 'components/organisms/content'
+import HeaderBar from 'components/organisms/headerBar/headerBar'
+import Menu from 'components/organisms/menu/menu'
+import Content from 'components/organisms/content/content'
 
 export const templateContext = createContext({})
 

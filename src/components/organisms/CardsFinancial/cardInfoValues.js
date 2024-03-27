@@ -144,7 +144,7 @@ const CardInfoValues = ({ props, styles, onClick }) => {
             <Text fontSize={'16px'}>
               Crédito:{' '}
               <Text fontSize={'16px'}>
-                {moneyMask(props?.driver.credit || [0])}
+                {moneyMask(props?.driver?.credit || [0])}
               </Text>
             </Text>
             <Text>

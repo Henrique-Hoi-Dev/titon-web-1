@@ -1,14 +1,15 @@
 import * as React from 'react'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import Typography from '@mui/material/Typography'
-import Text from '../../atoms/BaseText/BaseText'
-
 import { moneyMask } from 'utils/masks'
 import { CardMedia, Grid } from '@mui/material'
 import { IconMenuTruck } from 'assets/icons/icons'
 import { formatDate } from 'utils/formatDate'
 import { status } from 'utils/status'
+
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
+
+import Text from '../../../components/atoms/BaseText/BaseText'
 
 const CardInfoValues = ({ props, styles, onClick }) => {
   const getStatus = (res) => {

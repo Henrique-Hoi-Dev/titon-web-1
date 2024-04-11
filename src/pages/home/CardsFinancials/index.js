@@ -7,18 +7,12 @@ import { useMediaQuery } from 'react-responsive'
 import { useNavigate } from 'react-router-dom'
 
 import imgNotFound from '../../../assets/NotFound.png'
-import CardInfoValues from 'components/organisms/CardsFinancial/cardInfoValues'
-import Loading from 'components/atoms/loading/loading'
 import Text from 'components/atoms/BaseText/BaseText'
-import ModalAddFinancial from 'pages/home/modal/modalAddFinancial'
+import Loading from 'components/atoms/loading/loading'
 
-const Cards = ({
-  search,
-  searchOrder,
-  searchStatus,
-  showModalFicha,
-  setShowModalFicha
-}) => {
+import CardInfoValues from './cardInfoValues'
+
+const CardsFinancials = ({ search, searchOrder, searchStatus }) => {
   const navigate = useNavigate()
 
   const isDesktop = useMediaQuery({ minWidth: '2000px' })
@@ -40,8 +34,7 @@ const Cards = ({
   const {
     data: financial,
     loading,
-    isValidating,
-    mutate
+    isValidating
   } = useGet('financialStatements', financialQuery)
 
   useEffect(() => {
@@ -146,14 +139,8 @@ const Cards = ({
             />
           </Grid>
         )}
-
-      <ModalAddFinancial
-        mutate={mutate}
-        showModal={showModalFicha}
-        setShowModal={setShowModalFicha}
-      />
     </Grid>
   )
 }
 
-export default Cards
+export default CardsFinancials

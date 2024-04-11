@@ -53,15 +53,7 @@ const Driver = () => {
       justifyContent="center"
       alignContent={'flex-start'}
     >
-      <Grid
-        item
-        container
-        pl={2}
-        pb={7}
-        mr={4}
-        mt={-6.5}
-        justifyContent={'flex-end'}
-      >
+      <Grid item container pl={2} mr={4} justifyContent={'flex-end'}>
         <BaseButton
           onClick={() => setShowModalDriver(true)}
           background={

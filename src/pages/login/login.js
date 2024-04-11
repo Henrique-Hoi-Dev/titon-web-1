@@ -98,7 +98,7 @@ const Login = () => {
             >
               <img src={logo} alt="img" />
             </Text>
-            <Text
+            {/* <Text
               fontSize={'14px'}
               sx={{
                 width: '360px',
@@ -112,7 +112,7 @@ const Login = () => {
             >
               Agora insira as informações da sua empresa e já tenha acesso ao
               melhor gerenciador de frotda.
-            </Text>
+            </Text> */}
 
             <Grid
               container

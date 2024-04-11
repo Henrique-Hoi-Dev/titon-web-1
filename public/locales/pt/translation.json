@@ -1,5 +1,9 @@
 {
   "menu": {
+    "home": "Home",
+    "drivers": "Motoristas",
+    "trucks": "Caminhões",
+    "carts": "Carretas",
     "users": "Usuários",
     "user": "Usuarios",
     "manager": "Gerente",
@@ -8,6 +12,7 @@
     "withdraws": "Saques",
     "scratch_games": "Raspadinhas",
     "reports": "Relatórios",
+    "check": "Checklist",
     "pix": "Pix",
     "scheduled_draw": "Sorteio Programado",
     "historic": "Histórico",

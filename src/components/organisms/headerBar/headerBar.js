@@ -4,16 +4,17 @@ import { IconNotifications, PointIcon } from 'assets/icons/icons'
 import { formatDistance, parseISO } from 'date-fns'
 import { useSelector } from 'react-redux'
 import { api } from 'services/api'
-import { useMediaQuery } from 'react-responsive'
+// import { useMediaQuery } from 'react-responsive'
 
 import Text from 'components/atoms/BaseText/BaseText'
 import pt from 'date-fns/locale/pt'
-import ModalCheck from 'pages/home/modal/modalCheck'
+import ModalCheck from 'pages/home/modalCheck'
+import logo from '../../../assets/logo.png'
 
 const HeaderBar = ({ setFetch, fetch }) => {
   const user = useSelector((state) => state?.user)
 
-  const isDesktopBig = useMediaQuery({ maxWidth: '1600px' })
+  // const isDesktopBig = useMediaQuery({ maxWidth: '1600px' })
 
   const [anchorElTwo, setAnchorElTwo] = useState(false)
   const [showModalCheck, setShowModalCheck] = useState(false)
@@ -99,12 +100,15 @@ const HeaderBar = ({ setFetch, fetch }) => {
       <Grid
         item
         container
-        xs={2}
-        md={isDesktopBig ? 3 : 2}
+        xs={12}
+        md={12}
+        pl={4}
         sx={{
-          position: 'sticky',
-          backgroundColor: 'inherit',
-          height: '64px'
+          position: 'fixed',
+          background: '#1C1C1C',
+          width: '100%',
+          height: '64px',
+          zIndex: 10
         }}
         alignItems="center"
         justifyContent={'flex-end'}
@@ -112,17 +116,21 @@ const HeaderBar = ({ setFetch, fetch }) => {
         <Grid
           item
           container
-          xs={1}
-          md={1}
           flexWrap="nowrap"
-          flexDirection={'row'}
           alignItems="center"
-          justifyContent={'flex-end'}
+          justifyContent={'flex-start'}
         >
+          <img
+            width={'200px'}
+            height={'30px'}
+            src={logo}
+            alt="img"
+            style={{ marginRight: '40px' }}
+          />
+
           <IconButton
             color="error"
             fontSize="12px"
-            sx={{ mt: 4 }}
             onClick={(ev) => handleClickTwo(ev)}
           >
             <Badge badgeContent={notifications.length} color="info">

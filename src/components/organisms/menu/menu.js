@@ -1,18 +1,12 @@
 import React, { useContext, useEffect } from 'react'
-import {
-  Avatar,
-  Grid,
-  IconButton,
-  List,
-  ListItemText,
-  Tooltip
-} from '@mui/material'
+import { Avatar, IconButton, List, ListItemText, Tooltip } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { signOut } from '../../../store/modules/auth/actions'
 import { templateContext } from 'components/templates/main'
 import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import { FiLogOut } from 'react-icons/fi'
+import { useTranslation } from 'react-i18next'
 import {
   Drawer,
   ListItemCategory,
@@ -28,17 +22,14 @@ import {
   IconMenuHome,
   IconMenuTruck,
   IconMenuUser,
-  IconMenuFile,
-  IconMenuTrailer,
-  IconMenuTaskAltIcon
+  IconMenuTrailer
 } from 'assets/icons/icons'
-
-import logo from '../../../assets/logo.png'
 
 const Menu = ({ setFetch }) => {
   const user = useSelector((state) => state?.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const handleLogOut = () => {
     dispatch(signOut())
@@ -59,25 +50,7 @@ const Menu = ({ setFetch }) => {
 
   return (
     <Drawer variant="permanent" open={openMenu}>
-      <DrawerHeader>
-        <Grid
-          item
-          container
-          alignItems={'center'}
-          mt={2.5}
-          sx={{
-            display: `${!openMenu && 'none'}`
-          }}
-        >
-          <img
-            width={'200px'}
-            height={'30px'}
-            src={logo}
-            alt="img"
-            style={{ marginRight: '-15px' }}
-          />
-        </Grid>
-      </DrawerHeader>
+      <DrawerHeader></DrawerHeader>
       <List sx={{ marginTop: '20px', border: 'none' }}>
         <ListItemCategory onClick={() => navigate('/home') || setFetch(true)}>
           <ButtonMenu
@@ -99,7 +72,7 @@ const Menu = ({ setFetch }) => {
                 marginTop: '10px'
               }}
             >
-              Home
+              {t('menu.home')}
             </ListItemText>
           </ButtonMenu>
         </ListItemCategory>
@@ -124,7 +97,7 @@ const Menu = ({ setFetch }) => {
                 marginTop: '10px'
               }}
             >
-              Motoristas
+              {t('menu.drivers')}
             </ListItemText>
           </ButtonMenu>
         </ListItemCategory>
@@ -152,7 +125,7 @@ const Menu = ({ setFetch }) => {
                 marginTop: '10px'
               }}
             >
-              Caminhões
+              {t('menu.trucks')}
             </ListItemText>
           </ButtonMenu>
         </ListItemCategory>
@@ -180,12 +153,13 @@ const Menu = ({ setFetch }) => {
                 marginTop: '10px'
               }}
             >
-              Carretas
+              {t('menu.carts')}
             </ListItemText>
           </ButtonMenu>
         </ListItemCategory>
 
-        <ListItemCategory onClick={() => navigate('/report')}>
+        {/* menus desativados até  */}
+        {/* <ListItemCategory onClick={() => navigate('/report')}>
           <ButtonMenu
             sx={{
               justifyContent: openMenu ? 'initial' : 'center',
@@ -206,7 +180,7 @@ const Menu = ({ setFetch }) => {
                 fontWeight: '400!important'
               }}
             >
-              Relatórios
+              {t('menu.reports')}
             </ListItemText>
           </ButtonMenu>
         </ListItemCategory>
@@ -236,10 +210,10 @@ const Menu = ({ setFetch }) => {
                 marginTop: '10px'
               }}
             >
-              Checklist
+              {t('menu.check')}
             </ListItemText>
           </ButtonMenu>
-        </ListItemCategory>
+        </ListItemCategory> */}
       </List>
 
       <ListSub>
@@ -259,7 +233,7 @@ const Menu = ({ setFetch }) => {
             </IconMenuCategory>
 
             <ListText sx={{ opacity: openMenu ? 1 : 0 }}>
-              {user?.data?.userProps?.name}
+              {user?.data?.userProps?.name ?? 'user'}
             </ListText>
           </ButtonMenu>
 

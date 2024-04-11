@@ -20,8 +20,9 @@ const Content = () => {
         }}
         p={'10px'}
         ml={`${openMenu ? '280px' : '20px'}`}
+        mt={10}
         width={`${openMenu ? 'calc(100% - 285px)' : 'calc(100% - 100px)'}`}
-        height={'calc(100vh - 66px)'}
+        minHeight="88vh"
         component={Paper}
         alignContent={'center'}
         justifyContent={'center'}

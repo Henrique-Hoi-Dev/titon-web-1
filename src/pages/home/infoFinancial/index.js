@@ -13,18 +13,19 @@ import { moneyMask } from 'utils/masks'
 import { IconMenuTruck } from 'assets/icons/icons'
 import { formatDate } from 'utils/formatDate'
 import { HiOutlinePlusSm } from 'react-icons/hi'
-import { ModalFinalizeRecord } from '../modal/modalFinalizeRecord'
-import { ModalAddFreight } from '../modal/modalAddFreight'
+import { ModalFinalizeRecord } from '../modalFinalizeRecord'
+import { ModalAddFreight } from '../modalAddFreight'
 import { status } from 'utils/status'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-import Table from './table'
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
 import Text from 'components/atoms/BaseText/BaseText'
 import Button from 'components/atoms/BaseButton/BaseButton'
 import imgNotFound from '../../../assets/NotFound.png'
+
+import Table from './table'
 
 export const InfoFinancial = ({ financialId }) => {
   const INITIAL_STATE_USER = {

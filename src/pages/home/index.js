@@ -4,10 +4,12 @@ import { IconAdd } from 'assets/icons/icons'
 import { InputSearches } from 'components/atoms/input/inputSearches/input'
 import { useTranslation } from 'react-i18next'
 
-import CardsFinancial from '../../components/organisms/CardsFinancial'
 import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import SubMenuFilter from 'pages/home/subMenuFilter'
 import Graphic from 'components/molecules/graphic/graphic'
+
+import SubMenuFilter from './subMenuFilter'
+import CardsFinancial from './CardsFinancials'
+import ModalAddFinancial from './modalAddFinancial'
 
 const Home = () => {
   const [showModalFicha, setShowModalFicha] = useState(false)
@@ -27,14 +29,7 @@ const Home = () => {
         spacing={2}
         alignContent={'flex-start'}
       >
-        <Grid
-          item
-          container
-          pl={2}
-          mr={4}
-          mt={-6.5}
-          justifyContent={'flex-end'}
-        >
+        <Grid item container pl={2} mr={4} justifyContent={'flex-end'}>
           <Grid
             item
             container
@@ -85,6 +80,7 @@ const Home = () => {
           </Grid>
         </Grid>
 
+        {/* cards das fichas dos caminhao */}
         <Grid
           item
           container
@@ -99,14 +95,19 @@ const Home = () => {
             search={search}
             searchOrder={searchOrder}
             searchStatus={searchStatus}
-            setShowModalFicha={setShowModalFicha}
-            showModalFicha={showModalFicha}
           />
         </Grid>
+
+        {/* modulo grafico  */}
         <Grid item container height={'430px'}>
           <Graphic />
         </Grid>
       </Grid>
+
+      <ModalAddFinancial
+        showModal={showModalFicha}
+        setShowModal={setShowModalFicha}
+      />
     </>
   )
 }

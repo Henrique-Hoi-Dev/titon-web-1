@@ -29,7 +29,7 @@ const Home = () => {
         spacing={2}
         alignContent={'flex-start'}
       >
-        <Grid item container pl={2} mr={4} justifyContent={'flex-end'}>
+        <Grid item container pl={2} mr={4} justifyContent={'space-between'}>
           <Grid
             item
             container

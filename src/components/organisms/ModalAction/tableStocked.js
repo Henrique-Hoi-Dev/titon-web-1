@@ -21,7 +21,13 @@ export const TableStocked = ({ data, isFetching, mutate, error, loading }) => {
 
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer
+        component={Paper}
+        sx={{
+          background: '#3A3A3A',
+          borderRadius: '16px'
+        }}
+      >
         <STable>
           <SHead>
             <SRow alternatingcolors={0}>

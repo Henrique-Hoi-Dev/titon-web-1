@@ -82,7 +82,7 @@ const CardsFinancials = ({ search, searchOrder, searchStatus }) => {
             <CardInfoValues
               key={financial?.id}
               props={financial}
-              onClick={() => navigate(`/home/info-financial/${financial?.id}`)}
+              onClick={() => navigate(`/info-financial/${financial?.id}`)}
             />
           ))}
         </Box>

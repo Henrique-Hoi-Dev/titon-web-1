@@ -8,13 +8,13 @@ import {
   STable,
   STableBody
 } from 'components/atoms/BaseTable/BaseTable'
-import { ModalAction } from '../../../components/organisms/ModalAction'
+import { ModalAction } from '../../components/organisms/ModalAction'
 import { useTranslation } from 'react-i18next'
 
 import InfoRow from './infoRow'
 import Text from 'components/atoms/BaseText/BaseText'
 import Loading from 'components/atoms/loading/loading'
-import imgNotFound from '../../../assets/NotFound.png'
+import imgNotFound from '../../assets/NotFound.png'
 
 const Table = ({ data, isFetching, mutate, error, loading }) => {
   const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' })

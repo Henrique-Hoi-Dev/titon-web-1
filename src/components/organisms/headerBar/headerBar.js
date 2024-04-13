@@ -4,17 +4,14 @@ import { IconNotifications, PointIcon } from 'assets/icons/icons'
 import { formatDistance, parseISO } from 'date-fns'
 import { useSelector } from 'react-redux'
 import { api } from 'services/api'
-// import { useMediaQuery } from 'react-responsive'
 
 import Text from 'components/atoms/BaseText/BaseText'
 import pt from 'date-fns/locale/pt'
-import ModalCheck from 'pages/home/modalCheck'
+import ModalCheck from 'components/organisms/headerBar/modalCheck'
 import logo from '../../../assets/logo.png'
 
 const HeaderBar = ({ setFetch, fetch }) => {
   const user = useSelector((state) => state?.user)
-
-  // const isDesktopBig = useMediaQuery({ maxWidth: '1600px' })
 
   const [anchorElTwo, setAnchorElTwo] = useState(false)
   const [showModalCheck, setShowModalCheck] = useState(false)
@@ -22,7 +19,7 @@ const HeaderBar = ({ setFetch, fetch }) => {
   const [checkId, setCheckId] = useState('')
 
   const [notifications, setNotifications] = useState([])
-  const [history, setHistory] = useState([])
+  const [, setHistory] = useState([])
 
   useEffect(() => {
     async function loadNotifications() {
@@ -90,10 +87,10 @@ const HeaderBar = ({ setFetch, fetch }) => {
     setAnchorElTwo(false)
   }
 
-  const handleCheck = (freightId, driverId) => {
-    setCheckId({ freightId: freightId, driverId: driverId })
-    setShowModalCheck(!showModalCheck)
-  }
+  // const handleCheck = (freightId, driverId) => {
+  //   setCheckId({ freightId: freightId, driverId: driverId })
+  //   setShowModalCheck(!showModalCheck)
+  // }
 
   return (
     <>
@@ -151,9 +148,10 @@ const HeaderBar = ({ setFetch, fetch }) => {
               filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
               mt: 1.5,
               marginTop: '0px!important',
-              marginLeft: '-50px!important',
+              marginLeft: '-25px!important',
               maxHeight: '345px',
               overflow: 'scroll',
+              width: '560px',
               '& .MuiAvatar-root': {
                 width: 52,
                 height: 32,
@@ -201,7 +199,7 @@ const HeaderBar = ({ setFetch, fetch }) => {
                   sx={{
                     cursor: 'pointer',
                     fontWeight: '900',
-                    maxWidth: '380px'
+                    maxWidth: '500px'
                   }}
                 >
                   {res?.content}
@@ -220,7 +218,8 @@ const HeaderBar = ({ setFetch, fetch }) => {
               </Grid>
             </Grid>
           ))}
-          {history.length > 0 &&
+
+          {/* {history.length > 0 &&
             history.map((res) => (
               <Grid
                 item
@@ -264,13 +263,14 @@ const HeaderBar = ({ setFetch, fetch }) => {
                   <PointIcon color={`${res.read === true && '#86878A'}`} />
                 </Grid>
               </Grid>
-            ))}
-          {notifications?.length === 0 && history?.length === 0 && (
+            ))} */}
+
+          {notifications?.length === 0 && (
             <Grid
-              item
+              container
               justifyContent="center"
               alignItems="center"
-              pt={5}
+              p={5}
               padding={'12px'}
             >
               <Text fontSize={'18px'} center>

@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import { Report } from 'pages/report'
 import { Truck } from 'pages/truck'
 import { Check } from 'pages/check'
-import { InfoFinancial } from 'pages/home/infoFinancial'
+import { InfoFinancial } from 'pages/infoFinancial'
 
 import MainTemplate from 'components/templates/main'
 import RequireAuth from 'utils/requireAuth'
@@ -24,7 +24,7 @@ const RouterController = () => {
         <Route element={<MainTemplate />}>
           <Route path="/" element={initialPage()} />
           <Route path="/home" element={<Home />} />
-          <Route path="/home/info-financial/:id" element={<InfoFinancial />} />
+          <Route path="/info-financial/:id" element={<InfoFinancial />} />
           <Route path="/driver" element={<Driver />} />
           <Route path="/user" element={<User />} />
           <Route path="/truck" element={<Truck />} />

@@ -85,6 +85,7 @@ export const SHead = styled(TableHead)(
     tableLayout: `${tableLayout}`,
     display: `${displaywidth ? 'none' : ''}`,
     fontSize: 18,
+    height: '70px',
     backgroundColor: `${backgroundcolor ? backgroundcolor : '#545454'}`,
     '&.MuiTableCell-root': {
       color: `${color ? 'black' : '#939395'}`,

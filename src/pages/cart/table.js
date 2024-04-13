@@ -170,10 +170,10 @@ const Table = ({
 
         {data?.dataResult?.length === 0 && !isFetching && (
           <Grid
-            item
+            container
             justifyContent="center"
             alignItems="center"
-            pt={5}
+            p={5}
             sx={{ background: '#3A3A3A' }}
           >
             <Text fontSize={'28px'} center color={'#939395'}>
@@ -192,7 +192,7 @@ const Table = ({
         )}
 
         {error && (
-          <Grid item justifyContent="center" alignItems="center" pt={5}>
+          <Grid container justifyContent="center" alignItems="center" p={5}>
             <Text fontSize={'28px'} center>
               {t('messages.unknown_error').toUpperCase()}
             </Text>

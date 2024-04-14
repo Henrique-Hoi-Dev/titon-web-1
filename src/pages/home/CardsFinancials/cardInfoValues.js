@@ -4,6 +4,7 @@ import { CardMedia, Grid } from '@mui/material'
 import { IconMenuTruck } from 'assets/icons/icons'
 import { formatDate } from 'utils/formatDate'
 import { status } from 'utils/status'
+import { useTranslation } from 'react-i18next'
 
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -12,6 +13,8 @@ import Typography from '@mui/material/Typography'
 import Text from '../../../components/atoms/BaseText/BaseText'
 
 const CardInfoValues = ({ props, styles, onClick }) => {
+  const { t } = useTranslation()
+
   const getStatus = (res) => {
     const firstStatus =
       res.find((item) => item.status === 'STARTING_TRIP') ?? ''
@@ -130,26 +133,27 @@ const CardInfoValues = ({ props, styles, onClick }) => {
               </Text>
             </Grid>
             <Text fontSize={'16px'}>
-              Motorista: <Text fontSize={'16px'}>{props?.driver_name}</Text>
+              {t('card_financial.label1')}{' '}
+              <Text fontSize={'16px'}>{props?.driver_name}</Text>
             </Text>
             <Text fontSize={'16px'}>
-              Data de Inicio:{' '}
+              {t('card_financial.label2')}{' '}
               <Text fontSize={'16px'}>{formatDate(props?.start_date)}</Text>
             </Text>
             <Text fontSize={'16px'}>
-              Destino:{' '}
+              {t('card_financial.label3')}{' '}
               <Text fontSize={'16px'}>
                 {props?.freigth[0]?.final_freight_city.toUpperCase()}
               </Text>
             </Text>
             <Text fontSize={'16px'}>
-              Crédito:{' '}
+              {t('card_financial.label4')}{' '}
               <Text fontSize={'16px'}>
                 {moneyMask(props?.driver?.credit || [0])}
               </Text>
             </Text>
             <Text>
-              <IconMenuTruck sx={{ fontSize: '30px', color: '#509BFB' }} />{' '}
+              <IconMenuTruck sx={{ fontSize: '30px', color: '#509BFB' }} />
               <Text fontSize={'18px'} sx={{ verticalAlign: 'super' }}>
                 {props.cart_models.toUpperCase()}
               </Text>

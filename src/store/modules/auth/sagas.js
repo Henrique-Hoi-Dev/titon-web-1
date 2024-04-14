@@ -10,7 +10,6 @@ export function* signIn({ payload }) {
   try {
     const response = yield call(api.post, 'user/signin', payload)
     const { token } = response.data.data
-    console.log("🚀 ~ function*signIn ~ token:", token)
 
     const user = jwt(token)
     api.defaults.headers.Authorization = `Bearer ${token} `
@@ -28,7 +27,6 @@ export function setToken({ payload }) {
   const { token } = payload.auth
 
   if (token) {
-    // api.defaults.headers = `Bearer ${token}`;
     api.defaults.headers.Authorization = `Bearer ${token} `
   }
 }

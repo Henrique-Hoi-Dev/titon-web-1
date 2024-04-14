@@ -14,6 +14,7 @@ import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHea
 import Title from 'components/atoms/BaseTitle/BaseTitle'
 import Autocomplete from 'components/atoms/BaseAutocomplete/BaseAutocomplete'
 import PickerDate from 'components/atoms/pickerDate/pickerDate'
+import BaseText from 'components/atoms/BaseText/BaseText'
 
 const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
   const { t } = useTranslation()
@@ -97,7 +98,7 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
         <Title
           sx={{ fontFamily: 'Poppins, sans-serif!important', fontSize: '32px' }}
         >
-          Nova Ficha
+          {t('financial.new_financial')}
         </Title>
       </ContentHeader>
 
@@ -117,7 +118,7 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
                   height: '0.4em!important'
                 }
               }}
-              placeholder={'Motorista'}
+              placeholder={t('placeholder.driver')}
               options={drivers?.dataResult ?? []}
               getOptionLabel={(option) => option.name}
               onChange={(event, newValue) => {
@@ -133,7 +134,7 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
                   height: '0.4em!important'
                 }
               }}
-              placeholder={'Caminhão'}
+              placeholder={t('placeholder.truck')}
               options={trucks?.dataResult ?? []}
               getOptionLabel={(option) => option.truck_models}
               onChange={(event, newValue) => {
@@ -143,13 +144,14 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
           </Grid>
 
           <Grid item xs={12} md={12} lg={12}>
+            <BaseText>{} </BaseText>
             <Autocomplete
               sx={{
                 '& .MuiAutocomplete-input': {
                   height: '0.4em!important'
                 }
               }}
-              placeholder={'Carreta'}
+              placeholder={t('placeholder.cart')}
               options={carts?.dataResult ?? []}
               getOptionLabel={(option) => option.cart_models}
               onChange={(event, newValue) => {
@@ -181,7 +183,7 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
                 }}
                 variant="text"
               >
-                Voltar
+                {t('button.return')}
               </Button>
             </Grid>
             <Grid container item xs={12} md={12} lg={6}>
@@ -192,7 +194,7 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
                 }
                 sx={{ width: '140px', height: '49px' }}
               >
-                Confirmar
+                {t('button.confirm')}
               </Button>
             </Grid>
           </Grid>

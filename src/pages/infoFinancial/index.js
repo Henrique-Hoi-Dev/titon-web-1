@@ -18,14 +18,15 @@ import { ModalAddFreight } from './modalAddFreight'
 import { status } from 'utils/status'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { BaseNotFount } from 'components/molecules/BaseNotFound/BaseNotFound'
 
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
 import Text from 'components/atoms/BaseText/BaseText'
 import Button from 'components/atoms/BaseButton/BaseButton'
-import imgNotFound from '../../assets/NotFound.png'
 
 import Table from './table'
+import ModalCheck from 'components/organisms/ModalCheck'
 
 export const InfoFinancial = ({ financialId }) => {
   const INITIAL_STATE_USER = {
@@ -38,9 +39,11 @@ export const InfoFinancial = ({ financialId }) => {
   const { t } = useTranslation()
 
   const [userQuery, setUserQuery] = useState(INITIAL_STATE_USER)
+  const [checkId, setCheckId] = useState('')
 
   const [showModalFinalizeRecord, setShowModalFinalizeRecord] = useState(false)
   const [showModalAddFreight, setShowModalAddFreight] = useState(false)
+  const [showModalCheck, setShowModalCheck] = useState(false)
 
   const {
     data: financial,
@@ -90,6 +93,11 @@ export const InfoFinancial = ({ financialId }) => {
     } else {
       return ''
     }
+  }
+
+  const handleCheck = (freightId, driverId) => {
+    setCheckId({ freightId: freightId, driverId: driverId })
+    setShowModalCheck(!showModalCheck)
   }
 
   return (
@@ -291,21 +299,19 @@ export const InfoFinancial = ({ financialId }) => {
               }}
             >
               {financial?.dataResult?.notifications.length === 0 && (
-                <Text fontSize={'28px'} center>
-                  {t('info_financial.notFoundNotifications')}{' '}
-                  <img
-                    src={imgNotFound}
-                    alt="img"
-                    width={'60px'}
-                    style={{
-                      verticalAlign: 'middle',
-                      marginLeft: '20px'
-                    }}
-                  />
-                </Text>
+                <BaseNotFount />
               )}
+
               {financial?.dataResult?.notifications?.map((item) => (
-                <React.Fragment key={item?.id}>
+                <Grid
+                  container
+                  justifyContent={'space-between'}
+                  onClick={() => handleCheck(item?.freight_id, item?.driver_id)}
+                  key={item?.id}
+                  sx={{
+                    cursor: 'pointer'
+                  }}
+                >
                   <Text sx={{ maxWidth: '690px' }}>{item?.content}</Text>{' '}
                   <Text>{formatDate(item?.createdAt)}</Text>
                   <Divider
@@ -317,7 +323,7 @@ export const InfoFinancial = ({ financialId }) => {
                       background: '#2B2B2C'
                     }}
                   />
-                </React.Fragment>
+                </Grid>
               ))}
             </Grid>
 
@@ -383,6 +389,15 @@ export const InfoFinancial = ({ financialId }) => {
           props={financial}
           setShowModal={setShowModalFinalizeRecord}
           showModal={showModalFinalizeRecord}
+        />
+      )}
+
+      {showModalCheck && (
+        <ModalCheck
+          checkId={checkId}
+          showModal={showModalCheck}
+          setShowModal={setShowModalCheck}
+          mutate={mutate}
         />
       )}
     </>

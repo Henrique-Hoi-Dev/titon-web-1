@@ -54,6 +54,7 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
   useEffect(() => {
     if (data) {
       onClose()
+      mutate()
       successNotification(data?.success?.responseData?.msg)
     } else if (error?.response?.data?.httpStatus === 400) {
       errorNotification(error?.response?.data?.responseData?.msg)

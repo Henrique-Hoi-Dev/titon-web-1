@@ -15,7 +15,7 @@ const BaseModal = ({
   children,
   component,
   onSubmit,
-  showCloseIcon,
+  showCloseIcon = true,
   height,
   maxWidth,
   maxHeight,

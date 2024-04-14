@@ -8,14 +8,13 @@ import {
   STable,
   STableBody
 } from 'components/atoms/BaseTable/BaseTable'
+import { BaseError } from 'components/molecules/BaseError/BaseError'
+import { BaseNotFount } from 'components/molecules/BaseNotFound/BaseNotFound'
 
 import RowStocked from './rowStocked'
-import Text from 'components/atoms/BaseText/BaseText'
 import Loading from 'components/atoms/loading/loading'
-import imgNotFound from '../../../assets/trist-not-found-table.svg'
 
 export const TableStocked = ({ data, isFetching, mutate, error, loading }) => {
-  // const isDesktop = useMediaQuery({ maxWidth: "1400px" });
   const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' })
   const isMobile = useMediaQuery({ maxWidth: '730px' })
 
@@ -72,41 +71,10 @@ export const TableStocked = ({ data, isFetching, mutate, error, loading }) => {
           justifyContent="center"
         >
           {data?.dataResult?.restock?.length === 0 && !isFetching && (
-            <Grid
-              container
-              item
-              justifyContent="center"
-              alignItems="center"
-              pt={5}
-            >
-              <Text fontSize={'28px'} center>
-                RESULTADO NÃO ENCONTRADO...{' '}
-                <img
-                  src={imgNotFound}
-                  alt="img"
-                  width={'30px'}
-                  style={{
-                    verticalAlign: 'unset',
-                    marginLeft: '20px'
-                  }}
-                />
-              </Text>
-            </Grid>
+            <BaseNotFount />
           )}
 
-          {error && (
-            <Grid
-              container
-              item
-              justifyContent="center"
-              alignItems="center"
-              pt={5}
-            >
-              <Text fontSize={'28px'} center>
-                ERRO
-              </Text>
-            </Grid>
-          )}
+          {error && <BaseError />}
         </Grid>
       </TableContainer>
     </>

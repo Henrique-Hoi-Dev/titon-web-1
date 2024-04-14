@@ -1,17 +1,15 @@
 import * as React from 'react'
 import Paper from '@mui/material/Paper'
-import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import Text from 'components/atoms/BaseText/BaseText'
-import imgNotFound from '../../assets/trist-not-found-table.svg'
 import TableRow from '@mui/material/TableRow'
 
-import { Grid, TablePagination } from '@mui/material'
+import { TablePagination } from '@mui/material'
 import { formatDate } from '../../utils/formatDate'
 import { moneyMask } from 'utils/masks'
+import { BaseNotFount } from 'components/molecules/BaseNotFound/BaseNotFound'
+import { SHead, SRow, STable } from 'components/atoms/BaseTable/BaseTable'
 
 const columns = [
   { id: 'typeTransactions', label: 'Motivo', minWidth: 170 },
@@ -53,25 +51,34 @@ export default function TableBankStatement({ data }) {
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440, height: 370 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
+      <TableContainer
+        sx={{
+          maxHeight: 440,
+          height: 370,
+          background: '#3A3A3A',
+          boxShadow: 'none!important',
+          borderRadius: '16px'
+        }}
+      >
+        <STable stickyHeader aria-label="sticky table">
+          <SHead>
+            <SRow>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
                   style={{
                     minWidth: column.minWidth,
-                    background: '#CCD6EB',
-                    fontWeight: 600
+                    fontWeight: 600,
+                    background: '#3A3A3A',
+                    color: '#939395'
                   }}
                 >
                   {column.label}
                 </TableCell>
               ))}
-            </TableRow>
-          </TableHead>
+            </SRow>
+          </SHead>
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -98,34 +105,11 @@ export default function TableBankStatement({ data }) {
                 )
               })}
           </TableBody>
-        </Table>
+        </STable>
 
-        {rows?.length === 0 && (
-          <Grid
-            container
-            item
-            xs={12}
-            md={12}
-            lg={12}
-            justifyContent={'center'}
-            alignItems={'center'}
-            height={'300px'}
-          >
-            <Text fontSize={'28px'} center>
-              {'RESULTADO NÃO ENCONTRADO...'}
-              <img
-                src={imgNotFound}
-                alt="img"
-                width={'40px'}
-                style={{
-                  verticalAlign: 'bottom',
-                  marginLeft: '24px'
-                }}
-              />
-            </Text>
-          </Grid>
-        )}
+        {rows?.length === 0 && <BaseNotFount />}
       </TableContainer>
+
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"

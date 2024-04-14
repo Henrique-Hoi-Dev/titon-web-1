@@ -293,7 +293,6 @@ export default function TableCheck({
 
           {data?.dataResult?.length === 0 && !isFetching && (
             <Grid
-              item
               container
               justifyContent="center"
               alignItems="center"

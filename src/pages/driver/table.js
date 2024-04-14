@@ -11,10 +11,10 @@ import {
   STableBody,
   SLabel
 } from 'components/atoms/BaseTable/BaseTable'
+import { BaseNotFount } from 'components/molecules/BaseNotFound/BaseNotFound'
+import { BaseError } from 'components/molecules/BaseError/BaseError'
 
 import InfoRow from './infoRow'
-import imgNotFound from '../../assets/trist-not-found-table.svg'
-import Text from 'components/atoms/BaseText/BaseText'
 import Loading from 'components/atoms/loading/loading'
 import ModalDeleteDriver from './modalDeleteDriver'
 import ModalUpdateDriver from './modalUpdateDriver'
@@ -146,36 +146,9 @@ const Table = ({
           </Grid>
         )}
 
-        {data?.dataResult?.length === 0 && !isFetching && (
-          <Grid
-            container
-            justifyContent="center"
-            alignItems="center"
-            p={5}
-            sx={{ background: '#3A3A3A' }}
-          >
-            <Text fontSize={'28px'} center color={'#939395'}>
-              {t('messages.result_not_found')}
-              <img
-                src={imgNotFound}
-                alt="img"
-                width={'40px'}
-                style={{
-                  verticalAlign: 'bottom',
-                  marginLeft: '24px'
-                }}
-              />
-            </Text>
-          </Grid>
-        )}
+        {data?.dataResult?.length === 0 && !isFetching && <BaseNotFount />}
 
-        {error && (
-          <Grid container justifyContent="center" alignItems="center" p={5}>
-            <Text fontSize={'28px'} center>
-              {t('messages.unknown_error').toUpperCase()}
-            </Text>
-          </Grid>
-        )}
+        {error && <BaseError />}
       </TableContainer>
 
       {showModalDelete && (

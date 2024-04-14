@@ -7,7 +7,7 @@ import { api } from 'services/api'
 
 import Text from 'components/atoms/BaseText/BaseText'
 import pt from 'date-fns/locale/pt'
-import ModalCheck from 'components/organisms/headerBar/modalCheck'
+import ModalCheck from 'components/organisms/ModalCheck'
 import logo from '../../../assets/logo.png'
 
 const HeaderBar = ({ setFetch, fetch }) => {
@@ -147,6 +147,8 @@ const HeaderBar = ({ setFetch, fetch }) => {
             sx: {
               filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
               mt: 1.5,
+              paddingTop: '15px',
+              paddingLeft: '10px',
               marginTop: '0px!important',
               marginLeft: '-25px!important',
               maxHeight: '345px',
@@ -184,7 +186,7 @@ const HeaderBar = ({ setFetch, fetch }) => {
               flexWrap={'nowrap'}
               alignItems={'center'}
               key={res.id}
-              sx={{ padding: '10px' }}
+              p={'10px'}
             >
               <Grid
                 item
@@ -194,10 +196,12 @@ const HeaderBar = ({ setFetch, fetch }) => {
                 lg={12}
                 flexDirection={'column'}
                 onClick={() => handleMarkAsRead(res?.id)}
+                sx={{
+                  cursor: 'pointer'
+                }}
               >
                 <Text
                   sx={{
-                    cursor: 'pointer',
                     fontWeight: '900',
                     maxWidth: '500px'
                   }}

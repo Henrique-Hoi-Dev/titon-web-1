@@ -9,11 +9,10 @@ import Graphic from 'components/molecules/graphic/graphic'
 
 import SubMenuFilter from './subMenuFilter'
 import CardsFinancial from './CardsFinancials'
-import ModalAddFinancial from './modalAddFinancial'
 
 const Home = () => {
-  const [showModalFicha, setShowModalFicha] = useState(false)
   const { t } = useTranslation()
+  const [showModalFicha, setShowModalFicha] = useState(false)
 
   const [search, setSearch] = useState('')
   const [searchOrder, setSearchOrder] = useState('')
@@ -95,6 +94,8 @@ const Home = () => {
             search={search}
             searchOrder={searchOrder}
             searchStatus={searchStatus}
+            showModalFicha={showModalFicha}
+            setShowModalFicha={setShowModalFicha}
           />
         </Grid>
 
@@ -103,11 +104,6 @@ const Home = () => {
           <Graphic />
         </Grid>
       </Grid>
-
-      <ModalAddFinancial
-        showModal={showModalFicha}
-        setShowModal={setShowModalFicha}
-      />
     </>
   )
 }

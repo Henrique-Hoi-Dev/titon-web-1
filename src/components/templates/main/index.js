@@ -5,7 +5,7 @@ import { createContext, useState } from 'react'
 
 import Theme from 'theme/theme'
 import HeaderBar from 'components/organisms/HeaderBar'
-import Menu from 'components/organisms/Menu'
+import Menu from 'components/organisms/menu/menu'
 import Content from 'components/organisms/content/content'
 
 export const templateContext = createContext({})

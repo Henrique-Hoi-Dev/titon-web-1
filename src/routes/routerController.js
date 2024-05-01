@@ -6,7 +6,8 @@ import { InfoFinancial } from 'pages/infoFinancial'
 
 import MainTemplate from 'components/templates/main'
 import RequireAuth from 'utils/requireAuth'
-import Login from 'pages/login/login'
+import Login from 'pages/login'
+import ForgotPassword from 'pages/forgot-password'
 import Home from 'pages/home'
 import Driver from 'pages/driver'
 import User from 'pages/user'
@@ -20,6 +21,7 @@ const RouterController = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route element={<RequireAuth />}>
         <Route element={<MainTemplate />}>
           <Route path="/" element={initialPage()} />

@@ -29,7 +29,9 @@
     "truck": "Caminhão",
     "email": "E-mail",
     "password": "Senha",
-    "cart": "Carreta"
+    "cart": "Carreta",
+    "forgot_password": "Esqueceu sua senha?",
+    "to_go_back": "Voltar"
   },
   "placeholder": {
     "driver": "Motorista",
@@ -43,6 +45,7 @@
     "search_financial": "Nome e placa"
   },
   "field": {
+    "send": "Enviar",
     "login": "Entrar",
     "actions": "Ações",
     "canceled": "Cancelado",

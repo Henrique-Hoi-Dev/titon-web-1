@@ -10,24 +10,24 @@ import { useTranslation } from 'react-i18next'
 import Button from 'components/atoms/BaseButton/BaseButton'
 import Loading from 'components/atoms/loading/loading'
 import Text from 'components/atoms/BaseText/BaseText'
-import logo from '../../assets/logo.png'
-import bannerLogin from '../../assets/background-login.png'
+import logo from '../assets/logo.png'
+import bannerLogin from '../assets/background-login.png'
 import BaseInput from 'components/molecules/BaseInput/BaseInput'
+import BaseLink from 'components/atoms/BaseLink/BaseLink'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 const INITIAL_STATE = {
   username: null,
   password: null
 }
 
-const Login = () => {
+const ForgotPassword = () => {
   const { t } = useTranslation()
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const [email, setEmail] = useState(null)
-  const [password, setPassword] = useState(null)
-  const [showPassword, setShowPassword] = useState(false)
 
   const [userData, setUserData] = useState(INITIAL_STATE)
 
@@ -53,7 +53,7 @@ const Login = () => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault()
-    dispatch(signInRequest(email, password))
+    dispatch(signInRequest(email))
   }
 
   return (
@@ -65,11 +65,15 @@ const Login = () => {
       flexWrap={'nowrap'}
     >
       <Grid container height="100vh" width={'auto'}>
+        <Grid container m={4} color="#fff" alignItems={'center'} gap={1}>
+          <ArrowBackIcon />
+          <BaseLink label={t('label.to_go_back')} color="#fff" to={'/login'} />
+        </Grid>
         <Paper
           elevation={3}
           sx={{
             boxShadow: 'none',
-            height: '100%',
+            height: '90%',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -106,6 +110,7 @@ const Login = () => {
               direction="column"
               rowSpacing={3}
               p={4}
+              gap={2}
               minWidth="200px"
               maxWidth="400px"
               width="400px"
@@ -120,18 +125,7 @@ const Login = () => {
                   onChange={(ev) => setEmail(ev.target.value)}
                 />
               </Grid>
-              <Grid item>
-                <BaseInput
-                  required
-                  type={showPassword ? 'text' : 'password'}
-                  labelText={t('label.password')}
-                  label={t('placeholder.login_password')}
-                  styles={{ minWidth: '350px' }}
-                  onChange={(ev) => setPassword(ev.target.value)}
-                  isPassword
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              </Grid>
+
               {!showLoading && (
                 <Grid item>
                   <Button
@@ -139,6 +133,7 @@ const Login = () => {
                     background={
                       'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
                     }
+                    disabled
                     sx={{
                       fontSize: '14px',
                       color: 'white',
@@ -148,7 +143,7 @@ const Login = () => {
                     fullWidth
                     type="submit"
                   >
-                    {t('field.login')}
+                    {t('field.send')}
                   </Button>
                 </Grid>
               )}
@@ -183,4 +178,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default ForgotPassword

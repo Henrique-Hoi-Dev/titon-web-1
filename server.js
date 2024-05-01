@@ -32,7 +32,10 @@ app.get('/report', function (req, res) {
 app.get('/check', function (req, res) {
   res.sendFile(resolve(__dirname, 'build', 'index.html'))
 })
-app.get('/infoFinancial', function (req, res) {
+app.get('/info-financial/:id', function (req, res) {
+  res.sendFile(resolve(__dirname, 'build', 'index.html'))
+})
+app.get('/forgot-password', function (req, res) {
   res.sendFile(resolve(__dirname, 'build', 'index.html'))
 })
 

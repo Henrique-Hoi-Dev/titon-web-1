@@ -64,10 +64,10 @@ const BaseInput = ({
             borderBottomColor: '#1877F2'
           },
           '& .MuiFilledInput-underline:hover:after': {
-            borderBottomColor: '#1877F2'
+            borderBottomColor: '#1877F2!important'
           },
           '& .MuiFilledInput-underline:hover:before': {
-            borderBottomColor: '#1877F2'
+            borderBottomColor: '#1877F2!important'
           }
         }}
         inputProps={{

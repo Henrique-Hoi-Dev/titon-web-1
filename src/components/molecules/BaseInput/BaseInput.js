@@ -46,20 +46,28 @@ const BaseInput = ({
           fontWeight: 'bold',
           ...styles,
           mt: '5px',
-          color: '#FFFFFF',
+          color: '#fff',
           background: '#31363F',
           borderRadius: '8px 8px 0px 0px',
-          '& .css-10botns-MuiInputBase-input-MuiFilledInput-input': {
-            color: '#FFF!important',
+          '& .MuiFilledInput-input': {
+            color: '#fff',
             opacity: '0.5'
           },
-          '& .css-e4w4as-MuiFormLabel-root-MuiInputLabel-root': {
-            color: '#FFF!important',
+          '& .MuiInputLabel-root': {
+            color: '#fff',
             opacity: '0.5'
           },
-          '& .css-o943dk-MuiFormLabel-root-MuiInputLabel-root': {
-            color: '#FFF!important',
-            opacity: '0.5'
+          '& .MuiFilledInput-underline:before': {
+            borderBottomColor: '#1877F2'
+          },
+          '& .MuiFilledInput-underline:after': {
+            borderBottomColor: '#1877F2'
+          },
+          '& .MuiFilledInput-underline:hover:after': {
+            borderBottomColor: '#1877F2'
+          },
+          '& .MuiFilledInput-underline:hover:before': {
+            borderBottomColor: '#1877F2'
           }
         }}
         inputProps={{
@@ -78,7 +86,8 @@ const BaseInput = ({
                 onClick={onClick}
                 edge="end"
                 sx={{
-                  color: '#FFFFFF!important'
+                  color: '#fff',
+                  opacity: '0.5'
                 }}
               >
                 {type === 'password' ? <Visibility /> : <VisibilityOff />}

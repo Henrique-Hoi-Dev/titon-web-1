@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLogin } from 'services/requests/useLogin'
 import { signInRequest } from 'store/modules/auth/actions'
-import { InputDark } from 'components/atoms/input/inputDark/input'
 import { useTranslation } from 'react-i18next'
 
 import Button from 'components/atoms/BaseButton/BaseButton'
@@ -122,10 +121,11 @@ const Login = () => {
                 />
               </Grid>
               <Grid item>
-                <InputDark
+                <BaseInput
                   required
-                  label={t('placeholder.login_password')}
                   type={showPassword ? 'text' : 'password'}
+                  labelText={t('label.password')}
+                  label={t('placeholder.login_password')}
                   styles={{ minWidth: '350px' }}
                   onChange={(ev) => setPassword(ev.target.value)}
                   isPassword

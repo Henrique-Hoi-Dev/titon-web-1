@@ -28,6 +28,7 @@
   "label": {
     "truck": "Caminhão",
     "email": "E-mail",
+    "password": "Senha",
     "cart": "Carreta"
   },
   "placeholder": {

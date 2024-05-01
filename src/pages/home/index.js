@@ -73,13 +73,12 @@ const Home = () => {
               searches
               searchesType={'searches'}
               styles={{ minWidth: '350px' }}
-              placeholder={'Nome, placa...'}
+              placeholder={t('placeholder.search_financial')}
               onChange={(ev) => setSearch(ev.target.value)}
             />
           </Grid>
         </Grid>
 
-        {/* cards das fichas dos caminhao */}
         <Grid
           item
           container
@@ -99,7 +98,6 @@ const Home = () => {
           />
         </Grid>
 
-        {/* modulo grafico  */}
         <Grid item container height={'430px'}>
           <Graphic />
         </Grid>

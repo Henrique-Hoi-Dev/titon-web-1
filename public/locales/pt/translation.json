@@ -27,14 +27,22 @@
   },
   "label": {
     "truck": "Caminhão",
+    "email": "E-mail",
     "cart": "Carreta"
   },
   "placeholder": {
     "driver": "Motorista",
+    "login_email": "Insira seu e-mail",
+    "login_password": "Insira sua senha",
     "truck": "Caminhão",
-    "cart": "Carreta"
+    "cart": "Carreta",
+    "name_driver": "Nome do motorista",
+    "search_truck": "Modelo, Marca, placa, ano e cor",
+    "search_cart": "Modelo, placa, ano e cor",
+    "search_financial": "Nome e placa"
   },
   "field": {
+    "login": "Entrar",
     "actions": "Ações",
     "canceled": "Cancelado",
     "confirm_password": "Confirmar Senha",
@@ -188,6 +196,7 @@
   },
   "error": {
     "passwords_not_match": "Senhas não coincidem",
+    "login_error": "Usuário e/ou senha incorretos",
     "there_is_already_a_draw_at_this_time": "Já existe sorteio nesse horário!",
     "minimum_break_is_10_minutes": "Mínimo intervalo é de 10 minutos!"
   },

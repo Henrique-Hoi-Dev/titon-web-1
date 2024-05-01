@@ -15,7 +15,6 @@ import { formatDate } from 'utils/formatDate'
 import { HiOutlinePlusSm } from 'react-icons/hi'
 import { ModalFinalizeRecord } from './modalFinalizeRecord'
 import { ModalAddFreight } from './modalAddFreight'
-import { status } from 'utils/status'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { BaseNotFount } from 'components/molecules/BaseNotFound/BaseNotFound'
@@ -27,18 +26,20 @@ import Button from 'components/atoms/BaseButton/BaseButton'
 
 import Table from './table'
 import ModalCheck from 'components/organisms/ModalCheck'
+import { BaseTypeStatus } from 'components/molecules/BaseTypeStatus/BaseTypeStatus'
 
-export const InfoFinancial = ({ financialId }) => {
-  const INITIAL_STATE_USER = {
+export const InfoFinancial = () => {
+  const { t } = useTranslation()
+  const { id } = useParams()
+
+  const INITIAL_STATE = {
     limit: 10,
     page: 1,
     sort_field: null,
     sort_order: 'ASC'
   }
-  const { id } = useParams()
-  const { t } = useTranslation()
 
-  const [userQuery, setUserQuery] = useState(INITIAL_STATE_USER)
+  const [userQuery, setUserQuery] = useState(INITIAL_STATE)
   const [checkId, setCheckId] = useState('')
 
   const [showModalFinalizeRecord, setShowModalFinalizeRecord] = useState(false)
@@ -51,52 +52,10 @@ export const InfoFinancial = ({ financialId }) => {
     isFetching: financialIsFetching,
     loading,
     mutate
-  } = useGet(`user/financialStatement/${id}`, [], id ? false : true)
-
-  const getStatus = (res) => {
-    const firstStatus =
-      res?.find((item) => item.status === 'STARTING_TRIP') ?? ''
-    const firstStatusProps =
-      status.find((item) => item.value === firstStatus?.status) ?? ''
-
-    const secondStatus =
-      res?.find((item) => item.status === 'APPROVAL_PROCESS') ?? ''
-    const secondStatusProps =
-      status.find((item) => item.value === secondStatus?.status) ?? ''
-
-    const thirdStatus = res?.find((item) => item.status === 'APPROVED') ?? ''
-    const thirdStatusProps =
-      status.find((item) => item.value === thirdStatus?.status) ?? ''
-
-    const fourthStatus = res?.find((item) => item.status === 'DENIED') ?? ''
-    const fourthStatusProps =
-      status.find((item) => item.value === fourthStatus?.status) ?? ''
-
-    const fifthStatus = res?.find((item) => item.status === 'DENIED') ?? ''
-    const fifthStatusProps =
-      status.find((item) => item.value === fifthStatus?.status) ?? ''
-
-    const nonEmptyStatus = status.find((item) => item.value === '') ?? ''
-
-    if (firstStatus) {
-      return firstStatusProps
-    } else if (secondStatus) {
-      return secondStatusProps
-    } else if (thirdStatus) {
-      return thirdStatusProps
-    } else if (fourthStatus) {
-      return fourthStatusProps
-    } else if (fifthStatus) {
-      return fifthStatusProps
-    } else if (nonEmptyStatus) {
-      return nonEmptyStatus
-    } else {
-      return ''
-    }
-  }
+  } = useGet(`user/financialStatement/${id}`)
 
   const handleCheck = (freightId, driverId) => {
-    setCheckId({ freightId: freightId, driverId: driverId })
+    setCheckId({ freightId, driverId })
     setShowModalCheck(!showModalCheck)
   }
 
@@ -114,27 +73,11 @@ export const InfoFinancial = ({ financialId }) => {
           </BaseTitle>
         </BaseContentHeader>
 
-        <Grid
-          container
-          justifyContent="center"
-          padding={'30px 15px'}
-          spacing={2}
-        >
-          <Grid
-            item
-            xs={6}
-            md={3}
-            lg={3}
-            container
-            flexDirection={'column'}
-            alignItems="flex-start"
-            justifyContent="flex-start"
-            paddingTop={'0!important'}
-          >
+        <Grid container justifyContent="flex-start" padding={'30px 0px'}>
+          <Grid item xs={6} md={3} lg={3} container flexDirection={'column'}>
             <Card
               sx={{
-                minWidth: '264px!important',
-                minHeight: '615px!important',
+                p: '16px',
                 boxShadow: 'none!important',
                 backgroundColor: 'transparent',
                 color: 'white'
@@ -144,7 +87,7 @@ export const InfoFinancial = ({ financialId }) => {
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
-                  alignItems: 'center',
+                  alignItems: 'flex-start',
                   padding: '0px'
                 }}
               >
@@ -159,11 +102,9 @@ export const InfoFinancial = ({ financialId }) => {
                 >
                   <CardMedia
                     component="img"
-                    height="150px"
+                    height="185px"
                     sx={{
-                      borderRadius: '4px',
-                      width: '248px',
-                      height: '185px'
+                      borderRadius: '4px'
                     }}
                     image={financial?.dataResult?.truck_avatar}
                     alt="green iguana"
@@ -173,9 +114,7 @@ export const InfoFinancial = ({ financialId }) => {
                 <Grid
                   item
                   container
-                  pl={2}
-                  mt={1}
-                  spacing={1}
+                  mt={2}
                   height="100%"
                   flexDirection={'column'}
                   sx={{
@@ -184,53 +123,54 @@ export const InfoFinancial = ({ financialId }) => {
                     lineHeight: '25px'
                   }}
                 >
-                  <Grid
-                    container
-                    item
-                    pb={2}
-                    pr={'8px!important'}
-                    paddingLeft={'0!important'}
-                    justifyContent={'space-between'}
-                  >
-                    <Text
-                      fontSize={'19px'}
-                      color={getStatus(financial?.dataResult?.freight).color}
-                    >
-                      {getStatus(financial?.dataResult?.freight).label}
-                    </Text>
+                  <Grid container item pb={2} justifyContent={'space-between'}>
+                    <BaseTypeStatus props={financial?.dataResult?.freight} />
                   </Grid>
-                  <Text fontSize={'16px'}>
-                    {t('info_financial.driver')}:{' '}
-                    <Text fontSize={'16px'}>
+
+                  <Grid container item justifyContent={'space-between'}>
+                    <Text fontsize={'16px'}>{t('info_financial.driver')}:</Text>
+                    <Text fontsize={'16px'}>
                       {financial?.dataResult?.driver_name}
                     </Text>
-                  </Text>
-                  <Text fontSize={'16px'}>
-                    <Text fontSize={'16px'}>
-                      {t('info_financial.startDate')}:{' '}
+                  </Grid>
+
+                  <Grid container item justifyContent={'space-between'}>
+                    <Text fontsize={'16px'}>
+                      {t('info_financial.startDate')}:
+                    </Text>
+                    <Text fontsize={'16px'}>
                       {formatDate(financial?.dataResult?.start_date)}
                     </Text>
-                  </Text>
-                  <Text fontSize={'16px'}>
-                    {t('info_financial.destiny')}:{' '}
-                    <Text fontSize={'16px'}>
+                  </Grid>
+
+                  <Grid container item justifyContent={'space-between'}>
+                    <Text fontsize={'16px'}>
+                      {t('info_financial.destiny')}:
+                    </Text>
+                    <Text fontsize={'16px'}>
                       {financial?.dataResult?.freight[0]?.finalFreightCity?.toUpperCase()}
                     </Text>
-                  </Text>
-                  <Text fontSize={'16px'}>
-                    {t('info_financial.credit')}:{' '}
-                    <Text fontSize={'16px'}>
+                  </Grid>
+
+                  <Grid container item justifyContent={'space-between'}>
+                    <Text fontsize={'16px'}>{t('info_financial.credit')}:</Text>
+                    <Text fontsize={'16px'}>
                       {moneyMask(financial?.dataResult?.driver?.credit || [0])}
                     </Text>
-                  </Text>
-                  <Text>
+                  </Grid>
+
+                  <Grid
+                    container
+                    justifyContent={'flex-start'}
+                    alignItems={'flex-end'}
+                  >
                     <IconMenuTruck
-                      sx={{ fontSize: '30px', color: '#509BFB' }}
-                    />{' '}
-                    <Text fontSize={'18px'} sx={{ verticalAlign: 'super' }}>
-                      {financial?.dataResult.cart_models.toUpperCase()}
+                      sx={{ fontSize: '30px', color: '#509BFB', mr: 1 }}
+                    />
+                    <Text fontsize={'16px'} sx={{ verticalAlign: 'super' }}>
+                      {financial?.dataResult?.cart_models}
                     </Text>
-                  </Text>
+                  </Grid>
                 </Grid>
               </CardContent>
 
@@ -376,7 +316,7 @@ export const InfoFinancial = ({ financialId }) => {
 
       {showModalAddFreight && (
         <ModalAddFreight
-          financialId={financialId?.id}
+          financialId={id}
           showModal={showModalAddFreight}
           setShowModal={setShowModalAddFreight}
         />
@@ -385,7 +325,7 @@ export const InfoFinancial = ({ financialId }) => {
       {showModalFinalizeRecord && (
         <ModalFinalizeRecord
           mutate={mutate}
-          financialId={financialId?.id}
+          financialId={id}
           props={financial}
           setShowModal={setShowModalFinalizeRecord}
           showModal={showModalFinalizeRecord}

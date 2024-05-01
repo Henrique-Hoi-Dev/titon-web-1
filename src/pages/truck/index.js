@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Grid } from '@mui/material'
 import { useGet } from 'services/requests/useGet'
 import { IconAdd } from 'assets/icons/icons'
@@ -25,6 +25,8 @@ export const Truck = () => {
   const [truckQuery, setTruckQuery] = useState(INITIAL_STATE_USER)
   const [search, setSearch] = useState('')
 
+  const isMounted = useRef(false)
+
   const {
     data: trucks,
     error: trucksError,
@@ -34,6 +36,11 @@ export const Truck = () => {
   } = useGet('trucks', truckQuery)
 
   useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true
+      return
+    }
+
     const timer = setTimeout(() => {
       setTruckQuery((state) => ({
         ...state,
@@ -74,7 +81,7 @@ export const Truck = () => {
           searches
           searchesType={'searches'}
           styles={{ minWidth: '350px' }}
-          placeholder={'Nome, placa...'}
+          placeholder={t('placeholder.search_truck')}
           onChange={(ev) => setSearch(ev.target.value)}
         />
       </Grid>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Grid } from '@mui/material'
 import { useGet } from 'services/requests/useGet'
 import { IconAdd } from 'assets/icons/icons'
@@ -25,6 +25,8 @@ const Driver = () => {
   const [driverQuery, setDriverQuery] = useState(INITIAL_STATE_DRIVER)
   const [search, setSearch] = useState('')
 
+  const isMounted = useRef(false)
+
   const {
     data: drivers,
     error: driversError,
@@ -34,13 +36,17 @@ const Driver = () => {
   } = useGet('/drivers', driverQuery)
 
   useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true
+      return
+    }
+
     const timer = setTimeout(() => {
       setDriverQuery((state) => ({
         ...state,
         search: search
       }))
     }, 1200)
-
     return () => clearTimeout(timer)
   }, [search])
 
@@ -73,7 +79,7 @@ const Driver = () => {
           searches
           searchesType={'searches'}
           styles={{ minWidth: '350px' }}
-          placeholder={'Nome, placa...'}
+          placeholder={t('placeholder.name_driver')}
           onChange={(ev) => setSearch(ev.target.value)}
         />
       </Grid>

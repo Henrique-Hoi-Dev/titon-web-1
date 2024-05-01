@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Grid } from '@mui/material'
 import { IconAdd } from 'assets/icons/icons'
 import { InputSearches } from 'components/atoms/input/inputSearches/input'
@@ -33,7 +33,14 @@ const Cart = () => {
     mutate
   } = useGet('/carts', cardQuery)
 
+  const isMounted = useRef(false)
+
   useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true
+      return
+    }
+
     const timer = setTimeout(() => {
       setCardQuery((state) => ({
         ...state,
@@ -74,7 +81,7 @@ const Cart = () => {
           searches
           searchesType={'searches'}
           styles={{ minWidth: '350px' }}
-          placeholder={'Nome, placa...'}
+          placeholder={t('placeholder.search_cart')}
           onChange={(ev) => setSearch(ev.target.value)}
         />
       </Grid>

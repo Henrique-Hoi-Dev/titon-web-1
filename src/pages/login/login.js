@@ -5,14 +5,15 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLogin } from 'services/requests/useLogin'
 import { signInRequest } from 'store/modules/auth/actions'
+import { InputDark } from 'components/atoms/input/inputDark/input'
+import { useTranslation } from 'react-i18next'
 
 import Button from 'components/atoms/BaseButton/BaseButton'
 import Loading from 'components/atoms/loading/loading'
 import Text from 'components/atoms/BaseText/BaseText'
 import logo from '../../assets/logo.png'
-
-import { Wrapper } from './styles'
-import { InputDark } from 'components/atoms/input/inputDark/input'
+import bannerLogin from '../../assets/background-login.png'
+import BaseInput from 'components/molecules/BaseInput/BaseInput'
 
 const INITIAL_STATE = {
   username: null,
@@ -20,6 +21,8 @@ const INITIAL_STATE = {
 }
 
 const Login = () => {
+  const { t } = useTranslation()
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -55,17 +58,17 @@ const Login = () => {
   }
 
   return (
-    <Wrapper>
-      <Grid
-        container
-        justifyContent="flex-start"
-        alignItems="center"
-        height="100vh"
-      >
+    <Grid
+      container
+      item
+      justifyContent="space-between"
+      alignItems="center"
+      flexWrap={'nowrap'}
+    >
+      <Grid container height="100vh" width={'auto'}>
         <Paper
           elevation={3}
           sx={{
-            backgroundColor: 'transparent!important',
             boxShadow: 'none',
             height: '100%',
             display: 'flex',
@@ -80,12 +83,10 @@ const Login = () => {
               justifyContent: 'center',
               alignItems: 'center',
               flexDirection: 'column',
-              width: '600px',
-              height: '90%',
+              width: '700px',
+              height: '100%',
               background: '#2B2B2C',
-              border: '1px solid #F1F3F9',
-              boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-              borderRadius: '32px'
+              boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
             }}
             component="form"
             onSubmit={handleSubmit}
@@ -98,21 +99,6 @@ const Login = () => {
             >
               <img src={logo} alt="img" />
             </Text>
-            {/* <Text
-              fontSize={'14px'}
-              sx={{
-                width: '360px',
-                height: '32px',
-                fontStyle: 'normal',
-                fontWeight: '500',
-                lineHeight: '100%',
-                textAlign: 'center'
-              }}
-              color={'#FFFFFF'}
-            >
-              Agora insira as informações da sua empresa e já tenha acesso ao
-              melhor gerenciador de frotda.
-            </Text> */}
 
             <Grid
               container
@@ -126,10 +112,11 @@ const Login = () => {
               width="400px"
             >
               <Grid item>
-                <InputDark
+                <BaseInput
                   required
                   type="text"
-                  label={'E-mail'}
+                  labelText={t('label.email')}
+                  label={t('placeholder.login_email')}
                   styles={{ minWidth: '350px' }}
                   onChange={(ev) => setEmail(ev.target.value)}
                 />
@@ -137,7 +124,7 @@ const Login = () => {
               <Grid item>
                 <InputDark
                   required
-                  label={'Senha'}
+                  label={t('placeholder.login_password')}
                   type={showPassword ? 'text' : 'password'}
                   styles={{ minWidth: '350px' }}
                   onChange={(ev) => setPassword(ev.target.value)}
@@ -161,21 +148,38 @@ const Login = () => {
                     fullWidth
                     type="submit"
                   >
-                    Login
+                    {t('field.login')}
                   </Button>
                 </Grid>
               )}
               {showLoading && <Loading color={'white'} />}
               {showError && !showLoading && (
                 <Text center sx={{ mt: '10px' }} type="warning">
-                  Usuário e/ou senha incorretos
+                  {t('error.login_error')}
                 </Text>
               )}
             </Grid>
           </Box>
         </Paper>
       </Grid>
-    </Wrapper>
+
+      <Grid
+        item
+        container
+        height="100vh"
+        sx={{
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center center'
+        }}
+      >
+        <img
+          src={bannerLogin}
+          alt="img"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+      </Grid>
+    </Grid>
   )
 }
 

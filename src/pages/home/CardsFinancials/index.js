@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Box, Grid } from '@mui/material'
 import { useGet } from 'services/requests/useGet'
 import { useState } from 'react'
@@ -43,7 +43,14 @@ const CardsFinancials = ({
     mutate
   } = useGet('financialStatements', financialQuery)
 
+  const isMounted = useRef(false)
+
   useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true
+      return
+    }
+
     const timer = setTimeout(() => {
       setFinancialQuery((state) => ({
         ...state,
@@ -64,24 +71,17 @@ const CardsFinancials = ({
 
   return (
     <>
-      <Grid item container pl={2} mt={-2} justifyContent={'center'}>
+      <Grid item container justifyContent={'flex-start'}>
         {financial?.dataResult?.length > 0 && (
           <Box
             sx={{
               minHeight: '385px',
-              minWidth: '100%',
+              width: '100%',
               display: 'flex',
-              flexDirection: 'row',
               overflowX: 'auto',
               justifyContent: 'flex-start',
               '& > :not(style)': {
-                margin: '10px',
-                width: 180,
-                height: 80,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center'
+                margin: '10px'
               }
             }}
           >

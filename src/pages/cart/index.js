@@ -6,7 +6,7 @@ import { useGet } from 'services/requests/useGet'
 import { useTranslation } from 'react-i18next'
 
 import Table from './table'
-import ModalAddCart from './modalAddCart'
+import ModalAddCart from './modal/modalAddCart'
 import BaseButton from 'components/atoms/BaseButton/BaseButton'
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'

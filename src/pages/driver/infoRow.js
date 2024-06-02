@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Box, Collapse, IconButton, Menu, MenuItem } from '@mui/material'
 import { useMediaQuery } from 'react-responsive'
 import { moneyMask } from 'utils/masks'
-import { ArrowDownIcon, ArrowUpIcon, IconActions } from 'assets/icons/icons'
+import { ArrowDownIcon, ArrowUpIcon, DropUpSharpIcon } from 'assets/icons/icons'
 import {
   SCell,
   SRow,
@@ -85,16 +85,26 @@ const InfoRow = (props) => {
         </SCell>
         <SCell>
           <IconButton
-            color="inherit"
-            fontSize="20px"
-            sx={{ mr: 1 }}
+            color="default"
+            size="small"
+            sx={{
+              background: '#1877F2',
+              '& .icon': {
+                transition: 'transform 0.3s ease-in-out'
+              },
+              '&:hover': {
+                backgroundColor: '#1657A2',
+                transform: 'scale(1.1)',
+                transition: 'background-color 0.3s ease, transform 0.3s ease'
+              }
+            }}
             onClick={(ev) => handleClick(ev)}
           >
-            <IconActions
+            <DropUpSharpIcon
+              className="icon"
               sx={{
-                color: '#ff443a',
-                height: '30px',
-                width: '30px'
+                color: '#fff',
+                transform: `${openSettings ? '' : 'rotate(180deg)'}`
               }}
             />
           </IconButton>
@@ -112,8 +122,20 @@ const InfoRow = (props) => {
           horizontal: 'center'
         }}
         sx={{
-          zIndex: 4444,
-          mt: 5
+          zIndex: 10,
+          mt: 5,
+          '& .MuiPaper-root': {
+            bgcolor: '#333',
+            color: '#fff',
+            '& .MuiMenuItem-root': {
+              '&:hover': {
+                bgcolor: '#444'
+              }
+            }
+          }
+        }}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button'
         }}
         open={openSettings}
         onClose={() => setOpenSettings(!openSettings)}
@@ -121,7 +143,9 @@ const InfoRow = (props) => {
         <MenuItem onClick={() => handleCredit(data?.id, data.name)}>
           Crédito/Débito
         </MenuItem>
+
         <MenuItem onClick={() => handleUpdate(data?.id)}>Editar</MenuItem>
+
         <MenuItem onClick={() => handleDelete(data?.id, data.name)}>
           Excluir
         </MenuItem>

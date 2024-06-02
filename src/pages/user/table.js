@@ -16,8 +16,8 @@ import imgNotFound from '../../assets/trist-not-found-table.svg'
 import InfoRow from './infoRow'
 import Text from 'components/atoms/BaseText/BaseText'
 import Loading from 'components/atoms/loading/loading'
-import ModalDeleteUser from './modalDeleteUser'
-import ModalUpdateUser from './modalUpdateUser'
+import ModalDeleteUser from './modal/modalDeleteUser'
+import ModalUpdateUser from './modal/modalUpdateUser'
 
 const Table = ({
   data,

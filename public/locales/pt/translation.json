@@ -25,6 +25,15 @@
     "transactions": "Transações",
     "collector": "Coletor"
   },
+  "subMenu": {
+    "label": "Organizar fichas por",
+    "label1": "Organizar por:",
+    "label2": "LIMPAR FILTRO",
+    "labelStatus1": "ANALISE",
+    "labelStatus2": "APROVADO",
+    "labelStatus3": "NEGADO",
+    "labelStatus4": "FINALIZADO"
+  },
   "label": {
     "truck": "Caminhão",
     "email": "E-mail",
@@ -32,17 +41,6 @@
     "cart": "Carreta",
     "forgot_password": "Esqueceu sua senha?",
     "to_go_back": "Voltar"
-  },
-  "placeholder": {
-    "driver": "Motorista",
-    "login_email": "Insira seu e-mail",
-    "login_password": "Insira sua senha",
-    "truck": "Caminhão",
-    "cart": "Carreta",
-    "name_driver": "Nome do motorista",
-    "search_truck": "Modelo, Marca, placa, ano e cor",
-    "search_cart": "Modelo, placa, ano e cor",
-    "search_financial": "Nome e placa"
   },
   "field": {
     "send": "Enviar",
@@ -164,13 +162,20 @@
     "add": "Adicionar",
     "create": "Criar",
     "edit": "Editar",
-    "delete": "Deletar"
+    "delete": "Deletar",
+    "label_price": "COTAÇÃO X ATUALIZAÇÃO",
+    "label_price2": "COTAÇÃO",
+    "label_filled_with_fuel": "ABASTECIDAS",
+    "label_money_deposit": "DEPOSITOS",
+    "label_financial_expenses": "DESPESAS"
   },
   "button": {
     "return": "Voltar",
     "confirm": "Confirmar",
     "create": "Criar",
-    "add_new_listing": "Adicionar Nova Ficha"
+    "cancel": "Cancelar",
+    "add_new_listing": "Adicionar Nova Ficha",
+    "register": "Cadastrar"
   },
   "components": {
     "button_default": "Botão Padrão",
@@ -188,6 +193,7 @@
     "min_interval": "Intervalo mínimo de 10 minutos",
     "success_msg": "Operação realizada com sucesso!",
     "select_room": "Selecione uma sala",
+    "select": "Selecione",
     "select_game_instance_or_status": "Selecione uma local ou status",
     "select_game_instance": "Selecione uma local",
     "select_template": "Selecione um template",
@@ -288,5 +294,32 @@
     "label2": "Data de Inicio:",
     "label3": "Destino:",
     "label4": "Crédito:"
+  },
+  "placeholder": {
+    "driver": "Motorista",
+    "login_email": "Insira seu e-mail",
+    "login_password": "Insira sua senha",
+    "create_password": "Insira sua senha novamente",
+    "phone_driver": "(DDD) 00000-0000",
+    "value_driver": "R$ 0,00",
+    "percentage_driver": "0%",
+    "truck": "Caminhão",
+    "cart": "Carreta",
+    "name_driver": "Insira o nome completo",
+    "cpf_driver": "Insira o CPF",
+    "search_truck": "Modelo, Marca, placa, ano e cor",
+    "search_cart": "Modelo, placa, ano e cor",
+    "search_financial": "Nome e placa"
+  },
+  "modal_create_driver": {
+    "title": "Cadastro Motorista",
+    "name_driver": "Nome completo",
+    "cpf_driver": "CPF",
+    "phone_driver": "Celular",
+    "value_daily_driver": "Valor diária",
+    "value_fixed_remuneration_driver": "Remuneração fixa",
+    "value_percentage_pay_driver": "Remuneração porcentagem",
+    "create_password": "Senha",
+    "create_confirm_password": "Confirmar senha"
   }
 }

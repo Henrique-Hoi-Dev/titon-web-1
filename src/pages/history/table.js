@@ -15,8 +15,8 @@ import { BaseError } from 'components/molecules/BaseError/BaseError'
 
 import InfoRow from './infoRow'
 import Loading from 'components/atoms/loading/loading'
-import ModalDeleteFinancial from './modalDeleteFinancial'
-import ModalUpdateFinancial from './modalUpdateFinancial'
+import ModalDeleteFinancial from './modal/modalDeleteFinancial'
+import ModalUpdateFinancial from './modal/modalUpdateFinancial'
 
 const Table = ({
   data,

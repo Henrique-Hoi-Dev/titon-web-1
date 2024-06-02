@@ -161,7 +161,7 @@ const Login = () => {
                   </Button>
                 </Grid>
               )}
-              {showLoading && <Loading color={'white'} />}
+              {showLoading && <Loading />}
               {showError && !showLoading && (
                 <Text center sx={{ mt: '10px' }} type="warning">
                   {t('error.login_error')}

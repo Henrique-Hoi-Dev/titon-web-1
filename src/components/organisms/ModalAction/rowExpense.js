@@ -27,68 +27,6 @@ const RowExpense = (props) => {
           {data?.payment?.modo ?? '---'}
         </SCell>
       </SRow>
-
-      {/* <SRow 
-        displaywidth={isDesktop ? 0 : 1} 
-        sx={{ backgroundColor: "white" }}>
-        <SCell
-          style={{ paddingBottom: 0, paddingTop: 0, border: 0 }}
-          colSpan={6}
-        >
-          <Collapse 
-            // in={open} 
-            timeout="auto" 
-            unmountOnExit
-          >
-            <Box sx={{ margin: 4 }}>
-              <STable aria-label="purchases">
-                <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                  <STable aria-label="purchases" sx={{ borderRadius: "8px" }}>
-                    <SHead>
-                      <SRow>
-                        <SCell displaywidth={isDesktop ? 0 : 1}>
-                          <SLabel
-                            active={query?.sort_field === "start_km"}
-                            direction={query?.sort_order?.toLowerCase()}
-                            onClick={() => handleSort("start_km")}
-                          >
-                            Valor Tonelada
-                          </SLabel>
-                        </SCell>
-                        <SCell displaywidth={isDesktop ? 0 : 1}>
-                          <SLabel
-                            active={query?.sort_field === "preview_value_diesel"}
-                            direction={query?.sort_order?.toLowerCase()}
-                            onClick={() => handleSort("preview_value_diesel")}
-                          >
-                            Valor Prévia Diesel
-                          </SLabel>
-                        </SCell>
-                        <SCell displaywidth={isDesktop ? 0 : 1}>
-                          <SLabel
-                            active={query?.sort_field === "start_date"}
-                            direction={query?.sort_order?.toLowerCase()}
-                            onClick={() => handleSort("start_date")}
-                          >
-                            Data Check Frete
-                          </SLabel>
-                        </SCell>
-                      </SRow>
-                    </SHead>
-                    <STableBody>
-                      <SRow alternatingcolors={index}>
-                        <SCell displaywidth={isDesktop ? 0 : 1}>{moneyMask(data.value_tonne)}</SCell>
-                        <SCell displaywidth={isDesktop ? 0 : 1}>{moneyMask(data.preview_value_diesel)}</SCell>
-                        <SCell displaywidth={isDesktop ? 0 : 1}>{formatDate(data.createdAt)}</SCell>
-                      </SRow>                      
-                    </STableBody>
-                  </STable>
-                </Box>
-              </STable>
-            </Box>
-          </Collapse>
-        </SCell>
-      </SRow> */}
     </>
   )
 }

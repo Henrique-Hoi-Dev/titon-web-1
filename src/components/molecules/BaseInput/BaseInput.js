@@ -5,8 +5,6 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import Text from 'components/atoms/BaseText/BaseText'
 
 const BaseInput = ({
-  isInvalid,
-  isInvalidMsg,
   holder,
   password,
   showPassword,
@@ -22,11 +20,11 @@ const BaseInput = ({
   minLength,
   maxLength,
   styles,
+  helperText,
   error,
   min,
   ...props
 }) => {
-  const Label = {}
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <Text fontsize={'14px'} color={'#1877F2'}>
@@ -39,6 +37,7 @@ const BaseInput = ({
         variant="filled"
         type={type}
         error={error}
+        helperText={helperText}
         placeholder={placeholder}
         label={label}
         color="primary"
@@ -96,7 +95,6 @@ const BaseInput = ({
           )
         }}
       />
-      {isInvalid && <Label error>{isInvalidMsg}</Label>}
     </div>
   )
 }

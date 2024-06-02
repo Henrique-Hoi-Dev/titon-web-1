@@ -16,9 +16,9 @@ import { BaseError } from 'components/molecules/BaseError/BaseError'
 
 import InfoRow from './infoRow'
 import Loading from 'components/atoms/loading/loading'
-import ModalDeleteDriver from './modalDeleteDriver'
-import ModalUpdateDriver from './modalUpdateDriver'
-import ModalCreditDriver from './modalCreditDriver'
+import ModalDeleteDriver from './modal/modalDeleteDriver'
+import ModalUpdateDriver from './modal/modalUpdateDriver'
+import ModalCreditDriver from './modal/modalCreditDriver'
 
 const Table = ({
   data,

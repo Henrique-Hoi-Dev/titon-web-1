@@ -1,5 +1,5 @@
-import React from "react";
-import { CircularProgress, Grid } from "@mui/material";
+import React from 'react'
+import { CircularProgress, Grid } from '@mui/material'
 
 const Loading = ({ sx, color }) => (
   <Grid
@@ -11,9 +11,9 @@ const Loading = ({ sx, color }) => (
     sx={sx}
     pt={4}
   >
-    <CircularProgress sx={{ color: `${color ? color : "black"}` }} />
-    <p style={{ color: `${color ? color : "black"}` }}>Carregando...</p>
+    <CircularProgress sx={{ color: `${color ? color : '#F1F3F9'}` }} />
+    <p style={{ color: `${color ? color : '#F1F3F9'}` }}>Carregando...</p>
   </Grid>
-);
+)
 
-export default Loading;
+export default Loading

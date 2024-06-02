@@ -16,8 +16,8 @@ import { BaseNotFount } from 'components/molecules/BaseNotFound/BaseNotFound'
 
 import InfoRow from './infoRow'
 import Loading from 'components/atoms/loading/loading'
-import ModalDeleteCart from './modalDeleteCart'
-import ModalUpdateCart from './modalUpdateCart'
+import ModalDeleteCart from './modal/modalDeleteCart'
+import ModalUpdateCart from './modal/modalUpdateCart'
 
 const Table = ({
   data,

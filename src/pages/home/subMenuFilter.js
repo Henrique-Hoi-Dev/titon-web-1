@@ -3,10 +3,11 @@ import { useState } from 'react'
 import { styled, alpha } from '@mui/material/styles'
 import { Grid } from '@mui/material'
 import {
-  IconSubMenuTrendingDownIcon,
-  IconSubMenuTrendingUpIcon,
+  // IconSubMenuTrendingDownIcon,
+  // IconSubMenuTrendingUpIcon,
   PointIcon
 } from 'assets/icons/icons'
+import { useTranslation } from 'react-i18next'
 
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
@@ -58,6 +59,8 @@ const StyledMenu = styled((props) => (
 }))
 
 export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
+  const { t } = useTranslation()
+
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
 
@@ -87,7 +90,7 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
       >
-        Organizar fichas por
+        {t('subMenu.label')}
       </Button>
       <StyledMenu
         id="demo-customized-menu"
@@ -99,14 +102,14 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
         onClose={handleClose}
       >
         <Grid item container p={1} ml={2} sx={{ color: '#1877F2' }}>
-          Organizar por:
+          {t('subMenu.label1')}
         </Grid>
         <MenuItem
           onClick={() => handleClear() || handleClose()}
           disableRipple
           sx={{ ml: 2, width: '80%', lineHeight: 'unset', fontWeight: '700' }}
         >
-          LIMPAR FILTRO
+          {t('subMenu.label2')}
         </MenuItem>
         <Divider sx={{ my: 0.3, width: '85%', ml: 2, mt: -2 }} />
         <MenuItem
@@ -124,7 +127,7 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
         >
           Z-A
         </MenuItem>
-        <Divider sx={{ my: 0.3, width: '85%', ml: 2 }} />
+        {/* <Divider sx={{ my: 0.3, width: '85%', ml: 2 }} />
         <MenuItem
           onClick={handleClose}
           disableRipple
@@ -139,7 +142,7 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
           sx={{ ml: 2, width: '85%', lineHeight: 'unset', fontWeight: '700' }}
         >
           $ <IconSubMenuTrendingDownIcon />
-        </MenuItem>
+        </MenuItem> */}
         <Divider sx={{ my: 0.3, width: '85%', ml: 2 }} />
         <MenuItem
           onClick={() => setSearchStatus('APPROVAL_PROCESS') || handleClose()}
@@ -154,7 +157,7 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
             }}
             color={'#FFCE52'}
           />
-          ANALISE
+          {t('subMenu.labelStatus1')}
         </MenuItem>
         <Divider sx={{ my: 0.3, width: '85%', ml: 2 }} />
         <MenuItem
@@ -170,7 +173,7 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
             }}
             color={'#0BB07B'}
           />
-          APROVADO
+          {t('subMenu.labelStatus2')}
         </MenuItem>
         <Divider sx={{ my: 0.3, width: '85%', ml: 2 }} />
         <MenuItem
@@ -186,7 +189,7 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
             }}
             color={'#F03D3D'}
           />
-          NEGADO
+          {t('subMenu.labelStatus3')}
         </MenuItem>
         <Divider sx={{ my: 0.3, width: '85%', ml: 2 }} />
         <MenuItem
@@ -202,7 +205,7 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
             }}
             color={'#86878A'}
           />
-          FINALIZADO
+          {t('subMenu.labelStatus4')}
         </MenuItem>
         <Divider sx={{ my: 0.3, width: '85%', ml: 2 }} />
       </StyledMenu>

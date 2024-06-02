@@ -19,6 +19,7 @@ const BaseModal = ({
   height,
   maxWidth,
   maxHeight,
+  minheight,
   sxGridModal
 }) => {
   const { t } = useTranslation()
@@ -40,8 +41,9 @@ const BaseModal = ({
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          backgroundColor: 'white',
+          backgroundColor: '#2B2B2C',
           height: `${height ? height : 'auto'}`,
+          minHeight: minheight,
           maxWidth: `${
             (isMobile ? '370px' : maxWidth ?? '1100px') ||
             (isTable ? '470px' : maxWidth ?? '1100px') ||
@@ -68,12 +70,11 @@ const BaseModal = ({
           {showCloseIcon && (
             <Grid
               item
-              p={1}
               sx={{
                 display: `${isMobile ? 'none' : ''}`,
                 position: 'absolute',
-                top: `${isMobile ? '3px' : '10px'}`,
-                right: `${isMobile ? 0 : '20px'}`
+                top: `${isMobile ? '3px' : '5px'}`,
+                right: `${isMobile ? 0 : '5px'}`
               }}
             >
               <Button
@@ -87,7 +88,7 @@ const BaseModal = ({
                 }}
                 onClick={onClose}
               >
-                <IconClose sx={{ color: 'black', fontSize: '30px' }} />
+                <IconClose sx={{ height: '32px' }} />
               </Button>
             </Grid>
           )}

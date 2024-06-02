@@ -67,7 +67,7 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
       <ContentHeader
         mt={2}
         sx={{
-          borderBottom: '2px solid #000',
+          borderBottom: '2px solid #fff',
           width: '96% !important'
         }}
       >

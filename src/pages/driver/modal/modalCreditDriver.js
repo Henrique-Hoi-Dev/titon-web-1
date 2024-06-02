@@ -6,7 +6,7 @@ import { useState } from 'react'
 import Loading from 'components/atoms/loading/loading'
 import Text from 'components/atoms/BaseText/BaseText'
 import Modal from 'components/molecules/BaseModal/BaseModal'
-import TableBankStatement from './tableBankStatement'
+import TableBankStatement from '../tableBankStatement'
 import ModalAddCreditDriver from './modalAddCreditDriver'
 
 const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {

@@ -1,29 +1,29 @@
-import { useState } from "react";
-import { Grid } from "@mui/material";
-import { useGet } from "services/requests/useGet";
+import { useState } from 'react'
+import { Grid } from '@mui/material'
+import { useGet } from 'services/requests/useGet'
 
-import Table from "./table";
-import ModalAddUser from "./modalAddUser";
+import Table from './table'
+import ModalAddUser from './modal/modalAddUser'
 
 const User = () => {
-  const [showModalDriver, setShowModalDriver] = useState(false);
+  const [showModalDriver, setShowModalDriver] = useState(false)
 
   const INITIAL_STATE_USER = {
     limit: 10,
     page: 1,
     sort_field: null,
-    sort_order: "ASC",
-  };
+    sort_order: 'ASC'
+  }
 
-  const [userQuery, setUserQuery] = useState(INITIAL_STATE_USER);
+  const [userQuery, setUserQuery] = useState(INITIAL_STATE_USER)
 
   const {
     data: users,
     error: usersError,
     isFetching: usersIsFetching,
     loading,
-    mutate,
-  } = useGet("/users", userQuery);
+    mutate
+  } = useGet('/users', userQuery)
 
   return (
     <Grid
@@ -32,7 +32,7 @@ const User = () => {
       spacing={2}
       minHeight="88vh"
       justifyContent="center"
-      alignContent={"flex-start"}
+      alignContent={'flex-start'}
     >
       <Grid
         item
@@ -48,7 +48,7 @@ const User = () => {
           mr={4}
           mt={5}
           mb={3}
-          justifyContent={"center"}
+          justifyContent={'center'}
         >
           <Table
             data={users}
@@ -68,7 +68,7 @@ const User = () => {
         mutate={mutate}
       />
     </Grid>
-  );
-};
+  )
+}
 
-export default User;
+export default User

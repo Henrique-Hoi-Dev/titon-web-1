@@ -6,7 +6,7 @@ import { InputSearches } from 'components/atoms/input/inputSearches/input'
 import { useTranslation } from 'react-i18next'
 
 import Table from './table'
-import ModalAddDriver from './modalAddDriver'
+import ModalAddDriver from './modal/modalAddDriver'
 import BaseButton from 'components/atoms/BaseButton/BaseButton'
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'

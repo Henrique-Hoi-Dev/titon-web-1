@@ -6,6 +6,7 @@ import { useGet } from 'services/requests/useGet'
 import { TableStocked } from './tableStocked'
 import { TableExpense } from './tableExpense'
 import { TableDeposit } from './tableDeposit'
+import { useTranslation } from 'react-i18next'
 
 import Button from 'components/atoms/BaseButton/BaseButton'
 import Text from 'components/atoms/BaseText/BaseText'
@@ -17,6 +18,8 @@ import Loading from 'components/atoms/loading/loading'
 import NestedList from 'components/atoms/nestedList/nestedList'
 
 export const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
+  const { t } = useTranslation()
+
   const [fetch, setFetch] = useState(false)
 
   const [value, setValue] = useState(0)
@@ -80,7 +83,7 @@ export const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
               <Box
                 sx={{
                   p: 2,
-                  background: `${value === index && '#CCD6EB'}`,
+                  background: `${value === index && '#545454'}`,
                   borderRadius: '8px'
                 }}
               >
@@ -117,13 +120,13 @@ export const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
       onClose={onClose}
       component="form"
       maxWidth="800px"
-      height={'558px'}
+      minheight={'590px'}
       sxGridModal={{ marginLeft: 0 }}
     >
       <ContentHeader
         mt={2}
         sx={{
-          borderBottom: '2px solid #000',
+          borderBottom: '2px solid #FFF',
           marginBottom: '15px',
           width: '96%'
         }}
@@ -166,10 +169,14 @@ export const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
               fontWeight: 'bold',
               borderTopRightRadius: '8px',
               borderTopLeftRadius: '8px',
-              background: `${value === 0 && '#CCD6EB'}`,
-              color: `${value === 0 && '#000000 !important'}`
+              background: `${value === 0 && '#545454'}`,
+              color: '#FFF !important'
             }}
-            label={statusSecondCheck ? 'COTAÇÃO X ATUALIZAÇÃO' : 'COTAÇÃO'}
+            label={
+              statusSecondCheck
+                ? t('modal.label_price')
+                : t('modal.label_price2')
+            }
             {...a11yProps(0)}
           />
           <Tab
@@ -177,10 +184,10 @@ export const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
               fontWeight: '700',
               borderTopRightRadius: '8px',
               borderTopLeftRadius: '8px',
-              background: `${value === 1 && '#CCD6EB'}`,
-              color: `${value === 1 && '#000000 !important'}`
+              background: `${value === 1 && '#545454'}`,
+              color: '#FFF !important'
             }}
-            label="ABASTECIDAS"
+            label={t('modal.label_filled_with_fuel')}
             {...a11yProps(1)}
           />
           <Tab
@@ -188,10 +195,10 @@ export const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
               fontWeight: '700',
               borderTopRightRadius: '8px',
               borderTopLeftRadius: '8px',
-              background: `${value === 2 && '#CCD6EB'}`,
-              color: `${value === 2 && '#000000 !important'}`
+              background: `${value === 2 && '#545454'}`,
+              color: '#FFF !important'
             }}
-            label="DESPESAS"
+            label={t('modal.label_financial_expenses')}
             {...a11yProps(2)}
           />
           <Tab
@@ -199,10 +206,10 @@ export const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
               fontWeight: '700',
               borderTopRightRadius: '8px',
               borderTopLeftRadius: '8px',
-              background: `${value === 3 && '#CCD6EB'}`,
-              color: `${value === 3 && '#000000 !important'}`
+              background: `${value === 3 && '#545454'}`,
+              color: '#FFF !important'
             }}
-            label="DEPOSITOS"
+            label={t('modal.label_money_deposit')}
             {...a11yProps(3)}
           />
         </Tabs>

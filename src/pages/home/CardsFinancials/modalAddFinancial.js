@@ -12,9 +12,8 @@ import Modal from 'components/molecules/BaseModal/BaseModal'
 import Loading from 'components/atoms/loading/loading'
 import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
 import Title from 'components/atoms/BaseTitle/BaseTitle'
-import Autocomplete from 'components/atoms/BaseAutocomplete/BaseAutocomplete'
-import PickerDate from 'components/atoms/pickerDate/pickerDate'
 import BaseText from 'components/atoms/BaseText/BaseText'
+import BaseSelect from 'components/molecules/BaseSelect/BaseSelect'
 
 const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
   const { t } = useTranslation()
@@ -28,7 +27,7 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
   const [truckId, setTruckId] = useState('')
   const [cartId, setCartId] = useState('')
   const [driverId, setDriverId] = useState('')
-  const [date, setDate] = useState(currentDate)
+  const [date] = useState(currentDate)
 
   const [fetch, setFetch] = useState(false)
 
@@ -92,11 +91,11 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
       open={showModal}
       onClose={onClose}
       maxWidth={'335px'}
-      maxHeight={'500px'}
+      maxHeight={'600px'}
     >
       <ContentHeader mt={2}>
         <Title
-          sx={{ fontFamily: 'Poppins, sans-serif!important', fontSize: '32px' }}
+          sx={{ fontFamily: 'Poppins, sans-serif!important', fontSize: '24px' }}
         >
           {t('financial.new_financial')}
         </Title>
@@ -112,13 +111,9 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
           sx={{ minHeight: '300px' }}
         >
           <Grid item xs={12} md={12} lg={12}>
-            <Autocomplete
-              sx={{
-                '& .MuiAutocomplete-input': {
-                  height: '0.4em!important'
-                }
-              }}
-              placeholder={t('placeholder.driver')}
+            <BaseSelect
+              labelText={t('placeholder.driver')}
+              placeholder={t('messages.select')}
               options={drivers?.dataResult ?? []}
               getOptionLabel={(option) => option.name}
               onChange={(event, newValue) => {
@@ -128,15 +123,13 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
           </Grid>
 
           <Grid item xs={12} md={12} lg={12}>
-            <Autocomplete
-              sx={{
-                '& .MuiAutocomplete-input': {
-                  height: '0.4em!important'
-                }
-              }}
-              placeholder={t('placeholder.truck')}
+            <BaseSelect
+              labelText={t('placeholder.truck')}
+              placeholder={t('messages.select')}
               options={trucks?.dataResult ?? []}
-              getOptionLabel={(option) => option.truck_models}
+              getOptionLabel={(option) =>
+                `${option.id} - ${option.truck_models}`
+              }
               onChange={(event, newValue) => {
                 setTruckId(newValue?.id)
               }}
@@ -144,28 +137,16 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
           </Grid>
 
           <Grid item xs={12} md={12} lg={12}>
-            <BaseText>{} </BaseText>
-            <Autocomplete
-              sx={{
-                '& .MuiAutocomplete-input': {
-                  height: '0.4em!important'
-                }
-              }}
-              placeholder={t('placeholder.cart')}
+            <BaseText></BaseText>
+            <BaseSelect
+              labelText={t('placeholder.cart')}
+              placeholder={t('messages.select')}
               options={carts?.dataResult ?? []}
-              getOptionLabel={(option) => option.cart_models}
+              getOptionLabel={(option) =>
+                `${option.id} - ${option.cart_models}`
+              }
               onChange={(event, newValue) => {
                 setCartId(newValue.id)
-              }}
-            />
-          </Grid>
-
-          <Grid container item xs={12} md={12} lg={12}>
-            <PickerDate
-              size="medium"
-              height="2.4em"
-              onChange={(newValue) => {
-                setDate(newValue)
               }}
             />
           </Grid>
@@ -174,16 +155,16 @@ const ModalAddFinancial = ({ showModal, setShowModal, mutate }) => {
             <Grid item xs={12} md={12} lg={6}>
               <Button
                 onClick={() => onClose()}
-                background={'#fff'}
+                background={''}
                 sx={{
                   width: '140px',
                   height: '49px',
                   border: '1px solid #509BFB',
-                  color: '#000000'
+                  color: '#FFF'
                 }}
                 variant="text"
               >
-                {t('button.return')}
+                {t('button.cancel')}
               </Button>
             </Grid>
             <Grid container item xs={12} md={12} lg={6}>

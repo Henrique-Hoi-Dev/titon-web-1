@@ -134,8 +134,6 @@ export const ModalAddFreight = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  console.log('final', body)
-
   return (
     <Modal
       open={showModal}

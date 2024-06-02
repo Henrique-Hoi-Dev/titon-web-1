@@ -18,7 +18,7 @@ const BaseText = ({
         ...sx,
         fontSize: `${fontsize ? fontsize : '18px'}`,
         whiteSpace: `${whiteSpace}`,
-        color: `${color}`,
+        color: `${color ? color : '#FFFFFF'}`,
         fontWeight: `${font_weight}`
       }}
     >

@@ -165,7 +165,6 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
                   handleSubmit(ev)
                 }
                 background={'#fff'}
-                variant="text"
                 sx={{
                   fontSize: '14px',
                   width: '141px',

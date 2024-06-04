@@ -147,6 +147,7 @@ const HeaderBar = ({ setFetch, fetch }) => {
             sx: {
               filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
               mt: 1.5,
+              background: '#2B2B2C',
               paddingTop: '15px',
               paddingLeft: '10px',
               marginTop: '0px!important',
@@ -167,7 +168,7 @@ const HeaderBar = ({ setFetch, fetch }) => {
                 left: 24,
                 width: 10,
                 height: 10,
-                bgcolor: 'background.paper',
+                bgcolor: '#2B2B2C',
                 transform: 'translateY(-50%) rotate(45deg)',
                 zIndex: 0
               }

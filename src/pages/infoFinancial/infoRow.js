@@ -26,17 +26,14 @@ const InfoRow = (props) => {
         }}
         onClick={(ev) => handleAction(ev, data?.id)}
       >
-        <SCell
-          sx={{ p: 2, display: 'flex', justifyContent: 'center' }}
-          displaywidth={isMobile ? 1 : 0}
-        >
+        <SCell displaywidth={isMobile ? 1 : 0}>
           <BaseTypeStatus props={data} statusTable />
         </SCell>
         <SCell displaywidth={isMobile ? 1 : 0}>
           {data?.finalFreightCity.toUpperCase() ?? '---'}
         </SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-          {data?.locationTruck.toUpperCase()}
+          {data?.locationTruck?.toUpperCase()}
         </SCell>
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>
           {formatDate(data?.date)}

@@ -53,7 +53,7 @@ const CardInfoValues = ({ props, styles, onClick }) => {
               component="img"
               height="190px"
               sx={{ borderRadius: '8px' }}
-              image={props.truck_avatar}
+              image={props?.truck_avatar}
               alt="green iguana"
             />
           </Typography>
@@ -91,7 +91,7 @@ const CardInfoValues = ({ props, styles, onClick }) => {
             <Grid container justifyContent={'space-between'}>
               <Text fontsize={'16px'}>{t('card_financial.label3')} </Text>
               <Text fontsize={'16px'}>
-                {props?.freigth[0]?.final_freight_city.toUpperCase()}
+                {props?.freight[0]?.final_freight_city.toUpperCase()}
               </Text>
             </Grid>
 

@@ -12,10 +12,16 @@ export const BaseTypeStatus = ({ props, statusTable = false }) => {
           : typeStatus(props).background
       }
       borderRadius={'8px'}
-      p={'0 8px 0 8px'}
+      borderColor={
+        statusTable ? typeStatusTable(props).color : typeStatus(props).color
+      }
+      border={2}
+      p={'5px 8px 5px 8px'}
     >
       <BaseText
         fontsize={'12px'}
+        sx={{ fontWeight: '10px' }}
+        font_weight="600"
         color={
           statusTable ? typeStatusTable(props).color : typeStatus(props).color
         }

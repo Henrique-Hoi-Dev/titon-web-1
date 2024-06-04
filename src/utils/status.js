@@ -23,6 +23,12 @@ const status = [
     label: 'FINALIZADO',
     color: '#86878A',
     background: '#D9D9D9'
+  },
+  {
+    value: 'DRAFT',
+    label: 'RASCUNHO',
+    color: '#86878A',
+    background: '#D9D9D9'
   }
 ]
 

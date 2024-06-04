@@ -75,7 +75,7 @@ const CardInfoValues = ({ props, styles, onClick }) => {
               <Text fontsize={'24px'} color="#F1F3F9">
                 {props?.truck_board.toUpperCase()}
               </Text>
-              <BaseTypeStatus props={props?.freigth} />
+              <BaseTypeStatus props={props?.freight} />
             </Grid>
 
             <Grid container justifyContent={'space-between'}>

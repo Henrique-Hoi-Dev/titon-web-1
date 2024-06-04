@@ -18,6 +18,7 @@ import { ModalAddFreight } from './modal/modalAddFreight'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { BaseNotFount } from 'components/molecules/BaseNotFound/BaseNotFound'
+import { BaseTypeStatus } from 'components/molecules/BaseTypeStatus/BaseTypeStatus'
 
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
@@ -26,7 +27,6 @@ import Button from 'components/atoms/BaseButton/BaseButton'
 
 import Table from './table'
 import ModalCheck from 'components/organisms/ModalCheck'
-import { BaseTypeStatus } from 'components/molecules/BaseTypeStatus/BaseTypeStatus'
 
 export const InfoFinancial = () => {
   const { t } = useTranslation()

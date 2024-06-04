@@ -15,9 +15,9 @@ const status = [
     value: 'STARTING_TRIP',
     label: 'EM VIAGEM',
     color: '#1877F2',
-    background: ''
+    background: '#e6ecff'
   },
-  { value: 'DENIED', label: 'NEGADO', color: '#F03D3D', background: '' },
+  { value: 'DENIED', label: 'NEGADO', color: '#F03D3D', background: '#ffeaea' },
   {
     value: 'FINISHED',
     label: 'FINALIZADO',
@@ -27,8 +27,8 @@ const status = [
   {
     value: 'DRAFT',
     label: 'RASCUNHO',
-    color: '#86878A',
-    background: '#D9D9D9'
+    color: '#b590db',
+    background: '#f3e2fe'
   }
 ]
 
@@ -54,9 +54,13 @@ export const typeStatus = (res) => {
   const fourthStatusProps =
     status.find((item) => item.value === fourthStatus?.status) ?? ''
 
-  const fifthStatus = res.find((item) => item.status === 'DENIED') ?? ''
+  const fifthStatus = res.find((item) => item.status === 'FINISHED') ?? ''
   const fifthStatusProps =
     status.find((item) => item.value === fifthStatus?.status) ?? ''
+
+  const fifthStatus1 = res.find((item) => item.status === 'DRAFT') ?? ''
+  const fifthStatusProps1 =
+    status.find((item) => item.value === fifthStatus1?.status) ?? ''
 
   const nonEmptyStatus = status.find((item) => item.value === '') ?? ''
 
@@ -72,6 +76,8 @@ export const typeStatus = (res) => {
     return fifthStatusProps
   } else if (nonEmptyStatus) {
     return nonEmptyStatus
+  } else if (fifthStatusProps1) {
+    return fifthStatusProps1
   } else {
     return ''
   }
@@ -93,6 +99,9 @@ export const typeStatusTable = (res) => {
   const fifthStatusProps =
     status.find((item) => item.value === res?.status) ?? ''
 
+  const fifthStatusProps1 =
+    status.find((item) => item.value === res?.status) ?? ''
+
   const nonEmptyStatus = status.find((item) => item.value === '') ?? ''
 
   if (firstStatusProps) {
@@ -107,6 +116,8 @@ export const typeStatusTable = (res) => {
     return fifthStatusProps
   } else if (nonEmptyStatus) {
     return nonEmptyStatus
+  } else if (fifthStatusProps1) {
+    return fifthStatusProps1
   } else {
     return ''
   }

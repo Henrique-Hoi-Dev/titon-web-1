@@ -17,11 +17,11 @@ const ModalAddCart = ({ showModal, setShowModal, mutate }) => {
   const [fetch, setFetch] = useState(false)
 
   const typeCart = [
-    { value: 'tank', label: 'Tanque' },
-    { value: 'bulkCarrier', label: 'Graneleiro' },
-    { value: 'sider', label: 'Sider' },
-    { value: 'chest', label: 'Baú' },
-    { value: 'bucket', label: 'Caçamba' }
+    { value: 'TANK', label: 'Tanque' },
+    { value: 'BULKCARRIER', label: 'Graneleiro' },
+    { value: 'SIDER', label: 'Sider' },
+    { value: 'CHEST', label: 'Baú' },
+    { value: 'BUCKET', label: 'Caçamba' }
   ]
 
   const {
@@ -205,10 +205,10 @@ const ModalAddCart = ({ showModal, setShowModal, mutate }) => {
             </Grid>
           )}
 
-          {(body?.cart_bodyworks === 'bulkCarrier' ||
-            body?.cart_bodyworks === 'sider' ||
-            body?.cart_bodyworks === 'chest' ||
-            body?.cart_bodyworks === 'bucket') && (
+          {(body?.cart_bodyworks === 'BULKCARRIER' ||
+            body?.cart_bodyworks === 'SIDER' ||
+            body?.cart_bodyworks === 'CHEST' ||
+            body?.cart_bodyworks === 'BUCKET') && (
             <Grid item xs={12} md={6} lg={6}>
               <Input
                 label={'Capacidade de tonelada'}

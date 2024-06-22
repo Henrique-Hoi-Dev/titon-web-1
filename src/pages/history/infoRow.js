@@ -31,7 +31,7 @@ const InfoRow = (props) => {
   const isMobile = useMediaQuery({ maxWidth: '730px' })
 
   const status = [
-    { value: 'approval_process', label: 'Em processo', color: 'green' },
+    { value: 'PENDING', label: 'Em processo', color: 'green' },
     { value: 'approved', label: 'Aprovado', color: '#1976d2' },
     { value: 'denied', label: 'Negado', color: 'red' },
     { value: 'finished', label: 'Finalizado', color: 'grey' }

@@ -1,6 +1,6 @@
 const status = [
   {
-    value: 'APPROVAL_PROCESS',
+    value: 'PENDING',
     label: 'ANALISE',
     color: '#FFCE52',
     background: '#FFEDB3'
@@ -41,8 +41,7 @@ export const typeStatus = (res) => {
   const firstStatusProps =
     status.find((item) => item.value === firstStatus?.status) ?? ''
 
-  const secondStatus =
-    res.find((item) => item.status === 'APPROVAL_PROCESS') ?? ''
+  const secondStatus = res.find((item) => item.status === 'PENDING') ?? ''
   const secondStatusProps =
     status.find((item) => item.value === secondStatus?.status) ?? ''
 

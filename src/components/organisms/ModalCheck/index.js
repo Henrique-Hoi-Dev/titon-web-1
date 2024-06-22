@@ -154,7 +154,7 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
         </Grid>
       )}
 
-      {checks?.responseData?.status === 'APPROVAL_PROCESS' &&
+      {checks?.responseData?.status === 'PENDING' &&
         !isFetching &&
         !isValidating && (
           <Grid container item spacing={2} mt={1} justifyContent="flex-end">

@@ -145,7 +145,7 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
         </MenuItem> */}
         <Divider sx={{ my: 0.3, width: '85%', ml: 2 }} />
         <MenuItem
-          onClick={() => setSearchStatus('APPROVAL_PROCESS') || handleClose()}
+          onClick={() => setSearchStatus('PENDING') || handleClose()}
           disableRipple
           sx={{ ml: 2, width: '85%', lineHeight: 'unset', fontWeight: '700' }}
         >

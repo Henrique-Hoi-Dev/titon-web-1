@@ -2,7 +2,7 @@ import { Grid } from '@mui/material'
 import BaseText from '../../atoms/BaseText/BaseText'
 import { typeStatus, typeStatusTable } from 'utils/status'
 
-export const BaseTypeStatus = ({ props, statusTable = false }) => {
+export const BaseTypeStatus = ({ sx, props, statusTable = false }) => {
   return (
     <Grid
       item
@@ -13,6 +13,9 @@ export const BaseTypeStatus = ({ props, statusTable = false }) => {
       }
       borderRadius={'8px'}
       sx={{
+        ...sx,
+        minWidth: '100px',
+        textAlign: 'center',
         borderColor: statusTable
           ? typeStatusTable(props).color
           : typeStatus(props).color,

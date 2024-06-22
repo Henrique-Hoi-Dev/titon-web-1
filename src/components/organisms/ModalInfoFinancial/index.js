@@ -15,7 +15,7 @@ import { formatDate } from 'utils/formatDate'
 import { HiOutlinePlusSm } from 'react-icons/hi'
 import { ModalFinalizeRecord } from '../../../pages/infoFinancial/modal/modalFinalizeRecord'
 import { ModalAddFreight } from '../../../pages/infoFinancial/modal/modalAddFreight'
-import { status } from 'utils/status'
+import { typeStatus } from 'utils/status'
 
 import Table from './table'
 import Title from 'components/atoms/BaseTitle/BaseTitle'
@@ -56,48 +56,6 @@ export const ModalInfoFinancial = ({
 
   const onClose = () => {
     setShowModal(false)
-  }
-
-  const getStatus = (res) => {
-    const firstStatus =
-      res?.find((item) => item.status === 'STARTING_TRIP') ?? ''
-    const firstStatusProps =
-      status.find((item) => item.value === firstStatus?.status) ?? ''
-
-    const secondStatus =
-      res?.find((item) => item.status === 'APPROVAL_PROCESS') ?? ''
-    const secondStatusProps =
-      status.find((item) => item.value === secondStatus?.status) ?? ''
-
-    const thirdStatus = res?.find((item) => item.status === 'APPROVED') ?? ''
-    const thirdStatusProps =
-      status.find((item) => item.value === thirdStatus?.status) ?? ''
-
-    const fourthStatus = res?.find((item) => item.status === 'DENIED') ?? ''
-    const fourthStatusProps =
-      status.find((item) => item.value === fourthStatus?.status) ?? ''
-
-    const fifthStatus = res?.find((item) => item.status === 'DENIED') ?? ''
-    const fifthStatusProps =
-      status.find((item) => item.value === fifthStatus?.status) ?? ''
-
-    const nonEmptyStatus = status.find((item) => item.value === '') ?? ''
-
-    if (firstStatus) {
-      return firstStatusProps
-    } else if (secondStatus) {
-      return secondStatusProps
-    } else if (thirdStatus) {
-      return thirdStatusProps
-    } else if (fourthStatus) {
-      return fourthStatusProps
-    } else if (fifthStatus) {
-      return fifthStatusProps
-    } else if (nonEmptyStatus) {
-      return nonEmptyStatus
-    } else {
-      return ''
-    }
   }
 
   return (
@@ -194,9 +152,9 @@ export const ModalInfoFinancial = ({
                   >
                     <Text
                       fontSize={'19px'}
-                      color={getStatus(financial?.dataResult?.freight).color}
+                      color={typeStatus(financial?.dataResult?.freight).color}
                     >
-                      {getStatus(financial?.dataResult?.freight).label}
+                      {typeStatus(financial?.dataResult?.freight).label}
                     </Text>
                   </Grid>
                   <Text fontSize={'16px'}>

@@ -167,13 +167,24 @@
     "label_price2": "COTAÇÃO",
     "label_filled_with_fuel": "ABASTECIDAS",
     "label_money_deposit": "DEPOSITOS",
-    "label_financial_expenses": "DESPESAS"
+    "label_financial_expenses": "DESPESAS",
+    "previous_average": "Média anterior",
+    "fuel_estimate": "Estimativa combustivel",
+    "liquid_surplus": "Lucro final",
+    "trip_km": "Viagem KM",
+    "total_shipping": "Frete total",
+    "fuel_consumption": "Combustível consumo",
+    "driver_commission": "Comissão motorista",
+    "km_price": "Preço por KM",
+    "net_shipping": "Frete liquido"
   },
   "button": {
     "return": "Voltar",
     "confirm": "Confirmar",
     "create": "Criar",
     "cancel": "Cancelar",
+    "approved": "APROVAR",
+    "disapprove": "REPROVAR",
     "add_new_listing": "Adicionar Nova Ficha",
     "register": "Cadastrar"
   },

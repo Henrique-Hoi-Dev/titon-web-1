@@ -173,6 +173,8 @@
     "return": "Voltar",
     "confirm": "Confirmar",
     "create": "Criar",
+    "approved": "APROVAR",
+    "disapprove": "REPROVAR",
     "cancel": "Cancelar",
     "add_new_listing": "Adicionar Nova Ficha",
     "register": "Cadastrar"

@@ -4,6 +4,7 @@ import { successNotification, errorNotification } from 'utils/notification'
 import { useGet } from 'services/requests/useGet'
 import { useSelector } from 'react-redux'
 import { useUpdatePatch } from 'services/requests/useUpdatePatch'
+import { useTranslation } from 'react-i18next'
 
 import Button from 'components/atoms/BaseButton/BaseButton'
 import Loading from 'components/atoms/loading/loading'
@@ -14,6 +15,8 @@ import Title from 'components/atoms/BaseTitle/BaseTitle'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 
 const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
+  const { t } = useTranslation()
+
   const [fetch, setFetch] = useState(false)
   const [body, setBody] = useState({})
 
@@ -54,7 +57,7 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
   useEffect(() => {
     if (data) {
       onClose()
-      mutate()
+      // mutate()
       successNotification(data?.success?.responseData?.msg)
     } else if (error?.response?.data?.httpStatus === 400) {
       errorNotification(error?.response?.data?.responseData?.msg)
@@ -89,30 +92,33 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
       {!isFetching && !isValidating && (
         <Grid container item spacing={2} mt={1} sx={{ minHeight: '300px' }}>
           <Grid item md={4} lg={4} container flexDirection={'column'}>
-            <Text>Média anterior</Text>
+            <Text>{t('modal.previous_average')}</Text>
             <Text fontsize={'24px'}>
               {checks?.responseData?.previous_average}
             </Text>
           </Grid>
+
           <Grid item md={4} lg={4} container flexDirection={'column'}>
-            <Text>Estimativa combustivel</Text>
+            <Text>{t('modal.fuel_estimate')}</Text>
             <Text fontsize={'24px'} color="#F03D3D">
               {checks?.responseData?.fuel_estimate}
             </Text>
           </Grid>
+
           <Grid item md={3} lg={3} container flexDirection={'column'}>
-            <Text>Sobra Liquida</Text>
+            <Text>{t('modal.liquid_surplus')}</Text>
             <Text fontsize={'24px'} color="#0BB07B">
               {checks?.responseData?.net_freight}
             </Text>
           </Grid>
 
           <Grid item md={4} lg={4} container flexDirection={'column'}>
-            <Text>Distancia KM</Text>
+            <Text>{t('modal.trip_km')}</Text>
             <Text fontsize={'24px'}>{checks?.responseData?.distance}</Text>
           </Grid>
+
           <Grid item md={4} lg={4} container flexDirection={'column'}>
-            <Text>Frete Total</Text>
+            <Text>{t('modal.total_shipping')}</Text>
             <Text fontsize={'24px'} color="#0BB07B">
               {checks?.responseData?.full_freight}
             </Text>
@@ -123,11 +129,12 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
           </Grid>
 
           <Grid item md={4} lg={4} container flexDirection={'column'}>
-            <Text>Consumo</Text>
+            <Text>{t('modal.fuel_consumption')}</Text>
             <Text fontsize={'24px'}>{checks?.responseData?.consumption}</Text>
           </Grid>
+
           <Grid item md={4} lg={4} container flexDirection={'column'}>
-            <Text>Comissão motorista</Text>
+            <Text>{t('modal.driver_commission')}</Text>
             <Text fontsize={'24px'} color="#F03D3D">
               {checks?.responseData?.driver_commission}
             </Text>
@@ -138,11 +145,12 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
           </Grid>
 
           <Grid item md={4} lg={4} container flexDirection={'column'}>
-            <Text>Preço KM</Text>
+            <Text>{t('modal.km_price')}</Text>
             <Text fontsize={'24px'}>{checks?.responseData?.KM_price}</Text>
           </Grid>
+
           <Grid item md={4} lg={4} container flexDirection={'column'}>
-            <Text>Frete Liquido</Text>
+            <Text>{t('modal.net_shipping')}</Text>
             <Text fontsize={'24px'} color="#0BB07B">
               {checks?.responseData?.leftover_liquid}
             </Text>
@@ -164,17 +172,16 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
                   setBody((state) => ({ ...state, status: 'DENIED' })) ||
                   handleSubmit(ev)
                 }
-                background={'#fff'}
+                disableRipple
+                variant="outlined"
                 sx={{
-                  fontSize: '14px',
                   width: '141px',
                   height: '49px',
                   marginRight: '15px',
-                  border: '1px solid #F03D3D',
-                  color: '#000000'
+                  color: '#fff'
                 }}
               >
-                REPROVAR
+                {t('button.disapprove')}
               </Button>
             </Grid>
             <Grid container item xs={12} md={3} lg={3}>
@@ -184,19 +191,17 @@ const ModalCheck = ({ showModal, setShowModal, mutate, checkId }) => {
                   handleSubmit(ev)
                 }
                 type="submit"
-                color="success"
                 background={
                   'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
                 }
                 sx={{
-                  fontSize: '14px',
                   color: 'white',
                   width: '141px',
                   height: '49px',
                   marginRight: '15px'
                 }}
               >
-                APROVAR
+                {t('button.approved')}
               </Button>
             </Grid>
           </Grid>

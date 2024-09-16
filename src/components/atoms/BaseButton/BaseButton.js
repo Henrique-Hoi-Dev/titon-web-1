@@ -21,7 +21,6 @@ const BaseButton = ({
           variant={variant ? variant : 'default'}
           sx={{
             ...sx,
-            // position: "relative",
             paddingTop: '8px',
             lineHeight: '0px',
             fontSize: `${fontsize ? fontsize : '14px'}`,

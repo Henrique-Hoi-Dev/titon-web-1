@@ -29,6 +29,7 @@ const SelectWithInput = ({
       sx={{ flexWrap: "nowrap" }}
     >
       <Autocomplete
+        required
         options={options}
         getOptionLabel={(option) => option?.label ?? ""}
         isOptionEqualToValue={(option, value) => option.value === value.value}
@@ -45,6 +46,9 @@ const SelectWithInput = ({
             border: `2px solid ${
               dark ? "#FFFFFF!important" : "#2B2B2C!important"
             }`,
+          },
+          "& .css-segi59": {
+            paddingRight: "60px !important",
           },
           "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
             width: "110px !important",
@@ -73,6 +77,7 @@ const SelectWithInput = ({
         renderInput={(params) => <TextField {...params} />}
       />
       <TextField
+        required
         label={placeholder}
         type={type}
         sx={{

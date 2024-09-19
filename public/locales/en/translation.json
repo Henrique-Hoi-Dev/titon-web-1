@@ -90,7 +90,7 @@
     "rounds": "Rounds",
     "super_prize": "Super Prize",
     "prize": "Prize",
-    "double_line":  "Double Line",
+    "double_line": "Double Line",
     "line": "Line",
     "prize_total": "Prize Total",
     "auto_increment": "Auto Increment",
@@ -144,8 +144,8 @@
   "button": {
     "return": "Return",
     "confirm": "Confirm",
-    "create": "Create"
-    
+    "create": "Create",
+    "add_new_listing": "Add new listing"
   },
   "components": {
     "button_default": "Button Default",
@@ -172,8 +172,8 @@
     "there_are_no_sweepstakes": "There are no sweepstakes"
   },
   "error": {
-   "passwords_not_match": "Passwords not match",
-   "there_is_already_a_draw_at_this_time": "There is already a draw at this time!",
-   "minimum_break_is_10_minutes": "Minimum break is 10 minutes!"
+    "passwords_not_match": "Passwords not match",
+    "there_is_already_a_draw_at_this_time": "There is already a draw at this time!",
+    "minimum_break_is_10_minutes": "Minimum break is 10 minutes!"
   }
 }

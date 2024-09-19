@@ -1,5 +1,9 @@
 {
   "menu": {
+    "home": "Home",
+    "drivers": "Motoristas",
+    "trucks": "Caminhões",
+    "carts": "Carretas",
     "users": "Usuários",
     "user": "Usuarios",
     "manager": "Gerente",
@@ -8,6 +12,7 @@
     "withdraws": "Saques",
     "scratch_games": "Raspadinhas",
     "reports": "Relatórios",
+    "check": "Checklist",
     "pix": "Pix",
     "scheduled_draw": "Sorteio Programado",
     "historic": "Histórico",
@@ -20,7 +25,26 @@
     "transactions": "Transações",
     "collector": "Coletor"
   },
+  "subMenu": {
+    "label": "Organizar fichas por",
+    "label1": "Organizar por:",
+    "label2": "LIMPAR FILTRO",
+    "labelStatus1": "ANALISE",
+    "labelStatus2": "APROVADO",
+    "labelStatus3": "NEGADO",
+    "labelStatus4": "FINALIZADO"
+  },
+  "label": {
+    "truck": "Caminhão",
+    "email": "E-mail",
+    "password": "Senha",
+    "cart": "Carreta",
+    "forgot_password": "Esqueceu sua senha?",
+    "to_go_back": "Voltar"
+  },
   "field": {
+    "send": "Enviar",
+    "login": "Entrar",
     "actions": "Ações",
     "canceled": "Cancelado",
     "confirm_password": "Confirmar Senha",
@@ -93,7 +117,7 @@
     "line": "Linha",
     "prize_total": "Prêmio Total",
     "auto_increment": "Auto Incremento",
-    "type":"Tipo",
+    "type": "Tipo",
     "draw_amount": "Qtd Sorteio",
     "interval": "Intervalo",
     "hours": "Horas",
@@ -132,18 +156,28 @@
     "housecut_total": "Housecut",
     "ticket_total": "Ticket",
     "balance_total": "Saldo",
-    "canceled_total": "Cancelado"  
+    "canceled_total": "Cancelado"
   },
   "modal": {
     "add": "Adicionar",
     "create": "Criar",
     "edit": "Editar",
-    "delete": "Deletar"
+    "delete": "Deletar",
+    "label_price": "COTAÇÃO X ATUALIZAÇÃO",
+    "label_price2": "COTAÇÃO",
+    "label_filled_with_fuel": "ABASTECIDAS",
+    "label_money_deposit": "DEPOSITOS",
+    "label_financial_expenses": "DESPESAS"
   },
   "button": {
     "return": "Voltar",
     "confirm": "Confirmar",
-    "create": "Criar"
+    "create": "Criar",
+    "approved": "APROVAR",
+    "disapprove": "REPROVAR",
+    "cancel": "Cancelar",
+    "add_new_listing": "Adicionar Nova Ficha",
+    "register": "Cadastrar"
   },
   "components": {
     "button_default": "Botão Padrão",
@@ -160,18 +194,134 @@
     "add_logo": "Adicionar logo",
     "min_interval": "Intervalo mínimo de 10 minutos",
     "success_msg": "Operação realizada com sucesso!",
-    "select_room": "Selecione uma sala", 
+    "select_room": "Selecione uma sala",
+    "select": "Selecione",
     "select_game_instance_or_status": "Selecione uma local ou status",
     "select_game_instance": "Selecione uma local",
     "select_template": "Selecione um template",
     "unknown_error": "Erro desconhecido",
     "loading": "Carregando",
     "number_of_draws_added": "Número de sorteios adicionados",
-    "there_are_no_sweepstakes": "Não há sorteios"
+    "there_are_no_sweepstakes": "Não há sorteios",
+    "result_not_found": "Resultado não encontrado",
+    "error": "Error"
   },
   "error": {
     "passwords_not_match": "Senhas não coincidem",
+    "login_error": "Usuário e/ou senha incorretos",
     "there_is_already_a_draw_at_this_time": "Já existe sorteio nesse horário!",
     "minimum_break_is_10_minutes": "Mínimo intervalo é de 10 minutos!"
-   }
+  },
+  "driver": {
+    "title": "Motoristas",
+    "button": {
+      "title": "Adicionar Motorista"
+    },
+    "table": {
+      "label1": "ID",
+      "label2": "Motorista",
+      "label3": "Crédito/Débito",
+      "label4": "Caminhão",
+      "label5": "Carreta",
+      "label6": "Ações"
+    }
+  },
+  "truck": {
+    "title": "Caminhões",
+    "button": {
+      "title": "Adicionar Caminhão"
+    },
+    "table": {
+      "label1": "Marca",
+      "label2": "Modelo",
+      "label3": "Placa",
+      "label4": "Cor",
+      "label5": "Caminhão/KM",
+      "label6": "Chassi",
+      "label7": "Caminhão/Ano",
+      "label8": "Ações"
+    }
+  },
+  "cart": {
+    "title": "Carretas",
+    "button": {
+      "title": "Adicionar Carretas"
+    },
+    "table": {
+      "label1": "Marca",
+      "label2": "Modelo",
+      "label3": "Placa",
+      "label4": "Cor",
+      "label5": "Tara",
+      "label6": "Carretas/Tipo",
+      "label7": "Chassi",
+      "label8": "Carreta/Ano",
+      "label9": "Ações"
+    }
+  },
+  "report": {
+    "title": "Relatórios",
+    "button": {
+      "title": "Emitir Relatório"
+    }
+  },
+  "check": {
+    "title": "Check List",
+    "button": {
+      "title": "Adicionar modelo Check List"
+    }
+  },
+  "info_financial": {
+    "driver": "Motorista",
+    "startDate": "Data inicio",
+    "endDate": "Data final",
+    "destiny": "Destino",
+    "credit": "Crédito",
+    "invoicing": "Faturamento",
+    "notifications": "Notificações",
+    "notFoundNotifications": "NÃO HÁ NOTIFICAÇÔES...",
+    "button": { "finalize_form": "Finalizar Ficha" },
+    "table": {
+      "status": "Status",
+      "current_location": "Local atual",
+      "creation_date": "Data de criação",
+      "gross_value": "Valor bruto"
+    }
+  },
+  "financial": {
+    "new_financial": "Nova Ficha"
+  },
+  "card_financial": {
+    "label1": "Motorista:",
+    "label2": "Data de Inicio:",
+    "label3": "Destino:",
+    "label4": "Crédito:"
+  },
+  "placeholder": {
+    "driver": "Motorista",
+    "login_email": "Insira seu e-mail",
+    "login_password": "Insira sua senha",
+    "create_password": "Insira sua senha novamente",
+    "phone_driver": "(DDD) 00000-0000",
+    "value_driver": "R$ 0,00",
+    "percentage_driver": "0%",
+    "truck": "Caminhão",
+    "cart": "Carreta",
+    "name_driver": "Insira o nome completo",
+    "cpf_driver": "Insira o CPF",
+    "search_truck": "Modelo, Marca, placa, ano e cor",
+    "search_cart": "Modelo, placa, ano e cor",
+    "search_financial": "Nome e placa"
+  },
+  "modal_create_driver": {
+    "title": "Cadastro Motorista",
+    "name_driver": "Nome completo",
+    "cpf_driver": "CPF",
+    "phone_driver": "Celular",
+    "value_daily_driver": "Valor diária",
+    "value_fixed_remuneration_driver": "Remuneração fixa",
+    "value_percentage_pay_driver": "Remuneração porcentagem",
+    "create_password": "Senha",
+    "create_confirm_password": "Confirmar senha"
+  }
 }

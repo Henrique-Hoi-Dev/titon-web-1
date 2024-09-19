@@ -19,7 +19,7 @@ function App() {
         statusText?.data?.error === "Unauthorized" ||
         statusText?.data?.error === "jwt expired" ||
         statusText?.data?.error === "invalid token" ||
-        statusText?.data?.error === "User token invalid"
+        statusText?.data?.error === "INVALID_TOKEN"
       ) {
         dispatch(signOut());
         navigate("/login");

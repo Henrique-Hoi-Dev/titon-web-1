@@ -1,31 +1,29 @@
-import * as React from "react";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import Text from "components/atoms/text/text";
-import imgNotFound from "../../assets/trist-not-found-table.svg";
-import TableRow from "@mui/material/TableRow";
+import * as React from 'react'
+import Paper from '@mui/material/Paper'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableRow from '@mui/material/TableRow'
 
-import { Grid, TablePagination } from "@mui/material";
-import { formatDate } from "../../utils/formatDate";
-import { moneyMask } from "utils/masks";
+import { TablePagination } from '@mui/material'
+import { formatDate } from '../../utils/formatDate'
+import { moneyMask } from 'utils/masks'
+import { BaseNotFount } from 'components/molecules/BaseNotFound/BaseNotFound'
+import { SHead, SRow, STable } from 'components/atoms/BaseTable/BaseTable'
 
 const columns = [
-  { id: "typeTransactions", label: "Motivo", minWidth: 170 },
-  { id: "value", label: "Valor", minWidth: 140 },
+  { id: 'typeTransactions', label: 'Motivo', minWidth: 170 },
+  { id: 'value', label: 'Valor', minWidth: 140 },
   {
-    id: "type",
-    label: "Tipo",
-    minWidth: 100,
+    id: 'type',
+    label: 'Tipo',
+    minWidth: 100
   },
-  { id: "date", label: "Data", minWidth: 170, align: "right" },
-];
+  { id: 'date', label: 'Data', minWidth: 170, align: 'right' }
+]
 
 function createData(typeTransactions, value, type, date) {
-  return { typeTransactions, value, type, date };
+  return { typeTransactions, value, type, date }
 }
 
 export default function TableBankStatement({ data }) {
@@ -34,44 +32,53 @@ export default function TableBankStatement({ data }) {
       createData(
         item.typeTransactions,
         moneyMask(item.value),
-        item.type_method === "DEBIT" ? "Débito" : "Crédito",
+        item.type_method === 'DEBIT' ? 'Débito' : 'Crédito',
         formatDate(item.date)
       )
-    ) ?? [];
+    ) ?? []
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = React.useState(0)
+  const [rowsPerPage, setRowsPerPage] = React.useState(10)
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+    setPage(newPage)
+  }
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
+    setRowsPerPage(+event.target.value)
+    setPage(0)
+  }
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440, height: 370 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
+    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+      <TableContainer
+        sx={{
+          maxHeight: 440,
+          height: 370,
+          background: '#3A3A3A',
+          boxShadow: 'none!important',
+          borderRadius: '16px'
+        }}
+      >
+        <STable stickyHeader aria-label="sticky table">
+          <SHead>
+            <SRow>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
                   style={{
                     minWidth: column.minWidth,
-                    background: "#CCD6EB",
                     fontWeight: 600,
+                    background: '#3A3A3A',
+                    color: '#939395'
                   }}
                 >
                   {column.label}
                 </TableCell>
               ))}
-            </TableRow>
-          </TableHead>
+            </SRow>
+          </SHead>
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -79,47 +86,30 @@ export default function TableBankStatement({ data }) {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={i}>
                     {columns.map((column) => {
-                      const value = row[column.id];
+                      const value = row[column.id]
                       return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          style={{
+                            color: `${row.type === 'Crédito' ? 'green' : 'red'}`
+                          }}
+                        >
+                          {column.format && typeof value === 'number'
                             ? column.format(value)
                             : value}
                         </TableCell>
-                      );
+                      )
                     })}
                   </TableRow>
-                );
+                )
               })}
           </TableBody>
-        </Table>
+        </STable>
 
-        {rows?.length === 0 && (
-          <Grid
-            container
-            item
-            xs={12}
-            md={12}
-            lg={12}
-            justifyContent={"center"}
-            alignItems={"center"}
-            height={"300px"}
-          >
-            <Text fontSize={"28px"} center>
-              {"RESULTADO NÃO ENCONTRADO..."}
-              <img
-                src={imgNotFound}
-                alt="img"
-                width={"40px"}
-                style={{
-                  verticalAlign: "bottom",
-                  marginLeft: "24px",
-                }}
-              />
-            </Text>
-          </Grid>
-        )}
+        {rows?.length === 0 && <BaseNotFount />}
       </TableContainer>
+
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
@@ -130,5 +120,5 @@ export default function TableBankStatement({ data }) {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
-  );
+  )
 }

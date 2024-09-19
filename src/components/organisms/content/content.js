@@ -1,35 +1,36 @@
-import { Grid, Paper } from "@mui/material";
-import { templateContext } from "components/templates/main/main";
-import { useContext } from "react";
+import { Grid, Paper } from '@mui/material'
+import { templateContext } from 'components/templates/main'
+import { useContext } from 'react'
 // import { useMediaQuery } from "react-responsive";
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom'
 import { Wrapper } from './styles'
 
 const Content = () => {
-  const { openMenu } = useContext(templateContext);
-  
+  const { openMenu } = useContext(templateContext)
+
   // const isDesktop = useMediaQuery({ maxWidth: 1430 });
 
   return (
     <Wrapper>
       <Grid
-        sx={{ 
-          background: "transparent", 
-          boxShadow: "none",
-          borderRadius: "8px" 
+        sx={{
+          background: 'transparent',
+          boxShadow: 'none',
+          borderRadius: '8px'
         }}
-        p={"10px"}
-        ml={`${openMenu ? "280px" : "20px"}`}
-        width={`${openMenu ? "calc(100% - 285px)" : "calc(100% - 100px)"}`}
-        height={"calc(100vh - 66px)"}
+        p={'10px'}
+        ml={`${openMenu ? '280px' : '20px'}`}
+        mt={10}
+        width={`${openMenu ? 'calc(100% - 285px)' : 'calc(100% - 100px)'}`}
+        minHeight="88vh"
         component={Paper}
-        alignContent={"center"}
-        justifyContent={"center"}
+        alignContent={'center'}
+        justifyContent={'center'}
       >
         <Outlet />
-      </Grid>      
+      </Grid>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Content;
+export default Content

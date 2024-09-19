@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { Grid, Paper, TableContainer } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import { TablePagination } from "components/atoms/tablePagination/tablePagination";
-import { useMediaQuery } from "react-responsive";
+import React, { useState } from 'react'
+import { Grid, Paper, TableContainer } from '@mui/material'
+import { useTranslation } from 'react-i18next'
+import { TablePagination } from 'components/atoms/tablePagination/tablePagination'
+import { useMediaQuery } from 'react-responsive'
 import {
   SCell,
   SHead,
   SRow,
   STable,
   STableBody,
-  SLabel,
-} from "components/atoms/table/table";
+  SLabel
+} from 'components/atoms/BaseTable/BaseTable'
+import { BaseError } from 'components/molecules/BaseError/BaseError'
+import { BaseNotFount } from 'components/molecules/BaseNotFound/BaseNotFound'
 
-import InfoRow from "./infoRow";
-import Text from "components/atoms/text/text";
-import imgNotFound from "../../assets/trist-not-found-table.svg";
-import Loading from "components/atoms/loading/loading";
-import ModalDeleteCart from "./modalDeleteCart";
-import ModalUpdateCart from "./modalUpdateCart";
+import InfoRow from './infoRow'
+import Loading from 'components/atoms/loading/loading'
+import ModalDeleteCart from './modal/modalDeleteCart'
+import ModalUpdateCart from './modal/modalUpdateCart'
 
 const Table = ({
   data,
@@ -26,107 +26,116 @@ const Table = ({
   isFetching,
   mutate,
   error,
-  loading,
+  loading
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const isDesktop = useMediaQuery({ maxWidth: "1120px" });
-  const isMobile = useMediaQuery({ maxWidth: "730px" });
+  const isDesktop = useMediaQuery({ maxWidth: '1120px' })
+  const isMobile = useMediaQuery({ maxWidth: '730px' })
 
-  const [showModalDelete, setShowModalDelete] = useState(false);
-  const [showModalUpdate, setShowModalUpdate] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false)
+  const [showModalUpdate, setShowModalUpdate] = useState(false)
 
-  const [cartId, setCartId] = useState(null);
+  const [cartId, setCartId] = useState(null)
 
   const handleSort = (item) => {
     setQuery((state) => ({
       ...state,
       sort_field: item,
-      sort_order: `${query?.sort_order === "ASC" ? "DESC" : "ASC"}`,
-    }));
-    return;
-  };
+      sort_order: `${query?.sort_order === 'ASC' ? 'DESC' : 'ASC'}`
+    }))
+    return
+  }
 
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer
+        component={Paper}
+        sx={{
+          background: '#3A3A3A',
+          boxShadow: 'none!important',
+          borderRadius: '16px'
+        }}
+      >
         <STable>
           <SHead>
             <SRow>
               <SCell displaywidth={isDesktop ? 0 : 1}>Info</SCell>
               <SCell>
                 <SLabel
-                  active={query?.sort_field === "cart_brand"}
+                  active={query?.sort_field === 'cart_brand'}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_brand")}
+                  onClick={() => handleSort('cart_brand')}
                 >
-                  Marca
+                  {t('cart.table.label1')}
                 </SLabel>
               </SCell>
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "cart_models"}
+                  active={query?.sort_field === 'cart_models'}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_models")}
+                  onClick={() => handleSort('cart_models')}
                 >
-                  Modelo
+                  {t('cart.table.label2')}
                 </SLabel>
               </SCell>
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "cart_brand"}
+                  active={query?.sort_field === 'cart_board'}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_brand")}
+                  onClick={() => handleSort('cart_board')}
                 >
-                  Placa
+                  {t('cart.table.label3')}
                 </SLabel>
               </SCell>
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "cart_color"}
+                  active={query?.sort_field === 'cart_color'}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_color")}
+                  onClick={() => handleSort('cart_color')}
                 >
-                  Cor
+                  {t('cart.table.label4')}
                 </SLabel>
               </SCell>
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "cart_tara"}
+                  active={query?.sort_field === 'cart_tara'}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_tara")}
+                  onClick={() => handleSort('cart_tara')}
                 >
-                  Tara
+                  {t('cart.table.label5')}
                 </SLabel>
               </SCell>
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "cart_bodywork"}
+                  active={query?.sort_field === 'cart_bodywork'}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_bodywork")}
+                  onClick={() => handleSort('cart_bodywork')}
                 >
-                  Tipo Carreta
+                  {t('cart.table.label6')}
                 </SLabel>
               </SCell>
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "cart_chassis"}
+                  active={query?.sort_field === 'cart_chassis'}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_chassis")}
+                  onClick={() => handleSort('cart_chassis')}
                 >
-                  Chassi
+                  {t('cart.table.label7')}
                 </SLabel>
               </SCell>
               <SCell displaywidth={isMobile ? 1 : 0}>
                 <SLabel
-                  active={query?.sort_field === "cart_year"}
+                  active={query?.sort_field === 'cart_year'}
                   direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort("cart_year")}
+                  onClick={() => handleSort('cart_year')}
                 >
-                  Ano Fabricação
+                  {t('cart.table.label8')}
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isDesktop ? 1 : 0}>Ações</SCell>
+              <SCell displaywidth={isDesktop ? 1 : 0}>
+                {t('cart.table.label9')}
+              </SCell>
             </SRow>
           </SHead>
           {!isFetching && data && data?.dataResult?.length > 0 && (
@@ -155,34 +164,13 @@ const Table = ({
 
         {(loading || isFetching) && (
           <Grid container justifyContent="center" alignItems="center" mt={3}>
-            <Loading titulo={t("messages.loading")} />
+            <Loading titulo={t('messages.loading')} />
           </Grid>
         )}
 
-        {data?.dataResult?.length === 0 && !isFetching && (
-          <Grid item justifyContent="center" alignItems="center" pt={5}>
-            <Text fontSize={"28px"} center>
-              {"RESULTADO NÃO ENCONTRADO..."}
-              <img
-                src={imgNotFound}
-                alt="img"
-                width={"40px"}
-                style={{
-                  verticalAlign: "bottom",
-                  marginLeft: "24px",
-                }}
-              />
-            </Text>
-          </Grid>
-        )}
+        {data?.dataResult?.length === 0 && !isFetching && <BaseNotFount />}
 
-        {error && (
-          <Grid item justifyContent="center" alignItems="center" pt={5}>
-            <Text fontSize={"28px"} center>
-              {t("messages.unknown_error").toUpperCase()}
-            </Text>
-          </Grid>
-        )}
+        {error && <BaseError />}
       </TableContainer>
 
       {showModalDelete && (
@@ -203,7 +191,7 @@ const Table = ({
         />
       )}
     </>
-  );
-};
+  )
+}
 
-export default Table;
+export default Table

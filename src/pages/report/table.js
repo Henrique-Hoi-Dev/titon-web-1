@@ -1,69 +1,66 @@
-import * as React from "react";
-import PropTypes from "prop-types";
-import Box from "@mui/material/Box";
-import TableContainer from "@mui/material/TableContainer";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import Loading from "components/atoms/loading/loading";
-import Text from "components/atoms/text/text";
-import imgNotFound from "../../assets/NotFound.png";
+import * as React from 'react'
+import PropTypes from 'prop-types'
+import Box from '@mui/material/Box'
+import TableContainer from '@mui/material/TableContainer'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import Paper from '@mui/material/Paper'
+import Checkbox from '@mui/material/Checkbox'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
+import DeleteIcon from '@mui/icons-material/Delete'
+import FilterListIcon from '@mui/icons-material/FilterList'
+import Loading from 'components/atoms/loading/loading'
+import Text from 'components/atoms/BaseText/BaseText'
+import imgNotFound from '../../assets/NotFound.png'
 
-import { alpha } from "@mui/material/styles";
+import { alpha } from '@mui/material/styles'
 import {
   SCell,
   SHead,
   SRow,
   STable,
-  STableBody,
-} from "components/atoms/table/table";
-import { Grid } from "@mui/material";
-import { TablePagination } from "components/atoms/tablePagination/tablePagination";
-import { formatDate } from "utils/formatDate";
+  STableBody
+} from 'components/atoms/BaseTable/BaseTable'
+import { Grid } from '@mui/material'
+import { TablePagination } from 'components/atoms/tablePagination/tablePagination'
+import { formatDate } from 'utils/formatDate'
+import { useTranslation } from 'react-i18next'
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
-    return -1;
+    return -1
   }
   if (b[orderBy] > a[orderBy]) {
-    return 1;
+    return 1
   }
-  return 0;
+  return 0
 }
 
 function getComparator(order, orderBy) {
-  return order === "desc"
+  return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
+    : (a, b) => -descendingComparator(a, b, orderBy)
 }
 
-// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-// stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-// only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-// with exampleArray.slice().sort(exampleComparator)
 function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
+  const stabilizedThis = array.map((el, index) => [el, index])
   stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
+    const order = comparator(a[0], b[0])
     if (order !== 0) {
-      return order;
+      return order
     }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
+    return a[1] - b[1]
+  })
+  return stabilizedThis.map((el) => el[0])
 }
 
-const DEFAULT_ORDER = "asc";
-const DEFAULT_ORDER_BY = "calories";
-const DEFAULT_ROWS_PER_PAGE = 5;
+const DEFAULT_ORDER = 'asc'
+const DEFAULT_ORDER_BY = 'calories'
+const DEFAULT_ROWS_PER_PAGE = 5
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, numSelected, rowCount } = props;
+  const { onSelectAllClick, numSelected, rowCount } = props
 
   return (
     <SHead>
@@ -75,7 +72,7 @@ function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              "aria-label": "select all desserts",
+              'aria-label': 'select all desserts'
             }}
           />
         </SCell>
@@ -86,11 +83,11 @@ function EnhancedTableHead(props) {
         <SCell>Carreta</SCell>
       </SRow>
     </SHead>
-  );
+  )
 }
 
 function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
+  const { numSelected } = props
 
   return (
     <Toolbar
@@ -102,13 +99,13 @@ function EnhancedTableToolbar(props) {
             alpha(
               theme.palette.primary.main,
               theme.palette.action.activatedOpacity
-            ),
-        }),
+            )
+        })
       }}
     >
       {numSelected > 0 ? (
         <Typography
-          sx={{ flex: "1 1 100%" }}
+          sx={{ flex: '1 1 100%' }}
           color="inherit"
           variant="subtitle1"
           component="div"
@@ -117,7 +114,7 @@ function EnhancedTableToolbar(props) {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: "1 1 100%" }}
+          sx={{ flex: '1 1 100%' }}
           variant="h6"
           id="tableTitle"
           component="div"
@@ -140,12 +137,12 @@ function EnhancedTableToolbar(props) {
         </Tooltip>
       )}
     </Toolbar>
-  );
+  )
 }
 
 EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
+  numSelected: PropTypes.number.isRequired
+}
 
 export default function TableCheck({
   data,
@@ -153,7 +150,7 @@ export default function TableCheck({
   setQuery,
   isFetching,
   error,
-  loading,
+  loading
 }) {
   function createData(id, driver, date, truck, cart) {
     return {
@@ -161,9 +158,10 @@ export default function TableCheck({
       driver,
       date,
       truck,
-      cart,
-    };
+      cart
+    }
   }
+  const { t } = useTranslation()
 
   const rows =
     data?.dataResult?.map((item) =>
@@ -174,61 +172,63 @@ export default function TableCheck({
         item?.truck_models,
         item?.cart_models
       )
-    ) ?? [];
+    ) ?? []
 
-  const [selected, setSelected] = React.useState([]);
-  const [visibleRows, setVisibleRows] = React.useState(null);
+  const [selected, setSelected] = React.useState([])
+  const [visibleRows, setVisibleRows] = React.useState(null)
 
   React.useEffect(() => {
     let rowsOnMount = stableSort(
       rows,
       getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY)
-    );
+    )
 
     rowsOnMount = rowsOnMount.slice(
       0 * DEFAULT_ROWS_PER_PAGE,
       0 * DEFAULT_ROWS_PER_PAGE + DEFAULT_ROWS_PER_PAGE
-    );
+    )
 
-    setVisibleRows(rowsOnMount);
+    setVisibleRows(rowsOnMount)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  }, [data])
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.id);
-      setSelected(newSelected);
-      return;
+      const newSelected = rows.map((n) => n.id)
+      setSelected(newSelected)
+      return
     }
-    setSelected([]);
-  };
+    setSelected([])
+  }
 
   const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
+    const selectedIndex = selected.indexOf(name)
+    let newSelected = []
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, name)
     } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
+      newSelected = newSelected.concat(selected.slice(1))
     } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
+      newSelected = newSelected.concat(selected.slice(0, -1))
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
         selected.slice(selectedIndex + 1)
-      );
+      )
     }
 
-    setSelected(newSelected);
-  };
+    setSelected(newSelected)
+  }
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (name) => selected.indexOf(name) !== -1
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
-        <TableContainer>
+    <Box sx={{ width: '100%' }}>
+      <Paper sx={{ width: '100%', mb: 2 }}>
+        <TableContainer
+          sx={{ background: 'transparent', boxShadow: 'none!important' }}
+        >
           <STable sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <EnhancedTableHead
               numSelected={selected.length}
@@ -238,8 +238,8 @@ export default function TableCheck({
             <STableBody>
               {visibleRows
                 ? visibleRows.map((row, index) => {
-                    const isItemSelected = isSelected(row.id);
-                    const labelId = `enhanced-table-checkbox-${index}`;
+                    const isItemSelected = isSelected(row.id)
+                    const labelId = `enhanced-table-checkbox-${index}`
 
                     return (
                       <SRow
@@ -250,7 +250,7 @@ export default function TableCheck({
                         tabIndex={-1}
                         key={row.id}
                         selected={isItemSelected}
-                        sx={{ cursor: "pointer" }}
+                        sx={{ cursor: 'pointer' }}
                         alternatingcolors={index}
                       >
                         <SCell padding="checkbox">
@@ -258,7 +258,7 @@ export default function TableCheck({
                             color="primary"
                             checked={isItemSelected}
                             inputProps={{
-                              "aria-labelledby": labelId,
+                              'aria-labelledby': labelId
                             }}
                           />
                         </SCell>
@@ -275,7 +275,7 @@ export default function TableCheck({
                         <SCell align="right">{row.truck}</SCell>
                         <SCell align="right">{row.cart}</SCell>
                       </SRow>
-                    );
+                    )
                   })
                 : null}
             </STableBody>
@@ -293,21 +293,21 @@ export default function TableCheck({
 
           {data?.dataResult?.length === 0 && !isFetching && (
             <Grid
-              item
               container
               justifyContent="center"
               alignItems="center"
               p={5}
+              sx={{ background: '#3A3A3A' }}
             >
-              <Text fontSize={"28px"} center>
-                {"RESULTADO NÃO ENCONTRADO..."}
+              <Text fontSize={'28px'} center color={'#939395'}>
+                {t('messages.result_not_found')}
                 <img
                   src={imgNotFound}
                   alt="img"
-                  width={"60px"}
+                  width={'60px'}
                   style={{
-                    verticalAlign: "middle",
-                    marginLeft: "24px",
+                    verticalAlign: 'middle',
+                    marginLeft: '24px'
                   }}
                 />
               </Text>
@@ -316,5 +316,5 @@ export default function TableCheck({
         </TableContainer>
       </Paper>
     </Box>
-  );
+  )
 }

@@ -55,6 +55,7 @@ export const InfoFinancial = () => {
   } = useGet(`user/financialStatement/${id}`)
 
   const handleCheck = (freightId, driverId) => {
+    if (!freightId || !driverId) return
     setCheckId({ freightId, driverId })
     setShowModalCheck(!showModalCheck)
   }
@@ -249,7 +250,9 @@ export const InfoFinancial = () => {
                   onClick={() => handleCheck(item?.freight_id, item?.driver_id)}
                   key={item?.id}
                   sx={{
-                    cursor: 'pointer'
+                    cursor: `${
+                      !item?.freight_id || !item?.driver_id ? '' : 'pointer'
+                    }`
                   }}
                 >
                   <Text sx={{ maxWidth: '690px' }}>{item?.content}</Text>{' '}

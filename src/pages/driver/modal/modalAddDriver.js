@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import {
   Grid,
   LinearProgress,
   linearProgressClasses,
   styled
-} from '@mui/material'
-import { useTranslation } from 'react-i18next'
-import { useCreate } from 'services/requests/useCreate'
-import { errorNotification, successNotification } from 'utils/notification'
-import { formatMoney, maskCPF, maskPhone } from 'utils/masks'
-import { unmaskMoney } from 'utils/unmaskMoney'
-import { evaluateStrongPassword } from 'utils/passwordVerify'
-import { unmaskPhone } from 'utils/unmask'
+} from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { useCreate } from 'services/requests/useCreate';
+import { errorNotification, successNotification } from 'utils/notification';
+import { formatMoney, maskCPF, maskPhone } from 'utils/masks';
+import { unmaskMoney } from 'utils/unmaskMoney';
+import { evaluateStrongPassword } from 'utils/passwordVerify';
+import { unmaskPhone } from 'utils/unmask';
 
-import Button from 'components/atoms/BaseButton/BaseButton'
-import Modal from 'components/molecules/BaseModal/BaseModal'
-import Loading from 'components/atoms/loading/loading'
-import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import Title from 'components/atoms/BaseTitle/BaseTitle'
-import BaseInput from 'components/molecules/BaseInput/BaseInput'
+import Button from 'components/atoms/BaseButton/BaseButton';
+import Modal from 'components/molecules/BaseModal/BaseModal';
+import Loading from 'components/atoms/loading/loading';
+import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import Title from 'components/atoms/BaseTitle/BaseTitle';
+import BaseInput from 'components/molecules/BaseInput/BaseInput';
 
 const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
-  const [body, setBody] = useState({})
-  const [data, setData] = useState({})
+  const [body, setBody] = useState({});
+  const [data, setData] = useState({});
 
-  const [fetch, setFetch] = useState(false)
+  const [fetch, setFetch] = useState(false);
 
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const [passwordError, setPasswordError] = useState(false)
+  const [passwordError, setPasswordError] = useState(false);
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 5,
@@ -46,31 +46,31 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
       borderRadius: 2,
       backgroundColor: evaluateStrongPassword(body.password).color
     }
-  }))
+  }));
 
   const {
     data: newDevice,
     error: errorNewDevice,
     isFetching
-  } = useCreate('driver/signup', data, fetch, setFetch)
+  } = useCreate('driver/signup', data, fetch, setFetch);
 
   const onClose = () => {
-    setShowModal(false)
-    setBody({})
-  }
+    setShowModal(false);
+    setBody({});
+  };
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
+    ev.preventDefault();
 
     if (body?.password !== confirmPassword) {
-      setPasswordError(true)
-      return
+      setPasswordError(true);
+      return;
     }
 
-    setFetch(true)
-    setPasswordError(false)
-    setConfirmPassword('')
-  }
+    setFetch(true);
+    setPasswordError(false);
+    setConfirmPassword('');
+  };
 
   useEffect(() => {
     setData((state) => ({
@@ -82,22 +82,22 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
       phone: unmaskPhone(body?.phone),
       daily: unmaskMoney(body?.daily),
       value_fix: unmaskMoney(body?.value_fix)
-    }))
+    }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [body])
+  }, [body]);
 
   useEffect(() => {
     if (newDevice) {
-      mutate()
-      onClose()
-      successNotification(t('messages.success_msg'))
+      mutate();
+      onClose();
+      successNotification(t('messages.success_msg'));
     }
 
     if (errorNewDevice) {
-      errorNotification(errorNewDevice?.response?.data?.mgs)
+      errorNotification(errorNewDevice?.response?.data?.mgs);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newDevice, errorNewDevice])
+  }, [newDevice, errorNewDevice]);
 
   return (
     <Modal
@@ -161,7 +161,7 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
               styles={{ minWidth: '250px' }}
               value={body?.password ?? ''}
               error={passwordError}
-              helperText={passwordError ? 'Senhas não conferem' : ''}
+              helperText={passwordError ? t('error.passwords_not_match') : ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
@@ -301,7 +301,7 @@ const ModalAddDriver = ({ showModal, setShowModal, mutate }) => {
 
       {isFetching && <Loading />}
     </Modal>
-  )
-}
+  );
+};
 
-export default ModalAddDriver
+export default ModalAddDriver;

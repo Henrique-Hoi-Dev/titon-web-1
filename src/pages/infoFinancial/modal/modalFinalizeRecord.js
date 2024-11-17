@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react'
-import { Grid } from '@mui/material'
-import { useUpdate } from 'services/requests/useUpdate'
-import { errorNotification, successNotification } from 'utils/notification'
-import { formatMil } from 'utils/masks'
-import { unmaskMoney } from 'utils/unmaskMoney'
+import { useEffect, useState } from 'react';
+import { Grid } from '@mui/material';
+import { useUpdate } from 'services/requests/useUpdate';
+import { errorNotification, successNotification } from 'utils/notification';
+import { formatMil } from 'utils/masks';
+import { unmaskMoney } from 'utils/unmaskMoney';
+import { useTranslation } from 'react-i18next';
 
-import Button from 'components/atoms/BaseButton/BaseButton'
-import Loading from 'components/atoms/loading/loading'
-import Text from 'components/atoms/BaseText/BaseText'
-import Modal from 'components/molecules/BaseModal/BaseModal'
-import Input from 'components/atoms/input/BaseInput'
+import Button from 'components/atoms/BaseButton/BaseButton';
+import Loading from 'components/atoms/loading/loading';
+import Text from 'components/atoms/BaseText/BaseText';
+import Modal from 'components/molecules/BaseModal/BaseModal';
+import BaseInput from 'components/molecules/BaseInput/BaseInput';
+import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
 
 export const ModalFinalizeRecord = ({
   showModal,
@@ -18,8 +20,10 @@ export const ModalFinalizeRecord = ({
   props,
   mutate
 }) => {
-  const [fetch, setFetch] = useState(false)
-  const [body, setBody] = useState({})
+  const { t } = useTranslation();
+
+  const [fetch, setFetch] = useState(false);
+  const [body, setBody] = useState({});
 
   const { data, error, isFetching } = useUpdate(
     `user/financialStatement/${financialId}`,
@@ -27,27 +31,27 @@ export const ModalFinalizeRecord = ({
     '',
     fetch,
     setFetch
-  )
+  );
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
-    setFetch(true)
-  }
+    ev.preventDefault();
+    setFetch(true);
+  };
 
   const onClose = () => {
-    setShowModal(false)
-  }
+    setShowModal(false);
+  };
 
   useEffect(() => {
     if (data?.httpStatus === 200) {
-      mutate()
-      onClose()
-      successNotification(data?.status)
+      mutate();
+      onClose();
+      successNotification(data?.status);
     } else if (error?.response?.data?.httpStatus === 400) {
-      errorNotification(error?.response?.data?.msg)
+      errorNotification(error?.response?.data?.msg);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, error])
+  }, [data, error]);
 
   return (
     <Modal
@@ -55,7 +59,8 @@ export const ModalFinalizeRecord = ({
       onClose={onClose}
       component="form"
       onSubmit={handleSubmit}
-      maxWidth="560px"
+      maxWidth="640px"
+      minheight={'300px'}
     >
       {!isFetching && error && (
         <Grid item container justifyContent="center">
@@ -65,16 +70,16 @@ export const ModalFinalizeRecord = ({
         </Grid>
       )}
 
+      <ContentHeader>
+        <Text fontsize={'32px'}>
+          {t('info_financial.title')} {props?.dataResult?.truck_board} ?
+        </Text>
+      </ContentHeader>
+
       {!isFetching && (
         <>
-          <Grid item container justifyContent="center">
-            <Text fontsize={'32px'}>
-              Deseja finalizar ficha: {props?.dataResult?.truck_board}?
-            </Text>
-          </Grid>
-
           <Grid item container xs={12} md={12} lg={12} justifyContent="center">
-            <Input
+            <BaseInput
               label={'Insira o KM final'}
               required
               styles={{
@@ -94,51 +99,45 @@ export const ModalFinalizeRecord = ({
             />
           </Grid>
 
-          <Grid container item xs={12} md={12} lg={12} spacing={2}>
-            <Grid
-              container
-              item
-              xs={6}
-              md={6}
-              lg={6}
-              justifyContent={'flex-end'}
-            >
-              <Button
-                type="submit"
-                background={'#fff'}
-                sx={{
-                  width: '140px',
-                  height: '49px',
-                  border: '2px solid #F03D3D',
-                  color: '#000000'
-                }}
-                variant="text"
-              >
-                FINALIZAR
-              </Button>
-            </Grid>
-
-            <Grid
-              container
-              item
-              xs={6}
-              md={6}
-              lg={6}
-              justifyContent={'flex-start'}
-            >
+          <Grid
+            container
+            item
+            xs={12}
+            md={12}
+            lg={12}
+            spacing={2}
+            justifyContent={'center'}
+          >
+            <Grid item container xs={12} md={12} lg={3}>
               <Button
                 onClick={() => onClose()}
-                background={'#509BFB'}
+                background={''}
                 sx={{
                   width: '140px',
                   height: '49px',
                   border: '1px solid #509BFB',
-                  color: '#ffff',
-                  mr: 3
+                  color: '#FFF'
                 }}
-                variant="contained"
+                variant="text"
               >
-                CANCELAR
+                {t('button.cancel')}
+              </Button>
+            </Grid>
+
+            <Grid container item xs={12} md={3} lg={3}>
+              <Button
+                type="submit"
+                color="error"
+                variant="outlined"
+                sx={{
+                  fontSize: '14px',
+                  color: 'white',
+                  width: '141px',
+                  height: '49px',
+                  marginRight: '15px'
+                }}
+              >
+                {t('button.finish')}
               </Button>
             </Grid>
           </Grid>
@@ -150,5 +149,5 @@ export const ModalFinalizeRecord = ({
         </Grid>
       )}
     </Modal>
-  )
-}
+  );
+};

@@ -1,51 +1,44 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
+import { useMediaQuery } from 'react-responsive';
 import {
-  Avatar,
-  Box,
-  Collapse,
-  IconButton,
-  Menu,
-  MenuItem
-} from '@mui/material'
-import { useMediaQuery } from 'react-responsive'
-import { moneyMask } from 'utils/masks'
-import { ArrowDownIcon, ArrowUpIcon, IconActions } from 'assets/icons/icons'
-import {
-  SCell,
-  SRow,
-  STable,
-  STableBody,
-  SCellTwoHead
-} from 'components/atoms/BaseTable/BaseTable'
+  ArrowDownIcon,
+  ArrowUpIcon,
+  DropUpSharpIcon
+} from 'assets/icons/icons';
+import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
+import { useTranslation } from 'react-i18next';
 
 const InfoRow = (props) => {
+  const { t } = useTranslation();
+
   const { data, index, setShowModalDelete, setShowModalUpdate, setTruckId } =
-    props
+    props;
 
-  const [open, setOpen] = useState(false)
-  const [openSettings, setOpenSettings] = useState(false)
-  const [anchorEl, setAnchorEl] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [openSettings, setOpenSettings] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(false);
 
-  const isDesktop = useMediaQuery({ maxWidth: '1250px' })
-  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' })
-  const isMobile = useMediaQuery({ maxWidth: '730px' })
+  const isDesktop = useMediaQuery({ maxWidth: '1250px' });
+  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' });
+  const isMobile = useMediaQuery({ maxWidth: '730px' });
 
   const handleClick = (ev) => {
-    setOpenSettings(!openSettings)
-    setAnchorEl(ev.currentTarget)
-  }
+    setOpenSettings(!openSettings);
+    setAnchorEl(ev.currentTarget);
+  };
 
   const handleDelete = (id, name) => {
-    setShowModalDelete(true)
-    setTruckId({ id: id, name: name })
-    setOpenSettings(false)
-  }
+    setShowModalDelete(true);
+    setTruckId({ id: id, name: name });
+    setOpenSettings(false);
+  };
 
   const handleUpdate = (id) => {
-    setShowModalUpdate(true)
-    setTruckId({ id: id })
-    setOpenSettings(false)
-  }
+    setShowModalUpdate(true);
+    setTruckId({ id: id });
+    setOpenSettings(false);
+  };
 
   return (
     <>
@@ -74,22 +67,37 @@ const InfoRow = (props) => {
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>
           <Avatar
             alt="img"
-            sx={{ height: '70px', width: '70px', marginLeft: '12px' }}
+            sx={{
+              height: '70px',
+              width: '70px',
+              marginLeft: '12px',
+              borderRadius: '8px'
+            }}
             src={data.truck_avatar}
           />
         </SCell>
         <SCell>
           <IconButton
-            color="inherit"
-            fontSize="20px"
-            sx={{ mr: 1 }}
+            color="default"
+            size="small"
+            sx={{
+              background: '#1877F2',
+              '& .icon': {
+                transition: 'transform 0.3s ease-in-out'
+              },
+              '&:hover': {
+                backgroundColor: '#1657A2',
+                transform: 'scale(1.1)',
+                transition: 'background-color 0.3s ease, transform 0.3s ease'
+              }
+            }}
             onClick={(ev) => handleClick(ev)}
           >
-            <IconActions
+            <DropUpSharpIcon
+              className="icon"
               sx={{
-                color: '#ff443a',
-                height: '30px',
-                width: '30px'
+                color: '#fff',
+                transform: `${openSettings ? '' : 'rotate(180deg)'}`
               }}
             />
           </IconButton>
@@ -107,13 +115,24 @@ const InfoRow = (props) => {
           horizontal: 'center'
         }}
         sx={{
-          zIndex: 4444,
-          mt: 5
+          zIndex: 10,
+          mt: 5,
+          '& .MuiPaper-root': {
+            bgcolor: '#333',
+            color: '#fff',
+            '& .MuiMenuItem-root': {
+              '&:hover': {
+                bgcolor: '#444'
+              }
+            }
+          }
         }}
         open={openSettings}
         onClose={() => setOpenSettings(!openSettings)}
       >
-        <MenuItem onClick={() => handleUpdate(data?.id)}>Editar</MenuItem>
+        <MenuItem onClick={() => handleUpdate(data?.id)}>
+          {t('modal.edit')}
+        </MenuItem>
         <MenuItem
           onClick={() =>
             handleDelete(
@@ -122,64 +141,11 @@ const InfoRow = (props) => {
             )
           }
         >
-          Excluir
+          {t('button.delete')}
         </MenuItem>
       </Menu>
-
-      <SRow displaywidth={isDesktop ? 0 : 1} sx={{ backgroundColor: 'white' }}>
-        <SCell
-          style={{ paddingBottom: 0, paddingTop: 0, border: 0 }}
-          colSpan={6}
-        >
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 4 }}>
-              <STable aria-label="purchases">
-                <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-                  <STableBody>
-                    <SRow sx={{ backgroundColor: 'white' }}>
-                      <SCellTwoHead displaywidth={isMobile ? 0 : 1}>
-                        ID
-                      </SCellTwoHead>
-                      <SCell displaywidth={isMobile ? 0 : 1}>
-                        {data.roomid}
-                      </SCell>
-                    </SRow>
-
-                    <SRow sx={{ backgroundColor: 'white' }}>
-                      <SCellTwoHead displaywidth={isSmallDesktop ? 0 : 1}>
-                        ID
-                      </SCellTwoHead>
-                      <SCell displaywidth={isSmallDesktop ? 0 : 1}>
-                        {data.userid}
-                      </SCell>
-                    </SRow>
-
-                    <SRow sx={{ backgroundColor: 'white' }}>
-                      <SCellTwoHead displaywidth={isSmallDesktop ? 0 : 1}>
-                        value
-                      </SCellTwoHead>
-                      <SCell displaywidth={isSmallDesktop ? 0 : 1}>
-                        {moneyMask(data.value || [0])}
-                      </SCell>
-                    </SRow>
-
-                    <SRow sx={{ backgroundColor: 'white' }}>
-                      <SCellTwoHead displaywidth={isDesktop ? 0 : 1}>
-                        trst
-                      </SCellTwoHead>
-                      <SCell displaywidth={isDesktop ? 0 : 1}>
-                        {data.date}
-                      </SCell>
-                    </SRow>
-                  </STableBody>
-                </Box>
-              </STable>
-            </Box>
-          </Collapse>
-        </SCell>
-      </SRow>
     </>
-  )
-}
+  );
+};
 
-export default InfoRow
+export default InfoRow;

@@ -176,17 +176,25 @@
     "fuel_consumption": "Combustível consumo",
     "driver_commission": "Comissão motorista",
     "km_price": "Preço por KM",
-    "net_shipping": "Frete liquido"
+    "net_shipping": "Frete liquido",
+    "title_credit": "Registro crédito / débito",
+    "reason": "Motivo"
   },
   "button": {
     "return": "Voltar",
     "confirm": "Confirmar",
     "create": "Criar",
     "cancel": "Cancelar",
+    "edit": "Editar",
+    "finish": "Finalizar",
+    "credit/debit": "Crédito/Débito",
     "approved": "APROVAR",
+    "register2": "Registrar",
     "disapprove": "REPROVAR",
     "add_new_listing": "Adicionar Nova Ficha",
-    "register": "Cadastrar"
+    "register": "Cadastrar",
+    "update": "Atualizar",
+    "delete": "Excluir"
   },
   "components": {
     "button_default": "Botão Padrão",
@@ -201,8 +209,13 @@
     "no_results_found": "Nenhum resultado encontrado",
     "do_you_want_delete": "Você quer excluir?",
     "add_logo": "Adicionar logo",
+    "credit/debit": "Registro crédito / débito para:",
+    "want_to_delete": "Deseja excluir:",
     "min_interval": "Intervalo mínimo de 10 minutos",
     "success_msg": "Operação realizada com sucesso!",
+    "delete_msg_notice_cart": "Após excluir os registros da carreta serão perdidos.",
+    "delete_msg_notice_truck": "Após excluir os registros do caminhão serão perdidos.",
+    "delete_msg_notice": "Após excluir ele dá plataforma o caminhoneiro não terá mais acesso a sua empresa atraves da LogBook.",
     "select_room": "Selecione uma sala",
     "select": "Selecione",
     "select_game_instance_or_status": "Selecione uma local ou status",
@@ -282,10 +295,12 @@
   },
   "info_financial": {
     "driver": "Motorista",
+    "title": "Deseja finalizar ficha:",
     "startDate": "Data inicio",
     "endDate": "Data final",
     "destiny": "Destino",
     "credit": "Crédito",
+    "debit": "Débito",
     "invoicing": "Faturamento",
     "notifications": "Notificações",
     "notFoundNotifications": "NÃO HÁ NOTIFICAÇÔES...",
@@ -320,7 +335,70 @@
     "cpf_driver": "Insira o CPF",
     "search_truck": "Modelo, Marca, placa, ano e cor",
     "search_cart": "Modelo, placa, ano e cor",
-    "search_financial": "Nome e placa"
+    "search_financial": "Nome e placa",
+    "enter_admission_date": "Insira Data da Admissão",
+    "date_of_birth": "Insira data Nascimento",
+    "cnh_driver": "Insira numero CNH",
+    "cnh_validity": "Insira validade CNH",
+    "mopp_validity": "Insira validade MOPP",
+    "nr20_validity": "Insira validade NR20",
+    "nr35_validity": "Insira validade NR35",
+    "reason": "Insira um motivo"
+  },
+  "modal_cart": {
+    "title": "Cadastro Carreta",
+    "label": {
+      "type_cart": "Tipo de Carreta",
+      "tare": "Tara",
+      "liter_capacity": "Capacidade de litros",
+      "ton_capacity": "Capacidade de tonelada"
+    },
+    "placeholder": {
+      "type_cart": "Insira tipo de Carreta",
+      "tare": "Insira tara",
+      "liter_capacity": "Insira capacidade de litros",
+      "ton_capacity": "Insira capacidade de tonelada"
+    }
+  },
+  "modal_user": {
+    "title": "Editar usuário",
+    "label": {
+      "name": "Nome",
+      "email": "E-mail",
+      "user_cpf": "CPF",
+      "type_user": "Tipo de Usuário",
+      "new_password": "Nova Senha",
+      "confirm_password": "Confirmar Senha"
+    },
+    "placeholder": {
+      "name": "Insira nome",
+      "email": "Insira e-mail",
+      "user_cpf": "Insira CPF",
+      "new_password": "Insira nova Senha",
+      "confirm_password": "Insira confirmar Senha"
+    }
+  },
+  "modal_truck": {
+    "title": "Cadastro Caminhão",
+    "title_edit": "Editar Caminhão",
+    "label": {
+      "mark": "Marca",
+      "model": "Modelo",
+      "year_manufacture": "Ano fabricação",
+      "chassis_number": "Número chassi",
+      "truck_km": "KM rodado",
+      "color": "Cor",
+      "plate": "Placa"
+    },
+    "placeholder": {
+      "mark": "Insira marca",
+      "model": "Insira modelo",
+      "year_manufacture": "Insira Ano fabricação",
+      "chassis_number": "Insira número chassi",
+      "truck_km": "Insira KM rodado",
+      "color": "Insira cor",
+      "plate": "Insira placa"
+    }
   },
   "modal_create_driver": {
     "title": "Cadastro Motorista",
@@ -331,6 +409,13 @@
     "value_fixed_remuneration_driver": "Remuneração fixa",
     "value_percentage_pay_driver": "Remuneração porcentagem",
     "create_password": "Senha",
-    "create_confirm_password": "Confirmar senha"
+    "create_confirm_password": "Confirmar senha",
+    "admission_date": "Data da Admissão",
+    "date_of_birth": "Data Nascimento",
+    "cnh_driver": "Numero CNH",
+    "cnh_validity": "Validade CNH",
+    "mopp_validity": "Validade MOPP",
+    "nr20_validity": "Validade NR20",
+    "nr35_validity": "Validade NR35"
   }
 }

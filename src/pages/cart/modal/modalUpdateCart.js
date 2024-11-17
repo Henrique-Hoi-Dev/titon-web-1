@@ -1,39 +1,42 @@
-import React, { useEffect, useState } from 'react'
-import { Grid } from '@mui/material'
-import { errorNotification, successNotification } from 'utils/notification'
-import { useGet } from 'services/requests/useGet'
-import { useUpdate } from 'services/requests/useUpdate'
+import React, { useEffect, useState } from 'react';
+import { Grid } from '@mui/material';
+import { errorNotification, successNotification } from 'utils/notification';
+import { useGet } from 'services/requests/useGet';
+import { useUpdate } from 'services/requests/useUpdate';
+import { useTranslation } from 'react-i18next';
 
-import Button from 'components/atoms/BaseButton/BaseButton'
-import Input from 'components/atoms/input/BaseInput'
-import Modal from 'components/molecules/BaseModal/BaseModal'
-import Loading from 'components/atoms/loading/loading'
-import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import Title from 'components/atoms/BaseTitle/BaseTitle'
+import Button from 'components/atoms/BaseButton/BaseButton';
+import Modal from 'components/molecules/BaseModal/BaseModal';
+import Loading from 'components/atoms/loading/loading';
+import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import Title from 'components/atoms/BaseTitle/BaseTitle';
+import BaseInput from 'components/molecules/BaseInput/BaseInput';
 
 const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
-  const [fetch, setFetch] = useState(false)
+  const { t } = useTranslation();
 
-  const [body, setBody] = useState([])
+  const [fetch, setFetch] = useState(false);
 
-  const { data: cart, isValidating } = useGet(`user/cart/${props?.id}`, [])
+  const [body, setBody] = useState([]);
+
+  const { data: cart, isValidating } = useGet(`user/cart/${props?.id}`, []);
 
   const {
     data: cartUpdate,
     error: errorCartUpadate,
     isFetching
-  } = useUpdate(`user/cart/${props?.id}`, body, '', fetch, setFetch)
+  } = useUpdate(`user/cart/${props?.id}`, body, '', fetch, setFetch);
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
+    ev.preventDefault();
 
-    setFetch(true)
-  }
+    setFetch(true);
+  };
 
   const onClose = () => {
-    setShowModal(false)
-    setBody({})
-  }
+    setShowModal(false);
+    setBody({});
+  };
 
   useEffect(() => {
     setBody((state) => ({
@@ -42,27 +45,27 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
       cart_brand: cart?.dataResult?.cart_brand,
       cart_color: cart?.dataResult?.cart_color,
       cart_tara: cart?.dataResult?.cart_tara,
-      cart_bodywork: cart?.dataResult?.cart_bodywork,
+      cart_bodyworks: cart?.dataResult?.cart_bodyworks,
       cart_year: cart?.dataResult?.cart_year,
       cart_liter_capacity: cart?.dataResult?.cart_liter_capacity,
       cart_ton_capacity: cart?.dataResult?.cart_ton_capacity
-    }))
-  }, [cart])
+    }));
+  }, [cart]);
 
   useEffect(() => {
     if (cartUpdate) {
-      mutate()
-      onClose()
+      mutate();
+      onClose();
     }
     if (cartUpdate) {
-      successNotification()
+      successNotification();
     }
 
     if (errorCartUpadate) {
-      errorNotification(errorCartUpadate?.response?.data?.msg)
+      errorNotification(errorCartUpadate?.response?.data?.msg);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cartUpdate, errorCartUpadate])
+  }, [cartUpdate, errorCartUpadate]);
 
   return (
     <Modal
@@ -86,8 +89,9 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
           sx={{ minHeight: '300px', justifyContent: 'flex-start' }}
         >
           <Grid item xs={12} md={6} lg={6}>
-            <Input
-              label={'Marca'}
+            <BaseInput
+              label={t('modal_truck.placeholder.mark')}
+              labelText={t('modal_truck.label.mark')}
               required
               styles={{
                 maxWidth: '274px',
@@ -106,14 +110,10 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Input
-              label={'Modelo'}
+            <BaseInput
+              label={t('modal_truck.placeholder.model')}
+              labelText={t('modal_truck.label.model')}
               required
-              styles={{
-                '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                  height: '1.4rem'
-                }
-              }}
               value={body?.cart_models ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
@@ -124,17 +124,12 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
             />
           </Grid>
 
-          {body?.cart_bodywork === 'tank' && (
+          {body?.cart_bodyworks === 'TANK' && (
             <Grid item xs={12} md={6} lg={6}>
-              <Input
-                label={'Capacidade de litros'}
+              <BaseInput
+                label={t('modal_cart.placeholder.liter_capacity')}
+                labelText={t('modal_cart.label.liter_capacity')}
                 required
-                styles={{
-                  maxWidth: '274px',
-                  '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
-                }}
                 value={body?.cart_liter_capacity ?? ''}
                 onChange={(ev) =>
                   setBody((state) => ({
@@ -146,20 +141,15 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
             </Grid>
           )}
 
-          {(body?.cart_bodywork === 'bulkCarrier' ||
-            body?.cart_bodywork === 'sider' ||
-            body?.cart_bodywork === 'chest' ||
-            body?.cart_bodywork === 'bucket') && (
+          {(body?.cart_bodyworks === 'BULKCARRIER' ||
+            body?.cart_bodyworks === 'SIDER' ||
+            body?.cart_bodyworks === 'CHEST' ||
+            body?.cart_bodyworks === 'BUCKET') && (
             <Grid item xs={12} md={6} lg={6}>
-              <Input
-                label={'Capacidade de tonelada'}
+              <BaseInput
+                label={t('modal_cart.placeholder.ton_capacity')}
+                labelText={t('modal_cart.label.ton_capacity')}
                 required
-                styles={{
-                  maxWidth: '274px',
-                  '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
-                }}
                 value={body?.cart_ton_capacity ?? ''}
                 onChange={(ev) =>
                   setBody((state) => ({
@@ -172,15 +162,10 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
           )}
 
           <Grid item xs={12} md={6} lg={6}>
-            <Input
-              label={'Cor'}
+            <BaseInput
+              label={t('modal_truck.placeholder.color')}
+              labelText={t('modal_truck.label.color')}
               required
-              styles={{
-                maxWidth: '274px',
-                '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                  height: '1.4rem'
-                }
-              }}
               value={body?.cart_color ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
@@ -192,15 +177,10 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Input
-              label={'Tara'}
+            <BaseInput
+              label={t('modal_cart.placeholder.tare')}
+              labelText={t('modal_cart.label.tare')}
               required
-              styles={{
-                maxWidth: '274px',
-                '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                  height: '1.4rem'
-                }
-              }}
               value={body?.cart_tara ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
@@ -212,15 +192,10 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
           </Grid>
 
           <Grid item xs={12} md={6} lg={6}>
-            <Input
-              label={'Ano Fabricação'}
+            <BaseInput
+              label={t('modal_truck.placeholder.year_manufacture')}
+              labelText={t('modal_truck.label.year_manufacture')}
               required
-              styles={{
-                maxWidth: '274px',
-                '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                  height: '1.4rem'
-                }
-              }}
               value={body?.cart_year ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
@@ -241,19 +216,19 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
             mt={0.3}
             justifyContent={'flex-end'}
           >
-            <Grid container item xs={12} md={3} lg={3}>
+            <Grid item container xs={12} md={12} lg={3}>
               <Button
                 onClick={() => onClose()}
-                background={'#fff'}
+                background={''}
                 sx={{
                   width: '140px',
                   height: '49px',
                   border: '1px solid #509BFB',
-                  color: '#000000'
+                  color: '#FFF'
                 }}
                 variant="text"
               >
-                CANCELAR
+                {t('button.cancel')}
               </Button>
             </Grid>
             <Grid container item xs={12} md={3} lg={3}>
@@ -271,7 +246,7 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
                   marginRight: '15px'
                 }}
               >
-                Atualizar
+                {t('button.update')}
               </Button>
             </Grid>
           </Grid>
@@ -281,7 +256,7 @@ const ModalUpdateCart = ({ showModal, setShowModal, mutate, props }) => {
       {isFetching && <Loading />}
       {isValidating && <Loading />}
     </Modal>
-  )
-}
+  );
+};
 
-export default ModalUpdateCart
+export default ModalUpdateCart;

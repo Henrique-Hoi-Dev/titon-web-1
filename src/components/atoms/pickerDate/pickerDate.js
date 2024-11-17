@@ -1,6 +1,28 @@
-import React from "react";
-import { TextField } from "@mui/material";
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import React from 'react';
+import { TextField } from '@mui/material';
+import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { ptBR } from 'date-fns/locale';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+import Text from 'components/atoms/BaseText/BaseText';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#1877F2' // Cor primária
+    },
+    background: {
+      default: '#31363F', // Cor de fundo
+      paper: '#424242' // Cor de fundo dos componentes
+    },
+    text: {
+      primary: '#fff',
+      secondary: '#B0B0B0'
+    }
+  }
+});
 
 const PickerDate = ({
   minWidth,
@@ -8,45 +30,60 @@ const PickerDate = ({
   label,
   readOnly,
   height,
+  styles,
+  labelText,
   ...props
 }) => {
   return (
-    <MobileDatePicker
-      {...props}
-      label={label}
-      inputFormat="yyyy-MM-dd"
-      renderInput={props => (
-        <TextField
-          size={`${size === "medium" ? "medium" : "small"}`}
-          {...props}
-          sx={{
-            width: `${minWidth ? minWidth : "100%"}`,
-            "& .css-igs3ac": { border: "2px solid #2B2B2C!important", },
-            ".css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
-              border: "2px solid #2B2B2C!important",
-            },
-            "& .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root": {
-              top: "-6px",
-            },
-            "& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused": {
-              color: "black !important",
-            },
-            "& .MuiSvgIcon-root": {
-              color: "black !important",
-              height: `${height}`,
-            },
-            "& .MuiIconButton-root": {
-              color: "black !important",
-              height: `${height}`,
-            },
-            "& .MuiOutlinedInput-root": {
-              color: "black !important",
-              height: `${height}`,
-            },
-          }}
-        />
-      )}
-    />
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <Text fontsize={'14px'} color={'#1877F2'}>
+        {labelText}
+      </Text>
+      <ThemeProvider theme={darkTheme}>
+        <LocalizationProvider dateAdapter={AdapterDateFns} locale={ptBR}>
+          <DesktopDatePicker
+            {...props}
+            label={label}
+            inputFormat="dd/MM/yyyy"
+            renderInput={(props) => (
+              <TextField
+                size={`${size === 'medium' ? 'medium' : 'small'}`}
+                variant="filled"
+                {...props}
+                sx={{
+                  fontWeight: 'bold',
+                  ...styles,
+                  mt: '5px',
+                  color: '#fff',
+                  background: '#31363F',
+                  borderRadius: '8px 8px 0px 0px',
+                  '& .MuiFilledInput-input': {
+                    color: '#fff',
+                    opacity: '0.5'
+                  },
+                  '& .MuiInputLabel-root': {
+                    color: '#fff',
+                    opacity: '0.5'
+                  },
+                  '& .MuiFilledInput-underline:before': {
+                    borderBottomColor: '#1877F2'
+                  },
+                  '& .MuiFilledInput-underline:after': {
+                    borderBottomColor: '#1877F2'
+                  },
+                  '& .MuiFilledInput-underline:hover:after': {
+                    borderBottomColor: '#1877F2!important'
+                  },
+                  '& .MuiFilledInput-underline:hover:before': {
+                    borderBottomColor: '#1877F2!important'
+                  }
+                }}
+              />
+            )}
+          />
+        </LocalizationProvider>
+      </ThemeProvider>
+    </div>
   );
 };
 

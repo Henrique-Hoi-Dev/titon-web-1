@@ -1,43 +1,46 @@
-import { useEffect, useState } from 'react'
-import { Grid } from '@mui/material'
-import { successNotification, errorNotification } from 'utils/notification'
-import { useDelete } from 'services/requests/useDelete'
+import { useEffect, useState } from 'react';
+import { Grid } from '@mui/material';
+import { successNotification, errorNotification } from 'utils/notification';
+import { useDelete } from 'services/requests/useDelete';
+import { useTranslation } from 'react-i18next';
 
-import Button from 'components/atoms/BaseButton/BaseButton'
-import Loading from 'components/atoms/loading/loading'
-import Text from 'components/atoms/BaseText/BaseText'
-import Modal from 'components/molecules/BaseModal/BaseModal'
+import Button from 'components/atoms/BaseButton/BaseButton';
+import Loading from 'components/atoms/loading/loading';
+import Text from 'components/atoms/BaseText/BaseText';
+import Modal from 'components/molecules/BaseModal/BaseModal';
 
 const ModalDeleteDriver = ({ showModal, setShowModal, props, mutate }) => {
-  const [fetch, setFetch] = useState(false)
+  const { t } = useTranslation();
+
+  const [fetch, setFetch] = useState(false);
 
   const { data, isFetching, error } = useDelete(
     'driver',
     props.id,
     fetch,
     setFetch
-  )
+  );
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
-    setFetch(true)
-  }
+    ev.preventDefault();
+    setFetch(true);
+  };
 
   const onClose = () => {
-    setShowModal(false)
-  }
+    setShowModal(false);
+  };
 
   useEffect(() => {
     if (data?.successStatus === true) {
-      mutate()
-      onClose()
-      successNotification(data?.success?.responseData?.msg)
+      mutate();
+      onClose();
+      successNotification(data?.success?.responseData?.msg);
     }
     if (error?.response?.data?.httpStatus === 400) {
-      errorNotification(error?.response?.data?.mgs)
+      errorNotification(error?.response?.data?.mgs);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, error])
+  }, [data, error]);
 
   return (
     <Modal
@@ -58,7 +61,9 @@ const ModalDeleteDriver = ({ showModal, setShowModal, props, mutate }) => {
       {!isFetching && (
         <>
           <Grid item container justifyContent="center">
-            <Text fontSize={'30px'}>Deseja excluir: {props.name}?</Text>
+            <Text fontSize={'30px'}>
+              {t('messages.want_to_delete')} {props.name} ?
+            </Text>
           </Grid>
           <Grid item container xs={12} md={12} lg={12} justifyContent="center">
             <Grid
@@ -69,57 +74,51 @@ const ModalDeleteDriver = ({ showModal, setShowModal, props, mutate }) => {
               mt={1}
               sx={{ textAlign: 'center' }}
             >
-              <Text fontSize={'16px'}>
-                Após excluir ele dá plataforma o caminhoneiro não terá mais
-                acesso a sua empresa atraves da LogBook.
-              </Text>
+              <Text fontSize={'16px'}>{t('messages.delete_msg_notice')}</Text>
             </Grid>
           </Grid>
 
-          <Grid container item xs={12} md={12} lg={12} spacing={2} mt={2}>
-            <Grid
-              container
-              item
-              xs={6}
-              md={6}
-              lg={6}
-              justifyContent={'flex-end'}
-            >
+          <Grid
+            container
+            item
+            xs={12}
+            md={12}
+            lg={12}
+            spacing={2}
+            mt={2}
+            justifyContent={'center'}
+          >
+            <Grid item container xs={12} md={12} lg={3}>
               <Button
                 onClick={() => onClose()}
-                background={'#509BFB'}
+                background={''}
                 sx={{
                   width: '140px',
                   height: '49px',
                   border: '1px solid #509BFB',
-                  color: '#ffff',
-                  mr: 3
-                }}
-                variant="contained"
-              >
-                CANCELAR
-              </Button>
-            </Grid>
-            <Grid
-              container
-              item
-              xs={6}
-              md={6}
-              lg={6}
-              justifyContent={'flex-start'}
-            >
-              <Button
-                type="submit"
-                background={'#fff'}
-                sx={{
-                  width: '140px',
-                  height: '49px',
-                  border: '1px solid #F03D3D',
-                  color: '#000000'
+                  color: '#FFF'
                 }}
                 variant="text"
               >
-                EXCLUIR
+                {t('button.cancel')}
+              </Button>
+            </Grid>
+
+            <Grid container item xs={12} md={3} lg={3}>
+              <Button
+                type="submit"
+                color="error"
+                // background={'#F03D3D'}
+                variant="outlined"
+                sx={{
+                  fontSize: '14px',
+                  color: 'white',
+                  width: '141px',
+                  height: '49px',
+                  marginRight: '15px'
+                }}
+              >
+                {t('button.delete')}
               </Button>
             </Grid>
           </Grid>
@@ -131,7 +130,7 @@ const ModalDeleteDriver = ({ showModal, setShowModal, props, mutate }) => {
         </Grid>
       )}
     </Modal>
-  )
-}
+  );
+};
 
-export default ModalDeleteDriver
+export default ModalDeleteDriver;

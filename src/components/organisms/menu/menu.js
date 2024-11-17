@@ -1,12 +1,12 @@
-import React, { useContext, useEffect } from 'react'
-import { Avatar, IconButton, List, ListItemText, Tooltip } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
-import { signOut } from '../../../store/modules/auth/actions'
-import { templateContext } from 'components/templates/main'
-import { useNavigate } from 'react-router-dom'
-import { useMediaQuery } from 'react-responsive'
-import { FiLogOut } from 'react-icons/fi'
-import { useTranslation } from 'react-i18next'
+import React, { useContext, useEffect } from 'react';
+import { Avatar, IconButton, List, ListItemText, Tooltip } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { signOut } from '../../../store/modules/auth/actions';
+import { templateContext } from 'components/templates/main';
+import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
+import { FiLogOut } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 import {
   Drawer,
   ListItemCategory,
@@ -16,47 +16,56 @@ import {
   ListText,
   ListSub,
   ListItemCategoryUser
-} from './styles'
+} from './styles';
 
 import {
   IconMenuHome,
   IconMenuTruck,
   IconMenuUser,
   IconMenuTrailer
-} from 'assets/icons/icons'
+} from 'assets/icons/icons';
+import { useLocation } from 'react-router-dom';
 
 const Menu = ({ setFetch }) => {
-  const user = useSelector((state) => state?.user)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const { t } = useTranslation()
+  const user = useSelector((state) => state?.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { t } = useTranslation();
 
   const handleLogOut = () => {
-    dispatch(signOut())
-    navigate('/login')
-  }
+    dispatch(signOut());
+    navigate('/login');
+  };
 
-  const { openMenu, setOpenMenu } = useContext(templateContext)
+  const isActive = (path) => location.pathname === path;
 
-  const isSmallDesktop = useMediaQuery({ maxWidth: '710px' })
+  const { openMenu, setOpenMenu } = useContext(templateContext);
+
+  const isSmallDesktop = useMediaQuery({ maxWidth: '710px' });
 
   useEffect(() => {
     if (isSmallDesktop) {
-      setOpenMenu(false)
+      setOpenMenu(false);
     } else {
-      setOpenMenu(true)
+      setOpenMenu(true);
     }
-  }, [openMenu, setOpenMenu, isSmallDesktop])
+  }, [openMenu, setOpenMenu, isSmallDesktop]);
 
   return (
     <Drawer variant="permanent" open={openMenu}>
       <DrawerHeader></DrawerHeader>
       <List sx={{ marginTop: '20px', border: 'none' }}>
+        {/* home */}
         <ListItemCategory onClick={() => navigate('/home') || setFetch(true)}>
           <ButtonMenu
             sx={{
               justifyContent: openMenu ? 'initial' : 'center',
-              marginLeft: openMenu ? '25px' : '0px'
+              marginLeft: openMenu ? '25px' : '0px',
+              color: isActive('/home') ? '#fff' : 'inherit',
+              backgroundColor: isActive('/home') ? '#1877F2' : 'inherit',
+              borderRadius: '8px'
             }}
           >
             <Tooltip title={'Home'} placement="top">
@@ -76,12 +85,15 @@ const Menu = ({ setFetch }) => {
             </ListItemText>
           </ButtonMenu>
         </ListItemCategory>
-
+        {/* driver */}
         <ListItemCategory onClick={() => navigate('/driver') || setFetch(true)}>
           <ButtonMenu
             sx={{
               justifyContent: openMenu ? 'initial' : 'center',
-              marginLeft: openMenu ? '25px' : '0px'
+              marginLeft: openMenu ? '25px' : '0px',
+              color: isActive('/driver') ? '#fff' : 'inherit',
+              backgroundColor: isActive('/driver') ? '#1877F2' : 'inherit',
+              borderRadius: '8px'
             }}
           >
             <Tooltip title={'Motoristas'} placement="top">
@@ -101,7 +113,7 @@ const Menu = ({ setFetch }) => {
             </ListItemText>
           </ButtonMenu>
         </ListItemCategory>
-
+        {/* truck */}
         <ListItemCategory
           onClick={() => navigate('/truck')}
           sx={{ display: 'block' }}
@@ -109,7 +121,10 @@ const Menu = ({ setFetch }) => {
           <ButtonMenu
             sx={{
               justifyContent: openMenu ? 'initial' : 'center',
-              marginLeft: openMenu ? '25px' : '0px'
+              marginLeft: openMenu ? '25px' : '0px',
+              color: isActive('/truck') ? '#fff' : 'inherit',
+              backgroundColor: isActive('/truck') ? '#1877F2' : 'inherit',
+              borderRadius: '8px'
             }}
           >
             <Tooltip title="Caminhões" placement="top">
@@ -129,7 +144,7 @@ const Menu = ({ setFetch }) => {
             </ListItemText>
           </ButtonMenu>
         </ListItemCategory>
-
+        {/* cart */}
         <ListItemCategory
           onClick={() => navigate('/cart') || setFetch(true)}
           sx={{ display: 'block' }}
@@ -137,7 +152,10 @@ const Menu = ({ setFetch }) => {
           <ButtonMenu
             sx={{
               justifyContent: openMenu ? 'initial' : 'center',
-              marginLeft: openMenu ? '25px' : '0px'
+              marginLeft: openMenu ? '25px' : '0px',
+              color: isActive('/cart') ? '#fff' : 'inherit',
+              backgroundColor: isActive('/cart') ? '#1877F2' : 'inherit',
+              borderRadius: '8px'
             }}
           >
             <Tooltip title="Carretas" placement="top">
@@ -243,7 +261,7 @@ const Menu = ({ setFetch }) => {
         </ListItemCategoryUser>
       </ListSub>
     </Drawer>
-  )
-}
+  );
+};
 
-export default Menu
+export default Menu;

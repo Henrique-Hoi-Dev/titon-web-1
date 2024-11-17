@@ -1,44 +1,48 @@
-import React, { useState } from 'react'
-import { Box, Collapse, IconButton, Menu, MenuItem } from '@mui/material'
-import { useMediaQuery } from 'react-responsive'
-import { moneyMask } from 'utils/masks'
-import { ArrowDownIcon, ArrowUpIcon, IconActions } from 'assets/icons/icons'
+import React, { useState } from 'react';
+import { Box, Collapse, IconButton, Menu, MenuItem } from '@mui/material';
+import { useMediaQuery } from 'react-responsive';
+import { moneyMask } from 'utils/masks';
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  DropUpSharpIcon
+} from 'assets/icons/icons';
 import {
   SCell,
   SRow,
   STable,
   STableBody,
   SCellTwoHead
-} from 'components/atoms/BaseTable/BaseTable'
+} from 'components/atoms/BaseTable/BaseTable';
 
 export default function InfoRow(props) {
   const { data, index, setShowModalDelete, setShowModalUpdate, setUserId } =
-    props
+    props;
 
-  const [open, setOpen] = useState(false)
-  const [openSettings, setOpenSettings] = useState(false)
-  const [anchorEl, setAnchorEl] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [openSettings, setOpenSettings] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(false);
 
-  const isDesktop = useMediaQuery({ maxWidth: '1250px' })
-  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' })
-  const isMobile = useMediaQuery({ maxWidth: '730px' })
+  const isDesktop = useMediaQuery({ maxWidth: '1250px' });
+  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' });
+  const isMobile = useMediaQuery({ maxWidth: '730px' });
 
   const handleClick = (ev) => {
-    setOpenSettings(!openSettings)
-    setAnchorEl(ev.currentTarget)
-  }
+    setOpenSettings(!openSettings);
+    setAnchorEl(ev.currentTarget);
+  };
 
   const handleDelete = (id, name) => {
-    setShowModalDelete(true)
-    setUserId({ id: id, name: name })
-    setOpenSettings(false)
-  }
+    setShowModalDelete(true);
+    setUserId({ id: id, name: name });
+    setOpenSettings(false);
+  };
 
   const handleUpdate = (id) => {
-    setShowModalUpdate(true)
-    setUserId({ id: id })
-    setOpenSettings(false)
-  }
+    setShowModalUpdate(true);
+    setUserId({ id: id });
+    setOpenSettings(false);
+  };
 
   return (
     <>
@@ -59,16 +63,26 @@ export default function InfoRow(props) {
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.type_role}</SCell>
         <SCell>
           <IconButton
-            color="inherit"
-            fontSize="20px"
-            sx={{ mr: 1 }}
+            color="default"
+            size="small"
+            sx={{
+              background: '#1877F2',
+              '& .icon': {
+                transition: 'transform 0.3s ease-in-out'
+              },
+              '&:hover': {
+                backgroundColor: '#1657A2',
+                transform: 'scale(1.1)',
+                transition: 'background-color 0.3s ease, transform 0.3s ease'
+              }
+            }}
             onClick={(ev) => handleClick(ev)}
           >
-            <IconActions
+            <DropUpSharpIcon
+              className="icon"
               sx={{
-                color: '#ff443a',
-                height: '30px',
-                width: '30px'
+                color: '#fff',
+                transform: `${openSettings ? '' : 'rotate(180deg)'}`
               }}
             />
           </IconButton>
@@ -86,8 +100,17 @@ export default function InfoRow(props) {
           horizontal: 'center'
         }}
         sx={{
-          zIndex: 4444,
-          mt: 5
+          zIndex: 10,
+          mt: 5,
+          '& .MuiPaper-root': {
+            bgcolor: '#333',
+            color: '#fff',
+            '& .MuiMenuItem-root': {
+              '&:hover': {
+                bgcolor: '#444'
+              }
+            }
+          }
         }}
         open={openSettings}
         onClose={() => setOpenSettings(!openSettings)}
@@ -151,5 +174,5 @@ export default function InfoRow(props) {
         </SCell>
       </SRow>
     </>
-  )
+  );
 }

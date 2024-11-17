@@ -8,6 +8,7 @@ import Button from 'components/atoms/BaseButton/BaseButton';
 import Loading from 'components/atoms/loading/loading';
 import Text from 'components/atoms/BaseText/BaseText';
 import Modal from 'components/molecules/BaseModal/BaseModal';
+import mgsError from '../../../utils/error/en.json';
 
 const ModalDeleteCart = ({ showModal, setShowModal, props, mutate }) => {
   const { t } = useTranslation();
@@ -15,7 +16,7 @@ const ModalDeleteCart = ({ showModal, setShowModal, props, mutate }) => {
   const [fetch, setFetch] = useState(false);
 
   const { data, isFetching, error } = useDelete(
-    'cart',
+    'user/cart',
     props.id,
     fetch,
     setFetch
@@ -35,8 +36,8 @@ const ModalDeleteCart = ({ showModal, setShowModal, props, mutate }) => {
       mutate();
       onClose();
       successNotification(data?.success?.responseData?.msg);
-    } else if (error?.response?.data?.httpStatus === 400) {
-      errorNotification(error?.response?.data?.responseData?.msg);
+    } else if (error?.response?.status === 400) {
+      errorNotification(error?.response?.data?.mgs);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, error]);
@@ -52,7 +53,7 @@ const ModalDeleteCart = ({ showModal, setShowModal, props, mutate }) => {
       {!isFetching && error && (
         <Grid item container justifyContent="center">
           <Text type="warning">
-            {`messages: ${error?.response?.data?.responseData?.msg}`}
+            {`messages: ${mgsError[error?.response?.data?.mgs]}`}
           </Text>
         </Grid>
       )}

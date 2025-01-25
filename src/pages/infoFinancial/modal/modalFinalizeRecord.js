@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
-import { useUpdate } from 'services/requests/useUpdate';
 import { errorNotification, successNotification } from 'utils/notification';
 import { formatMil } from 'utils/masks';
 import { unmaskMoney } from 'utils/unmaskMoney';
 import { useTranslation } from 'react-i18next';
+import { useUpdatePatch } from 'services/requests/useUpdatePatch';
 
 import Button from 'components/atoms/BaseButton/BaseButton';
 import Loading from 'components/atoms/loading/loading';
@@ -25,8 +25,8 @@ export const ModalFinalizeRecord = ({
   const [fetch, setFetch] = useState(false);
   const [body, setBody] = useState({});
 
-  const { data, error, isFetching } = useUpdate(
-    `user/financialStatement/${financialId}`,
+  const { data, error, isFetching } = useUpdatePatch(
+    `user/financialStatement/finishing/${financialId}`,
     body,
     '',
     fetch,
@@ -43,12 +43,15 @@ export const ModalFinalizeRecord = ({
   };
 
   useEffect(() => {
-    if (data?.httpStatus === 200) {
+    if (data) {
       mutate();
       onClose();
-      successNotification(data?.status);
-    } else if (error?.response?.data?.httpStatus === 400) {
-      errorNotification(error?.response?.data?.msg);
+      successNotification();
+    }
+
+    if (error) {
+      errorNotification(error?.response?.data?.mgs);
+      onClose();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, error]);

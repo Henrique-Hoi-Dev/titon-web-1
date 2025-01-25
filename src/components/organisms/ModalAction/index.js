@@ -1,35 +1,35 @@
-import { useEffect, useState } from 'react'
-import { Box, Divider, Grid, Tab, Tabs, Typography } from '@mui/material'
-import { successNotification, errorNotification } from 'utils/notification'
-import { useUpdate } from 'services/requests/useUpdate'
-import { useGet } from 'services/requests/useGet'
-import { TableStocked } from './tableStocked'
-import { TableExpense } from './tableExpense'
-import { TableDeposit } from './tableDeposit'
-import { useTranslation } from 'react-i18next'
+import { useEffect, useState } from 'react';
+import { Box, Divider, Grid, Tab, Tabs, Typography } from '@mui/material';
+import { successNotification, errorNotification } from 'utils/notification';
+import { useUpdate } from 'services/requests/useUpdate';
+import { useGet } from 'services/requests/useGet';
+import { TableStocked } from './tableStocked';
+import { TableExpense } from './tableExpense';
+import { TableDeposit } from './tableDeposit';
+import { useTranslation } from 'react-i18next';
 
-import Button from 'components/atoms/BaseButton/BaseButton'
-import Text from 'components/atoms/BaseText/BaseText'
-import Modal from 'components/molecules/BaseModal/BaseModal'
-import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import Title from 'components/atoms/BaseTitle/BaseTitle'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import Loading from 'components/atoms/loading/loading'
-import NestedList from 'components/atoms/nestedList/nestedList'
+import Button from 'components/atoms/BaseButton/BaseButton';
+import Text from 'components/atoms/BaseText/BaseText';
+import Modal from 'components/molecules/BaseModal/BaseModal';
+import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import Title from 'components/atoms/BaseTitle/BaseTitle';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import Loading from 'components/atoms/loading/loading';
+import NestedList from 'components/atoms/nestedList/nestedList';
 
 export const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
-  const [fetch, setFetch] = useState(false)
+  const [fetch, setFetch] = useState(false);
 
-  const [value, setValue] = useState(0)
-  const [statusSecondCheck, setStatusSecondCheck] = useState(false)
+  const [value, setValue] = useState(0);
+  const [statusSecondCheck, setStatusSecondCheck] = useState(false);
 
   const { data: check, isValidating } = useGet(
     `user/freight/${checkId}`,
     '',
     checkId ? false : true
-  )
+  );
 
   const { data, error } = useUpdate(
     'user/freight',
@@ -37,37 +37,38 @@ export const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
     checkId,
     fetch,
     setFetch
-  )
+  );
 
   const handleChange = (event, newValue) => {
-    setValue(newValue)
-  }
+    setValue(newValue);
+  };
 
   const onClose = () => {
-    setShowModal(false)
-  }
+    setShowModal(false);
+  };
 
   useEffect(() => {
     if (check?.dataResult?.status === 'STARTING_TRIP') {
-      setStatusSecondCheck(true)
+      setStatusSecondCheck(true);
     } else {
-      setStatusSecondCheck(false)
+      setStatusSecondCheck(false);
     }
-  }, [check, setStatusSecondCheck])
+  }, [check, setStatusSecondCheck]);
 
   useEffect(() => {
     if (data) {
-      mutate()
-      onClose()
-      successNotification(data?.success?.responseData?.msg)
-    } else if (error?.response?.data?.httpStatus === 400) {
-      errorNotification(error?.response?.data?.responseData?.msg)
+      mutate();
+      onClose();
+      successNotification();
+    }
+    if (error) {
+      errorNotification(error?.response?.data?.responseData?.msg);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, error])
+  }, [data, error]);
 
   function TabPanel(props) {
-    const { children, value, index, ...other } = props
+    const { children, value, index, ...other } = props;
 
     return (
       <div
@@ -95,14 +96,14 @@ export const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
           </>
         )}
       </div>
-    )
+    );
   }
 
   function a11yProps(index) {
     return {
       id: `simple-tab-${index}`,
       'aria-controls': `simple-tabpanel-${index}`
-    }
+    };
   }
 
   const valuesFirstCheck = {
@@ -112,7 +113,7 @@ export const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
     },
     value2: check?.dataResult?.expenses,
     value3: check?.dataResult?.totalDriver
-  }
+  };
 
   return (
     <Modal
@@ -408,5 +409,5 @@ export const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
         </Grid>
       )}
     </Modal>
-  )
-}
+  );
+};

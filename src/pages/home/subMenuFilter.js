@@ -1,19 +1,19 @@
-import * as React from 'react'
-import { useState } from 'react'
-import { styled, alpha } from '@mui/material/styles'
-import { Grid } from '@mui/material'
+import * as React from 'react';
+import { useState } from 'react';
+import { styled, alpha } from '@mui/material/styles';
+import { Grid } from '@mui/material';
 import {
   // IconSubMenuTrendingDownIcon,
   // IconSubMenuTrendingUpIcon,
   PointIcon
-} from 'assets/icons/icons'
-import { useTranslation } from 'react-i18next'
+} from 'assets/icons/icons';
+import { useTranslation } from 'react-i18next';
 
-import Button from '@mui/material/Button'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import Divider from '@mui/material/Divider'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Divider from '@mui/material/Divider';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -33,12 +33,12 @@ const StyledMenu = styled((props) => (
     borderRadius: 6,
     marginTop: theme.spacing(1),
     minWidth: 180,
-    color:
-      theme.palette.mode === 'light'
-        ? 'rgb(55, 65, 81)'
-        : theme.palette.grey[300],
+    backgroundColor: '#1C1C1C', // Define o fundo escuro no modo dark
+    color: '#ffffff', // Define a cor do texto
     boxShadow:
-      'rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
+      theme.palette.mode === 'dark'
+        ? 'rgba(255, 255, 255, 0.1) 0px 0px 10px'
+        : 'rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
     '& .MuiMenu-list': {
       padding: '4px 0'
     },
@@ -48,6 +48,15 @@ const StyledMenu = styled((props) => (
         color: theme.palette.text.secondary,
         marginRight: theme.spacing(1.5)
       },
+      '&:hover': {
+        backgroundColor:
+          theme.palette.mode === 'dark'
+            ? '#1E1E1E'
+            : alpha(
+                theme.palette.primary.main,
+                theme.palette.action.selectedOpacity
+              )
+      },
       '&:active': {
         backgroundColor: alpha(
           theme.palette.primary.main,
@@ -56,27 +65,27 @@ const StyledMenu = styled((props) => (
       }
     }
   }
-}))
+}));
 
 export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
-  const [anchorEl, setAnchorEl] = useState(null)
-  const open = Boolean(anchorEl)
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
+    setAnchorEl(event.currentTarget);
+  };
 
   const handleClose = () => {
-    setAnchorEl(null)
-  }
+    setAnchorEl(null);
+  };
 
   const handleClear = () => {
-    setSearchOrder('')
-    setSearchStatus('')
-    setAnchorEl(null)
-  }
+    setSearchOrder('');
+    setSearchStatus('');
+    setAnchorEl(null);
+  };
 
   return (
     <div>
@@ -210,5 +219,5 @@ export default function SubMenuFilter({ setSearchStatus, setSearchOrder }) {
         <Divider sx={{ my: 0.3, width: '85%', ml: 2 }} />
       </StyledMenu>
     </div>
-  )
+  );
 }

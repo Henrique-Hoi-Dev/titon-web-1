@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -7,44 +7,44 @@ import {
   Grid,
   IconButton,
   Typography
-} from '@mui/material'
-import { useGet } from 'services/requests/useGet'
-import { moneyMask } from 'utils/masks'
-import { IconMenuTruck } from 'assets/icons/icons'
-import { formatDate } from 'utils/formatDate'
-import { HiOutlinePlusSm } from 'react-icons/hi'
-import { ModalFinalizeRecord } from './modal/modalFinalizeRecord'
-import { ModalAddFreight } from './modal/modalAddFreight'
-import { useParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { BaseNotFount } from 'components/molecules/BaseNotFound/BaseNotFound'
-import { BaseTypeStatus } from 'components/molecules/BaseTypeStatus/BaseTypeStatus'
+} from '@mui/material';
+import { useGet } from 'services/requests/useGet';
+import { moneyMask } from 'utils/masks';
+import { IconMenuTruck } from 'assets/icons/icons';
+import { formatDate } from 'utils/formatDate';
+import { HiOutlinePlusSm } from 'react-icons/hi';
+import { ModalFinalizeRecord } from './modal/modalFinalizeRecord';
+import { ModalAddFreight } from './modal/modalAddFreight';
+import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { BaseNotFount } from 'components/molecules/BaseNotFound/BaseNotFound';
+import { BaseTypeStatus } from 'components/molecules/BaseTypeStatus/BaseTypeStatus';
 
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import Text from 'components/atoms/BaseText/BaseText'
-import Button from 'components/atoms/BaseButton/BaseButton'
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import ModalCheck from 'components/organisms/ModalCheck';
+import Text from 'components/atoms/BaseText/BaseText';
+import Button from 'components/atoms/BaseButton/BaseButton';
 
-import Table from './table'
-import ModalCheck from 'components/organisms/ModalCheck'
+import Table from './table';
 
 export const InfoFinancial = () => {
-  const { t } = useTranslation()
-  const { id } = useParams()
+  const { t } = useTranslation();
+  const { id } = useParams();
 
   const INITIAL_STATE = {
     limit: 10,
     page: 1,
     sort_field: null,
     sort_order: 'ASC'
-  }
+  };
 
-  const [userQuery, setUserQuery] = useState(INITIAL_STATE)
-  const [checkId, setCheckId] = useState('')
+  const [userQuery, setUserQuery] = useState(INITIAL_STATE);
+  const [checkId, setCheckId] = useState('');
 
-  const [showModalFinalizeRecord, setShowModalFinalizeRecord] = useState(false)
-  const [showModalAddFreight, setShowModalAddFreight] = useState(false)
-  const [showModalCheck, setShowModalCheck] = useState(false)
+  const [showModalFinalizeRecord, setShowModalFinalizeRecord] = useState(false);
+  const [showModalAddFreight, setShowModalAddFreight] = useState(false);
+  const [showModalCheck, setShowModalCheck] = useState(false);
 
   const {
     data: financial,
@@ -52,13 +52,13 @@ export const InfoFinancial = () => {
     isFetching: financialIsFetching,
     loading,
     mutate
-  } = useGet(`user/financialStatement/${id}`)
+  } = useGet(`user/financialStatement/${id}`);
 
   const handleCheck = (freightId, driverId) => {
-    if (!freightId || !driverId) return
-    setCheckId({ freightId, driverId })
-    setShowModalCheck(!showModalCheck)
-  }
+    if (!freightId || !driverId) return;
+    setCheckId({ freightId, driverId });
+    setShowModalCheck(!showModalCheck);
+  };
 
   return (
     <>
@@ -344,5 +344,5 @@ export const InfoFinancial = () => {
         />
       )}
     </>
-  )
-}
+  );
+};

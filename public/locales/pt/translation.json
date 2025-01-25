@@ -178,7 +178,9 @@
     "km_price": "Preço por KM",
     "net_shipping": "Frete liquido",
     "title_credit": "Registro crédito / débito",
-    "reason": "Motivo"
+    "reason": "Motivo",
+    "price": "Cotação",
+    "accomplished": "Realizado"
   },
   "button": {
     "return": "Voltar",

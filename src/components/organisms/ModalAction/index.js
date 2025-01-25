@@ -31,6 +31,12 @@ export const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
     checkId ? false : true
   );
 
+  const { data: checkfirst } = useGet(
+    `user/first-check/${checkId}`,
+    '',
+    checkId ? false : true
+  );
+
   const { data, error } = useUpdate(
     'user/freight',
     'body',
@@ -238,15 +244,14 @@ export const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
                 width="45%"
               >
                 <Text sx={{ marginBottom: '-15px', fontWeight: '800' }}>
-                  Cotação
+                  {t('modal.price')}
                 </Text>
                 <NestedList
                   maxwidth={'200px'}
-                  sx={{}}
-                  titleOne={'Frete Total'}
-                  valorOne={check?.dataResult?.freightTotal}
-                  titleTwo={'Frete Líquido'}
-                  valorTwo={check?.dataResult?.totalNetFreight}
+                  titleOne={t('modal.total_shipping')}
+                  valorOne={checkfirst?.dataResult?.freightTotal}
+                  titleTwo={t('modal.net_shipping')}
+                  valorTwo={checkfirst?.dataResult?.totalNetFreight}
                   valuesFirstCheck={valuesFirstCheck}
                   statusSecondCheck={statusSecondCheck}
                 />
@@ -263,14 +268,14 @@ export const ModalAction = ({ showModal, setShowModal, mutate, checkId }) => {
           >
             {statusSecondCheck && (
               <Text sx={{ marginBottom: '-15px', fontWeight: '800' }}>
-                Realizado
+                {t('modal.accomplished')}
               </Text>
             )}
             <NestedList
               maxwidth={statusSecondCheck ? '220px' : '360px'}
-              titleOne={'Frete Total'}
+              titleOne={t('modal.total_shipping')}
               valorOne={check?.dataResult?.freightTotal}
-              titleTwo={'Frete Líquido'}
+              titleTwo={t('modal.net_shipping')}
               valorTwo={check?.dataResult?.totalNetFreight}
               valuesFirstCheck={valuesFirstCheck}
               statusSecondCheck={statusSecondCheck}

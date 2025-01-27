@@ -175,7 +175,7 @@ export const InfoFinancial = () => {
                 </Grid>
               </CardContent>
 
-              <Grid item container mt={18} xs={12} md={12} lg={12}>
+              <Grid item container mt={18} xs={10} md={10} lg={10}>
                 <Text
                   fontSize={'24px'}
                   sx={{ verticalAlign: 'super', fontWeight: '700' }}
@@ -255,8 +255,16 @@ export const InfoFinancial = () => {
                     }`
                   }}
                 >
-                  <Text sx={{ maxWidth: '690px' }}>{item?.content}</Text>{' '}
-                  <Text>{formatDate(item?.createdAt)}</Text>
+                  <Text
+                    color="#2B2B2C"
+                    font_weight={`600`}
+                    sx={{ maxWidth: '690px' }}
+                  >
+                    {item?.content}
+                  </Text>{' '}
+                  <Text font_weight={`600`} color="#2B2B2C">
+                    {formatDate(item?.createdAt)}
+                  </Text>
                   <Divider
                     sx={{
                       my: 1,

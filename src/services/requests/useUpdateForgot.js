@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { apiDriver } from 'services/api';
+import { api_driver } from 'services/api';
 
 export const useUpdateForgotPassword = (url, body, fetch, setFetch, token) => {
   const [data, setData] = useState(null);
@@ -9,7 +9,7 @@ export const useUpdateForgotPassword = (url, body, fetch, setFetch, token) => {
   useEffect(() => {
     if (fetch) {
       setIsFetching(true);
-      apiDriver
+      api_driver
         .put(`/${url}`, body, {
           headers: { Authorization: `Bearer ${token}` }
         })

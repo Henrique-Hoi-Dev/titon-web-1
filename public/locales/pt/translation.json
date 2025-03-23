@@ -38,6 +38,7 @@
     "truck": "Caminhão",
     "email": "E-mail",
     "password": "Senha",
+    "new_password": "Nova senha",
     "cart": "Carreta",
     "forgot_password": "Esqueceu sua senha?",
     "to_go_back": "Voltar"
@@ -188,6 +189,8 @@
     "create": "Criar",
     "cancel": "Cancelar",
     "edit": "Editar",
+    "access": "Acessar",
+    "to_alter": "Alterar",
     "finish": "Finalizar",
     "credit/debit": "Crédito/Débito",
     "approved": "APROVAR",
@@ -208,6 +211,7 @@
   "messages": {
     "hello": "Olá",
     "invalidDocument": "Documento inválido",
+    "password_reset_success": "Sua senha foi atualizada. Clique abaixo para acessar sua conta.",
     "no_results_found": "Nenhum resultado encontrado",
     "do_you_want_delete": "Você quer excluir?",
     "add_logo": "Adicionar logo",
@@ -227,14 +231,19 @@
     "loading": "Carregando",
     "number_of_draws_added": "Número de sorteios adicionados",
     "there_are_no_sweepstakes": "Não há sorteios",
+    "password_changed_successfully": "Senha alterada com sucesso!",
     "result_not_found": "Resultado não encontrado",
     "error": "Error"
   },
   "error": {
     "passwords_not_match": "Senhas não coincidem",
-    "login_error": "Usuário e/ou senha incorretos",
+    "login_error": "Usuário ou senha incorretos",
+    "password_error": "Senha incorreta",
     "there_is_already_a_draw_at_this_time": "Já existe sorteio nesse horário!",
-    "minimum_break_is_10_minutes": "Mínimo intervalo é de 10 minutos!"
+    "minimum_break_is_10_minutes": "Mínimo intervalo é de 10 minutos!",
+    "expired_error_token": "URL inválido ou expirada!",
+    "expired_token": "URL expirada!",
+    "token": "URL error"
   },
   "driver": {
     "title": "Motoristas",

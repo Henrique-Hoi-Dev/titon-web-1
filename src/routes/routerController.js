@@ -1,27 +1,43 @@
-import { Route, Routes } from 'react-router-dom'
-import { Report } from 'pages/report'
-import { Truck } from 'pages/truck'
-import { Check } from 'pages/check'
-import { InfoFinancial } from 'pages/infoFinancial'
+import { Route, Routes } from 'react-router-dom';
+import { Report } from 'pages/report';
+import { Truck } from 'pages/truck';
+import { Check } from 'pages/check';
+import { InfoFinancial } from 'pages/infoFinancial';
 
-import MainTemplate from 'components/templates/main'
-import RequireAuth from 'utils/requireAuth'
-import Login from 'pages/login'
-import ForgotPassword from 'pages/forgot-password'
-import Home from 'pages/home'
-import Driver from 'pages/driver'
-import User from 'pages/user'
-import Cart from 'pages/cart'
-import History from 'pages/history'
+import MainTemplate from 'components/templates/main';
+import RequireAuth from 'utils/requireAuth';
+import Login from 'pages/login';
+import ForgotPassword from 'pages/forgot-password';
+import ForgotPasswordDriver from 'pages/forgot-password-driver';
+import Home from 'pages/home';
+import Driver from 'pages/driver';
+import User from 'pages/user';
+import Cart from 'pages/cart';
+import History from 'pages/history';
+import TokenProtectedRoute from 'components/atoms/TokenProtectedRoute/TokenProtectedRoute';
+import ForgotPasswordSuccess from 'components/atoms/ForgotPasswordSuccess/ForgotPasswordSuccess';
 
 const RouterController = () => {
   const initialPage = () => {
-    return <Home />
-  }
+    return <Home />;
+  };
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route
+        path="/driver/forgot-password"
+        element={
+          <TokenProtectedRoute>
+            <ForgotPasswordDriver />
+          </TokenProtectedRoute>
+        }
+      />
+      <Route
+        path="/driver/forgot-password-success"
+        element={<ForgotPasswordSuccess />}
+      />
+
       <Route element={<RequireAuth />}>
         <Route element={<MainTemplate />}>
           <Route path="/" element={initialPage()} />
@@ -37,7 +53,7 @@ const RouterController = () => {
         </Route>
       </Route>
     </Routes>
-  )
-}
+  );
+};
 
-export default RouterController
+export default RouterController;

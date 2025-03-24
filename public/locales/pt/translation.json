@@ -41,7 +41,8 @@
     "new_password": "Nova senha",
     "cart": "Carreta",
     "forgot_password": "Esqueceu sua senha?",
-    "to_go_back": "Voltar"
+    "to_go_back": "Voltar",
+    "reset_password": "Resetar senha"
   },
   "field": {
     "send": "Enviar",
@@ -185,6 +186,7 @@
   },
   "button": {
     "return": "Voltar",
+    "reset": "Resetar",
     "confirm": "Confirmar",
     "create": "Criar",
     "cancel": "Cancelar",
@@ -217,8 +219,10 @@
     "add_logo": "Adicionar logo",
     "credit/debit": "Registro crédito / débito para:",
     "want_to_delete": "Deseja excluir:",
+    "want_to_password": "Deseja redefinir",
     "min_interval": "Intervalo mínimo de 10 minutos",
     "success_msg": "Operação realizada com sucesso!",
+    "reset_password": "Tem certeza de que deseja redefinir a senha do motorista?",
     "delete_msg_notice_cart": "Após excluir os registros da carreta serão perdidos.",
     "delete_msg_notice_truck": "Após excluir os registros do caminhão serão perdidos.",
     "delete_msg_notice": "Após excluir ele dá plataforma o caminhoneiro não terá mais acesso a sua empresa atraves da LogBook.",
@@ -373,6 +377,7 @@
   },
   "modal_user": {
     "title": "Editar usuário",
+    "title_edit_driver": "Editar Motorista",
     "label": {
       "name": "Nome",
       "email": "E-mail",

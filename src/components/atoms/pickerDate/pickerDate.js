@@ -40,7 +40,7 @@ const PickerDate = ({
         {labelText}
       </Text>
       <ThemeProvider theme={darkTheme}>
-        <LocalizationProvider dateAdapter={AdapterDateFns} locale={ptBR}>
+        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
           <DesktopDatePicker
             {...props}
             label={label}

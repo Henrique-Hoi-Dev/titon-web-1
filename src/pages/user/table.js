@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { Grid, Paper, TableContainer } from '@mui/material'
-import { useTranslation } from 'react-i18next'
-import { TablePagination } from 'components/atoms/tablePagination/tablePagination'
-import { useMediaQuery } from 'react-responsive'
+import React, { useState } from 'react';
+import { Grid, Paper, TableContainer } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { TablePagination } from 'components/atoms/tablePagination/tablePagination';
+import { useMediaQuery } from 'react-responsive';
 import {
   SCell,
   SHead,
@@ -10,14 +10,14 @@ import {
   STable,
   STableBody,
   SLabel
-} from 'components/atoms/BaseTable/BaseTable'
+} from 'components/atoms/BaseTable/BaseTable';
 
-import imgNotFound from '../../assets/trist-not-found-table.svg'
-import InfoRow from './infoRow'
-import Text from 'components/atoms/BaseText/BaseText'
-import Loading from 'components/atoms/loading/loading'
-import ModalDeleteUser from './modal/modalDeleteUser'
-import ModalUpdateUser from './modal/modalUpdateUser'
+import imgNotFound from '../../assets/trist-not-found-table.svg';
+import InfoRow from './infoRow';
+import Text from 'components/atoms/BaseText/BaseText';
+import Loading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseModalDeleteUser from 'components/molecules/BaseModalDeleteUser/BaseModalDeleteUser';
+import BaseModalUpdateUser from 'components/molecules/BaseModalUpdateUser/BaseModalUpdateUser';
 
 const Table = ({
   data,
@@ -28,24 +28,24 @@ const Table = ({
   error,
   loading
 }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
-  const isDesktop = useMediaQuery({ maxWidth: '1250px' })
-  const isMobile = useMediaQuery({ maxWidth: '730px' })
+  const isDesktop = useMediaQuery({ maxWidth: '1250px' });
+  const isMobile = useMediaQuery({ maxWidth: '730px' });
 
-  const [showModalDelete, setShowModalDelete] = useState(false)
-  const [showModalUpdate, setShowModalUpdate] = useState(false)
+  const [showModalDelete, setShowModalDelete] = useState(false);
+  const [showModalUpdate, setShowModalUpdate] = useState(false);
 
-  const [userId, setUserId] = useState(null)
+  const [userId, setUserId] = useState(null);
 
   const handleSort = (item) => {
     setQuery((state) => ({
       ...state,
       sort_field: item,
       sort_order: `${query?.sort_order === 'ASC' ? 'DESC' : 'ASC'}`
-    }))
-    return
-  }
+    }));
+    return;
+  };
 
   return (
     <>
@@ -169,7 +169,7 @@ const Table = ({
       </TableContainer>
 
       {showModalDelete && (
-        <ModalDeleteUser
+        <BaseModalDeleteUser
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
           props={userId}
@@ -178,7 +178,7 @@ const Table = ({
       )}
 
       {showModalUpdate && (
-        <ModalUpdateUser
+        <BaseModalUpdateUser
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
           props={userId}
@@ -186,7 +186,7 @@ const Table = ({
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default Table
+export default Table;

@@ -1,59 +1,57 @@
-import { useEffect, useRef, useState } from 'react'
-import { Grid } from '@mui/material'
-import { IconAdd } from 'assets/icons/icons'
-import { InputSearches } from 'components/atoms/input/inputSearches/input'
-import { useGet } from 'services/requests/useGet'
-import { useTranslation } from 'react-i18next'
+import React, { useEffect, useRef, useState } from 'react';
+import { Grid } from '@mui/material';
+import { IconAdd } from 'assets/icons/icons';
+import { InputSearches } from 'components/atoms/input/inputSearches/input';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCartsRequest } from 'store/modules/cart/cartSlice';
 
-import Table from './table'
-import ModalAddCart from './modal/modalAddCart'
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
+import Table from './table';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseModalAddCart from 'components/molecules/BaseModalAddCart/BaseModalAddCart';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
 
 const Cart = () => {
-  const [showModalDriver, setShowModalDriver] = useState(false)
-  const { t } = useTranslation()
+  const [showModalDriver, setShowModalDriver] = useState(false);
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  const { data: carts, loading, error } = useSelector((state) => state.cart);
 
   const INITIAL_STATE_CARD = {
     limit: 10,
     page: 1,
     sort_field: 'cart_models',
     sort_order: 'ASC'
-  }
+  };
 
-  const [cardQuery, setCardQuery] = useState(INITIAL_STATE_CARD)
-  const [search, setSearch] = useState('')
+  const [cardQuery, setCardQuery] = useState(INITIAL_STATE_CARD);
+  const [search, setSearch] = useState('');
 
-  const {
-    data: cards,
-    error: cardsError,
-    isFetching: cardsIsFetching,
-    loading,
-    mutate
-  } = useGet('/carts', cardQuery)
-
-  const isMounted = useRef(false)
+  const isMounted = useRef(false);
 
   useEffect(() => {
     if (!isMounted.current) {
-      isMounted.current = true
-      return
+      isMounted.current = true;
+      dispatch(getCartsRequest(cardQuery));
+      return;
     }
 
     const timer = setTimeout(() => {
-      setCardQuery((state) => ({
-        ...state,
+      const newQuery = {
+        ...cardQuery,
         search: search
-      }))
-    }, 1200)
+      };
+      setCardQuery(newQuery);
+      dispatch(getCartsRequest(newQuery));
+    }, 1200);
 
-    return () => clearTimeout(timer)
-  }, [search])
+    return () => clearTimeout(timer);
+  }, [dispatch, search, cardQuery]);
 
   return (
     <Grid
-      item
       container
       padding={1}
       spacing={2}
@@ -70,12 +68,11 @@ const Cart = () => {
           sx={{
             fontSize: '14px',
             color: 'white',
-            width: '228px',
-            height: '40px',
+            minWidth: '248px',
             marginRight: '15px'
           }}
         >
-          {t('cart.button.title')} <IconAdd sx={{ mt: -0.7 }} />
+          {t('button.add_new_cart')} <IconAdd sx={{ mb: '4px', ml: '10px' }} />
         </BaseButton>
         <InputSearches
           searches
@@ -94,30 +91,34 @@ const Cart = () => {
         item
         container
         mb={5}
-        minHeight={'100%'}
         alignItems="flex-start"
         justifyContent="flex-start"
       >
-        <Grid item container mr={4} mt={5} mb={3} justifyContent={'center'}>
+        <Grid
+          item
+          container
+          pl={2}
+          mr={4}
+          mt={5}
+          mb={3}
+          justifyContent={'center'}
+        >
           <Table
-            data={cards}
+            data={carts}
             query={cardQuery}
             setQuery={setCardQuery}
-            isFetching={cardsIsFetching}
-            error={cardsError}
+            error={error}
             loading={loading}
-            mutate={mutate}
           />
         </Grid>
       </Grid>
 
-      <ModalAddCart
+      <BaseModalAddCart
         setShowModal={setShowModalDriver}
         showModal={showModalDriver}
-        mutate={mutate}
       />
     </Grid>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;

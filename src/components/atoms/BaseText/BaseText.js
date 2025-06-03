@@ -6,7 +6,7 @@ const BaseText = ({
   center,
   sx,
   font_weight,
-  fontsize,
+  fontsize = '18px',
   whiteSpace,
   color
 }) => {
@@ -16,7 +16,7 @@ const BaseText = ({
       align={center && 'center'}
       sx={{
         ...sx,
-        fontSize: `${fontsize ? fontsize : '18px'}`,
+        fontSize: `${fontsize}`,
         whiteSpace: `${whiteSpace}`,
         color: `${color ? color : '#FFFFFF'}`,
         fontWeight: `${font_weight}`

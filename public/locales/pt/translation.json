@@ -23,7 +23,9 @@
     "info": "Informação",
     "device": "Terminal",
     "transactions": "Transações",
-    "collector": "Coletor"
+    "collector": "Coletor",
+    "notifications": "Notificações",
+    "notFoundNotifications": "NÃO HÁ NOTIFICAÇÔES..."
   },
   "subMenu": {
     "label": "Organizar fichas por",
@@ -189,9 +191,7 @@
     "reset": "Resetar",
     "confirm": "Confirmar",
     "create": "Criar",
-    "cancel": "Cancelar",
     "edit": "Editar",
-    "access": "Acessar",
     "to_alter": "Alterar",
     "finish": "Finalizar",
     "credit/debit": "Crédito/Débito",
@@ -201,7 +201,13 @@
     "add_new_listing": "Adicionar Nova Ficha",
     "register": "Cadastrar",
     "update": "Atualizar",
-    "delete": "Excluir"
+    "loading": "Carregando...",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "access": "Acessar",
+    "add_new_truck": "Adicionar novo caminhão",
+    "add_new_driver": "Adicionar novo motorista",
+    "add_new_cart": "Adicionar nova carreta"
   },
   "components": {
     "button_default": "Botão Padrão",
@@ -433,5 +439,10 @@
     "mopp_validity": "Validade MOPP",
     "nr20_validity": "Validade NR20",
     "nr35_validity": "Validade NR35"
+  },
+  "validation": {
+    "email_required": "E-mail é obrigatório",
+    "email_invalid": "E-mail inválido",
+    "password_required": "Senha é obrigatória"
   }
 }

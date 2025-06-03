@@ -1,30 +1,31 @@
-import React, { useState } from 'react'
-import { Grid, Paper, TableContainer } from '@mui/material'
-import { useMediaQuery } from 'react-responsive'
+import React, { useState } from 'react';
+import { Grid, Paper, TableContainer } from '@mui/material';
+import { useMediaQuery } from 'react-responsive';
 import {
   SCell,
   SHead,
   SRow,
   STable,
   STableBody
-} from 'components/atoms/BaseTable/BaseTable'
-import { ModalAction } from '../../components/organisms/ModalAction'
-import { useTranslation } from 'react-i18next'
-import { BaseNotFount } from 'components/molecules/BaseNotFound/BaseNotFound'
-import { BaseError } from 'components/molecules/BaseError/BaseError'
+} from 'components/atoms/BaseTable/BaseTable';
+import { useTranslation } from 'react-i18next';
 
-import InfoRow from './infoRow'
-import Loading from 'components/atoms/loading/loading'
+import BaseModalAction from '@/components/molecules/BaseModalAction/BaseModalAction';
+import BaseNotFound from '@components/molecules/BaseNotFound/BaseNotFound';
+import BaseError from '@components/molecules/BaseError/BaseError';
+
+import InfoRow from './infoRow';
+import Loading from '@/components/atoms/BaseLoading/BaseLoading';
 
 const Table = ({ data, isFetching, mutate, error, loading }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
-  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' })
-  const isMobile = useMediaQuery({ maxWidth: '730px' })
+  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' });
+  const isMobile = useMediaQuery({ maxWidth: '730px' });
 
-  const [showModalAction, setShowModalAction] = useState(false)
+  const [showModalAction, setShowModalAction] = useState(false);
 
-  const [checkId, setCheckId] = useState()
+  const [checkId, setCheckId] = useState();
 
   return (
     <>
@@ -94,21 +95,21 @@ const Table = ({ data, isFetching, mutate, error, loading }) => {
           justifyContent="center"
         >
           {data?.dataResult?.freight?.length === 0 && !isFetching && (
-            <BaseNotFount />
+            <BaseNotFound />
           )}
 
           {error && <BaseError />}
         </Grid>
       </TableContainer>
 
-      <ModalAction
+      <BaseModalAction
         setShowModal={setShowModalAction}
         showModal={showModalAction}
         checkId={checkId}
         mutate={mutate}
       />
     </>
-  )
-}
+  );
+};
 
-export default Table
+export default Table;

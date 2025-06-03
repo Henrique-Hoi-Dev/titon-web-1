@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { Grid, Paper, TableContainer } from '@mui/material'
-import { TablePagination } from 'components/atoms/tablePagination/tablePagination'
-import { useMediaQuery } from 'react-responsive'
+import React, { useState } from 'react';
+import { Grid, Paper, TableContainer } from '@mui/material';
+import { TablePagination } from 'components/atoms/tablePagination/tablePagination';
+import { useMediaQuery } from 'react-responsive';
 import {
   SCell,
   SHead,
@@ -9,14 +9,14 @@ import {
   STable,
   STableBody,
   SLabel
-} from 'components/atoms/BaseTable/BaseTable'
-import { BaseNotFount } from 'components/molecules/BaseNotFound/BaseNotFound'
-import { BaseError } from 'components/molecules/BaseError/BaseError'
+} from 'components/atoms/BaseTable/BaseTable';
 
-import InfoRow from './infoRow'
-import Loading from 'components/atoms/loading/loading'
-import ModalDeleteFinancial from './modal/modalDeleteFinancial'
-import ModalUpdateFinancial from './modal/modalUpdateFinancial'
+import BaseNotFount from 'components/molecules/BaseNotFound/BaseNotFound';
+import BaseError from 'components/molecules/BaseError/BaseError';
+import InfoRow from './infoRow';
+import Loading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseModalDeleteFinancial from '@/components/molecules/BaseModalDeleteFinancial/BaseModalDeleteFinancial';
+import BaseModalUpdateFinancial from '@/components/molecules/BaseModalUpdateFinancial/BaseModalUpdateFinancial';
 
 const Table = ({
   data,
@@ -27,23 +27,23 @@ const Table = ({
   error,
   loading
 }) => {
-  const isDesktop = useMediaQuery({ maxWidth: '1250px' })
-  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' })
-  const isMobile = useMediaQuery({ maxWidth: '730px' })
+  const isDesktop = useMediaQuery({ maxWidth: '1250px' });
+  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' });
+  const isMobile = useMediaQuery({ maxWidth: '730px' });
 
-  const [showModalDelete, setShowModalDelete] = useState(false)
-  const [showModalUpdate, setShowModalUpdate] = useState(false)
+  const [showModalDelete, setShowModalDelete] = useState(false);
+  const [showModalUpdate, setShowModalUpdate] = useState(false);
 
-  const [financialId, setFinancialId] = useState(null)
+  const [financialId, setFinancialId] = useState(null);
 
   const handleSort = (item) => {
     setQuery((state) => ({
       ...state,
       sort_field: item,
       sort_order: `${query?.sort_order === 'ASC' ? 'DESC' : 'ASC'}`
-    }))
-    return
-  }
+    }));
+    return;
+  };
 
   return (
     <>
@@ -92,10 +92,10 @@ const Table = ({
               <SCell displaywidth={isDesktop ? 1 : 0}>Ações</SCell>
             </SRow>
           </SHead>
-          {!isFetching && data && data?.dataResult?.length > 0 && (
+          {!isFetching && data && data.docs?.length > 0 && (
             <>
               <STableBody>
-                {data?.dataResult.map((item, index) => (
+                {data?.docs.map((item, index) => (
                   <InfoRow
                     key={item.id}
                     data={item}
@@ -138,7 +138,7 @@ const Table = ({
       </TableContainer>
 
       {showModalDelete && (
-        <ModalDeleteFinancial
+        <BaseModalDeleteFinancial
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
           id={financialId}
@@ -147,7 +147,7 @@ const Table = ({
       )}
 
       {showModalUpdate && (
-        <ModalUpdateFinancial
+        <BaseModalUpdateFinancial
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
           financialId={financialId}
@@ -155,7 +155,7 @@ const Table = ({
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default Table
+export default Table;

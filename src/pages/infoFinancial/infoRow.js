@@ -1,20 +1,20 @@
-import React from 'react'
-import { useMediaQuery } from 'react-responsive'
-import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable'
-import { formatDate } from 'utils/formatDate'
-import { BaseTypeStatus } from 'components/molecules/BaseTypeStatus/BaseTypeStatus'
+import React from 'react';
+import { useMediaQuery } from 'react-responsive';
+import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
+import { formatDate } from 'utils/formatDate';
+import BaseTypeStatus from '@components/molecules/BaseTypeStatus/BaseTypeStatus';
 
 const InfoRow = (props) => {
-  const { data, setCheckId, setShowModalAction } = props
+  const { data, setCheckId, setShowModalAction } = props;
 
-  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' })
-  const isMobile = useMediaQuery({ maxWidth: '730px' })
+  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' });
+  const isMobile = useMediaQuery({ maxWidth: '730px' });
 
   const handleAction = (ev, id) => {
-    ev.preventDefault()
-    setCheckId(id)
-    setShowModalAction(true)
-  }
+    ev.preventDefault();
+    setCheckId(id);
+    setShowModalAction(true);
+  };
 
   return (
     <>
@@ -43,7 +43,7 @@ const InfoRow = (props) => {
         </SCell>
       </SRow>
     </>
-  )
-}
+  );
+};
 
-export default InfoRow
+export default InfoRow;

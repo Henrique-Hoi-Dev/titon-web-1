@@ -1,10 +1,9 @@
-import React, { useContext, useEffect } from 'react';
-import { Avatar, IconButton, List, ListItemText, Tooltip } from '@mui/material';
+import React, { useContext } from 'react';
+import { IconButton, List, ListItemText, Tooltip } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { signOut } from '../../../store/modules/auth/actions';
-import { templateContext } from 'components/templates/main';
+import { signOut } from '@/store/modules/auth/authSlice';
+import { templateContext } from '@/components/templates/main';
 import { useNavigate } from 'react-router-dom';
-import { useMediaQuery } from 'react-responsive';
 import { FiLogOut } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
 import {
@@ -25,33 +24,31 @@ import {
   IconMenuTrailer
 } from 'assets/icons/icons';
 import { useLocation } from 'react-router-dom';
+import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
 
 const Menu = ({ setFetch }) => {
   const user = useSelector((state) => state?.user);
+  // const auth = useSelector((state) => state?.auth);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   const { t } = useTranslation();
 
+  // useEffect(() => {
+  //   if (!auth.signed) {
+  //     navigate('/login');
+  //   }
+  // }, [auth.signed, navigate]);
+
   const handleLogOut = () => {
-    dispatch(signOut());
-    navigate('/login');
+    dispatch(signOut()); // apenas dispara o logout
   };
 
   const isActive = (path) => location.pathname === path;
 
-  const { openMenu, setOpenMenu } = useContext(templateContext);
-
-  const isSmallDesktop = useMediaQuery({ maxWidth: '710px' });
-
-  useEffect(() => {
-    if (isSmallDesktop) {
-      setOpenMenu(false);
-    } else {
-      setOpenMenu(true);
-    }
-  }, [openMenu, setOpenMenu, isSmallDesktop]);
+  const { openMenu } = useContext(templateContext);
 
   return (
     <Drawer variant="permanent" open={openMenu}>
@@ -247,7 +244,7 @@ const Menu = ({ setFetch }) => {
             }}
           >
             <IconMenuCategory sx={{ mr: openMenu ? 0.4 : 'auto' }}>
-              <Avatar sx={{ fontSize: '30px' }} />
+              <BaseAvatar src={user?.avatar} styles={{ fontSize: '30px' }} />
             </IconMenuCategory>
 
             <ListText sx={{ opacity: openMenu ? 1 : 0 }}>

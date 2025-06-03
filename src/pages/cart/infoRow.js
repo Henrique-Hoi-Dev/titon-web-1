@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { IconButton, Menu, MenuItem } from '@mui/material';
-import { useMediaQuery } from 'react-responsive';
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  DropUpSharpIcon
-} from 'assets/icons/icons';
+import { DropUpSharpIcon } from 'assets/icons/icons';
 import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
 import { useTranslation } from 'react-i18next';
+
+import enums from '@/utils/enums';
 
 const InfoRow = (props) => {
   const { t } = useTranslation();
@@ -15,24 +12,11 @@ const InfoRow = (props) => {
   const { data, index, setShowModalDelete, setShowModalUpdate, setCartId } =
     props;
 
-  const [open, setOpen] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
 
-  const isDesktop = useMediaQuery({ maxWidth: '1250px' });
-  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' });
-  const isMobile = useMediaQuery({ maxWidth: '730px' });
-
-  const typeBodywork = [
-    { value: 'BUCKET', label: 'Caçanba' },
-    { value: 'BULKCARRIER', label: 'Graneleiro' },
-    { value: 'SIDER', label: 'Sider' },
-    { value: 'CHEST', label: 'Bau' },
-    { value: 'TANK', label: 'Tanque' }
-  ];
-
   const getBodywork = () =>
-    typeBodywork.find((item) => item.value === data?.cart_bodyworks);
+    enums.typeBodywork.find((item) => item.value === data?.cartBodyworks);
 
   const handleClick = (ev) => {
     setOpenSettings(!openSettings);
@@ -54,34 +38,14 @@ const InfoRow = (props) => {
   return (
     <>
       <SRow key={data.id} alternatingcolors={index}>
-        <SCell minwidth={'0px'} displaywidth={isDesktop ? 0 : 1}>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <ArrowUpIcon /> : <ArrowDownIcon />}
-          </IconButton>
-        </SCell>
-
-        <SCell displaywidth={isMobile ? 1 : 0}>{data?.cart_brand}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-          {data?.cart_models.toUpperCase()}
-        </SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-          {data?.cart_board.toUpperCase()}
-        </SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-          {data?.cart_color.toUpperCase()}
-        </SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.cart_tara}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-          {getBodywork()?.label.toUpperCase()}
-        </SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-          {data?.cart_chassis}
-        </SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.cart_year}</SCell>
+        <SCell>{data?.cartBrand}</SCell>
+        <SCell>{data?.cartModels?.toUpperCase()}</SCell>
+        <SCell>{data?.cartBoard?.toUpperCase()}</SCell>
+        <SCell>{data?.cartColor?.toUpperCase()}</SCell>
+        <SCell>{data?.cartTara}</SCell>
+        <SCell>{getBodywork()?.label?.toUpperCase()}</SCell>
+        <SCell>{data?.cartChassis}</SCell>
+        <SCell>{data?.cartYear}</SCell>
         <SCell>
           <IconButton
             color="default"

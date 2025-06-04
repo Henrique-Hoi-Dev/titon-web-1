@@ -50,5 +50,8 @@
   "INVOICE_PARTIALLY_CANCELED_SALE_ITEM_NOT_FOUND": "Item não encontrado para venda parcialmente cancelada",
   "QUANTITY_CANCELED_GREATER_THAN_SOLD": "A quantidade cancelada não deve ser maior que a quantidade vendida",
   "CANCELED_QUANTITY_MUST_BE_GREATER_THAN_ZERO": "A quantidade cancelada deve ser maior que zero",
-  "INVALID_USED_CASHBACK_VALUE": "Valor de cashback utilizado é inválido"
+  "INVALID_USED_CASHBACK_VALUE": "Valor de cashback utilizado é inválido",
+  "CANNOT_DELETE_TRUCK_IN_USE": "Não pode deletar caminhão em uso",
+  "CANNOT_DELETE_CART_IN_USE": "Não pode deletar carreta em uso",
+  "TRIP_IN_PROGRESS": "Há uma viagem em andamento"
 }

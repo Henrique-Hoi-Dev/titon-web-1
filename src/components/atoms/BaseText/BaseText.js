@@ -1,5 +1,5 @@
-import { Typography } from '@mui/material'
-import React from 'react'
+import { Typography } from '@mui/material';
+import React from 'react';
 
 const BaseText = ({
   children,
@@ -12,7 +12,7 @@ const BaseText = ({
 }) => {
   return (
     <Typography
-      variant="p"
+      variant="body1"
       align={center && 'center'}
       sx={{
         ...sx,
@@ -24,7 +24,7 @@ const BaseText = ({
     >
       {children}
     </Typography>
-  )
-}
+  );
+};
 
-export default BaseText
+export default BaseText;

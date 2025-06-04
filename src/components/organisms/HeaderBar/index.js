@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react'
-import { Badge, Grid, IconButton, Menu } from '@mui/material'
-import { IconNotifications, PointIcon } from 'assets/icons/icons'
-import { formatDistance, parseISO } from 'date-fns'
-import { useSelector } from 'react-redux'
-import { api } from 'services/api'
+import React, { useState, useEffect } from 'react';
+import { Badge, Grid, IconButton, Menu } from '@mui/material';
+import { IconNotifications, PointIcon } from 'assets/icons/icons';
+import { formatDistance, parseISO } from 'date-fns';
+import { useSelector } from 'react-redux';
+import { api } from 'services/api';
 
-import Text from 'components/atoms/BaseText/BaseText'
-import pt from 'date-fns/locale/pt'
-import ModalCheck from 'components/organisms/ModalCheck'
-import logo from '../../../assets/logo.png'
+import Text from 'components/atoms/BaseText/BaseText';
+import pt from 'date-fns/locale/pt';
+import logo from '../../../assets/logo.png';
+import ModalCheck from '../ModalCheck';
 
 const HeaderBar = ({ setFetch, fetch }) => {
-  const user = useSelector((state) => state?.user)
+  const user = useSelector((state) => state?.user);
 
-  const [anchorElTwo, setAnchorElTwo] = useState(false)
-  const [showModalCheck, setShowModalCheck] = useState(false)
+  const [anchorElTwo, setAnchorElTwo] = useState(false);
+  const [showModalCheck, setShowModalCheck] = useState(false);
 
-  const [checkId, setCheckId] = useState('')
+  const [checkId, setCheckId] = useState('');
 
-  const [notifications, setNotifications] = useState([])
-  const [, setHistory] = useState([])
+  const [notifications, setNotifications] = useState([]);
+  const [, setHistory] = useState([]);
 
   useEffect(() => {
     async function loadNotifications() {
-      const response = await api.get('notifications')
+      const response = await api.get('notifications');
 
       const data = response.data.notifications.map((notifications) => ({
         ...notifications,
@@ -32,7 +32,7 @@ const HeaderBar = ({ setFetch, fetch }) => {
           new Date(),
           { addSuffix: true, locale: pt }
         )
-      }))
+      }));
 
       const history = response.data.history.map((notifications) => ({
         ...notifications,
@@ -41,51 +41,51 @@ const HeaderBar = ({ setFetch, fetch }) => {
           new Date(),
           { addSuffix: true, locale: pt }
         )
-      }))
+      }));
 
       if (response?.data?.notifications?.length >= 0) {
-        setHistory(history)
+        setHistory(history);
       }
 
-      setNotifications(data)
+      setNotifications(data);
     }
     if (fetch === true) {
       if (user?.data.userProps?.type_role === 'MASTER') {
-        loadNotifications()
+        loadNotifications();
       }
-      setFetch(false)
+      setFetch(false);
     }
-  }, [fetch, setFetch, user])
+  }, [fetch, setFetch, user]);
 
   useEffect(() => {
-    setFetch(true)
-  }, [setFetch])
+    setFetch(true);
+  }, [setFetch]);
 
   async function handleMarkAsRead(id) {
-    const result = await api.put(`notifications/${id}`)
+    const result = await api.put(`notifications/${id}`);
 
     setNotifications(
       notifications.map((res) => (res.id === id ? { ...res, read: true } : res))
-    )
+    );
 
     setCheckId({
       freightId: result.data.freight_id,
       driverId: result.data.driver_id
-    })
-    setShowModalCheck(true)
+    });
+    setShowModalCheck(true);
 
-    setFetch(true)
+    setFetch(true);
   }
 
-  const open = Boolean(anchorElTwo)
+  const open = Boolean(anchorElTwo);
 
   const handleClickTwo = (ev) => {
-    setAnchorElTwo(ev.currentTarget)
-  }
+    setAnchorElTwo(ev.currentTarget);
+  };
 
   const handleClose = () => {
-    setAnchorElTwo(false)
-  }
+    setAnchorElTwo(false);
+  };
 
   // const handleCheck = (freightId, driverId) => {
   //   setCheckId({ freightId: freightId, driverId: driverId })
@@ -294,7 +294,7 @@ const HeaderBar = ({ setFetch, fetch }) => {
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default HeaderBar
+export default HeaderBar;

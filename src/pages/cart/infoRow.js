@@ -1,48 +1,55 @@
-import React, { useState } from 'react'
-import { IconButton, Menu, MenuItem } from '@mui/material'
-import { useMediaQuery } from 'react-responsive'
-import { ArrowDownIcon, ArrowUpIcon, IconActions } from 'assets/icons/icons'
-import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable'
+import React, { useState } from 'react';
+import { IconButton, Menu, MenuItem } from '@mui/material';
+import { useMediaQuery } from 'react-responsive';
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  DropUpSharpIcon
+} from 'assets/icons/icons';
+import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
+import { useTranslation } from 'react-i18next';
 
 const InfoRow = (props) => {
+  const { t } = useTranslation();
+
   const { data, index, setShowModalDelete, setShowModalUpdate, setCartId } =
-    props
+    props;
 
-  const [open, setOpen] = useState(false)
-  const [openSettings, setOpenSettings] = useState(false)
-  const [anchorEl, setAnchorEl] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [openSettings, setOpenSettings] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(false);
 
-  const isDesktop = useMediaQuery({ maxWidth: '1250px' })
-  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' })
-  const isMobile = useMediaQuery({ maxWidth: '730px' })
+  const isDesktop = useMediaQuery({ maxWidth: '1250px' });
+  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' });
+  const isMobile = useMediaQuery({ maxWidth: '730px' });
 
   const typeBodywork = [
-    { value: 'bucket', label: 'Caçanba' },
-    { value: 'bulkCarrier', label: 'Graneleiro' },
-    { value: 'sider', label: 'Sider' },
-    { value: 'chest', label: 'Bau' },
-    { value: 'tank', label: 'Tanque' }
-  ]
+    { value: 'BUCKET', label: 'Caçanba' },
+    { value: 'BULKCARRIER', label: 'Graneleiro' },
+    { value: 'SIDER', label: 'Sider' },
+    { value: 'CHEST', label: 'Bau' },
+    { value: 'TANK', label: 'Tanque' }
+  ];
 
   const getBodywork = () =>
-    typeBodywork.find((item) => item.value === data?.cart_bodyworks)
+    typeBodywork.find((item) => item.value === data?.cart_bodyworks);
 
   const handleClick = (ev) => {
-    setOpenSettings(!openSettings)
-    setAnchorEl(ev.currentTarget)
-  }
+    setOpenSettings(!openSettings);
+    setAnchorEl(ev.currentTarget);
+  };
 
   const handleDelete = (id, name) => {
-    setShowModalDelete(true)
-    setCartId({ id: id, name: name })
-    setOpenSettings(false)
-  }
+    setShowModalDelete(true);
+    setCartId({ id: id, name: name });
+    setOpenSettings(false);
+  };
 
   const handleUpdate = (id) => {
-    setShowModalUpdate(true)
-    setCartId({ id: id })
-    setOpenSettings(false)
-  }
+    setShowModalUpdate(true);
+    setCartId({ id: id });
+    setOpenSettings(false);
+  };
 
   return (
     <>
@@ -77,16 +84,26 @@ const InfoRow = (props) => {
         <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data?.cart_year}</SCell>
         <SCell>
           <IconButton
-            color="inherit"
-            fontSize="20px"
-            sx={{ mr: 1 }}
+            color="default"
+            size="small"
+            sx={{
+              background: '#1877F2',
+              '& .icon': {
+                transition: 'transform 0.3s ease-in-out'
+              },
+              '&:hover': {
+                backgroundColor: '#1657A2',
+                transform: 'scale(1.1)',
+                transition: 'background-color 0.3s ease, transform 0.3s ease'
+              }
+            }}
             onClick={(ev) => handleClick(ev)}
           >
-            <IconActions
+            <DropUpSharpIcon
+              className="icon"
               sx={{
-                color: '#ff443a',
-                height: '30px',
-                width: '30px'
+                color: '#fff',
+                transform: `${openSettings ? '' : 'rotate(180deg)'}`
               }}
             />
           </IconButton>
@@ -104,19 +121,31 @@ const InfoRow = (props) => {
           horizontal: 'center'
         }}
         sx={{
-          zIndex: 4444,
-          mt: 5
+          zIndex: 10,
+          mt: 5,
+          '& .MuiPaper-root': {
+            bgcolor: '#333',
+            color: '#fff',
+            '& .MuiMenuItem-root': {
+              '&:hover': {
+                bgcolor: '#444'
+              }
+            }
+          }
         }}
         open={openSettings}
         onClose={() => setOpenSettings(!openSettings)}
       >
-        <MenuItem onClick={() => handleUpdate(data?.id)}>Editar</MenuItem>
+        <MenuItem onClick={() => handleUpdate(data?.id)}>
+          {' '}
+          {t('modal.edit')}
+        </MenuItem>
         <MenuItem onClick={() => handleDelete(data?.id, data?.cart_models)}>
-          Excluir
+          {t('button.delete')}
         </MenuItem>
       </Menu>
     </>
-  )
-}
+  );
+};
 
-export default InfoRow
+export default InfoRow;

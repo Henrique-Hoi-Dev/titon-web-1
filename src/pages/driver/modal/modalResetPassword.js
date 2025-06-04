@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
 import { successNotification, errorNotification } from 'utils/notification';
-import { useDelete } from 'services/requests/useDelete';
+import { useUpdatePatch } from 'services/requests/useUpdatePatch';
 import { useTranslation } from 'react-i18next';
 
 import Button from 'components/atoms/BaseButton/BaseButton';
@@ -9,14 +9,15 @@ import Loading from 'components/atoms/loading/loading';
 import Text from 'components/atoms/BaseText/BaseText';
 import Modal from 'components/molecules/BaseModal/BaseModal';
 
-const ModalDeleteDriver = ({ showModal, setShowModal, props, mutate }) => {
+const ModalResetPassword = ({ showModal, setShowModal, props }) => {
   const { t } = useTranslation();
 
   const [fetch, setFetch] = useState(false);
 
-  const { data, isFetching, error } = useDelete(
-    'driver',
-    props.id,
+  const { data, isFetching, error } = useUpdatePatch(
+    'user/driver/reset-password',
+    {},
+    props?.cpf,
     fetch,
     setFetch
   );
@@ -31,10 +32,10 @@ const ModalDeleteDriver = ({ showModal, setShowModal, props, mutate }) => {
   };
 
   useEffect(() => {
-    if (data?.successStatus === true) {
-      mutate();
+    if (data) {
+      console.log('data', data);
       onClose();
-      successNotification(data?.success?.responseData?.msg);
+      successNotification();
     }
     if (error?.response?.data?.httpStatus === 400) {
       errorNotification(error?.response?.data?.mgs);
@@ -61,9 +62,7 @@ const ModalDeleteDriver = ({ showModal, setShowModal, props, mutate }) => {
       {!isFetching && (
         <>
           <Grid item container justifyContent="center">
-            <Text fontSize={'30px'}>
-              {t('messages.want_to_delete')} {props.name} ?
-            </Text>
+            <Text fontSize={'30px'}>{t('messages.want_to_password')}</Text>
           </Grid>
           <Grid item container xs={12} md={12} lg={12} justifyContent="center">
             <Grid
@@ -74,7 +73,7 @@ const ModalDeleteDriver = ({ showModal, setShowModal, props, mutate }) => {
               mt={1}
               sx={{ textAlign: 'center' }}
             >
-              <Text fontSize={'16px'}>{t('messages.delete_msg_notice')}</Text>
+              <Text fontSize={'16px'}>{t('messages.reset_password')}</Text>
             </Grid>
           </Grid>
 
@@ -108,7 +107,6 @@ const ModalDeleteDriver = ({ showModal, setShowModal, props, mutate }) => {
               <Button
                 type="submit"
                 color="error"
-                // background={'#F03D3D'}
                 variant="outlined"
                 sx={{
                   fontSize: '14px',
@@ -118,7 +116,7 @@ const ModalDeleteDriver = ({ showModal, setShowModal, props, mutate }) => {
                   marginRight: '15px'
                 }}
               >
-                {t('button.delete')}
+                {t('button.reset')}
               </Button>
             </Grid>
           </Grid>
@@ -133,4 +131,4 @@ const ModalDeleteDriver = ({ showModal, setShowModal, props, mutate }) => {
   );
 };
 
-export default ModalDeleteDriver;
+export default ModalResetPassword;

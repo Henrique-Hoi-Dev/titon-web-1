@@ -1,17 +1,24 @@
-import React, { useState } from 'react'
-import { Box, Collapse, IconButton, Menu, MenuItem } from '@mui/material'
-import { useMediaQuery } from 'react-responsive'
-import { moneyMask } from 'utils/masks'
-import { ArrowDownIcon, ArrowUpIcon, DropUpSharpIcon } from 'assets/icons/icons'
+import React, { useState } from 'react';
+import { Box, Collapse, IconButton, Menu, MenuItem } from '@mui/material';
+import { useMediaQuery } from 'react-responsive';
+import { moneyMask } from 'utils/masks';
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  DropUpSharpIcon
+} from 'assets/icons/icons';
 import {
   SCell,
   SRow,
   STable,
   STableBody,
   SCellTwoHead
-} from 'components/atoms/BaseTable/BaseTable'
+} from 'components/atoms/BaseTable/BaseTable';
+import { useTranslation } from 'react-i18next';
 
 const InfoRow = (props) => {
+  const { t } = useTranslation();
+
   const {
     data,
     index,
@@ -19,38 +26,38 @@ const InfoRow = (props) => {
     setShowModalUpdate,
     setShowModalCredit,
     setDriveId
-  } = props
+  } = props;
 
-  const [open, setOpen] = useState(false)
-  const [openSettings, setOpenSettings] = useState(false)
-  const [anchorEl, setAnchorEl] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [openSettings, setOpenSettings] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(false);
 
-  const isDesktop = useMediaQuery({ maxWidth: '1250px' })
-  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' })
-  const isMobile = useMediaQuery({ maxWidth: '730px' })
+  const isDesktop = useMediaQuery({ maxWidth: '1250px' });
+  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' });
+  const isMobile = useMediaQuery({ maxWidth: '730px' });
 
   const handleClick = (ev) => {
-    setOpenSettings(!openSettings)
-    setAnchorEl(ev.currentTarget)
-  }
+    setOpenSettings(!openSettings);
+    setAnchorEl(ev.currentTarget);
+  };
 
   const handleDelete = (id, name) => {
-    setShowModalDelete(true)
-    setDriveId({ id: id, name: name })
-    setOpenSettings(false)
-  }
+    setShowModalDelete(true);
+    setDriveId({ id: id, name: name });
+    setOpenSettings(false);
+  };
 
   const handleUpdate = (id) => {
-    setShowModalUpdate(true)
-    setDriveId({ id: id })
-    setOpenSettings(false)
-  }
+    setShowModalUpdate(true);
+    setDriveId({ id: id });
+    setOpenSettings(false);
+  };
 
   const handleCredit = (id, name) => {
-    setShowModalCredit(true)
-    setDriveId({ id: id, name: name })
-    setOpenSettings(false)
-  }
+    setShowModalCredit(true);
+    setDriveId({ id: id, name: name });
+    setOpenSettings(false);
+  };
 
   return (
     <>
@@ -140,14 +147,14 @@ const InfoRow = (props) => {
         open={openSettings}
         onClose={() => setOpenSettings(!openSettings)}
       >
-        <MenuItem onClick={() => handleCredit(data?.id, data.name)}>
-          Crédito/Débito
+        <MenuItem onClick={() => handleUpdate(data?.id)}>
+          {t('button.edit')}
         </MenuItem>
-
-        <MenuItem onClick={() => handleUpdate(data?.id)}>Editar</MenuItem>
-
+        <MenuItem onClick={() => handleCredit(data?.id, data.name)}>
+          {t('button.credit/debit')}
+        </MenuItem>
         <MenuItem onClick={() => handleDelete(data?.id, data.name)}>
-          Excluir
+          {t('button.delete')}
         </MenuItem>
       </Menu>
 
@@ -204,7 +211,7 @@ const InfoRow = (props) => {
         </SCell>
       </SRow>
     </>
-  )
-}
+  );
+};
 
-export default InfoRow
+export default InfoRow;

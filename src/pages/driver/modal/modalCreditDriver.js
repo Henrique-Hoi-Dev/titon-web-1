@@ -1,26 +1,29 @@
-import { Grid, IconButton } from '@mui/material'
-import { useGet } from 'services/requests/useGet'
-import { BiPlus } from 'react-icons/bi'
-import { useState } from 'react'
+import { Grid, IconButton } from '@mui/material';
+import { useGet } from 'services/requests/useGet';
+import { BiPlus } from 'react-icons/bi';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import Loading from 'components/atoms/loading/loading'
-import Text from 'components/atoms/BaseText/BaseText'
-import Modal from 'components/molecules/BaseModal/BaseModal'
-import TableBankStatement from '../tableBankStatement'
-import ModalAddCreditDriver from './modalAddCreditDriver'
+import Loading from 'components/atoms/loading/loading';
+import Text from 'components/atoms/BaseText/BaseText';
+import Modal from 'components/molecules/BaseModal/BaseModal';
+import TableBankStatement from '../tableBankStatement';
+import ModalAddCreditDriver from './modalAddCreditDriver';
 
 const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
+  const { t } = useTranslation();
+
   const {
     data,
     isValidating,
     mutate: mutateDriverId
-  } = useGet(`user/driver/${props.id}`, [])
+  } = useGet(`user/driver/${props.id}`, []);
 
-  const [showModalAddCredit, setShowModalAddCredit] = useState(false)
+  const [showModalAddCredit, setShowModalAddCredit] = useState(false);
 
   const onClose = () => {
-    setShowModal(false)
-  }
+    setShowModal(false);
+  };
 
   return (
     <Modal open={showModal} onClose={onClose} maxWidth="650px" height="580px">
@@ -28,7 +31,7 @@ const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
         <>
           <Grid item container justifyContent="center">
             <Text fontsize={'23px'}>
-              Registro crédito / débito para: {props.name}?
+              {t('messages.credit/debit')} {props.name} ?
             </Text>
           </Grid>
           <Grid
@@ -68,7 +71,7 @@ const ModalCreditDriver = ({ showModal, setShowModal, props, mutate }) => {
         />
       )}
     </Modal>
-  )
-}
+  );
+};
 
-export default ModalCreditDriver
+export default ModalCreditDriver;

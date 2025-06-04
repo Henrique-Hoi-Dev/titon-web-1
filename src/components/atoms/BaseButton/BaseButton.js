@@ -1,10 +1,11 @@
-import React from 'react'
-import { CircularProgress } from '@mui/material'
-import { Button as ButtonComponent } from '@mui/material'
+import React from 'react';
+import { CircularProgress } from '@mui/material';
+import { Button as ButtonComponent } from '@mui/material';
 
 const BaseButton = ({
   disabled,
   children,
+  color,
   loading,
   variant,
   background,
@@ -19,6 +20,7 @@ const BaseButton = ({
           disabled={disabled}
           disableElevation
           variant={variant ? variant : 'default'}
+          color={color}
           sx={{
             ...sx,
             paddingTop: '8px',
@@ -58,7 +60,7 @@ const BaseButton = ({
         </ButtonComponent>
       )}
     </>
-  )
-}
+  );
+};
 
-export default BaseButton
+export default BaseButton;

@@ -1,95 +1,98 @@
-import React, { useEffect, useState } from 'react'
-import { Avatar, Grid, IconButton } from '@mui/material'
-import { useCreate } from 'services/requests/useCreate'
-import { successNotification, errorNotification } from 'utils/notification'
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-import { storage } from 'base'
+import React, { useEffect, useState } from 'react';
+import { Avatar, Grid, IconButton } from '@mui/material';
+import { useCreate } from 'services/requests/useCreate';
+import { successNotification, errorNotification } from 'utils/notification';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { storage } from 'base';
+import { useTranslation } from 'react-i18next';
 
-import Button from 'components/atoms/BaseButton/BaseButton'
-import Input from 'components/atoms/input/BaseInput'
-import Modal from 'components/molecules/BaseModal/BaseModal'
-import Loading from 'components/atoms/loading/loading'
-import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import Title from 'components/atoms/BaseTitle/BaseTitle'
-import Progress from 'components/atoms/progress/progress'
+import Button from 'components/atoms/BaseButton/BaseButton';
+import Modal from 'components/molecules/BaseModal/BaseModal';
+import Loading from 'components/atoms/loading/loading';
+import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import Title from 'components/atoms/BaseTitle/BaseTitle';
+import Progress from 'components/atoms/progress/progress';
+import BaseInput from 'components/molecules/BaseInput/BaseInput';
 
 const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
-  const [body, setBody] = useState({})
+  const { t } = useTranslation();
 
-  const [fetch, setFetch] = useState(false)
+  const [body, setBody] = useState({});
 
-  const [preview, setPreview] = useState('')
+  const [fetch, setFetch] = useState(false);
 
-  const [progressPercent, setProgressPercent] = useState(0)
+  const [preview, setPreview] = useState('');
+
+  const [progressPercent, setProgressPercent] = useState(0);
 
   const {
     data: truck,
     error: errorTruck,
     isFetching
-  } = useCreate('user/truck', body, fetch, setFetch)
+  } = useCreate('user/truck', body, fetch, setFetch);
 
   const onClose = () => {
-    setShowModal(false)
-    setBody({})
+    setShowModal(false);
+    setBody({});
     setPreview(
-      'https://i.pinimg.com/474x/a6/70/05/a67005e9bf90bc529088205650784bba.jpg'
-    )
-  }
+      'https://titon-file-storage.s3.us-east-1.amazonaws.com/images-public/exemple-truck.webp'
+    );
+  };
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
-    setFetch(true)
-  }
+    ev.preventDefault();
+    setFetch(true);
+  };
 
   useEffect(() => {
     setBody((state) => ({
       ...state,
       truck_avatar: preview
-    }))
-  }, [preview, setPreview])
+    }));
+  }, [preview, setPreview]);
 
   useEffect(() => {
     if (truck) {
-      mutate()
-      onClose()
+      mutate();
+      onClose();
     }
 
     if (truck) {
-      successNotification()
+      successNotification();
     }
 
     if (errorTruck) {
-      errorNotification(errorTruck?.response?.data?.msg)
+      errorNotification(errorTruck?.response?.data?.msg);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [truck, errorTruck])
+  }, [truck, errorTruck]);
 
   async function handleChange(e) {
-    const file = e.target.files[0]
+    const file = e.target.files[0];
 
-    if (!file) return null
-    const storageRef = ref(storage, `avatar/${file.name}`)
-    const uploadTask = uploadBytesResumable(storageRef, file)
+    if (!file) return null;
+    const storageRef = ref(storage, `avatar/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on(
       'state_changed',
       (snapshot) => {
         const progress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        )
-        setProgressPercent(progress)
+        );
+        setProgressPercent(progress);
       },
       (error) => {
-        alert(error)
+        alert(error);
       },
       () => {
         // e.target[0].value = ''
         getDownloadURL(storageRef).then((downloadURL) => {
-          console.log('avatar', downloadURL)
-          setPreview(downloadURL)
-        })
+          console.log('avatar', downloadURL);
+          setPreview(downloadURL);
+        });
       }
-    )
+    );
   }
 
   return (
@@ -102,7 +105,7 @@ const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
       maxHeight={'850px'}
     >
       <ContentHeader mt={2}>
-        <Title>Cadastro Caminhão</Title>
+        <Title>{t('modal_truck.title')}</Title>
       </ContentHeader>
 
       {!isFetching && (
@@ -111,7 +114,8 @@ const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
             container
             item
             spacing={2}
-            justifyContent="flex-start"
+            alignItems="center"
+            flexDirection={'column'}
             flexWrap={'nowrap'}
             mr={3}
             lg={12}
@@ -158,7 +162,7 @@ const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
                   src={
                     preview
                       ? preview
-                      : 'https://i.pinimg.com/474x/a6/70/05/a67005e9bf90bc529088205650784bba.jpg'
+                      : 'https://titon-file-storage.s3.us-east-1.amazonaws.com/images-public/exemple-truck.webp'
                   }
                 ></Avatar>
               </IconButton>
@@ -170,11 +174,20 @@ const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
               )}
             </Grid>
 
-            <Grid container item xs={6} md={6} lg={6} spacing={1.5}>
-              <Grid item xs={12} md={12} lg={12}>
-                <Input
+            <Grid
+              container
+              item
+              xs={12}
+              md={12}
+              lg={12}
+              spacing={1.5}
+              flexWrap={'wrap'}
+            >
+              <Grid item xs={6} md={6} lg={6}>
+                <BaseInput
                   required
-                  label={'Marca'}
+                  label={t('modal_truck.placeholder.mark')}
+                  labelText={t('modal_truck.label.mark')}
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
@@ -191,10 +204,11 @@ const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={12} lg={12}>
-                <Input
+              <Grid item xs={6} md={6} lg={6}>
+                <BaseInput
                   required
-                  label={'Modelo'}
+                  label={t('modal_truck.placeholder.model')}
+                  labelText={t('modal_truck.label.model')}
                   styles={{
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
                       height: '1.4rem'
@@ -210,10 +224,11 @@ const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={12} lg={12}>
-                <Input
+              <Grid item xs={6} md={6} lg={6}>
+                <BaseInput
                   required
-                  label={'Placa'}
+                  label={t('modal_truck.placeholder.plate')}
+                  labelText={t('modal_truck.label.plate')}
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
@@ -230,10 +245,11 @@ const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={12} lg={12}>
-                <Input
+              <Grid item xs={6} md={6} lg={6}>
+                <BaseInput
                   required
-                  label={'Cor'}
+                  label={t('modal_truck.placeholder.color')}
+                  labelText={t('modal_truck.label.color')}
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
@@ -250,10 +266,11 @@ const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={12} lg={12}>
-                <Input
+              <Grid item xs={6} md={6} lg={6}>
+                <BaseInput
                   required
-                  label={'KM'}
+                  label={t('modal_truck.placeholder.truck_km')}
+                  labelText={t('modal_truck.label.truck_km')}
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
@@ -270,10 +287,11 @@ const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={12} lg={12}>
-                <Input
+              <Grid item xs={6} md={6} lg={6}>
+                <BaseInput
                   required
-                  label={'Número Chassi'}
+                  label={t('modal_truck.placeholder.chassis_number')}
+                  labelText={t('modal_truck.label.chassis_number')}
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
@@ -290,10 +308,11 @@ const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={12} lg={12}>
-                <Input
+              <Grid item xs={12} md={6} lg={6}>
+                <BaseInput
                   required
-                  label={'Ano Fabricação'}
+                  label={t('modal_truck.placeholder.year_manufacture')}
+                  labelText={t('modal_truck.label.year_manufacture')}
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
@@ -322,19 +341,19 @@ const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
             mt={0.3}
             justifyContent={'flex-end'}
           >
-            <Grid container item xs={12} md={3} lg={3}>
+            <Grid item container xs={12} md={12} lg={3}>
               <Button
                 onClick={() => onClose()}
-                background={'#fff'}
+                background={''}
                 sx={{
                   width: '140px',
                   height: '49px',
                   border: '1px solid #509BFB',
-                  color: '#000000'
+                  color: '#FFF'
                 }}
                 variant="text"
               >
-                CANCELAR
+                {t('button.cancel')}
               </Button>
             </Grid>
             <Grid container item xs={12} md={3} lg={3}>
@@ -352,7 +371,7 @@ const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
                   marginRight: '15px'
                 }}
               >
-                CADASTRAR
+                {t('button.register')}
               </Button>
             </Grid>
           </Grid>
@@ -361,7 +380,7 @@ const ModalAddTruck = ({ showModal, setShowModal, mutate }) => {
 
       {isFetching && <Loading />}
     </Modal>
-  )
-}
+  );
+};
 
-export default ModalAddTruck
+export default ModalAddTruck;

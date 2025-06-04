@@ -2,13 +2,13 @@ import {
   Autocomplete as MuiAutocomplete,
   Popper,
   TextField
-} from '@mui/material'
-import { autocompleteClasses } from '@mui/material/Autocomplete'
+} from '@mui/material';
+import { autocompleteClasses } from '@mui/material/Autocomplete';
 
-import Loading from 'components/atoms/loading/loading'
-import Text from 'components/atoms/BaseText/BaseText'
-import styled from 'styled-components'
-import { ArrowDownIcon } from '../../../assets/icons/icons'
+import Loading from 'components/atoms/loading/loading';
+import Text from 'components/atoms/BaseText/BaseText';
+import styled from 'styled-components';
+import { ArrowDownIcon } from '../../../assets/icons/icons';
 
 const BaseSelect = ({
   placeholder,
@@ -37,7 +37,7 @@ const BaseSelect = ({
       textAlign: 'center',
       opacity: '0.5'
     }
-  }))
+  }));
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -49,7 +49,7 @@ const BaseSelect = ({
           ...sx,
           mt: '5px'
         }}
-        size="small"
+        size="medium"
         popupIcon={<ArrowDownIcon />}
         PopperComponent={StyledPopper}
         disabled={disabled}
@@ -105,7 +105,7 @@ const BaseSelect = ({
         )}
       />
     </div>
-  )
-}
+  );
+};
 
-export default BaseSelect
+export default BaseSelect;

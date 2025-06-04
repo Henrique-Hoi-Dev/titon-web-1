@@ -4,22 +4,18 @@ import { Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsersRequest } from 'store/modules/user/userSlice';
 
+import BaseModalAddUser from '../../components/molecules/BaseModalAddUser/BaseModalAddUser';
 import Table from './table';
-import ModalAddUser from '../../components/molecules/BaseModalAddUser/BaseModalAddUser';
+import initialStateQuery from '@/utils/initialStateQuery';
 
 const User = () => {
   const dispatch = useDispatch();
   const { data: users, loading } = useSelector((state) => state.user);
   const [showModalDriver, setShowModalDriver] = useState(false);
 
-  const INITIAL_STATE_USER = {
-    limit: 10,
-    page: 1,
-    sort_field: null,
-    sort_order: 'ASC'
-  };
-
-  const [userQuery, setUserQuery] = useState(INITIAL_STATE_USER);
+  const [userQuery, setUserQuery] = useState(
+    initialStateQuery.INITIAL_STATE_USER
+  );
 
   useEffect(() => {
     dispatch(getUsersRequest(userQuery));
@@ -54,19 +50,17 @@ const User = () => {
             data={users}
             query={userQuery}
             setQuery={setUserQuery}
-            isFetching={loading}
-            error={null}
             loading={loading}
-            mutate={null}
           />
         </Grid>
       </Grid>
 
-      <ModalAddUser
-        setShowModal={setShowModalDriver}
-        showModal={showModalDriver}
-        mutate={null}
-      />
+      {showModalDriver && (
+        <BaseModalAddUser
+          setShowModal={setShowModalDriver}
+          showModal={showModalDriver}
+        />
+      )}
     </Grid>
   );
 };

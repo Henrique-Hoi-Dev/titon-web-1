@@ -2,24 +2,28 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Divider, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import Button from 'components/atoms/BaseButton/BaseButton';
-import Text from 'components/atoms/BaseText/BaseText';
-import Modal from 'components/molecules/BaseModal/BaseModal';
-import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import Title from 'components/atoms/BaseTitle/BaseTitle';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
-import NestedList from 'components/atoms/nestedList/nestedList';
+import { getFreightByIdRequest } from '@/store/modules/freight/freightSlice';
 
-const BaseModalAction = ({ showModal, setShowModal, checkId, mutate }) => {
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseText from 'components/atoms/BaseText/BaseText';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import NestedList from 'components/atoms/nestedList/nestedList';
+import TableStocked from './tableStocked';
+import TableExpense from './tableExpense';
+import TableDeposit from './tableDeposit';
+
+const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { selected: check, loading } = useSelector((state) => state.check);
-  const { selected: checkFirst } = useSelector((state) => state.checkFirst);
-  const { success, error } = useSelector((state) => state.check);
+
+  const { selected, loadingById } = useSelector((state) => state?.freight);
 
   const [value, setValue] = useState(0);
-  const [statusSecondCheck, setStatusSecondCheck] = useState(false);
+  const [statusSecondCheck] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -30,25 +34,10 @@ const BaseModalAction = ({ showModal, setShowModal, checkId, mutate }) => {
   }, [setShowModal]);
 
   useEffect(() => {
-    if (checkId) {
-      // Implementar lógica de busca do check aqui
+    if (freightId) {
+      dispatch(getFreightByIdRequest(freightId));
     }
-  }, [dispatch, checkId]);
-
-  useEffect(() => {
-    if (check?.dataResult?.status === 'STARTING_TRIP') {
-      setStatusSecondCheck(true);
-    } else {
-      setStatusSecondCheck(false);
-    }
-  }, [check]);
-
-  useEffect(() => {
-    if (success) {
-      mutate();
-      onClose();
-    }
-  }, [success, mutate, onClose]);
+  }, [dispatch, freightId]);
 
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -63,7 +52,7 @@ const BaseModalAction = ({ showModal, setShowModal, checkId, mutate }) => {
       >
         {value === index && (
           <>
-            {!loading && (
+            {!loadingById && (
               <Box
                 sx={{
                   p: 2,
@@ -75,7 +64,7 @@ const BaseModalAction = ({ showModal, setShowModal, checkId, mutate }) => {
               </Box>
             )}
 
-            {loading && <Loading />}
+            {loadingById && <BaseLoading />}
           </>
         )}
       </div>
@@ -91,15 +80,15 @@ const BaseModalAction = ({ showModal, setShowModal, checkId, mutate }) => {
 
   const valuesFirstCheck = {
     value: {
-      liter: check?.dataResult?.totalLiters,
-      fuelValue: check?.dataResult?.fuelValueTotal
+      liter: selected?.totalLiters,
+      fuelValue: selected?.fuelValueTotal
     },
-    value2: check?.dataResult?.expenses,
-    value3: check?.dataResult?.totalDriver
+    value2: selected?.expenses,
+    value3: selected?.totalDriver
   };
 
   return (
-    <Modal
+    <BaseModal
       open={showModal}
       onClose={onClose}
       component="form"
@@ -107,7 +96,7 @@ const BaseModalAction = ({ showModal, setShowModal, checkId, mutate }) => {
       minheight={'590px'}
       sxGridModal={{ marginLeft: 0 }}
     >
-      <ContentHeader
+      <BaseContentHeader
         mt={2}
         sx={{
           borderBottom: '2px solid #FFF',
@@ -115,20 +104,12 @@ const BaseModalAction = ({ showModal, setShowModal, checkId, mutate }) => {
           width: '96%'
         }}
       >
-        <Title sxGridText={{ justifyContent: 'center' }}>
-          {check?.dataResult?.startCity?.toUpperCase()}{' '}
+        <BaseTitle sxGridText={{ justifyContent: 'center' }}>
+          {selected?.startCity?.toUpperCase()}{' '}
           <ArrowForwardIcon style={{ verticalAlign: 'middle' }} />{' '}
-          {check?.dataResult?.finalCity?.toUpperCase()}
-        </Title>
-      </ContentHeader>
-
-      {!loading && error && (
-        <Grid item container justifyContent="center">
-          <Text sx={{ color: 'red' }}>
-            {`Erro: ${error?.response?.data?.dataResult?.msg}`}
-          </Text>
-        </Grid>
-      )}
+          {selected?.finalCity?.toUpperCase()}
+        </BaseTitle>
+      </BaseContentHeader>
 
       <Box
         sx={{
@@ -220,15 +201,15 @@ const BaseModalAction = ({ showModal, setShowModal, checkId, mutate }) => {
                 alignItems={'center'}
                 width="45%"
               >
-                <Text sx={{ marginBottom: '-15px', fontWeight: '800' }}>
+                <BaseText sx={{ marginBottom: '-15px', fontWeight: '800' }}>
                   {t('modal.price')}
-                </Text>
+                </BaseText>
                 <NestedList
                   maxwidth={'200px'}
                   titleOne={t('modal.total_shipping')}
-                  valorOne={checkFirst?.dataResult?.freightTotal}
+                  valorOne={selected?.freightTotal}
                   titleTwo={t('modal.net_shipping')}
-                  valorTwo={checkFirst?.dataResult?.totalNetFreight}
+                  valorTwo={selected?.totalNetFreight}
                   valuesFirstCheck={valuesFirstCheck}
                   statusSecondCheck={statusSecondCheck}
                 />
@@ -244,16 +225,16 @@ const BaseModalAction = ({ showModal, setShowModal, checkId, mutate }) => {
             width="45%"
           >
             {statusSecondCheck && (
-              <Text sx={{ marginBottom: '-15px', fontWeight: '800' }}>
+              <BaseText sx={{ marginBottom: '-15px', fontWeight: '800' }}>
                 {t('modal.accomplished')}
-              </Text>
+              </BaseText>
             )}
             <NestedList
               maxwidth={statusSecondCheck ? '220px' : '360px'}
               titleOne={t('modal.total_shipping')}
-              valorOne={check?.dataResult?.freightTotal}
+              valorOne={selected?.freightTotal}
               titleTwo={t('modal.net_shipping')}
-              valorTwo={check?.dataResult?.totalNetFreight}
+              valorTwo={selected?.totalNetFreight}
               valuesFirstCheck={valuesFirstCheck}
               statusSecondCheck={statusSecondCheck}
             />
@@ -280,28 +261,28 @@ const BaseModalAction = ({ showModal, setShowModal, checkId, mutate }) => {
                 spacing={2}
               >
                 <Grid item container flexDirection={'column'}>
-                  <Text fontsize={'12px'} sx={{ opacity: 0.5 }}>
-                    Débito/Crédito
-                  </Text>
-                  <Text fontsize={'16px'}>{''}</Text>
+                  <BaseText fontsize={'12px'} sx={{ opacity: 0.5 }}>
+                    {t('modal.credit/debit')}
+                  </BaseText>
+                  <BaseText fontsize={'16px'}>{''}</BaseText>
                 </Grid>
                 <Grid item container flexDirection={'column'}>
-                  <Text fontsize={'12px'} sx={{ opacity: 0.5 }}>
-                    Local de descarga
-                  </Text>
-                  <Text fontsize={'16px'}>{''}</Text>
+                  <BaseText fontsize={'12px'} sx={{ opacity: 0.5 }}>
+                    {t('modal.discharge_location')}
+                  </BaseText>
+                  <BaseText fontsize={'16px'}>{''}</BaseText>
                 </Grid>
                 <Grid item container flexDirection={'column'}>
-                  <Text fontsize={'12px'} sx={{ opacity: 0.5 }}>
-                    Data de descarga
-                  </Text>
-                  <Text fontsize={'16px'}>{''}</Text>
+                  <BaseText fontsize={'12px'} sx={{ opacity: 0.5 }}>
+                    {t('modal.discharge_date')}
+                  </BaseText>
+                  <BaseText fontsize={'16px'}>{''}</BaseText>
                 </Grid>
                 <Grid item container flexDirection={'column'}>
-                  <Text fontsize={'12px'} sx={{ opacity: 0.5 }}>
-                    Hora de descarga
-                  </Text>
-                  <Text fontsize={'16px'}>{''}</Text>
+                  <BaseText fontsize={'12px'} sx={{ opacity: 0.5 }}>
+                    {t('modal.hour_of_discharge')}
+                  </BaseText>
+                  <BaseText fontsize={'16px'}>{''}</BaseText>
                 </Grid>
               </Grid>
             </>
@@ -320,7 +301,7 @@ const BaseModalAction = ({ showModal, setShowModal, checkId, mutate }) => {
           minHeight="365px"
           overflow={'auto'}
         >
-          {/* TableStocked component */}
+          <TableStocked data={selected?.restock} loading={loadingById} />
         </Grid>
       </TabPanel>
 
@@ -334,7 +315,7 @@ const BaseModalAction = ({ showModal, setShowModal, checkId, mutate }) => {
           maxHeight="365px"
           minHeight="365px"
         >
-          {/* TableExpense component */}
+          <TableExpense data={selected?.travelExpenses} loading={loadingById} />
         </Grid>
       </TabPanel>
 
@@ -348,14 +329,14 @@ const BaseModalAction = ({ showModal, setShowModal, checkId, mutate }) => {
           maxHeight="365px"
           minHeight="365px"
         >
-          {/* TableDeposit component */}
+          <TableDeposit data={selected?.depositMoney} loading={loadingById} />
         </Grid>
       </TabPanel>
 
-      {check?.dataResult?.status === 'FINISHED' && !loading && (
+      {selected?.status === 'FINISHED' && !loadingById && (
         <Grid container item spacing={2} mt={1} justifyContent="flex-end">
           <Grid container item xs={12} md={3} lg={3}>
-            <Button
+            <BaseButton
               background={'#fff'}
               variant="text"
               sx={{
@@ -367,11 +348,11 @@ const BaseModalAction = ({ showModal, setShowModal, checkId, mutate }) => {
                 color: '#000000'
               }}
             >
-              REPROVAR
-            </Button>
+              {t('modal.disapproved')}
+            </BaseButton>
           </Grid>
           <Grid container item xs={12} md={3} lg={3}>
-            <Button
+            <BaseButton
               type="submit"
               color="success"
               background={
@@ -385,12 +366,12 @@ const BaseModalAction = ({ showModal, setShowModal, checkId, mutate }) => {
                 marginRight: '15px'
               }}
             >
-              APROVAR
-            </Button>
+              {t('modal.approved')}
+            </BaseButton>
           </Grid>
         </Grid>
       )}
-    </Modal>
+    </BaseModal>
   );
 };
 

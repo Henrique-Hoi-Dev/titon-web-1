@@ -1,14 +1,17 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Grid } from '@mui/material';
-import { createCartRequest } from 'store/modules/cart/cartSlice';
+import {
+  createCartRequest,
+  getCartsRequest
+} from 'store/modules/cart/cartSlice';
 
-import Button from 'components/atoms/BaseButton/BaseButton';
-import Modal from 'components/molecules/BaseModal/BaseModal';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
-import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import Title from 'components/atoms/BaseTitle/BaseTitle';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
 import BaseInput from 'components/molecules/BaseInput/BaseInput';
 import BaseSelect from 'components/molecules/BaseSelect/BaseSelect';
 import enums from '@/utils/enums';
@@ -30,133 +33,240 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
     dispatch(createCartRequest(body));
   };
 
+  useEffect(() => {
+    if (loading) {
+      onClose();
+      dispatch(getCartsRequest());
+    }
+  }, [loading, onClose, dispatch]);
+
   return (
-    <Modal
+    <BaseModal
       open={showModal}
-      showCloseIcon
       onClose={onClose}
       component="form"
       onSubmit={handleSubmit}
       maxWidth={'600px'}
+      maxHeight={'800px'}
     >
-      <ContentHeader>
-        <Title>{t('modal_cart.title_add')}</Title>
-      </ContentHeader>
+      <BaseContentHeader mt={2}>
+        <BaseTitle>Cadastrar Carreta</BaseTitle>
+      </BaseContentHeader>
 
       {!loading && (
-        <Grid container item spacing={2}>
-          <Grid
-            container
-            item
-            xs={12}
-            md={12}
-            lg={12}
-            spacing={1.5}
-            flexWrap={'wrap'}
-          >
-            <Grid item xs={6} md={6} lg={6}>
+        <Grid
+          container
+          item
+          spacing={2}
+          mt={1}
+          sx={{ minHeight: '300px', justifyContent: 'flex-start' }}
+        >
+          <Grid item xs={12} md={6} lg={6}>
+            <BaseInput
+              label={'Marca'}
+              required
+              styles={{
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
+              }}
+              value={body?.cart_brand ?? ''}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  cart_brand: ev.target.value
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
+            <BaseInput
+              label={'Modelo'}
+              required
+              styles={{
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
+              }}
+              value={body?.cart_models ?? ''}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  cart_models: ev.target.value
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
+            <BaseInput
+              label={'Placa'}
+              required
+              styles={{
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
+              }}
+              value={body?.cart_board ?? ''}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  cart_board: ev.target.value
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
+            <BaseInput
+              label={'Cor'}
+              required
+              styles={{
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
+              }}
+              value={body?.cart_color ?? ''}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  cart_color: ev.target.value
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
+            <BaseSelect
+              placeholder={'Tipo Carreta'}
+              options={enums.typeCart ?? []}
+              getOptionLabel={(option) => option.label ?? ''}
+              isOptionEqualToValue={(option, value) =>
+                option.value === value.value
+              }
+              onChange={(event, newValue) => {
+                if (newValue) {
+                  setBody((state) => ({
+                    ...state,
+                    cart_bodyworks: newValue.value
+                  }));
+                }
+                if (newValue === null) {
+                  setBody((state) => ({ ...state, cart_bodyworks: '' }));
+                }
+              }}
+            />
+          </Grid>
+
+          {body?.cart_bodyworks === 'tank' && (
+            <Grid item xs={12} md={6} lg={6}>
               <BaseInput
+                label={'Capacidade de litros'}
                 required
-                label={t('modal_cart.placeholder.plate')}
-                labelText={t('modal_cart.label.plate')}
                 styles={{
                   maxWidth: '274px',
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
                     height: '1.4rem'
                   }
                 }}
-                value={body?.plate ?? ''}
+                value={body?.cart_liter_capacity ?? ''}
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    plate: ev.target.value
+                    cart_liter_capacity: ev.target.value
                   }))
                 }
               />
             </Grid>
+          )}
 
-            <Grid item xs={6} md={6} lg={6}>
+          {(body?.cartBodyworks === 'BULKCARRIER' ||
+            body?.cartBodyworks === 'SIDER' ||
+            body?.cartBodyworks === 'CHEST' ||
+            body?.cartBodyworks === 'BUCKET') && (
+            <Grid item xs={12} md={6} lg={6}>
               <BaseInput
+                label={'Capacidade de tonelada'}
                 required
-                label={t('modal_cart.placeholder.model')}
-                labelText={t('modal_cart.label.model')}
-                styles={{
-                  '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
-                }}
-                value={body?.model ?? ''}
-                onChange={(ev) =>
-                  setBody((state) => ({
-                    ...state,
-                    model: ev.target.value
-                  }))
-                }
-              />
-            </Grid>
-
-            <Grid item xs={6} md={6} lg={6}>
-              <BaseInput
-                required
-                label={t('modal_cart.placeholder.brand')}
-                labelText={t('modal_cart.label.brand')}
                 styles={{
                   maxWidth: '274px',
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
                     height: '1.4rem'
                   }
                 }}
-                value={body?.brand ?? ''}
+                value={body?.cart_ton_capacity ?? ''}
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    brand: ev.target.value
+                    cart_ton_capacity: ev.target.value
                   }))
                 }
               />
             </Grid>
+          )}
 
-            <Grid item xs={6} md={6} lg={6}>
-              <BaseInput
-                required
-                label={t('modal_cart.placeholder.year')}
-                labelText={t('modal_cart.label.year')}
-                styles={{
-                  '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
-                }}
-                value={body?.year ?? ''}
-                onChange={(ev) =>
-                  setBody((state) => ({
-                    ...state,
-                    year: ev.target.value
-                  }))
+          <Grid item xs={12} md={6} lg={6}>
+            <BaseInput
+              label={'Tara'}
+              required
+              styles={{
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
                 }
-              />
-            </Grid>
+              }}
+              value={body?.cart_tara ?? ''}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  cart_tara: ev.target.value
+                }))
+              }
+            />
+          </Grid>
 
-            <Grid item xs={6} md={6} lg={6}>
-              <BaseSelect
-                required
-                label={t('modal_cart.placeholder.type')}
-                labelText={t('modal_cart.label.type')}
-                styles={{
-                  maxWidth: '274px',
-                  '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
-                }}
-                value={body?.type ?? ''}
-                onChange={(ev) =>
-                  setBody((state) => ({
-                    ...state,
-                    type: ev.target.value
-                  }))
+          <Grid item xs={12} md={6} lg={6}>
+            <BaseInput
+              label={'Número Chassi'}
+              required
+              styles={{
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
                 }
-                options={enums.typeCart}
-              />
-            </Grid>
+              }}
+              value={body?.cart_chassis ?? ''}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  cart_chassis: ev.target.value
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
+            <BaseInput
+              label={'Ano Fabricação'}
+              required
+              styles={{
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
+              }}
+              value={body?.cart_year ?? ''}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  cart_year: ev.target.value
+                }))
+              }
+            />
           </Grid>
 
           <Grid
@@ -170,7 +280,7 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
             justifyContent={'flex-end'}
           >
             <Grid item container xs={12} md={12} lg={3}>
-              <Button
+              <BaseButton
                 onClick={() => onClose()}
                 background={''}
                 sx={{
@@ -182,10 +292,10 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
                 variant="text"
               >
                 {t('button.cancel')}
-              </Button>
+              </BaseButton>
             </Grid>
             <Grid container item xs={12} md={3} lg={3}>
-              <Button
+              <BaseButton
                 type="submit"
                 color="success"
                 background={
@@ -199,15 +309,15 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
                   marginRight: '15px'
                 }}
               >
-                {t('button.create')}
-              </Button>
+                {t('button.register')}
+              </BaseButton>
             </Grid>
           </Grid>
         </Grid>
       )}
 
-      {loading && <Loading />}
-    </Modal>
+      {loading && <BaseLoading />}
+    </BaseModal>
   );
 };
 

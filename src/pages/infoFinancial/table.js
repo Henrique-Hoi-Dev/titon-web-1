@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Paper, TableContainer } from '@mui/material';
-import { useMediaQuery } from 'react-responsive';
+import { Paper, TableContainer } from '@mui/material';
 import {
   SCell,
   SHead,
@@ -12,20 +11,15 @@ import { useTranslation } from 'react-i18next';
 
 import BaseModalAction from '@/components/molecules/BaseModalAction/BaseModalAction';
 import BaseNotFound from '@components/molecules/BaseNotFound/BaseNotFound';
-import BaseError from '@components/molecules/BaseError/BaseError';
-
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
 import InfoRow from './infoRow';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
 
-const Table = ({ data, isFetching, mutate, error, loading }) => {
+const Table = ({ data, loading }) => {
   const { t } = useTranslation();
-
-  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' });
-  const isMobile = useMediaQuery({ maxWidth: '730px' });
 
   const [showModalAction, setShowModalAction] = useState(false);
 
-  const [checkId, setCheckId] = useState();
+  const [freightId, setFreightId] = useState();
 
   return (
     <>
@@ -40,31 +34,21 @@ const Table = ({ data, isFetching, mutate, error, loading }) => {
         <STable>
           <SHead>
             <SRow>
-              <SCell displaywidth={isMobile ? 1 : 0}>
-                {t('info_financial.table.status')}
-              </SCell>
-              <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-                {t('info_financial.destiny')}
-              </SCell>
-              <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-                {t('info_financial.table.current_location')}
-              </SCell>
-              <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-                {t('info_financial.table.creation_date')}
-              </SCell>
-              <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-                {t('info_financial.table.gross_value')}
-              </SCell>
+              <SCell>{t('info_financial.table.status')}</SCell>
+              <SCell>{t('info_financial.destiny')}</SCell>
+              <SCell>{t('info_financial.table.current_location')}</SCell>
+              <SCell>{t('info_financial.table.creation_date')}</SCell>
+              <SCell>{t('info_financial.table.gross_value')}</SCell>
             </SRow>
           </SHead>
-          {!isFetching && data && data?.dataResult?.freight?.length > 0 && (
+          {!loading && data && data?.freight?.length > 0 && (
             <STableBody>
-              {data?.dataResult?.freight?.map((item, i) => (
+              {data?.freight?.map((item, i) => (
                 <InfoRow
                   key={i}
                   data={item}
                   index={i}
-                  setCheckId={setCheckId}
+                  setFreightId={setFreightId}
                   setShowModalAction={setShowModalAction}
                 />
               ))}
@@ -72,42 +56,18 @@ const Table = ({ data, isFetching, mutate, error, loading }) => {
           )}
         </STable>
 
-        {(loading || isFetching) && (
-          <Grid
-            container
-            item
-            justifyContent="center"
-            alignItems="center"
-            mt={3}
-          >
-            <Loading />
-          </Grid>
-        )}
+        {data?.freight?.length === 0 && !loading && <BaseNotFound />}
 
-        <Grid
-          item
-          container
-          spacing={2}
-          mt={1}
-          mb={1}
-          alignItems="center"
-          flexWrap="nowrap"
-          justifyContent="center"
-        >
-          {data?.dataResult?.freight?.length === 0 && !isFetching && (
-            <BaseNotFound />
-          )}
-
-          {error && <BaseError />}
-        </Grid>
+        {loading && <BaseLoading />}
       </TableContainer>
 
-      <BaseModalAction
-        setShowModal={setShowModalAction}
-        showModal={showModalAction}
-        checkId={checkId}
-        mutate={mutate}
-      />
+      {showModalAction && (
+        <BaseModalAction
+          setShowModal={setShowModalAction}
+          showModal={showModalAction}
+          freightId={freightId}
+        />
+      )}
     </>
   );
 };

@@ -5,11 +5,14 @@ import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
 import { useTranslation } from 'react-i18next';
 import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
 
-const InfoRow = (props) => {
+const InfoRow = ({
+  data,
+  index,
+  setShowModalDelete,
+  setShowModalUpdate,
+  setTruckId
+}) => {
   const { t } = useTranslation();
-
-  const { data, index, setShowModalDelete, setShowModalUpdate, setTruckId } =
-    props;
 
   const [openSettings, setOpenSettings] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
@@ -20,14 +23,14 @@ const InfoRow = (props) => {
   };
 
   const handleDelete = (id, name) => {
-    setShowModalDelete(true);
     setTruckId({ id: id, name: name });
+    setShowModalDelete(true);
     setOpenSettings(false);
   };
 
   const handleUpdate = (id) => {
-    setShowModalUpdate(true);
     setTruckId({ id: id });
+    setShowModalUpdate(true);
     setOpenSettings(false);
   };
 

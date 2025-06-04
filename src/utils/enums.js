@@ -25,7 +25,7 @@ const columnsTableBank = [
   { id: 'date', label: 'Data', minWidth: 170, align: 'right' }
 ];
 
-const status = [
+const statusFreight = [
   { value: 'PENDING', label: 'Em processo', color: 'green' },
   { value: 'approved', label: 'Aprovado', color: '#1976d2' },
   { value: 'denied', label: 'Negado', color: 'red' },
@@ -54,7 +54,7 @@ const enums = {
   typeCart,
   typeBodywork,
   columnsTableBank,
-  status,
+  statusFreight,
   typeUser,
   typeFinancial,
   statusFinancial

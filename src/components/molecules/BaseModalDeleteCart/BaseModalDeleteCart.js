@@ -4,13 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { Grid } from '@mui/material';
 import { deleteCartRequest } from 'store/modules/cart/cartSlice';
 
-import Button from 'components/atoms/BaseButton/BaseButton';
-import Modal from 'components/molecules/BaseModal/BaseModal';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
-import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import Title from 'components/atoms/BaseTitle/BaseTitle';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseText from '@/components/atoms/BaseText/BaseText';
 
-const BaseModalDeleteCart = ({ showModal, setShowModal, props }) => {
+const BaseModalDeleteCart = ({ showModal, setShowModal, data }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { loading, success } = useSelector((state) => state.cart);
@@ -21,7 +21,7 @@ const BaseModalDeleteCart = ({ showModal, setShowModal, props }) => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    dispatch(deleteCartRequest(props.id));
+    dispatch(deleteCartRequest(data.id));
   };
 
   useEffect(() => {
@@ -31,31 +31,33 @@ const BaseModalDeleteCart = ({ showModal, setShowModal, props }) => {
   }, [success, onClose]);
 
   return (
-    <Modal
+    <BaseModal
       open={showModal}
-      showCloseIcon
       onClose={onClose}
       component="form"
       onSubmit={handleSubmit}
-      maxWidth={'600px'}
+      maxWidth="460px"
     >
-      <ContentHeader>
-        <Title>{t('modal_cart.title_delete')}</Title>
-      </ContentHeader>
-
+      Deseja excluir: {data.name}?
       {!loading && (
-        <Grid container item spacing={2}>
-          <Grid
-            container
-            item
-            xs={12}
-            md={12}
-            lg={12}
-            spacing={1.5}
-            flexWrap={'wrap'}
-          >
-            <Grid item xs={12} md={12} lg={12}>
-              <p>{t('modal_cart.description_delete')}</p>
+        <>
+          <Grid item container justifyContent="center">
+            <BaseTitle fontSize={'30px'}>
+              Deseja excluir: {data.name}?
+            </BaseTitle>
+          </Grid>
+          <Grid item container xs={12} md={12} lg={12} justifyContent="center">
+            <Grid
+              item
+              xs={6}
+              md={8.3}
+              lg={8.3}
+              mt={1}
+              sx={{ textAlign: 'center' }}
+            >
+              <BaseText fontSize={'16px'}>
+                Após excluir os registros da carreta serão perdidos.
+              </BaseText>
             </Grid>
           </Grid>
 
@@ -65,12 +67,12 @@ const BaseModalDeleteCart = ({ showModal, setShowModal, props }) => {
             xs={12}
             md={12}
             lg={12}
-            spacing={1}
-            mt={0.3}
-            justifyContent={'flex-end'}
+            spacing={2}
+            mt={2}
+            justifyContent={'center'}
           >
-            <Grid item container xs={12} md={12} lg={3}>
-              <Button
+            <Grid item container xs={12} md={6} lg={4}>
+              <BaseButton
                 onClick={() => onClose()}
                 background={''}
                 sx={{
@@ -82,10 +84,10 @@ const BaseModalDeleteCart = ({ showModal, setShowModal, props }) => {
                 variant="text"
               >
                 {t('button.cancel')}
-              </Button>
+              </BaseButton>
             </Grid>
-            <Grid container item xs={12} md={3} lg={3}>
-              <Button
+            <Grid container item xs={12} md={6} lg={4}>
+              <BaseButton
                 type="submit"
                 color="error"
                 background={
@@ -94,20 +96,19 @@ const BaseModalDeleteCart = ({ showModal, setShowModal, props }) => {
                 sx={{
                   fontSize: '14px',
                   color: 'white',
-                  width: '139px',
+                  width: '190px',
                   height: '49px',
                   marginRight: '15px'
                 }}
               >
                 {t('button.delete')}
-              </Button>
+              </BaseButton>
             </Grid>
           </Grid>
-        </Grid>
+        </>
       )}
-
-      {loading && <Loading />}
-    </Modal>
+      {loading && <BaseLoading />}
+    </BaseModal>
   );
 };
 

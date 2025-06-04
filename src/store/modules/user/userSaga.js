@@ -40,7 +40,7 @@ function* getUsers({ payload }) {
 function* getUserById({ payload }) {
   try {
     const response = yield call(api.get, `manager/user/${payload}`);
-    yield put(getUserByIdSuccess(response.data));
+    yield put(getUserByIdSuccess(response.data.data));
   } catch (error) {
     yield put(getUserByIdFailure(error));
     errorNotification(error);

@@ -101,10 +101,9 @@ const InfoRow = (props) => {
         onClose={() => setOpenSettings(!openSettings)}
       >
         <MenuItem onClick={() => handleUpdate(data?.id)}>
-          {' '}
           {t('modal.edit')}
         </MenuItem>
-        <MenuItem onClick={() => handleDelete(data?.id, data?.cart_models)}>
+        <MenuItem onClick={() => handleDelete(data?.id, data?.cartModels)}>
           {t('button.delete')}
         </MenuItem>
       </Menu>

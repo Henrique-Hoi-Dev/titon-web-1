@@ -23,25 +23,21 @@ import BaseModalFinalizeRecord from 'components/molecules/BaseModalFinalizeRecor
 import BaseModalAddFreight from 'components/molecules/BaseModalAddFreight/BaseModalAddFreight';
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import BaseModalCheck from 'components/molecules/BaseModalCheck/BaseModalCheck';
-import Text from 'components/atoms/BaseText/BaseText';
-import Button from 'components/atoms/BaseButton/BaseButton';
+import BaseModalFreight from '@/components/molecules/BaseModalFreight/BaseModalFreight';
+import BaseText from 'components/atoms/BaseText/BaseText';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
 import Table from './table';
-import initialStateQuery from 'utils/initialStateQuery';
 
 const InfoFinancial = () => {
   const { t } = useTranslation();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { selected: financial, loading } = useSelector(
+
+  const { selected: financial, loadingGet } = useSelector(
     (state) => state.financial
   );
 
-  const [userQuery, setUserQuery] = useState(
-    initialStateQuery.INITIAL_STATE_FINANCIAL
-  );
-
-  const [checkId, setCheckId] = useState('');
+  const [freight, setFreight] = useState('');
 
   const [showModalFinalizeRecord, setShowModalFinalizeRecord] = useState(false);
   const [showModalAddFreight, setShowModalAddFreight] = useState(false);
@@ -49,7 +45,7 @@ const InfoFinancial = () => {
 
   const handleCheck = (freightId, driverId) => {
     if (!freightId || !driverId) return;
-    setCheckId({ freightId, driverId });
+    setFreight({ freightId, driverId });
     setShowModalCheck(!showModalCheck);
   };
 
@@ -59,13 +55,18 @@ const InfoFinancial = () => {
     }
   }, [dispatch, id]);
 
+  const getAvatar = (id, category) => {
+    if (id) {
+      return `https://titon-file-storage.s3.us-east-1.amazonaws.com/${category}/${id}`;
+    }
+    return 'https://titon-file-storage.s3.us-east-1.amazonaws.com/images-public/exemple-truck.webp';
+  };
+
   return (
     <>
       <Grid component="form" maxWidth="1200px" height="760px" maxHeight="760px">
         <BaseContentHeader mt={2}>
-          <BaseTitle>
-            {financial?.dataResult?.truck_board?.toUpperCase()}
-          </BaseTitle>
+          <BaseTitle>{financial?.truckBoard?.toUpperCase()}</BaseTitle>
         </BaseContentHeader>
 
         <Grid container justifyContent="flex-start" padding="30px 0px">
@@ -99,7 +100,10 @@ const InfoFinancial = () => {
                     component="img"
                     height="185px"
                     sx={{ borderRadius: '4px' }}
-                    image={financial?.dataResult?.truck_avatar}
+                    image={getAvatar(
+                      financial?.truck?.imageTruck?.uuid,
+                      financial?.truck?.imageTruck?.category
+                    )}
                     alt="truck"
                   />
                 </Typography>
@@ -117,37 +121,43 @@ const InfoFinancial = () => {
                   }}
                 >
                   <Grid container item pb={2} justifyContent="space-between">
-                    <BaseTypeStatus props={financial?.dataResult?.freight} />
+                    <BaseTypeStatus props={financial?.freight} />
                   </Grid>
 
                   <Grid container item justifyContent="space-between">
-                    <Text fontsize="16px">{t('info_financial.driver')}:</Text>
-                    <Text fontsize="16px">
-                      {financial?.dataResult?.driver_name}
-                    </Text>
+                    <BaseText fontsize="16px">
+                      {t('info_financial.driver')}:
+                    </BaseText>
+                    <BaseText fontsize="16px">
+                      {financial?.driver?.name}
+                    </BaseText>
                   </Grid>
 
                   <Grid container item justifyContent="space-between">
-                    <Text fontsize="16px">
+                    <BaseText fontsize="16px">
                       {t('info_financial.startDate')}:
-                    </Text>
-                    <Text fontsize="16px">
-                      {formatDate(financial?.dataResult?.start_date)}
-                    </Text>
+                    </BaseText>
+                    <BaseText fontsize="16px">
+                      {formatDate(financial?.startDate)}
+                    </BaseText>
                   </Grid>
 
                   <Grid container item justifyContent="space-between">
-                    <Text fontsize="16px">{t('info_financial.destiny')}:</Text>
-                    <Text fontsize="16px">
-                      {financial?.dataResult?.freight[0]?.finalFreightCity?.toUpperCase()}
-                    </Text>
+                    <BaseText fontsize="16px">
+                      {t('info_financial.destiny')}:
+                    </BaseText>
+                    <BaseText fontsize="16px">
+                      {financial?.freight[0]?.finalFreightCity?.toUpperCase()}
+                    </BaseText>
                   </Grid>
 
                   <Grid container item justifyContent="space-between">
-                    <Text fontsize="16px">{t('info_financial.credit')}:</Text>
-                    <Text fontsize="16px">
-                      {moneyMask(financial?.dataResult?.driver?.credit || [0])}
-                    </Text>
+                    <BaseText fontsize="16px">
+                      {t('info_financial.credit')}:
+                    </BaseText>
+                    <BaseText fontsize="16px">
+                      {moneyMask(financial?.driver?.credit || [0])}
+                    </BaseText>
                   </Grid>
 
                   <Grid
@@ -158,25 +168,25 @@ const InfoFinancial = () => {
                     <IconMenuTruck
                       sx={{ fontSize: '30px', color: '#509BFB', mr: 1 }}
                     />
-                    <Text fontsize="16px" sx={{ verticalAlign: 'super' }}>
-                      {financial?.dataResult?.cart_models}
-                    </Text>
+                    <BaseText fontsize="16px" sx={{ verticalAlign: 'super' }}>
+                      {financial?.cartModels}
+                    </BaseText>
                   </Grid>
                 </Grid>
               </CardContent>
 
               <Grid item container mt={18} xs={10} md={10} lg={10}>
-                <Text
+                <BaseText
                   fontSize="24px"
                   sx={{ verticalAlign: 'super', fontWeight: '700' }}
                 >
                   {t('info_financial.invoicing')}:{' '}
-                  <Text fontSize="24px" sx={{ fontWeight: '500' }}>
-                    {moneyMask(financial?.dataResult?.total_value || [0])}
-                  </Text>
-                </Text>
+                  <span style={{ fontWeight: '500' }}>
+                    {moneyMask(financial?.totalValue || [0])}
+                  </span>
+                </BaseText>
 
-                <Button
+                <BaseButton
                   onClick={() =>
                     setShowModalFinalizeRecord(!showModalFinalizeRecord)
                   }
@@ -191,7 +201,7 @@ const InfoFinancial = () => {
                   }}
                 >
                   {t('info_financial.button.finalize_form')}
-                </Button>
+                </BaseButton>
               </Grid>
             </Card>
           </Grid>
@@ -206,18 +216,16 @@ const InfoFinancial = () => {
             alignItems="flex-start"
             justifyContent="flex-start"
           >
-            <Text fontSize="24px" color="#F1F3F9">
+            <BaseText fontSize="24px" color="#F1F3F9">
               {t('info_financial.notifications')}
-            </Text>
+            </BaseText>
 
             <Grid
               item
               container
               alignItems="center"
               justifyContent={
-                financial?.dataResult?.notifications.length > 0
-                  ? 'space-between'
-                  : 'center'
+                financial?.notifications.length > 0 ? 'space-between' : 'center'
               }
               borderRadius="4px"
               padding={2}
@@ -229,32 +237,30 @@ const InfoFinancial = () => {
                 height: '180px'
               }}
             >
-              {financial?.dataResult?.notifications.length === 0 && (
-                <BaseNotFound />
-              )}
+              {financial?.notifications?.length === 0 && <BaseNotFound />}
 
-              {financial?.dataResult?.notifications?.map((item) => (
+              {financial?.notifications?.map((item) => (
                 <Grid
                   container
                   justifyContent="space-between"
-                  onClick={() => handleCheck(item?.freight_id, item?.driver_id)}
+                  onClick={() => handleCheck(item?.freightId, item?.driverId)}
                   key={item?.id}
                   sx={{
                     cursor: `${
-                      !item?.freight_id || !item?.driver_id ? '' : 'pointer'
+                      !item?.freightId || !item?.driverId ? '' : 'pointer'
                     }`
                   }}
                 >
-                  <Text
+                  <BaseText
                     color="#2B2B2C"
                     font_weight="600"
                     sx={{ maxWidth: '690px' }}
                   >
                     {item?.content}
-                  </Text>
-                  <Text font_weight="600" color="#2B2B2C">
+                  </BaseText>
+                  <BaseText font_weight="600" color="#2B2B2C">
                     {formatDate(item?.createdAt)}
-                  </Text>
+                  </BaseText>
                   <Divider
                     sx={{
                       my: 1,
@@ -277,13 +283,7 @@ const InfoFinancial = () => {
               height="270px"
               overflow="auto"
             >
-              <Table
-                data={financial}
-                query={userQuery}
-                setQuery={setUserQuery}
-                error={financial?.error}
-                loading={loading}
-              />
+              <Table data={financial} loading={loadingGet} />
             </Grid>
 
             <Grid
@@ -323,20 +323,17 @@ const InfoFinancial = () => {
 
       {showModalFinalizeRecord && (
         <BaseModalFinalizeRecord
-          mutate={() => {}}
-          financialId={id}
-          props={financial}
+          financial={financial}
           setShowModal={setShowModalFinalizeRecord}
           showModal={showModalFinalizeRecord}
         />
       )}
 
       {showModalCheck && (
-        <BaseModalCheck
-          checkId={checkId}
+        <BaseModalFreight
+          freight={freight}
           showModal={showModalCheck}
           setShowModal={setShowModalCheck}
-          mutate={() => {}}
         />
       )}
     </>

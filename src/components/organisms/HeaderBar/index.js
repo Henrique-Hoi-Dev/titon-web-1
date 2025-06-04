@@ -9,7 +9,7 @@ import api from '@/services/api';
 import Text from '@/components/atoms/BaseText/BaseText';
 import pt from 'date-fns/locale/pt';
 import logo from '../../../assets/logo.png';
-import BaseModalCheck from '../../molecules/BaseModalCheck/BaseModalCheck';
+import BaseModalCheck from '../../molecules/BaseModalFreight/BaseModalFreight';
 
 const HeaderBar = ({ setFetch, fetch }) => {
   const { user } = useSelector((state) => state?.auth);

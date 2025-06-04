@@ -11,14 +11,13 @@ import {
   SLabel
 } from 'components/atoms/BaseTable/BaseTable';
 
-import BaseError from 'components/molecules/BaseError/BaseError';
 import BaseNotFount from 'components/molecules/BaseNotFound/BaseNotFound';
 import Loading from '@/components/atoms/BaseLoading/BaseLoading';
 import InfoRow from './infoRow';
 import BaseModalDeleteTruck from 'components/molecules/BaseModalDeleteTruck/BaseModalDeleteTruck';
 import BaseModalUpdateTruck from 'components/molecules/BaseModalUpdateTruck/BaseModalUpdateTruck';
 
-const Table = ({ data, query, setQuery, error, loading }) => {
+const Table = ({ data, query, setQuery, loading }) => {
   const { t } = useTranslation();
 
   const [showModalDelete, setShowModalDelete] = useState(false);
@@ -145,15 +144,13 @@ const Table = ({ data, query, setQuery, error, loading }) => {
         )}
 
         {data?.docs?.length === 0 && !loading && <BaseNotFount />}
-
-        {error && <BaseError />}
       </TableContainer>
 
       {showModalDelete && (
         <BaseModalDeleteTruck
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
-          props={truckId}
+          data={truckId}
         />
       )}
 
@@ -161,7 +158,7 @@ const Table = ({ data, query, setQuery, error, loading }) => {
         <BaseModalUpdateTruck
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
-          props={truckId}
+          data={truckId}
         />
       )}
     </>

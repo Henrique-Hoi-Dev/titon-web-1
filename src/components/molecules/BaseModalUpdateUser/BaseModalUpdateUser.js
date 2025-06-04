@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Grid, IconButton } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Grid } from '@mui/material';
 import {
   getUserByIdRequest,
   updateUserRequest
 } from 'store/modules/user/userSlice';
+import { maskCPF } from '@/utils/masks';
 
-import Button from 'components/atoms/BaseButton/BaseButton';
-import Modal from 'components/molecules/BaseModal/BaseModal';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
-import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import Title from 'components/atoms/BaseTitle/BaseTitle';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
 import BaseInput from 'components/molecules/BaseInput/BaseInput';
 import BaseSelect from 'components/molecules/BaseSelect/BaseSelect';
 import enums from '@/utils/enums';
 
-const BaseModalUpdateUser = ({ showModal, setShowModal, props }) => {
+const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const {
@@ -45,24 +45,24 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, props }) => {
       return;
     }
 
-    dispatch(updateUserRequest({ id: props.id, data: body }));
+    dispatch(updateUserRequest({ id: data.id, data: body }));
     setPasswordError(false);
   };
 
   useEffect(() => {
-    if (props.id) {
-      dispatch(getUserByIdRequest(props.id));
+    if (data.id) {
+      dispatch(getUserByIdRequest(data.id));
     }
-  }, [dispatch, props.id]);
+  }, [dispatch, data.id]);
 
   useEffect(() => {
     if (user) {
       setBody((state) => ({
         ...state,
-        name: user?.dataResult?.name,
-        email: user?.dataResult?.email,
-        cpf: user?.dataResult?.cpf,
-        type_position: user?.dataResult?.type_position
+        name: user?.name,
+        email: user?.email,
+        cpf: user?.cpf,
+        type_position: user?.type_position
       }));
     }
   }, [user]);
@@ -74,7 +74,7 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, props }) => {
   }, [success, onClose]);
 
   return (
-    <Modal
+    <BaseModal
       open={showModal}
       showCloseIcon
       onClose={onClose}
@@ -82,165 +82,140 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, props }) => {
       onSubmit={handleSubmit}
       maxWidth={'600px'}
     >
-      <ContentHeader>
-        <Title>{t('modal_user.title_edit')}</Title>
-      </ContentHeader>
+      <BaseContentHeader>
+        <BaseTitle>Editar Usuário</BaseTitle>
+      </BaseContentHeader>
 
       {!loading && (
-        <Grid container item spacing={2}>
-          <Grid
-            container
-            item
-            xs={12}
-            md={12}
-            lg={12}
-            spacing={1.5}
-            flexWrap={'wrap'}
-          >
-            <Grid item xs={6} md={6} lg={6}>
-              <BaseInput
-                required
-                label={t('modal_user.placeholder.name')}
-                labelText={t('modal_user.label.name')}
-                styles={{
-                  maxWidth: '274px',
-                  '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
-                }}
-                value={body?.name ?? ''}
-                onChange={(ev) =>
-                  setBody((state) => ({
-                    ...state,
-                    name: ev.target.value
-                  }))
+        <Grid
+          container
+          item
+          spacing={2}
+          mt={1}
+          sx={{ minHeight: '300px', justifyContent: 'flex-start' }}
+        >
+          <Grid item xs={12} md={6} lg={6}>
+            <BaseInput
+              label={'Name'}
+              styles={{
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
                 }
-              />
-            </Grid>
+              }}
+              value={body?.name ?? ''}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  name: ev.target.value
+                }))
+              }
+            />
+          </Grid>
 
-            <Grid item xs={6} md={6} lg={6}>
-              <BaseInput
-                required
-                label={t('modal_user.placeholder.email')}
-                labelText={t('modal_user.label.email')}
-                styles={{
-                  '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
-                }}
-                value={body?.email ?? ''}
-                onChange={(ev) =>
-                  setBody((state) => ({
-                    ...state,
-                    email: ev.target.value
-                  }))
+          <Grid item xs={12} md={6} lg={6}>
+            <BaseInput
+              label={'Email'}
+              required
+              styles={{
+                maxWidth: '274px',
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
                 }
-              />
-            </Grid>
+              }}
+              value={body?.email ?? ''}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  email: ev.target.value
+                }))
+              }
+            />
+          </Grid>
 
-            <Grid item xs={6} md={6} lg={6}>
-              <BaseInput
-                required
-                label={t('modal_user.placeholder.cpf')}
-                labelText={t('modal_user.label.cpf')}
-                styles={{
-                  maxWidth: '274px',
-                  '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
-                }}
-                value={body?.cpf ?? ''}
-                onChange={(ev) =>
-                  setBody((state) => ({
-                    ...state,
-                    cpf: ev.target.value
-                  }))
-                }
-              />
-            </Grid>
+          <Grid item xs={12} md={6} lg={6}>
+            <BaseInput
+              required
+              label={t('placeholder.cpf_driver')}
+              styles={{ minWidth: '250px' }}
+              value={body?.cpf ?? ''}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  cpf: maskCPF(ev.target.value)
+                }))
+              }
+            />
+          </Grid>
 
-            <Grid item xs={6} md={6} lg={6}>
-              <BaseInput
-                label={t('modal_user.placeholder.password')}
-                labelText={t('modal_user.label.password')}
-                styles={{
-                  '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
-                }}
-                type={showPassword ? 'text' : 'password'}
-                value={body?.password ?? ''}
-                onChange={(ev) =>
-                  setBody((state) => ({
-                    ...state,
-                    password: ev.target.value
-                  }))
-                }
-                error={passwordError}
-                helperText={passwordError ? t('modal_user.error.password') : ''}
-                endAdornment={
-                  <IconButton
-                    onClick={() => setShowPassword(!showPassword)}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                }
-              />
-            </Grid>
-
-            <Grid item xs={6} md={6} lg={6}>
-              <BaseInput
-                label={t('modal_user.placeholder.confirm_password')}
-                labelText={t('modal_user.label.confirm_password')}
-                styles={{
-                  maxWidth: '274px',
-                  '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
-                }}
-                type={showConfirmPassword ? 'text' : 'password'}
-                value={body?.confirmPassword ?? ''}
-                onChange={(ev) =>
-                  setBody((state) => ({
-                    ...state,
-                    confirmPassword: ev.target.value
-                  }))
-                }
-                error={passwordError}
-                helperText={passwordError ? t('modal_user.error.password') : ''}
-                endAdornment={
-                  <IconButton
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    edge="end"
-                  >
-                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                }
-              />
-            </Grid>
-
-            <Grid item xs={6} md={6} lg={6}>
+          {user?.typeRole === 'MASTER' && (
+            <Grid item xs={12} md={6} lg={6}>
               <BaseSelect
-                required
-                label={t('modal_user.placeholder.type')}
-                labelText={t('modal_user.label.type')}
-                styles={{
-                  maxWidth: '274px',
-                  '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
+                placeholder={'Tipo usuário'}
+                options={enums.typeUser ?? []}
+                getOptionLabel={(option) => option.name ?? ''}
+                isOptionEqualToValue={(option, value) =>
+                  option.value === value.value
+                }
+                value={enums.typeUser.find(
+                  (option) => option.value === user?.type_position
+                )}
+                onChange={(event, newValue) => {
+                  if (newValue) {
+                    setBody((state) => ({
+                      ...state,
+                      type_position: newValue.value
+                    }));
+                  }
+                  if (newValue === null) {
+                    setBody((state) => ({ ...state, type_position: '' }));
                   }
                 }}
-                value={body?.type_position ?? ''}
-                onChange={(ev) =>
-                  setBody((state) => ({
-                    ...state,
-                    type_position: ev.target.value
-                  }))
-                }
-                options={enums.typeUser}
               />
             </Grid>
+          )}
+
+          <Grid item xs={12} md={6} lg={6}>
+            <BaseInput
+              label={'Nova Senha'}
+              type={showPassword ? 'text' : 'password'}
+              onClick={() => setShowPassword(!showPassword)}
+              isPassword
+              styles={{
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4rem'
+                }
+              }}
+              error={passwordError}
+              helperText={passwordError ? 'Senhas não conferem' : ''}
+              value={body?.password ?? ''}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  password: ev.target.value
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
+            <BaseInput
+              label={'Confirmar Senha'}
+              type={showConfirmPassword ? 'text' : 'password'}
+              styles={{
+                '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                  height: '1.4em'
+                }
+              }}
+              isPassword
+              value={body?.confirmPassword ?? ''}
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              onChange={(ev) => {
+                setBody((state) => ({
+                  ...state,
+                  confirmPassword: ev.target.value
+                }));
+              }}
+            />
           </Grid>
 
           <Grid
@@ -254,7 +229,7 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, props }) => {
             justifyContent={'flex-end'}
           >
             <Grid item container xs={12} md={12} lg={3}>
-              <Button
+              <BaseButton
                 onClick={() => onClose()}
                 background={''}
                 sx={{
@@ -266,10 +241,10 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, props }) => {
                 variant="text"
               >
                 {t('button.cancel')}
-              </Button>
+              </BaseButton>
             </Grid>
             <Grid container item xs={12} md={3} lg={3}>
-              <Button
+              <BaseButton
                 type="submit"
                 color="success"
                 background={
@@ -284,14 +259,14 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, props }) => {
                 }}
               >
                 {t('button.update')}
-              </Button>
+              </BaseButton>
             </Grid>
           </Grid>
         </Grid>
       )}
 
-      {loading && <Loading />}
-    </Modal>
+      {loading && <BaseLoading />}
+    </BaseModal>
   );
 };
 

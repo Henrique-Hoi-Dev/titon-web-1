@@ -4,7 +4,18 @@ const initialState = {
   data: [],
   selected: null,
   loading: false,
-  error: null
+  loadingById: false,
+  loadingCreate: false,
+  loadingUpdate: false,
+  loadingDelete: false,
+  error: null,
+  errorById: null,
+  errorCreate: null,
+  errorUpdate: null,
+  errorDelete: null,
+  loadingFirstCheck: false,
+  errorFirstCheck: null,
+  selectedFirstCheck: null
 };
 
 const freightSlice = createSlice({
@@ -27,63 +38,71 @@ const freightSlice = createSlice({
 
     // Buscar por ID
     getFreightByIdRequest: (state) => {
-      state.loading = true;
-      state.error = null;
+      state.loadingById = true;
+      state.errorById = null;
     },
     getFreightByIdSuccess: (state, action) => {
       state.selected = action.payload;
-      state.loading = false;
+      state.loadingById = false;
     },
     getFreightByIdFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
+      state.loadingById = false;
+      state.errorById = action.payload;
     },
 
     // Criar
     createFreightRequest: (state) => {
-      state.loading = true;
-      state.error = null;
+      state.loadingCreate = true;
+      state.errorCreate = null;
     },
-    createFreightSuccess: (state, action) => {
-      state.data.push(action.payload);
-      state.loading = false;
+    createFreightSuccess: (state) => {
+      state.loadingCreate = false;
     },
     createFreightFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
+      state.loadingCreate = false;
+      state.errorCreate = action.payload;
     },
 
     // Atualizar
     updateFreightRequest: (state) => {
-      state.loading = true;
-      state.error = null;
+      state.loadingUpdate = true;
+      state.errorUpdate = null;
     },
-    updateFreightSuccess: (state, action) => {
-      const index = state.data.findIndex(
-        (item) => item.id === action.payload.id
-      );
-      if (index !== -1) {
-        state.data[index] = action.payload;
-      }
-      state.loading = false;
+    updateFreightSuccess: (state) => {
+      state.loadingUpdate = false;
+      state.errorUpdate = null;
     },
     updateFreightFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
+      state.loadingUpdate = false;
+      state.errorUpdate = action.payload;
     },
 
     // Deletar
     deleteFreightRequest: (state) => {
-      state.loading = true;
-      state.error = null;
+      state.loadingDelete = true;
+      state.errorDelete = null;
     },
-    deleteFreightSuccess: (state, action) => {
-      state.data = state.data.filter((item) => item.id !== action.payload);
-      state.loading = false;
+    deleteFreightSuccess: (state) => {
+      state.loadingDelete = false;
+      state.errorDelete = null;
     },
     deleteFreightFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
+      state.loadingDelete = false;
+      state.errorDelete = action.payload;
+    },
+
+    // Buscar por id do primeiro check
+    getFirstCheckByIdRequest: (state) => {
+      state.loadingFirstCheck = true;
+      state.errorFirstCheck = null;
+    },
+    getFirstCheckByIdSuccess: (state, action) => {
+      state.selectedFirstCheck = action.payload;
+      state.loadingFirstCheck = false;
+    },
+    getFirstCheckByIdFailure: (state, action) => {
+      state.loadingFirstCheck = false;
+      state.errorFirstCheck = action.payload;
     }
   }
 });
@@ -103,7 +122,10 @@ export const {
   updateFreightFailure,
   deleteFreightRequest,
   deleteFreightSuccess,
-  deleteFreightFailure
+  deleteFreightFailure,
+  getFirstCheckByIdRequest,
+  getFirstCheckByIdSuccess,
+  getFirstCheckByIdFailure
 } = freightSlice.actions;
 
 export default freightSlice.reducer;

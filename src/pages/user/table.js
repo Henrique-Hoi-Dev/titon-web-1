@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Grid, Paper, TableContainer } from '@mui/material';
+import { Paper, TableContainer } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { TablePagination } from 'components/atoms/tablePagination/tablePagination';
-import { useMediaQuery } from 'react-responsive';
 import {
   SCell,
   SHead,
@@ -12,26 +11,14 @@ import {
   SLabel
 } from 'components/atoms/BaseTable/BaseTable';
 
-import imgNotFound from '../../assets/trist-not-found-table.svg';
-import InfoRow from './infoRow';
-import Text from 'components/atoms/BaseText/BaseText';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
 import BaseModalDeleteUser from 'components/molecules/BaseModalDeleteUser/BaseModalDeleteUser';
 import BaseModalUpdateUser from 'components/molecules/BaseModalUpdateUser/BaseModalUpdateUser';
+import BaseNotFound from '@/components/molecules/BaseNotFound/BaseNotFound';
+import InfoRow from './infoRow';
 
-const Table = ({
-  data,
-  query,
-  setQuery,
-  isFetching,
-  mutate,
-  error,
-  loading
-}) => {
+const Table = ({ data, query, setQuery, loading }) => {
   const { t } = useTranslation();
-
-  const isDesktop = useMediaQuery({ maxWidth: '1250px' });
-  const isMobile = useMediaQuery({ maxWidth: '730px' });
 
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showModalUpdate, setShowModalUpdate] = useState(false);
@@ -60,7 +47,6 @@ const Table = ({
         <STable>
           <SHead>
             <SRow>
-              <SCell displaywidth={isDesktop ? 0 : 1}>Info</SCell>
               <SCell>
                 <SLabel
                   active={query?.sort_field === 'id'}
@@ -79,7 +65,7 @@ const Table = ({
                   Usuário
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
+              <SCell>
                 <SLabel
                   active={query?.sort_field === 'email'}
                   direction={query?.sort_order?.toLowerCase()}
@@ -88,7 +74,7 @@ const Table = ({
                   Email
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
+              <SCell>
                 <SLabel
                   active={query?.sort_field === 'type_position'}
                   direction={query?.sort_order?.toLowerCase()}
@@ -97,12 +83,12 @@ const Table = ({
                   Tipo Usuário
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isDesktop ? 1 : 0}>Ações</SCell>
+              <SCell>Ações</SCell>
             </SRow>
           </SHead>
-          {!isFetching && data && data?.dataResult?.length > 0 && (
+          {!loading && data && data?.docs?.length > 0 && (
             <STableBody>
-              {data.dataResult.map((item, index) => (
+              {data.docs.map((item, index) => (
                 <InfoRow
                   key={item.id}
                   data={item}
@@ -116,54 +102,10 @@ const Table = ({
           )}
         </STable>
 
-        {(loading || isFetching) && (
-          <Grid container justifyContent="center" alignItems="center" mt={3}>
-            <Loading titulo={t('messages.loading')} />
-          </Grid>
-        )}
+        {data?.docs?.length === 0 && !loading && <BaseNotFound />}
+        {loading && <BaseLoading titulo={t('messages.loading')} />}
 
-        <Grid
-          container
-          spacing={2}
-          mt={1}
-          mb={1}
-          alignItems="center"
-          flexWrap="nowrap"
-          justifyContent="center"
-        >
-          {data?.dataResult?.length === 0 && !isFetching && (
-            <Grid
-              container
-              justifyContent="center"
-              alignItems="center"
-              pt={5}
-              sx={{ background: '#3A3A3A' }}
-            >
-              <Text fontSize={'28px'} center color={'#939395'}>
-                {t('messages.result_not_found')}
-                <img
-                  src={imgNotFound}
-                  alt="img"
-                  width={'40px'}
-                  style={{
-                    verticalAlign: 'bottom',
-                    marginLeft: '24px'
-                  }}
-                />
-              </Text>
-            </Grid>
-          )}
-
-          {error && (
-            <Grid container justifyContent="center" alignItems="center" p={5}>
-              <Text fontSize={'28px'} center color={'#939395'}>
-                {t('messages.unknown_error').toUpperCase()}
-              </Text>
-            </Grid>
-          )}
-        </Grid>
-
-        {!isFetching && data?.totalPages > 0 && (
+        {!loading && data?.totalPages > 0 && (
           <TablePagination data={data} query={query} setQuery={setQuery} />
         )}
       </TableContainer>
@@ -172,8 +114,7 @@ const Table = ({
         <BaseModalDeleteUser
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
-          props={userId}
-          mutate={mutate}
+          data={userId}
         />
       )}
 
@@ -181,8 +122,7 @@ const Table = ({
         <BaseModalUpdateUser
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
-          props={userId}
-          mutate={mutate}
+          data={userId}
         />
       )}
     </>

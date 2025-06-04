@@ -7,29 +7,26 @@ import {
   updateTruckRequest
 } from 'store/modules/truck/truckSlice';
 
-import Button from 'components/atoms/BaseButton/BaseButton';
-import Modal from 'components/molecules/BaseModal/BaseModal';
-import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import Title from 'components/atoms/BaseTitle/BaseTitle';
-import Progress from 'components/atoms/progress/progress';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseProgress from '@/components/atoms/BaseProgress/BaseProgress';
 import BaseInput from 'components/molecules/BaseInput/BaseInput';
-import BaseSelect from 'components/molecules/BaseSelect/BaseSelect';
-import enums from '@/utils/enums';
 import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
 import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
 
 const uploadImage = async (file) => {
-  // Implementação temporária - retorna uma URL de exemplo
   return 'https://titon-file-storage.s3.us-east-1.amazonaws.com/images-public/exemple-truck.webp';
 };
 
-const BaseModalUpdateTruck = ({ showModal, setShowModal, props }) => {
+const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const {
     selected: truck,
-    loading,
-    success
+    loadingUpdate,
+    successUpdate
   } = useSelector((state) => state.truck);
 
   const [body, setBody] = useState({});
@@ -45,14 +42,14 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, props }) => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    dispatch(updateTruckRequest({ id: props.id, data: body }));
+    dispatch(updateTruckRequest({ id: data.id, data: body }));
   };
 
   useEffect(() => {
-    if (props.id) {
-      dispatch(getTruckByIdRequest(props.id));
+    if (data.id) {
+      dispatch(getTruckByIdRequest(data.id));
     }
-  }, [dispatch, props.id]);
+  }, [dispatch, data.id]);
 
   useEffect(() => {
     if (truck) {
@@ -60,20 +57,22 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, props }) => {
         ...state,
         truck_models: truck?.truckModels,
         truck_name_brand: truck?.truckNameBrand,
+        truck_board: truck?.truckBoard,
         truck_color: truck?.truckColor,
         truck_km: truck?.truckKm,
+        truck_chassis: truck?.truckChassis,
         truck_year: truck?.truckYear
       }));
 
-      setPreview(truck?.imageTruck?.uuid);
+      setPreview(truck?.imageTruck);
     }
   }, [truck]);
 
   useEffect(() => {
-    if (success) {
+    if (successUpdate) {
       onClose();
     }
-  }, [success, onClose]);
+  }, [successUpdate, onClose]);
 
   async function handleChange(e) {
     const file = e.target.files[0];
@@ -85,26 +84,25 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, props }) => {
   }
 
   return (
-    <Modal
+    <BaseModal
       open={showModal}
-      showCloseIcon
       onClose={onClose}
       component="form"
       onSubmit={handleSubmit}
       maxWidth={'600px'}
+      maxHeight={'850px'}
     >
-      <ContentHeader>
-        <Title>{t('modal_truck.title_edit')} </Title>
-      </ContentHeader>
+      <BaseContentHeader mt={2}>
+        <BaseTitle>Cadastro Caminhão</BaseTitle>
+      </BaseContentHeader>
 
-      {!loading && (
-        <Grid container item spacing={2}>
+      {!loadingUpdate && (
+        <>
           <Grid
             container
             item
             spacing={2}
-            alignItems="center"
-            flexDirection={'column'}
+            justifyContent="flex-start"
             flexWrap={'nowrap'}
             mr={3}
             lg={12}
@@ -145,136 +143,162 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, props }) => {
                   onChange={handleChange}
                 />
                 <BaseAvatar
-                  src={
-                    body?.imageTruck?.uuid
-                      ? body?.imageTruck?.uuid
-                      : 'https://titon-file-storage.s3.us-east-1.amazonaws.com/images-public/exemple-truck.webp'
-                  }
+                  variant="square"
+                  alt="img"
                   styles={{
                     height: 'auto',
                     width: '280px',
                     borderRadius: '8px'
                   }}
+                  uuid={truck?.imageTruck?.uuid}
+                  category={truck?.imageTruck?.category}
                 />
               </IconButton>
               {progressPercent > 0 && (
-                <Progress
+                <BaseProgress
                   progressPercent={progressPercent}
                   setProgressPercent={setProgressPercent}
                 />
               )}
             </Grid>
 
-            <Grid
-              container
-              item
-              xs={12}
-              md={12}
-              lg={12}
-              spacing={1.5}
-              flexWrap={'wrap'}
-            >
-              <Grid item xs={6} md={6} lg={6}>
+            <Grid container item xs={6} md={6} lg={6} spacing={1.5}>
+              <Grid item xs={12} md={12} lg={12}>
                 <BaseInput
                   required
-                  label={t('modal_truck.placeholder.plate')}
-                  labelText={t('modal_truck.label.plate')}
+                  label={'Marca'}
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
                       height: '1.4rem'
                     }
                   }}
-                  value={body?.plate ?? ''}
+                  value={body?.truck_name_brand ?? ''}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      plate: ev.target.value
+                      truck_name_brand: ev.target.value
                     }))
                   }
                 />
               </Grid>
 
-              <Grid item xs={6} md={6} lg={6}>
+              <Grid item xs={12} md={12} lg={12}>
                 <BaseInput
                   required
-                  label={t('modal_truck.placeholder.model')}
-                  labelText={t('modal_truck.label.model')}
+                  label={'Modelo'}
                   styles={{
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
                       height: '1.4rem'
                     }
                   }}
-                  value={body?.model ?? ''}
+                  value={body?.truck_models ?? ''}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      model: ev.target.value
+                      truck_models: ev.target.value
                     }))
                   }
                 />
               </Grid>
 
-              <Grid item xs={6} md={6} lg={6}>
+              <Grid item xs={12} md={12} lg={12}>
                 <BaseInput
                   required
-                  label={t('modal_truck.placeholder.brand')}
-                  labelText={t('modal_truck.label.brand')}
+                  label={'Placa'}
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
                       height: '1.4rem'
                     }
                   }}
-                  value={body?.brand ?? ''}
+                  value={body?.truck_board ?? ''}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      brand: ev.target.value
+                      truck_board: ev.target.value
                     }))
                   }
                 />
               </Grid>
 
-              <Grid item xs={6} md={6} lg={6}>
+              <Grid item xs={12} md={12} lg={12}>
                 <BaseInput
                   required
-                  label={t('modal_truck.placeholder.year')}
-                  labelText={t('modal_truck.label.year')}
-                  styles={{
-                    '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem'
-                    }
-                  }}
-                  value={body?.year ?? ''}
-                  onChange={(ev) =>
-                    setBody((state) => ({
-                      ...state,
-                      year: ev.target.value
-                    }))
-                  }
-                />
-              </Grid>
-
-              <Grid item xs={6} md={6} lg={6}>
-                <BaseSelect
-                  required
-                  label={t('modal_truck.placeholder.type')}
-                  labelText={t('modal_truck.label.type')}
+                  label={'Cor'}
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
                       height: '1.4rem'
                     }
                   }}
-                  value={body?.type ?? ''}
+                  value={body?.truck_color ?? ''}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      type: ev.target.value
+                      truck_color: ev.target.value
                     }))
                   }
-                  options={enums.typeTruck}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={12} lg={12}>
+                <BaseInput
+                  required
+                  label={'KM'}
+                  styles={{
+                    maxWidth: '274px',
+                    '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                      height: '1.4rem'
+                    }
+                  }}
+                  value={body?.truck_km ?? ''}
+                  onChange={(ev) =>
+                    setBody((state) => ({
+                      ...state,
+                      truck_km: ev.target.value
+                    }))
+                  }
+                />
+              </Grid>
+
+              <Grid item xs={12} md={12} lg={12}>
+                <BaseInput
+                  required
+                  label={'Número Chassi'}
+                  styles={{
+                    maxWidth: '274px',
+                    '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                      height: '1.4rem'
+                    }
+                  }}
+                  value={body?.truck_chassis ?? ''}
+                  onChange={(ev) =>
+                    setBody((state) => ({
+                      ...state,
+                      truck_chassis: ev.target.value
+                    }))
+                  }
+                />
+              </Grid>
+
+              <Grid item xs={12} md={12} lg={12}>
+                <BaseInput
+                  required
+                  label={'Ano Fabricação'}
+                  styles={{
+                    maxWidth: '274px',
+                    '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                      height: '1.4rem'
+                    }
+                  }}
+                  value={body?.truck_year ?? ''}
+                  onChange={(ev) =>
+                    setBody((state) => ({
+                      ...state,
+                      truck_year: ev.target.value
+                    }))
+                  }
                 />
               </Grid>
             </Grid>
@@ -291,7 +315,7 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, props }) => {
             justifyContent={'flex-end'}
           >
             <Grid item container xs={12} md={12} lg={3}>
-              <Button
+              <BaseButton
                 onClick={() => onClose()}
                 background={''}
                 sx={{
@@ -303,10 +327,10 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, props }) => {
                 variant="text"
               >
                 {t('button.cancel')}
-              </Button>
+              </BaseButton>
             </Grid>
             <Grid container item xs={12} md={3} lg={3}>
-              <Button
+              <BaseButton
                 type="submit"
                 color="success"
                 background={
@@ -321,14 +345,14 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, props }) => {
                 }}
               >
                 {t('button.update')}
-              </Button>
+              </BaseButton>
             </Grid>
           </Grid>
-        </Grid>
+        </>
       )}
 
-      {loading && <BaseLoading />}
-    </Modal>
+      {loadingUpdate && <BaseLoading />}
+    </BaseModal>
   );
 };
 

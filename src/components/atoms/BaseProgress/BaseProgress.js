@@ -12,7 +12,7 @@ function LinearProgressWithLabel(props) {
       </Box>
       <Box sx={{ minWidth: 35 }}>
         <Typography variant="h6" color="text.secondary">{`${Math.round(
-          props.value,
+          props.value
         )}%`}</Typography>
       </Box>
     </Box>
@@ -24,28 +24,30 @@ LinearProgressWithLabel.propTypes = {
    * The value of the progress indicator for the determinate and buffer variants.
    * Value between 0 and 100.
    */
-  value: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired
 };
 
-export default function Progress({ progressPercent, setProgressPercent }) {
+export default function BaseProgress({ progressPercent, setProgressPercent }) {
   React.useEffect(() => {
     const timer = setInterval(() => {
-      setProgressPercent((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 0));
+      setProgressPercent((prevProgress) =>
+        prevProgress >= 100 ? 0 : prevProgress + 0
+      );
     }, 800);
     return () => {
       clearInterval(timer);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <Box 
-      sx={{ 
+    <Box
+      sx={{
         width: '80%',
-        ".css-eglki6-MuiLinearProgress-root": { 
-          backgroundColor: "blue",
-          height: "10px",
-          borderRadius: "8px"
+        '.css-eglki6-MuiLinearProgress-root': {
+          backgroundColor: 'blue',
+          height: '10px',
+          borderRadius: '8px'
         }
       }}
     >

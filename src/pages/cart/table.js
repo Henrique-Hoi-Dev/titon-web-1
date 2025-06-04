@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Paper, TableContainer } from '@mui/material';
+import { Paper, TableContainer } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { TablePagination } from 'components/atoms/tablePagination/tablePagination';
 import {
@@ -10,15 +10,14 @@ import {
   STableBody,
   SLabel
 } from 'components/atoms/BaseTable/BaseTable';
-import BaseNotFound from 'components/molecules/BaseNotFound/BaseNotFound';
-import BaseError from 'components/molecules/BaseError/BaseError';
 
 import InfoRow from './infoRow';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseNotFound from 'components/molecules/BaseNotFound/BaseNotFound';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
 import BaseModalDeleteCart from 'components/molecules/BaseModalDeleteCart/BaseModalDeleteCart';
 import BaseModalUpdateCart from 'components/molecules/BaseModalUpdateCart/BaseModalUpdateCart';
 
-const Table = ({ data, query, setQuery, error, loading }) => {
+const Table = ({ data, query, setQuery, loading }) => {
   const { t } = useTranslation();
 
   const [showModalDelete, setShowModalDelete] = useState(false);
@@ -145,22 +144,16 @@ const Table = ({ data, query, setQuery, error, loading }) => {
           <TablePagination data={data} query={query} setQuery={setQuery} />
         )}
 
-        {loading && (
-          <Grid container justifyContent="center" alignItems="center" mt={3}>
-            <Loading titulo={t('messages.loading')} />
-          </Grid>
-        )}
+        {loading && <BaseLoading titulo={t('messages.loading')} />}
 
         {data?.docs?.length === 0 && !loading && <BaseNotFound />}
-
-        {error && <BaseError />}
       </TableContainer>
 
       {showModalDelete && (
         <BaseModalDeleteCart
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
-          props={cartId}
+          data={cartId}
         />
       )}
 
@@ -168,7 +161,7 @@ const Table = ({ data, query, setQuery, error, loading }) => {
         <BaseModalUpdateCart
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
-          props={cartId}
+          data={cartId}
         />
       )}
     </>

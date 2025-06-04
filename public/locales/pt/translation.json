@@ -184,7 +184,28 @@
     "title_credit": "Registro crédito / débito",
     "reason": "Motivo",
     "price": "Cotação",
-    "accomplished": "Realizado"
+    "accomplished": "Realizado",
+    "data": "Data",
+    "hour": "Hora",
+    "location": "Local",
+    "payer": "Pagador",
+    "payment": "Pagamento",
+    "description": "Descrição",
+    "price_per_liter": "Preço do litro",
+    "quantity": "Quantidade",
+    "total_price": "Preço Total",
+    "payment_method": "Método de pagamento",
+    "approved": "APROVADO",
+    "disapproved": "REPROVADO",
+    "hour_of_discharge": "Hora de descarga",
+    "discharge_date": "Data de descarga",
+    "discharge_location": "Local de descarga",
+    "discharge_description": "Descrição de descarga",
+    "discharge_value": "Valor de descarga",
+    "discharge_payment": "Pagamento de descarga",
+    "finalize_record": {
+      "title": "Deseja finalizar ficha:"
+    }
   },
   "button": {
     "return": "Voltar",
@@ -207,7 +228,14 @@
     "access": "Acessar",
     "add_new_truck": "Adicionar novo caminhão",
     "add_new_driver": "Adicionar novo motorista",
-    "add_new_cart": "Adicionar nova carreta"
+    "add_new_cart": "Adicionar nova carreta",
+    "add_new_freight": "Adicionar nova ficha",
+    "add_new_financial": "Adicionar nova ficha",
+    "add_new_checklist": "Adicionar novo checklist",
+    "add_new_report": "Adicionar novo relatório",
+    "add_new_user": "Adicionar novo usuário",
+    "add_new_collector": "Adicionar novo coletor",
+    "add_new_transaction": "Adicionar nova transação"
   },
   "components": {
     "button_default": "Botão Padrão",

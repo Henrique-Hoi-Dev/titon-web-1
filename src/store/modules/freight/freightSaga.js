@@ -17,7 +17,10 @@ import {
   updateFreightFailure,
   deleteFreightRequest,
   deleteFreightSuccess,
-  deleteFreightFailure
+  deleteFreightFailure,
+  getFirstCheckByIdRequest,
+  getFirstCheckByIdSuccess,
+  getFirstCheckByIdFailure
 } from './freightSlice';
 
 // Listar todos os registros
@@ -40,9 +43,20 @@ function* getFreights({ payload }) {
 function* getFreightById({ payload }) {
   try {
     const response = yield call(api.get, `manager/freight/${payload}`);
-    yield put(getFreightByIdSuccess(response.data));
+    yield put(getFreightByIdSuccess(response.data.data));
   } catch (error) {
     yield put(getFreightByIdFailure(error));
+    errorNotification(error);
+  }
+}
+
+// Buscar por ID
+function* getFirstCheckById({ payload }) {
+  try {
+    const response = yield call(api.get, `manager/first-check/${payload}`);
+    yield put(getFirstCheckByIdSuccess(response.data.data));
+  } catch (error) {
+    yield put(getFirstCheckByIdFailure(error));
     errorNotification(error);
   }
 }
@@ -51,7 +65,7 @@ function* getFreightById({ payload }) {
 function* createFreight({ payload }) {
   try {
     const response = yield call(api.post, 'manager/freight', payload);
-    yield put(createFreightSuccess(response.data));
+    yield put(createFreightSuccess(response.data.data));
   } catch (error) {
     yield put(createFreightFailure(error));
     errorNotification(error);
@@ -84,6 +98,7 @@ function* deleteFreight({ payload }) {
 export default function* freightSagas() {
   yield all([
     takeEvery(getFreightsRequest.type, getFreights),
+    takeEvery(getFirstCheckByIdRequest.type, getFirstCheckById),
     takeEvery(getFreightByIdRequest.type, getFreightById),
     takeEvery(createFreightRequest.type, createFreight),
     takeEvery(updateFreightRequest.type, updateFreight),

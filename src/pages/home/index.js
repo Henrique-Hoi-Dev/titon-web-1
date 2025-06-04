@@ -23,7 +23,7 @@ const Home = () => {
   const [searchOrder, setSearchOrder] = useState('');
   const [searchStatus, setSearchStatus] = useState('');
 
-  const { data, loading } = useSelector((state) => state.financial);
+  const { data, loadingGet: loading } = useSelector((state) => state.financial);
 
   useEffect(() => {
     const timer = setTimeout(() => {

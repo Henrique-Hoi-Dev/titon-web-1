@@ -4,13 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { Grid } from '@mui/material';
 import { deleteUserRequest } from 'store/modules/user/userSlice';
 
-import Button from 'components/atoms/BaseButton/BaseButton';
-import Modal from 'components/molecules/BaseModal/BaseModal';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
-import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import Title from 'components/atoms/BaseTitle/BaseTitle';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseText from '@/components/atoms/BaseText/BaseText';
 
-const BaseModalDeleteUser = ({ showModal, setShowModal, props }) => {
+const BaseModalDeleteUser = ({ showModal, setShowModal, data }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.user);
@@ -21,50 +22,48 @@ const BaseModalDeleteUser = ({ showModal, setShowModal, props }) => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    dispatch(deleteUserRequest(props.id));
+    dispatch(deleteUserRequest(data?.id));
   };
 
   return (
-    <Modal
+    <BaseModal
       open={showModal}
-      showCloseIcon
       onClose={onClose}
       component="form"
       onSubmit={handleSubmit}
-      maxWidth={'600px'}
+      maxWidth="600px"
     >
-      <ContentHeader>
-        <Title>{t('modal_user.title_delete')}</Title>
-      </ContentHeader>
+      <BaseContentHeader>
+        <BaseTitle>Deseja excluir: {data?.name}?</BaseTitle>
+      </BaseContentHeader>
 
       {!loading && (
-        <Grid container item spacing={2}>
-          <Grid
-            container
-            item
-            xs={12}
-            md={12}
-            lg={12}
-            spacing={1.5}
-            flexWrap={'wrap'}
-          >
-            <Grid item xs={12} md={12} lg={12}>
-              <p>{t('modal_user.description_delete')}</p>
+        <>
+          <Grid item container xs={12} md={12} lg={12} justifyContent="center">
+            <Grid
+              item
+              xs={6}
+              md={8.3}
+              lg={8.3}
+              mt={1}
+              sx={{ textAlign: 'center' }}
+            >
+              <BaseText fontSize={'16px'}>
+                Após excluir os registros do usuário serão perdidos.
+              </BaseText>
             </Grid>
           </Grid>
 
-          <Grid
-            container
-            item
-            xs={12}
-            md={12}
-            lg={12}
-            spacing={1}
-            mt={0.3}
-            justifyContent={'flex-end'}
-          >
-            <Grid item container xs={12} md={12} lg={3}>
-              <Button
+          <Grid container item xs={12} md={12} lg={12} spacing={2}>
+            <Grid
+              container
+              item
+              xs={6}
+              md={6}
+              lg={6}
+              justifyContent={'flex-end'}
+            >
+              <BaseButton
                 onClick={() => onClose()}
                 background={''}
                 sx={{
@@ -76,32 +75,35 @@ const BaseModalDeleteUser = ({ showModal, setShowModal, props }) => {
                 variant="text"
               >
                 {t('button.cancel')}
-              </Button>
+              </BaseButton>
             </Grid>
-            <Grid container item xs={12} md={3} lg={3}>
-              <Button
+            <Grid
+              container
+              item
+              xs={6}
+              md={6}
+              lg={6}
+              justifyContent={'flex-start'}
+            >
+              <BaseButton
                 type="submit"
-                color="error"
                 background={
                   'linear-gradient(224.78deg, #FF4B4B 8.12%, #FF0000 92.21%)'
                 }
                 sx={{
-                  fontSize: '14px',
-                  color: 'white',
-                  width: '139px',
+                  width: '140px',
                   height: '49px',
-                  marginRight: '15px'
+                  color: 'white'
                 }}
               >
                 {t('button.delete')}
-              </Button>
+              </BaseButton>
             </Grid>
           </Grid>
-        </Grid>
+        </>
       )}
-
-      {loading && <Loading />}
-    </Modal>
+      {loading && <BaseLoading />}
+    </BaseModal>
   );
 };
 

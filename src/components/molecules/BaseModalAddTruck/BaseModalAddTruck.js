@@ -6,12 +6,12 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { storage } from 'base';
 import { useTranslation } from 'react-i18next';
 
-import Button from 'components/atoms/BaseButton/BaseButton';
-import Modal from 'components/molecules/BaseModal/BaseModal';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
 import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
-import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import Title from 'components/atoms/BaseTitle/BaseTitle';
-import Progress from 'components/atoms/progress/progress';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseProgress from '@/components/atoms/BaseProgress/BaseProgress';
 import BaseInput from 'components/molecules/BaseInput/BaseInput';
 import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
 
@@ -72,7 +72,7 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
   }
 
   return (
-    <Modal
+    <BaseModal
       open={showModal}
       onClose={onClose}
       component="form"
@@ -80,9 +80,9 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
       maxWidth={'600px'}
       maxHeight={'850px'}
     >
-      <ContentHeader mt={2}>
-        <Title>{t('modal_truck.title')}</Title>
-      </ContentHeader>
+      <BaseContentHeader mt={2}>
+        <BaseTitle>{t('modal_truck.title')}</BaseTitle>
+      </BaseContentHeader>
 
       {!loading && (
         <>
@@ -145,7 +145,7 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
                 />
               </IconButton>
               {progressPercent > 0 && (
-                <Progress
+                <BaseProgress
                   progressPercent={progressPercent}
                   setProgressPercent={setProgressPercent}
                 />
@@ -320,7 +320,7 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
             justifyContent={'flex-end'}
           >
             <Grid item container xs={12} md={12} lg={3}>
-              <Button
+              <BaseButton
                 onClick={() => onClose()}
                 background={''}
                 sx={{
@@ -332,10 +332,10 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
                 variant="text"
               >
                 {t('button.cancel')}
-              </Button>
+              </BaseButton>
             </Grid>
             <Grid container item xs={12} md={3} lg={3}>
-              <Button
+              <BaseButton
                 type="submit"
                 color="success"
                 background={
@@ -350,14 +350,14 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
                 }}
               >
                 {t('button.register')}
-              </Button>
+              </BaseButton>
             </Grid>
           </Grid>
         </>
       )}
 
       {loading && <BaseLoading />}
-    </Modal>
+    </BaseModal>
   );
 };
 

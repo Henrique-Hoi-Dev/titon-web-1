@@ -14,6 +14,7 @@ import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
 import BaseText from 'components/atoms/BaseText/BaseText';
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
 import enums from '@/utils/enums';
+import BaseContentHeader from '../BaseContentHeader/BaseContentHeader';
 
 const BaseModalDeleteDriver = ({ showModal, setShowModal, data }) => {
   const { t } = useTranslation();
@@ -45,16 +46,14 @@ const BaseModalDeleteDriver = ({ showModal, setShowModal, data }) => {
       onSubmit={handleSubmit}
       maxWidth="500px"
     >
+      <BaseContentHeader>
+        <BaseTitle fontSize={'24px'}>
+          {t('messages.want_to_delete')} {data?.name} ?
+        </BaseTitle>
+      </BaseContentHeader>
+
       {!loadingDelete && (
         <>
-          <Grid item container xs={12} md={12} lg={12} justifyContent="center">
-            <Grid item xs={6} md={8.3} lg={8.3} mt={1}>
-              <BaseTitle fontSize={'18px'}>
-                {t('messages.want_to_delete')} {data?.name} ?
-              </BaseTitle>
-            </Grid>
-          </Grid>
-
           <Grid item container justifyContent="center">
             <BaseText fontsize={'16px'}>
               {t('messages.delete_msg_notice')}

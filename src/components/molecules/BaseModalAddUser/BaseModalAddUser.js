@@ -5,12 +5,12 @@ import { Grid, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { createUserRequest } from 'store/modules/user/userSlice';
 
-import Button from 'components/atoms/BaseButton/BaseButton';
-import Modal from 'components/molecules/BaseModal/BaseModal';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
-import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import Title from 'components/atoms/BaseTitle/BaseTitle';
-import BaseInput from 'components/molecules/BaseInput/BaseInput';
+import BaseButton from '@/components/atoms/BaseButton/BaseButton';
+import BaseModal from '@/components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseContentHeader from '@/components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from '@/components/atoms/BaseTitle/BaseTitle';
+import BaseInput from '@/components/molecules/BaseInput/BaseInput';
 import BaseSelect from 'components/molecules/BaseSelect/BaseSelect';
 import enums from '@/utils/enums';
 
@@ -43,7 +43,7 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
   };
 
   return (
-    <Modal
+    <BaseModal
       open={showModal}
       showCloseIcon
       onClose={onClose}
@@ -51,9 +51,9 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
       onSubmit={handleSubmit}
       maxWidth={'600px'}
     >
-      <ContentHeader>
-        <Title>{t('modal_user.title_add')}</Title>
-      </ContentHeader>
+      <BaseContentHeader>
+        <BaseTitle>{t('modal_user.title_add')}</BaseTitle>
+      </BaseContentHeader>
 
       {!loading && (
         <Grid container item spacing={2}>
@@ -245,7 +245,7 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
             justifyContent={'flex-end'}
           >
             <Grid item container xs={12} md={12} lg={3}>
-              <Button
+              <BaseButton
                 onClick={() => onClose()}
                 background={''}
                 sx={{
@@ -257,10 +257,10 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
                 variant="text"
               >
                 {t('button.cancel')}
-              </Button>
+              </BaseButton>
             </Grid>
             <Grid container item xs={12} md={3} lg={3}>
-              <Button
+              <BaseButton
                 type="submit"
                 color="success"
                 background={
@@ -275,14 +275,14 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
                 }}
               >
                 {t('button.create')}
-              </Button>
+              </BaseButton>
             </Grid>
           </Grid>
         </Grid>
       )}
 
-      {loading && <Loading />}
-    </Modal>
+      {loading && <BaseLoading />}
+    </BaseModal>
   );
 };
 

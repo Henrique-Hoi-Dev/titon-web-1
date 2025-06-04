@@ -48,7 +48,7 @@ function* getFinancialById({ payload }) {
       api.get,
       `manager/financialStatement/${payload}`
     );
-    yield put(getFinancialByIdSuccess(response.data));
+    yield put(getFinancialByIdSuccess(response.data.data));
   } catch (error) {
     yield put(getFinancialByIdFailure(error));
     errorNotification(error);

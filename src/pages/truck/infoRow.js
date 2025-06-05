@@ -1,27 +1,21 @@
 import React, { useState } from 'react';
-import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
-import { useMediaQuery } from 'react-responsive';
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  DropUpSharpIcon
-} from 'assets/icons/icons';
+import { IconButton, Menu, MenuItem } from '@mui/material';
+import { DropUpSharpIcon } from 'assets/icons/icons';
 import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
 import { useTranslation } from 'react-i18next';
+import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
 
-const InfoRow = (props) => {
+const InfoRow = ({
+  data,
+  index,
+  setShowModalDelete,
+  setShowModalUpdate,
+  setTruckId
+}) => {
   const { t } = useTranslation();
 
-  const { data, index, setShowModalDelete, setShowModalUpdate, setTruckId } =
-    props;
-
-  const [open, setOpen] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
-
-  const isDesktop = useMediaQuery({ maxWidth: '1250px' });
-  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' });
-  const isMobile = useMediaQuery({ maxWidth: '730px' });
 
   const handleClick = (ev) => {
     setOpenSettings(!openSettings);
@@ -29,51 +23,37 @@ const InfoRow = (props) => {
   };
 
   const handleDelete = (id, name) => {
-    setShowModalDelete(true);
     setTruckId({ id: id, name: name });
+    setShowModalDelete(true);
     setOpenSettings(false);
   };
 
   const handleUpdate = (id) => {
-    setShowModalUpdate(true);
     setTruckId({ id: id });
+    setShowModalUpdate(true);
     setOpenSettings(false);
   };
 
   return (
     <>
       <SRow key={data.id} alternatingcolors={index}>
-        <SCell minwidth={'0px'} displaywidth={isDesktop ? 0 : 1}>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <ArrowUpIcon /> : <ArrowDownIcon />}
-          </IconButton>
-        </SCell>
-
-        <SCell displaywidth={isMobile ? 1 : 0}>{data.truck_name_brand}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.truck_models}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-          {data.truck_board.toUpperCase()}
-        </SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.truck_color}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.truck_km} KM</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-          {data.truck_chassis}
-        </SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>{data.truck_year}</SCell>
-        <SCell displaywidth={isSmallDesktop ? 1 : 0}>
-          <Avatar
-            alt="img"
-            sx={{
+        <SCell>{data?.truckNameBrand}</SCell>
+        <SCell>{data?.truckModels}</SCell>
+        <SCell>{data?.truckBoard?.toUpperCase()}</SCell>
+        <SCell>{data?.truckColor}</SCell>
+        <SCell>{data?.truckKm} KM</SCell>
+        <SCell>{data?.truckChassis}</SCell>
+        <SCell>{data?.truckYear}</SCell>
+        <SCell>
+          <BaseAvatar
+            uuid={data?.imageTruck?.uuid}
+            category={data?.imageTruck?.category}
+            styles={{
               height: '70px',
               width: '70px',
               marginLeft: '12px',
               borderRadius: '8px'
             }}
-            src={data.truck_avatar}
           />
         </SCell>
         <SCell>
@@ -137,7 +117,7 @@ const InfoRow = (props) => {
           onClick={() =>
             handleDelete(
               data?.id,
-              `${data?.truck_name_brand + ' ' + data?.truck_models}`
+              `${data?.truckNameBrand + ' ' + data?.truckModels}`
             )
           }
         >

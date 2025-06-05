@@ -4,11 +4,25 @@ import {
   TextField
 } from '@mui/material';
 import { autocompleteClasses } from '@mui/material/Autocomplete';
+import { styled } from '@mui/material/styles';
 
-import Loading from 'components/atoms/loading/loading';
+import Loading from '@/components/atoms/BaseLoading/BaseLoading';
 import Text from 'components/atoms/BaseText/BaseText';
-import styled from 'styled-components';
 import { ArrowDownIcon } from '../../../assets/icons/icons';
+
+const StyledPopper = styled(Popper)(({ theme }) => ({
+  [`& .${autocompleteClasses.paper}`]: {
+    backgroundColor: '#31363F',
+    color: '#fff!important'
+  },
+  [`& .${autocompleteClasses.listbox}`]: {
+    color: '#fff'
+  },
+  [`& .${autocompleteClasses.noOptions}`]: {
+    color: '#fff',
+    textAlign: 'center'
+  }
+}));
 
 const BaseSelect = ({
   placeholder,
@@ -23,22 +37,6 @@ const BaseSelect = ({
   loading,
   ...props
 }) => {
-  const StyledPopper = styled(Popper)(({ theme }) => ({
-    [`& .${autocompleteClasses.paper}`]: {
-      backgroundColor: '#31363F',
-      color: '#fff!important'
-    },
-    [`& .${autocompleteClasses.listbox}`]: {
-      color: '#fff',
-      opacity: '0.5'
-    },
-    [`& .${autocompleteClasses.noOptions}`]: {
-      color: '#fff',
-      textAlign: 'center',
-      opacity: '0.5'
-    }
-  }));
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <Text fontsize={'14px'} color={'#1877F2'}>
@@ -67,12 +65,10 @@ const BaseSelect = ({
               background: '#31363F',
               borderRadius: '8px 8px 0px 0px',
               '& .MuiFilledInput-input': {
-                color: '#fff',
-                opacity: '0.5'
+                color: '#fff'
               },
               '& .MuiInputLabel-root': {
-                color: '#fff',
-                opacity: '0.5'
+                color: '#fff'
               },
               '& .MuiFilledInput-underline:before': {
                 borderBottomColor: '#1877F2'

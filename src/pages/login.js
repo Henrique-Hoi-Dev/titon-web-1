@@ -1,61 +1,70 @@
-import { Grid, Paper } from '@mui/material'
-import { useSelector, useDispatch } from 'react-redux'
-import { Box } from '@mui/system'
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useLogin } from 'services/requests/useLogin'
-import { signInRequest } from 'store/modules/auth/actions'
-import { useTranslation } from 'react-i18next'
+import React, { useEffect, useState } from 'react';
+import { Grid, Paper } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { Box } from '@mui/system';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
-import Button from 'components/atoms/BaseButton/BaseButton'
-import Loading from 'components/atoms/loading/loading'
-import Text from 'components/atoms/BaseText/BaseText'
-import logo from '../assets/logo.png'
-import bannerLogin from '../assets/background-login.png'
-import BaseInput from 'components/molecules/BaseInput/BaseInput'
-import BaseLink from 'components/atoms/BaseLink/BaseLink'
+import { signInRequest } from 'store/modules/auth/authSlice';
 
-const INITIAL_STATE = {
-  username: null,
-  password: null
-}
+import Button from 'components/atoms/BaseButton/BaseButton';
+import Text from 'components/atoms/BaseText/BaseText';
+import logo from '../assets/logo.png';
+import bannerLogin from '../assets/background-login.png';
+import BaseInput from 'components/molecules/BaseInput/BaseInput';
+import BaseLink from 'components/atoms/BaseLink/BaseLink';
 
 const Login = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
 
-  const [email, setEmail] = useState(null)
-  const [password, setPassword] = useState(null)
-  const [showPassword, setShowPassword] = useState(false)
-
-  const [userData, setUserData] = useState(INITIAL_STATE)
-
-  const { error } = useLogin(userData)
-
-  const auth = useSelector((state) => state.auth)
-
-  const token = auth?.token
-  const loading = auth?.loading
-
-  const showLoading = loading
-  const showError = error
+  const auth = useSelector(
+    (state) => state?.auth || { loading: false, token: null }
+  );
+  const { token, loading } = auth;
 
   useEffect(() => {
     if (token) {
-      navigate('/home', { replace: true })
+      navigate('/home', { replace: true });
     }
-  }, [auth, token, navigate])
+  }, [token, navigate]);
 
-  useEffect(() => {
-    error && setUserData(INITIAL_STATE)
-  }, [error])
+  const validateForm = (form) => {
+    const newErrors = {};
+    const email = form.get('email');
+    const password = form.get('password');
 
-  const handleSubmit = (ev) => {
-    ev.preventDefault()
-    dispatch(signInRequest(email, password))
-  }
+    if (!email) {
+      newErrors.email = t('validation.email_required');
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = t('validation.email_invalid');
+    }
+
+    if (!password) {
+      newErrors.password = t('validation.password_required');
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = new FormData(e.target);
+
+    if (validateForm(form)) {
+      dispatch(
+        signInRequest({
+          email: form.get('email'),
+          password: form.get('password')
+        })
+      );
+    }
+  };
 
   return (
     <Grid
@@ -63,9 +72,9 @@ const Login = () => {
       item
       justifyContent="space-between"
       alignItems="center"
-      flexWrap={'nowrap'}
+      flexWrap="nowrap"
     >
-      <Grid container height="100vh" width={'auto'}>
+      <Grid container height="100vh" width="auto">
         <Paper
           elevation={3}
           sx={{
@@ -103,7 +112,7 @@ const Login = () => {
             <Grid
               container
               justifyContent="center"
-              alignItems={'center'}
+              alignItems="center"
               direction="column"
               rowSpacing={3}
               p={4}
@@ -116,20 +125,24 @@ const Login = () => {
                 <BaseInput
                   required
                   type="text"
+                  name="email"
                   labelText={t('label.email')}
                   label={t('placeholder.login_email')}
                   styles={{ minWidth: '350px' }}
-                  onChange={(ev) => setEmail(ev.target.value)}
+                  error={!!errors.email}
+                  helperText={errors.email}
                 />
               </Grid>
               <Grid item>
                 <BaseInput
                   required
                   type={showPassword ? 'text' : 'password'}
+                  name="password"
                   labelText={t('label.password')}
                   label={t('placeholder.login_password')}
                   styles={{ minWidth: '350px' }}
-                  onChange={(ev) => setPassword(ev.target.value)}
+                  error={!!errors.password}
+                  helperText={errors.password}
                   isPassword
                   onClick={() => setShowPassword(!showPassword)}
                 />
@@ -141,32 +154,24 @@ const Login = () => {
                   to="/forgot-password"
                 />
               </Grid>
-              {!showLoading && (
-                <Grid item>
-                  <Button
-                    disableElevation
-                    background={
-                      'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
-                    }
-                    sx={{
-                      fontSize: '14px',
-                      color: 'white',
-                      width: '168px',
-                      height: '50px'
-                    }}
-                    fullWidth
-                    type="submit"
-                  >
-                    {t('field.login')}
-                  </Button>
-                </Grid>
-              )}
-              {showLoading && <Loading />}
-              {showError && !showLoading && (
-                <Text center sx={{ mt: '10px' }} type="warning">
-                  {t('error.login_error')}
-                </Text>
-              )}
+
+              <Grid item>
+                <Button
+                  disableElevation
+                  background="linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+                  sx={{
+                    fontSize: '14px',
+                    color: 'white',
+                    width: '168px',
+                    height: '50px'
+                  }}
+                  fullWidth
+                  type="submit"
+                  disabled={loading}
+                >
+                  {loading ? t('button.loading') : t('field.login')}
+                </Button>
+              </Grid>
             </Grid>
           </Box>
         </Paper>
@@ -189,7 +194,7 @@ const Login = () => {
         />
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

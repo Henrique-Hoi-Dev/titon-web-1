@@ -1,8 +1,9 @@
-import { Grid } from '@mui/material'
-import BaseText from '../../atoms/BaseText/BaseText'
-import { typeStatus, typeStatusTable } from 'utils/status'
+import { Grid } from '@mui/material';
+import { typeStatus, typeStatusTable } from 'utils/status';
 
-export const BaseTypeStatus = ({ sx, props, statusTable = false }) => {
+import BaseText from 'components/atoms/BaseText/BaseText';
+
+const BaseTypeStatus = ({ sx, props, statusTable = false }) => {
   return (
     <Grid
       item
@@ -15,13 +16,14 @@ export const BaseTypeStatus = ({ sx, props, statusTable = false }) => {
       sx={{
         ...sx,
         minWidth: '100px',
-        textAlign: 'center',
         borderColor: statusTable
           ? typeStatusTable(props).color
           : typeStatus(props).color,
         borderWidth: 2,
         borderStyle: 'solid',
-        padding: '5px 8px'
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
       }}
       p={'5px 8px 5px 8px'}
     >
@@ -36,5 +38,7 @@ export const BaseTypeStatus = ({ sx, props, statusTable = false }) => {
         {statusTable ? typeStatusTable(props).label : typeStatus(props).label}
       </BaseText>
     </Grid>
-  )
-}
+  );
+};
+
+export default BaseTypeStatus;

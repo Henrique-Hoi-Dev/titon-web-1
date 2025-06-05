@@ -1,57 +1,53 @@
 const express = require('express');
-const { resolve } = require('path');
+const path = require('path');
+const cors = require('cors');
 
 const app = express();
 
-app.use('/', express.static(resolve(__dirname, 'build')));
+// Configuração do CORS
+app.use(
+  cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    exposedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+  })
+);
 
-app.get('/', function (req, res) {
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get('/driver', function (req, res) {
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get('/login', function (req, res) {
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get('/home', function (req, res) {
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get('/user', function (req, res) {
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get('/truck', function (req, res) {
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get('/cart', function (req, res) {
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get('/report', function (req, res) {
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get('/check', function (req, res) {
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get('/historic', function (req, res) {
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get('/info-financial/:id', function (req, res) {
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get('/forgot-password', function (req, res) {
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get('/driver/forgot-password', function (req, res) {
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
-app.get('/driver/forgot-password-success', function (req, res) {
-  res.sendFile(resolve(__dirname, 'build', 'index.html'));
-});
+// Headers de segurança
+app.use((req, res, next) => {
+  // Headers para permitir acesso às fontes do Google
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+  res.setHeader('Cross-Origin-Embedder-Policy', 'unsafe-none');
+  res.setHeader('Cross-Origin-Opener-Policy', 'unsafe-none');
 
-app.listen(process.env.PORT, (err) => {
-  if (err) {
-    return console.log(err);
+  // Headers específicos para fontes
+  if (
+    req.url.includes('fonts.googleapis.com') ||
+    req.url.includes('fonts.gstatic.com')
+  ) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET');
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept'
+    );
   }
 
-  console.log('server run web!!', process.env.PORT);
+  next();
+});
+
+// Servir arquivos estáticos
+app.use(express.static(path.join(__dirname, 'build')));
+
+// Rota para todas as outras requisições
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });

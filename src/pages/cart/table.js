@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
-import { Grid, Paper, TableContainer } from '@mui/material'
-import { useTranslation } from 'react-i18next'
-import { TablePagination } from 'components/atoms/tablePagination/tablePagination'
-import { useMediaQuery } from 'react-responsive'
+import React, { useState } from 'react';
+import { Paper, TableContainer } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { TablePagination } from 'components/atoms/tablePagination/tablePagination';
 import {
   SCell,
   SHead,
@@ -10,42 +9,30 @@ import {
   STable,
   STableBody,
   SLabel
-} from 'components/atoms/BaseTable/BaseTable'
-import { BaseError } from 'components/molecules/BaseError/BaseError'
-import { BaseNotFount } from 'components/molecules/BaseNotFound/BaseNotFound'
+} from 'components/atoms/BaseTable/BaseTable';
 
-import InfoRow from './infoRow'
-import Loading from 'components/atoms/loading/loading'
-import ModalDeleteCart from './modal/modalDeleteCart'
-import ModalUpdateCart from './modal/modalUpdateCart'
+import InfoRow from './infoRow';
+import BaseNotFound from 'components/molecules/BaseNotFound/BaseNotFound';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseModalDeleteCart from 'components/molecules/BaseModalDeleteCart/BaseModalDeleteCart';
+import BaseModalUpdateCart from 'components/molecules/BaseModalUpdateCart/BaseModalUpdateCart';
 
-const Table = ({
-  data,
-  query,
-  setQuery,
-  isFetching,
-  mutate,
-  error,
-  loading
-}) => {
-  const { t } = useTranslation()
+const Table = ({ data, query, setQuery, loading }) => {
+  const { t } = useTranslation();
 
-  const isDesktop = useMediaQuery({ maxWidth: '1120px' })
-  const isMobile = useMediaQuery({ maxWidth: '730px' })
+  const [showModalDelete, setShowModalDelete] = useState(false);
+  const [showModalUpdate, setShowModalUpdate] = useState(false);
 
-  const [showModalDelete, setShowModalDelete] = useState(false)
-  const [showModalUpdate, setShowModalUpdate] = useState(false)
-
-  const [cartId, setCartId] = useState(null)
+  const [cartId, setCartId] = useState(null);
 
   const handleSort = (item) => {
     setQuery((state) => ({
       ...state,
       sort_field: item,
       sort_order: `${query?.sort_order === 'ASC' ? 'DESC' : 'ASC'}`
-    }))
-    return
-  }
+    }));
+    return;
+  };
 
   return (
     <>
@@ -60,7 +47,6 @@ const Table = ({
         <STable>
           <SHead>
             <SRow>
-              <SCell displaywidth={isDesktop ? 0 : 1}>Info</SCell>
               <SCell>
                 <SLabel
                   active={query?.sort_field === 'cart_brand'}
@@ -70,7 +56,7 @@ const Table = ({
                   {t('cart.table.label1')}
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
+              <SCell>
                 <SLabel
                   active={query?.sort_field === 'cart_models'}
                   direction={query?.sort_order?.toLowerCase()}
@@ -79,7 +65,7 @@ const Table = ({
                   {t('cart.table.label2')}
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
+              <SCell>
                 <SLabel
                   active={query?.sort_field === 'cart_board'}
                   direction={query?.sort_order?.toLowerCase()}
@@ -88,7 +74,7 @@ const Table = ({
                   {t('cart.table.label3')}
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
+              <SCell>
                 <SLabel
                   active={query?.sort_field === 'cart_color'}
                   direction={query?.sort_order?.toLowerCase()}
@@ -97,7 +83,7 @@ const Table = ({
                   {t('cart.table.label4')}
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
+              <SCell>
                 <SLabel
                   active={query?.sort_field === 'cart_tara'}
                   direction={query?.sort_order?.toLowerCase()}
@@ -106,7 +92,7 @@ const Table = ({
                   {t('cart.table.label5')}
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
+              <SCell>
                 <SLabel
                   active={query?.sort_field === 'cart_bodywork'}
                   direction={query?.sort_order?.toLowerCase()}
@@ -115,7 +101,7 @@ const Table = ({
                   {t('cart.table.label6')}
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
+              <SCell>
                 <SLabel
                   active={query?.sort_field === 'cart_chassis'}
                   direction={query?.sort_order?.toLowerCase()}
@@ -124,7 +110,7 @@ const Table = ({
                   {t('cart.table.label7')}
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
+              <SCell>
                 <SLabel
                   active={query?.sort_field === 'cart_year'}
                   direction={query?.sort_order?.toLowerCase()}
@@ -133,15 +119,15 @@ const Table = ({
                   {t('cart.table.label8')}
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isDesktop ? 1 : 0}>
-                {t('cart.table.label9')}
-              </SCell>
+              <SCell></SCell>
+
+              <SCell>{t('cart.table.label9')}</SCell>
             </SRow>
           </SHead>
-          {!isFetching && data && data?.dataResult?.length > 0 && (
+          {!loading && data && data?.docs?.length > 0 && (
             <>
               <STableBody>
-                {data.dataResult.map((item, index) => (
+                {data.docs.map((item, index) => (
                   <InfoRow
                     key={item.id}
                     data={item}
@@ -156,42 +142,32 @@ const Table = ({
           )}
         </STable>
 
-        {!isFetching &&
-          data?.dataResult?.length > 0 &&
-          data?.totalPages > 0 && (
-            <TablePagination data={data} query={query} setQuery={setQuery} />
-          )}
-
-        {(loading || isFetching) && (
-          <Grid container justifyContent="center" alignItems="center" mt={3}>
-            <Loading titulo={t('messages.loading')} />
-          </Grid>
+        {data?.docs?.length > 0 && data?.totalPages > 0 && (
+          <TablePagination data={data} query={query} setQuery={setQuery} />
         )}
 
-        {data?.dataResult?.length === 0 && !isFetching && <BaseNotFount />}
+        {loading && <BaseLoading titulo={t('messages.loading')} />}
 
-        {error && <BaseError />}
+        {data?.docs?.length === 0 && !loading && <BaseNotFound />}
       </TableContainer>
 
       {showModalDelete && (
-        <ModalDeleteCart
+        <BaseModalDeleteCart
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
-          props={cartId}
-          mutate={mutate}
+          data={cartId}
         />
       )}
 
       {showModalUpdate && (
-        <ModalUpdateCart
+        <BaseModalUpdateCart
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
-          props={cartId}
-          mutate={mutate}
+          data={cartId}
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default Table
+export default Table;

@@ -1,10 +1,10 @@
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import mgsError from './error/en.json'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import errorMessages from './error/pt.json';
 
-const successNotification = (successMessage, msg) => {
-  const customId = successMessage
-  const massage = 'Operação realizada com sucesso!' ?? msg
+const successNotification = (successMessage) => {
+  const customId = successMessage;
+  const massage = 'Operação realizada com sucesso!';
 
   return toast.success(successMessage ?? massage, {
     position: 'top-right',
@@ -15,14 +15,19 @@ const successNotification = (successMessage, msg) => {
     pauseOnHover: true,
     draggable: true,
     progress: undefined
-  })
-}
+  });
+};
 
-const errorNotification = (errorMessage) => {
-  const customId = errorMessage
-  const msg = mgsError[errorMessage] ? mgsError[errorMessage] : errorMessage
+const errorNotification = (error) => {
+  const customId = error;
 
-  return toast.error(msg, {
+  const msg = errorMessages[error?.response?.data?.key]
+    ? errorMessages[error?.response?.data?.key]
+    : error;
+
+  const massage = 'Erro ao realizar a operação!';
+
+  return toast.error(msg ?? massage, {
     position: 'top-right',
     autoClose: 10000,
     toastId: customId,
@@ -31,7 +36,7 @@ const errorNotification = (errorMessage) => {
     pauseOnHover: true,
     draggable: true,
     progress: undefined
-  })
-}
+  });
+};
 
-export { errorNotification, successNotification }
+export { successNotification, errorNotification };

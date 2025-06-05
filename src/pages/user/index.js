@@ -1,29 +1,25 @@
-import { useState } from 'react'
-import { Grid } from '@mui/material'
-import { useGet } from 'services/requests/useGet'
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import { Grid } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUsersRequest } from 'store/modules/user/userSlice';
 
-import Table from './table'
-import ModalAddUser from './modal/modalAddUser'
+import BaseModalAddUser from '../../components/molecules/BaseModalAddUser/BaseModalAddUser';
+import Table from './table';
+import initialStateQuery from '@/utils/initialStateQuery';
 
 const User = () => {
-  const [showModalDriver, setShowModalDriver] = useState(false)
+  const dispatch = useDispatch();
+  const { data: users, loading } = useSelector((state) => state.user);
+  const [showModalDriver, setShowModalDriver] = useState(false);
 
-  const INITIAL_STATE_USER = {
-    limit: 10,
-    page: 1,
-    sort_field: null,
-    sort_order: 'ASC'
-  }
+  const [userQuery, setUserQuery] = useState(
+    initialStateQuery.INITIAL_STATE_USER
+  );
 
-  const [userQuery, setUserQuery] = useState(INITIAL_STATE_USER)
-
-  const {
-    data: users,
-    error: usersError,
-    isFetching: usersIsFetching,
-    loading,
-    mutate
-  } = useGet('/users', userQuery)
+  useEffect(() => {
+    dispatch(getUsersRequest(userQuery));
+  }, [dispatch, userQuery]);
 
   return (
     <Grid
@@ -54,21 +50,19 @@ const User = () => {
             data={users}
             query={userQuery}
             setQuery={setUserQuery}
-            isFetching={usersIsFetching}
-            error={usersError}
             loading={loading}
-            mutate={mutate}
           />
         </Grid>
       </Grid>
 
-      <ModalAddUser
-        setShowModal={setShowModalDriver}
-        showModal={showModalDriver}
-        mutate={mutate}
-      />
+      {showModalDriver && (
+        <BaseModalAddUser
+          setShowModal={setShowModalDriver}
+          showModal={showModalDriver}
+        />
+      )}
     </Grid>
-  )
-}
+  );
+};
 
-export default User
+export default User;

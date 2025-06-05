@@ -1,18 +1,21 @@
-import { useEffect, useState } from 'react'
-import { useGet } from 'services/requests/useGet'
-import { Grid } from '@mui/material'
-import { InputSearches } from 'components/atoms/input/inputSearches/input'
-import { IconAdd } from 'assets/icons/icons'
-import { useTranslation } from 'react-i18next'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { getFinancialsRequest } from 'store/modules/financial/financialSlice';
+import { Grid } from '@mui/material';
+import { IconAdd } from 'assets/icons/icons';
 
-import TableCheck from './table'
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
+import TableReport from './table';
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
 
-export const Report = () => {
-  const [, setShowModalReport] = useState(false)
-  const { t } = useTranslation()
+const Report = () => {
+  const [, setShowModalReport] = useState(false);
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { data: financials, loading } = useSelector((state) => state.financial);
 
   const INITIAL_STATE_FINANCIAL = {
     limit: 10,
@@ -20,29 +23,25 @@ export const Report = () => {
     sort_field: 'id',
     sort_order: 'ASC',
     status: false
-  }
+  };
 
-  const [financialQuery, setFinancialQuery] = useState(INITIAL_STATE_FINANCIAL)
-  const [search, setSearch] = useState('')
-
-  const {
-    data: financials,
-    error: financialsError,
-    isFetching: financialIsFetching,
-    loading,
-    mutate
-  } = useGet('financialStatements', financialQuery)
+  const [financialQuery, setFinancialQuery] = useState(INITIAL_STATE_FINANCIAL);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setFinancialQuery((state) => ({
         ...state,
         search: search
-      }))
-    }, 1200)
+      }));
+    }, 1200);
 
-    return () => clearTimeout(timer)
-  }, [search])
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  useEffect(() => {
+    dispatch(getFinancialsRequest(financialQuery));
+  }, [dispatch, financialQuery]);
 
   return (
     <Grid
@@ -52,7 +51,7 @@ export const Report = () => {
       spacing={2}
       minHeight="88vh"
       justifyContent="center"
-      alignContent={'flex-start'}
+      alignContent="flex-start"
     >
       <Grid
         item
@@ -61,13 +60,11 @@ export const Report = () => {
         pb={7}
         mr={4}
         mt={-6.5}
-        justifyContent={'flex-end'}
+        justifyContent="flex-end"
       >
         <BaseButton
           onClick={() => setShowModalReport(true)}
-          background={
-            'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
-          }
+          background="linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
           sx={{
             fontSize: '14px',
             color: 'white',
@@ -78,11 +75,11 @@ export const Report = () => {
         >
           {t('report.button.title')} <IconAdd sx={{ mt: -0.7 }} />
         </BaseButton>
-        <InputSearches
+        <BaseInputSearches
           searches
-          searchesType={'searches'}
+          searchesType="searches"
           styles={{ minWidth: '350px' }}
-          placeholder={'Nome, placa...'}
+          placeholder="Nome, placa..."
           onChange={(ev) => setSearch(ev.target.value)}
         />
       </Grid>
@@ -95,22 +92,24 @@ export const Report = () => {
         item
         container
         mb={5}
-        minHeight={'100%'}
+        minHeight="100%"
         alignItems="flex-start"
         justifyContent="flex-start"
       >
-        <Grid item container mr={4} mt={5} mb={3} justifyContent={'center'}>
-          <TableCheck
+        <Grid item container mr={4} mt={5} mb={3} justifyContent="center">
+          <TableReport
             data={financials}
             query={financialQuery}
             setQuery={setFinancialQuery}
-            isFetching={financialIsFetching}
-            error={financialsError}
+            isFetching={loading}
+            error={null}
             loading={loading}
-            mutate={mutate}
+            mutate={() => {}}
           />
         </Grid>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
+
+export default Report;

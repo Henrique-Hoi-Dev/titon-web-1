@@ -23,7 +23,9 @@
     "info": "Informação",
     "device": "Terminal",
     "transactions": "Transações",
-    "collector": "Coletor"
+    "collector": "Coletor",
+    "notifications": "Notificações",
+    "notFoundNotifications": "NÃO HÁ NOTIFICAÇÔES..."
   },
   "subMenu": {
     "label": "Organizar fichas por",
@@ -42,7 +44,12 @@
     "cart": "Carreta",
     "forgot_password": "Esqueceu sua senha?",
     "to_go_back": "Voltar",
-    "reset_password": "Resetar senha"
+    "reset_password": "Resetar senha",
+    "notifications": "Notificações",
+    "notifications_title": "🔔 Notificações",
+    "notifications_empty": "Não há notificações",
+    "notifications_new": "Você tem 3 novas tarefas.",
+    "notifications_data_not_available": "Data não disponível"
   },
   "field": {
     "send": "Enviar",
@@ -182,26 +189,91 @@
     "title_credit": "Registro crédito / débito",
     "reason": "Motivo",
     "price": "Cotação",
-    "accomplished": "Realizado"
+    "accomplished": "Realizado",
+    "data": "Data",
+    "hour": "Hora",
+    "location": "Local",
+    "payer": "Pagador",
+    "payment": "Pagamento",
+    "description": "Descrição",
+    "price_per_liter": "Preço do litro",
+    "quantity": "Quantidade",
+    "total_price": "Preço Total",
+    "payment_method": "Método de pagamento",
+    "approved": "APROVADO",
+    "disapproved": "REPROVADO",
+    "hour_of_discharge": "Hora de descarga",
+    "discharge_date": "Data de descarga",
+    "discharge_location": "Local de descarga",
+    "discharge_description": "Descrição de descarga",
+    "discharge_value": "Valor de descarga",
+    "discharge_payment": "Pagamento de descarga",
+    "finalize_record": {
+      "title": "Deseja finalizar ficha:"
+    },
+    "edit_truck": {
+      "title": "Editar caminhão",
+      "success": "Avatar atualizado com sucesso"
+    },
+    "edit_cart": {
+      "title": "Editar carreta",
+      "brand": "Marca",
+      "model": "Modelo",
+      "year": "Ano",
+      "color": "Cor",
+      "plate": "Placa",
+      "tara": "Tara",
+      "bodyworks": "Tipo",
+      "chassis": "Chassis",
+      "liter_capacity": "Capacidade de litros",
+      "ton_capacity": "Capacidade de tonelada"
+    },
+    "add_cart": {
+      "title": "Cadastrar carreta",
+      "type_cart": "Tipo Carreta",
+      "success": "Carreta cadastrada com sucesso",
+      "error": "Erro ao cadastrar carreta",
+      "brand": "Marca",
+      "model": "Modelo",
+      "year": "Ano",
+      "color": "Cor",
+      "plate": "Placa",
+      "tara": "Tara",
+      "bodyworks": "Tipo",
+      "chassis": "Chassis",
+      "liter_capacity": "Capacidade de litros",
+      "ton_capacity": "Capacidade de tonelada"
+    }
   },
   "button": {
     "return": "Voltar",
     "reset": "Resetar",
     "confirm": "Confirmar",
     "create": "Criar",
-    "cancel": "Cancelar",
     "edit": "Editar",
-    "access": "Acessar",
     "to_alter": "Alterar",
     "finish": "Finalizar",
     "credit/debit": "Crédito/Débito",
     "approved": "APROVAR",
     "register2": "Registrar",
     "disapprove": "REPROVAR",
-    "add_new_listing": "Adicionar Nova Ficha",
+    "add_new_listing": "Cadastrar Nova Ficha",
     "register": "Cadastrar",
     "update": "Atualizar",
-    "delete": "Excluir"
+    "loading": "Carregando...",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "access": "Acessar",
+    "add_new_truck": "Cadastrar caminhão",
+    "add_new_driver": "Cadastrar motorista",
+    "add_new_cart": "Cadastrar carreta",
+    "add_new_freight": "Cadastrar ficha",
+    "add_new_financial": "Cadastrar ficha",
+    "add_new_checklist": "Cadastrar checklist",
+    "add_new_report": "Cadastrar relatório",
+    "add_new_user": "Cadastrar usuário",
+    "add_new_collector": "Cadastrar coletor",
+    "add_new_transaction": "Cadastrar transação"
   },
   "components": {
     "button_default": "Botão Padrão",
@@ -361,7 +433,7 @@
     "reason": "Insira um motivo"
   },
   "modal_cart": {
-    "title": "Cadastro Carreta",
+    "title": "Cadastrar Carreta",
     "label": {
       "type_cart": "Tipo de Carreta",
       "tare": "Tara",
@@ -395,7 +467,7 @@
     }
   },
   "modal_truck": {
-    "title": "Cadastro Caminhão",
+    "title": "Cadastrar Caminhão",
     "title_edit": "Editar Caminhão",
     "label": {
       "mark": "Marca",
@@ -417,7 +489,7 @@
     }
   },
   "modal_create_driver": {
-    "title": "Cadastro Motorista",
+    "title": "Cadastrar Motorista",
     "name_driver": "Nome completo",
     "cpf_driver": "CPF",
     "phone_driver": "Celular",
@@ -433,5 +505,10 @@
     "mopp_validity": "Validade MOPP",
     "nr20_validity": "Validade NR20",
     "nr35_validity": "Validade NR35"
+  },
+  "validation": {
+    "email_required": "E-mail é obrigatório",
+    "email_invalid": "E-mail inválido",
+    "password_required": "Senha é obrigatória"
   }
 }

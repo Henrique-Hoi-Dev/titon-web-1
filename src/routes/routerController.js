@@ -1,21 +1,22 @@
 import { Route, Routes } from 'react-router-dom';
-import { Report } from 'pages/report';
-import { Truck } from 'pages/truck';
-import { Check } from 'pages/check';
-import { InfoFinancial } from 'pages/infoFinancial';
 
-import MainTemplate from 'components/templates/main';
-import RequireAuth from 'utils/requireAuth';
+import Truck from 'pages/truck';
+import Report from 'pages/report';
+import Check from 'pages/freight';
 import Login from 'pages/login';
-import ForgotPassword from 'pages/forgot-password';
-import ForgotPasswordDriver from 'pages/forgot-password-driver';
 import Home from 'pages/home';
 import Driver from 'pages/driver';
 import User from 'pages/user';
 import Cart from 'pages/cart';
 import History from 'pages/history';
-import TokenProtectedRoute from 'components/atoms/TokenProtectedRoute/TokenProtectedRoute';
-import ForgotPasswordSuccess from 'components/atoms/ForgotPasswordSuccess/ForgotPasswordSuccess';
+import InfoFinancial from 'pages/infoFinancial';
+import ForgotPassword from 'pages/forgot-password';
+import ForgotPasswordDriver from 'pages/forgot-password-driver';
+
+import RequireAuth from 'utils/requireAuth';
+import MainTemplate from 'components/templates/main';
+import BaseTokenProtectedRoute from '@/components/atoms/BaseTokenProtectedRoute/BaseTokenProtectedRoute';
+import BaseForgotPasswordSuccess from '@/components/molecules/BaseForgotPasswordSuccess/BaseForgotPasswordSuccess';
 
 const RouterController = () => {
   const initialPage = () => {
@@ -28,14 +29,14 @@ const RouterController = () => {
       <Route
         path="/driver/forgot-password"
         element={
-          <TokenProtectedRoute>
+          <BaseTokenProtectedRoute>
             <ForgotPasswordDriver />
-          </TokenProtectedRoute>
+          </BaseTokenProtectedRoute>
         }
       />
       <Route
         path="/driver/forgot-password-success"
-        element={<ForgotPasswordSuccess />}
+        element={<BaseForgotPasswordSuccess />}
       />
 
       <Route element={<RequireAuth />}>

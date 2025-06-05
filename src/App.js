@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { api } from "services/api";
-import { errorNotification } from "utils/notification";
-import { signOut } from "store/modules/auth/actions";
+import React from 'react';
+import api from 'services/api';
+import RouterController from 'routes/routerController';
 
-import RouterController from "routes/routerController";
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { errorNotification } from 'utils/notification';
+import { signOut } from 'store/modules/auth/authSlice';
 
 function App() {
   const navigate = useNavigate();
@@ -16,18 +17,16 @@ function App() {
       const statusText = error.response;
 
       if (
-        statusText?.data?.error === "Unauthorized" ||
-        statusText?.data?.error === "jwt expired" ||
-        statusText?.data?.error === "invalid token" ||
-        statusText?.data?.error === "INVALID_TOKEN"
+        statusText?.data?.key === 'VERIFY_TOKEN_ERROR_EXPIRED' ||
+        statusText?.data?.key === 'INVALID_TOKEN'
       ) {
         dispatch(signOut());
-        navigate("/login");
+        navigate('/login');
         window.location.reload();
       }
 
       if (statusText?.data?.error) {
-        errorNotification(statusText?.data?.error);
+        errorNotification(statusText);
       }
 
       return Promise.reject(error);

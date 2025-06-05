@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { getFinancialsRequest } from 'store/modules/financial/financialSlice';
 import { Grid } from '@mui/material';
-import { InputSearches } from 'components/atoms/input/inputSearches/input';
 import { IconAdd } from 'assets/icons/icons';
 
 import TableReport from './table';
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
 import BaseButton from 'components/atoms/BaseButton/BaseButton';
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
@@ -75,7 +75,7 @@ const Report = () => {
         >
           {t('report.button.title')} <IconAdd sx={{ mt: -0.7 }} />
         </BaseButton>
-        <InputSearches
+        <BaseInputSearches
           searches
           searchesType="searches"
           styles={{ minWidth: '350px' }}

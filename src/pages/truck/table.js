@@ -110,6 +110,7 @@ const Table = ({ data, query, setQuery, loading }) => {
                   {t('truck.table.label7')}
                 </SLabel>
               </SCell>
+              <SCell></SCell>
               <SCell>{t('truck.table.label8')}</SCell>
             </SRow>
           </SHead>

@@ -1,8 +1,8 @@
-import React from 'react'
-import { TextField, InputAdornment, IconButton } from '@mui/material'
-import { IconSearchIcon } from 'assets/icons/icons'
+import React from 'react';
+import { TextField, InputAdornment, IconButton } from '@mui/material';
+import { IconSearchIcon } from 'assets/icons/icons';
 
-export const InputSearches = ({
+const BaseInputSearches = ({
   isInvalid,
   isInvalidMsg,
   holder,
@@ -22,7 +22,7 @@ export const InputSearches = ({
   min,
   ...props
 }) => {
-  const Label = {}
+  const Label = {};
   return (
     <>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -80,5 +80,7 @@ export const InputSearches = ({
         {isInvalid && <Label error>{isInvalidMsg}</Label>}
       </div>
     </>
-  )
-}
+  );
+};
+
+export default BaseInputSearches;

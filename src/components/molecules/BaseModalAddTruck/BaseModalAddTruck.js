@@ -1,75 +1,89 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { Grid, IconButton } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { createTruckRequest } from 'store/modules/truck/truckSlice';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { storage } from 'base';
+import {
+  createTruckRequest,
+  getTrucksRequest,
+  resetTruckCreate
+} from 'store/modules/truck/truckSlice';
 import { useTranslation } from 'react-i18next';
+import { uploadImage } from '@/services/uploadImage';
+import { errorNotification } from '@/utils/notification';
 
 import BaseButton from 'components/atoms/BaseButton/BaseButton';
 import BaseModal from 'components/molecules/BaseModal/BaseModal';
 import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
-import BaseProgress from '@/components/atoms/BaseProgress/BaseProgress';
 import BaseInput from 'components/molecules/BaseInput/BaseInput';
 import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
 
 const ModalAddTruck = ({ showModal, setShowModal }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.truck);
+
+  const { loadingCreate: loading } = useSelector((state) => state.truck);
+
+  const [file, setFile] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
 
   const [body, setBody] = useState({});
-  const [preview, setPreview] = useState(
-    'https://titon-file-storage.s3.us-east-1.amazonaws.com/images-public/exemple-truck.webp'
-  );
-  const [progressPercent, setProgressPercent] = useState(0);
 
-  const onClose = () => {
-    setShowModal(false);
-    setBody({});
-    setPreview('');
-  };
-
-  const handleSubmit = (ev) => {
-    ev.preventDefault();
-    dispatch(createTruckRequest(body));
-  };
+  const isMountedRef = useRef(true);
 
   useEffect(() => {
-    setBody((state) => ({
-      ...state,
-      truck_avatar: preview
-    }));
-  }, [preview, setPreview]);
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
 
-  async function handleChange(e) {
-    const file = e.target.files[0];
+  const onClose = useCallback(() => {
+    if (!isMountedRef.current) return;
+    setShowModal(false);
+    setBody({});
+    setPreviewImage(null);
+  }, [setShowModal]);
 
-    if (!file) return null;
-    const storageRef = ref(storage, `avatar/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+  const handleChange = (e) => {
+    e.preventDefault();
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
+    setFile(selectedFile);
+    setPreviewImage(URL.createObjectURL(selectedFile));
+  };
 
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgressPercent(progress);
-      },
-      (error) => {
-        alert(error);
-      },
-      () => {
-        getDownloadURL(storageRef).then((downloadURL) => {
-          console.log('avatar', downloadURL);
-          setPreview(downloadURL);
-        });
-      }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    dispatch(
+      createTruckRequest({
+        ...body,
+        onSuccess: async (createdTruckId) => {
+          if (!isMountedRef.current) return;
+
+          try {
+            if (file && createdTruckId) {
+              await uploadImage({
+                url: 'manager/truck/upload-image',
+                file,
+                id: createdTruckId,
+                body: { category: 'avatar_truck' }
+              });
+            }
+
+            if (!isMountedRef.current) return;
+
+            dispatch(getTrucksRequest({}));
+            dispatch(resetTruckCreate());
+            onClose();
+          } catch (error) {
+            if (isMountedRef.current) errorNotification(error);
+          }
+        }
+      })
     );
-  }
+  };
 
   return (
     <BaseModal
@@ -81,7 +95,7 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
       maxHeight={'850px'}
     >
       <BaseContentHeader mt={2}>
-        <BaseTitle>{t('modal_truck.title')}</BaseTitle>
+        <BaseTitle>{t('button.add_new_truck')}</BaseTitle>
       </BaseContentHeader>
 
       {!loading && (
@@ -132,24 +146,14 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
                   onChange={handleChange}
                 />
                 <BaseAvatar
-                  src={
-                    body?.imageTruck?.uuid
-                      ? body?.imageTruck?.uuid
-                      : 'exemple-truck.webp'
-                  }
+                  src={previewImage}
                   styles={{
                     height: 'auto',
-                    width: '280px',
+                    width: '200px',
                     borderRadius: '8px'
                   }}
                 />
               </IconButton>
-              {progressPercent > 0 && (
-                <BaseProgress
-                  progressPercent={progressPercent}
-                  setProgressPercent={setProgressPercent}
-                />
-              )}
             </Grid>
 
             <Grid

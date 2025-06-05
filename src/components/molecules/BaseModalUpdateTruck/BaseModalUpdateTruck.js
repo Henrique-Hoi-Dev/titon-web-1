@@ -4,8 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
   getTruckByIdRequest,
+  getTrucksRequest,
+  resetTruckUpdate,
   updateTruckRequest
 } from 'store/modules/truck/truckSlice';
+import { uploadImage } from '@/services/uploadImage';
+import { errorNotification, successNotification } from '@/utils/notification';
 
 import BaseButton from 'components/atoms/BaseButton/BaseButton';
 import BaseModal from 'components/molecules/BaseModal/BaseModal';
@@ -16,23 +20,19 @@ import BaseInput from 'components/molecules/BaseInput/BaseInput';
 import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
 import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
 
-const uploadImage = async (file) => {
-  return 'https://titon-file-storage.s3.us-east-1.amazonaws.com/images-public/exemple-truck.webp';
-};
-
 const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const {
     selected: truck,
     loadingUpdate,
+    loadingGetById,
     successUpdate
   } = useSelector((state) => state.truck);
 
   const [body, setBody] = useState({});
-  const [, setPreview] = useState(
-    'https://titon-file-storage.s3.us-east-1.amazonaws.com/images-public/exemple-truck.webp'
-  );
+  const [image, setImage] = useState(null);
+
   const [progressPercent, setProgressPercent] = useState(0);
 
   const onClose = useCallback(() => {
@@ -42,6 +42,7 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
+
     dispatch(updateTruckRequest({ id: data.id, data: body }));
   };
 
@@ -63,24 +64,42 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
         truck_chassis: truck?.truckChassis,
         truck_year: truck?.truckYear
       }));
-
-      setPreview(truck?.imageTruck);
     }
   }, [truck]);
 
   useEffect(() => {
     if (successUpdate) {
       onClose();
+      dispatch(resetTruckUpdate());
+      dispatch(getTrucksRequest({}));
     }
-  }, [successUpdate, onClose]);
+  }, [successUpdate, onClose, dispatch]);
 
   async function handleChange(e) {
     const file = e.target.files[0];
-    if (!file) return null;
+    if (!file) return;
 
-    const downloadURL = await uploadImage(file);
-    setPreview(downloadURL);
-    setProgressPercent(100);
+    try {
+      setProgressPercent(10);
+
+      const image = await uploadImage({
+        file,
+        id: data.id,
+        body: {
+          category: 'avatar_truck'
+        },
+        url: 'manager/truck/upload-image',
+        onUploadProgress: (event) => {
+          const progress = Math.round((event.loaded * 100) / event.total);
+          setProgressPercent(progress);
+        }
+      });
+
+      setImage(image.imageTruck);
+      successNotification(t('modal.edit_truck.success'));
+    } catch (error) {
+      errorNotification(error);
+    }
   }
 
   return (
@@ -93,16 +112,17 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
       maxHeight={'850px'}
     >
       <BaseContentHeader mt={2}>
-        <BaseTitle>Cadastro Caminhão</BaseTitle>
+        <BaseTitle>{t('modal.edit_truck.title')}</BaseTitle>
       </BaseContentHeader>
 
-      {!loadingUpdate && (
+      {!loadingUpdate && !loadingGetById && (
         <>
           <Grid
             container
             item
             spacing={2}
-            justifyContent="flex-start"
+            alignItems="center"
+            flexDirection={'column'}
             flexWrap={'nowrap'}
             mr={3}
             lg={12}
@@ -150,8 +170,8 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
                     width: '280px',
                     borderRadius: '8px'
                   }}
-                  uuid={truck?.imageTruck?.uuid}
-                  category={truck?.imageTruck?.category}
+                  uuid={image?.uuid || truck?.imageTruck?.uuid}
+                  category={image?.category || truck?.imageTruck?.category}
                 />
               </IconButton>
               {progressPercent > 0 && (
@@ -162,8 +182,16 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
               )}
             </Grid>
 
-            <Grid container item xs={6} md={6} lg={6} spacing={1.5}>
-              <Grid item xs={12} md={12} lg={12}>
+            <Grid
+              container
+              item
+              xs={12}
+              md={12}
+              lg={12}
+              spacing={1.5}
+              flexWrap={'wrap'}
+            >
+              <Grid item xs={6} md={6} lg={6}>
                 <BaseInput
                   required
                   label={'Marca'}
@@ -183,7 +211,7 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={12} lg={12}>
+              <Grid item xs={6} md={6} lg={6}>
                 <BaseInput
                   required
                   label={'Modelo'}
@@ -202,7 +230,7 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={12} lg={12}>
+              <Grid item xs={6} md={6} lg={6}>
                 <BaseInput
                   required
                   label={'Placa'}
@@ -222,7 +250,7 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={12} lg={12}>
+              <Grid item xs={6} md={6} lg={6}>
                 <BaseInput
                   required
                   label={'Cor'}
@@ -242,7 +270,7 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={12} lg={12}>
+              <Grid item xs={6} md={6} lg={6}>
                 <BaseInput
                   required
                   label={'KM'}
@@ -262,7 +290,7 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={12} lg={12}>
+              <Grid item xs={6} md={6} lg={6}>
                 <BaseInput
                   required
                   label={'Número Chassi'}
@@ -282,7 +310,7 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
                 />
               </Grid>
 
-              <Grid item xs={12} md={12} lg={12}>
+              <Grid item xs={6} md={6} lg={6}>
                 <BaseInput
                   required
                   label={'Ano Fabricação'}
@@ -351,7 +379,7 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
         </>
       )}
 
-      {loadingUpdate && <BaseLoading />}
+      {(loadingUpdate || loadingGetById) && <BaseLoading />}
     </BaseModal>
   );
 };

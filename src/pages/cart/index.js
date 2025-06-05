@@ -1,32 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Grid } from '@mui/material';
 import { IconAdd } from 'assets/icons/icons';
-import { InputSearches } from 'components/atoms/input/inputSearches/input';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCartsRequest } from 'store/modules/cart/cartSlice';
 
 import Table from './table';
 import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
 import BaseModalAddCart from 'components/molecules/BaseModalAddCart/BaseModalAddCart';
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import initialStateQuery from '@/utils/initialStateQuery';
 
 const Cart = () => {
-  const [showModalDriver, setShowModalDriver] = useState(false);
+  const [showModalCart, setShowModalCart] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const { data: carts, loading, error } = useSelector((state) => state.cart);
+  const {
+    data: carts,
+    loadingGet: loading,
+    errorGet: error
+  } = useSelector((state) => state.cart);
 
-  const INITIAL_STATE_CARD = {
-    limit: 10,
-    page: 1,
-    sort_field: 'cart_models',
-    sort_order: 'ASC'
-  };
-
-  const [cardQuery, setCardQuery] = useState(INITIAL_STATE_CARD);
+  const [cardQuery, setCardQuery] = useState(
+    initialStateQuery.INITIAL_STATE_CART
+  );
   const [search, setSearch] = useState('');
 
   const isMounted = useRef(false);
@@ -61,7 +61,7 @@ const Cart = () => {
     >
       <Grid item container pl={2} mr={4} justifyContent={'flex-end'}>
         <BaseButton
-          onClick={() => setShowModalDriver(true)}
+          onClick={() => setShowModalCart(true)}
           background={
             'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
           }
@@ -74,7 +74,7 @@ const Cart = () => {
         >
           {t('button.add_new_cart')} <IconAdd sx={{ mb: '4px', ml: '10px' }} />
         </BaseButton>
-        <InputSearches
+        <BaseInputSearches
           searches
           searchesType={'searches'}
           styles={{ minWidth: '350px' }}
@@ -113,10 +113,12 @@ const Cart = () => {
         </Grid>
       </Grid>
 
-      <BaseModalAddCart
-        setShowModal={setShowModalDriver}
-        showModal={showModalDriver}
-      />
+      {showModalCart && (
+        <BaseModalAddCart
+          setShowModal={setShowModalCart}
+          showModal={showModalCart}
+        />
+      )}
     </Grid>
   );
 };

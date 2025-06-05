@@ -23,7 +23,7 @@ import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
 import BaseContentHeader from '@/components/molecules/BaseContentHeader/BaseContentHeader';
 import BaseInput from '@/components/molecules/BaseInput/BaseInput';
 import BaseTitle from '@/components/atoms/BaseTitle/BaseTitle';
-import enums from '@/utils/enums';
+import initialStateQuery from '@/utils/initialStateQuery';
 
 const BaseModalAddDriver = ({ showModal, setShowModal }) => {
   const { t } = useTranslation();
@@ -100,9 +100,9 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
 
   useEffect(() => {
     if (successCreate) {
-      onClose();
-      dispatch(getDriversRequest(enums.INITIAL_STATE_DRIVER));
+      dispatch(getDriversRequest(initialStateQuery.INITIAL_STATE_DRIVER));
       dispatch(resetCreateDriverStatus());
+      onClose();
     }
   }, [successCreate, onClose, dispatch]);
 

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
 import { IconAdd } from 'assets/icons/icons';
-import { InputSearches } from 'components/atoms/input/inputSearches/input';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFinancialsRequest } from 'store/modules/financial/financialSlice';
 
 import BaseGraphic from 'components/molecules/BaseGraphic/BaseGraphic';
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
 import BaseButton from 'components/atoms/BaseButton/BaseButton';
 import BaseMenuHomeFilterFinancial from 'components/molecules/BaseMenuHomeFilterFinancial/BaseMenuHomeFilterFinancial';
 import BaseCardInfoFinancial from 'components/molecules/BaseCardInfoFinancial/BaseCardInfoFinancial';
@@ -89,7 +89,7 @@ const Home = () => {
               <IconAdd sx={{ mb: '4px', ml: '10px' }} />
             </BaseButton>
 
-            <InputSearches
+            <BaseInputSearches
               searches
               searchesType="searches"
               styles={{ minWidth: '350px' }}

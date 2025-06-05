@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
-import { InputSearches } from 'components/atoms/input/inputSearches/input';
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
 
 import Table from './table';
 
@@ -36,7 +36,7 @@ const HistoryFinancialStatement = () => {
       spacing={2}
     >
       <Grid item container pl={2} mr={4} mt={-6.5} justifyContent={'flex-end'}>
-        <InputSearches
+        <BaseInputSearches
           searches
           searchesType={'searches'}
           styles={{ minWidth: '350px' }}

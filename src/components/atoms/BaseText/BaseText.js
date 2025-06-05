@@ -8,7 +8,8 @@ const BaseText = ({
   font_weight,
   fontsize = '18px',
   whiteSpace,
-  color
+  maxWidth,
+  color = '#FFFFFF'
 }) => {
   return (
     <Typography
@@ -16,9 +17,10 @@ const BaseText = ({
       align={center && 'center'}
       sx={{
         ...sx,
+        maxWidth: `${maxWidth}`,
         fontSize: `${fontsize}`,
         whiteSpace: `${whiteSpace}`,
-        color: `${color ? color : '#FFFFFF'}`,
+        color: `${color}`,
         fontWeight: `${font_weight}`
       }}
     >

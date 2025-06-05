@@ -66,5 +66,7 @@
   "DEPOSIT_NOT_FOUND": "Depósito não encontrado",
   "NEED_SOME_PAYMENT": "Necessário algum pagamento",
   "TRIP_NOT_STARTED": "Viagem não iniciada",
-  "RESTOCK_NOT_FOUND": "Reabastecimento não encontrado"
+  "RESTOCK_NOT_FOUND": "Reabastecimento não encontrado",
+  "CANNOT_DELETE_CART_IN_USE": "Não é possível excluir carreta em uso",
+  "CANNOT_DELETE_TRUCK_IN_USE": "Não é possível excluir caminhão em uso"
 }

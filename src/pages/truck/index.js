@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import { Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconAdd } from 'assets/icons/icons';
-import { InputSearches } from 'components/atoms/input/inputSearches/input';
 import { useTranslation } from 'react-i18next';
 import { getTrucksRequest } from 'store/modules/truck/truckSlice';
 
 import Table from './table';
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
 import BaseButton from 'components/atoms/BaseButton/BaseButton';
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
@@ -29,7 +29,11 @@ const Truck = () => {
 
   const isMounted = useRef(false);
 
-  const { data: trucks, loading, error } = useSelector((state) => state.truck);
+  const {
+    data: trucks,
+    loadingGet: loading,
+    errorGet: error
+  } = useSelector((state) => state.truck);
 
   useEffect(() => {
     dispatch(getTrucksRequest(truckQuery));
@@ -86,7 +90,7 @@ const Truck = () => {
             <IconAdd sx={{ mb: '4px', ml: '10px' }} />
           </BaseButton>
 
-          <InputSearches
+          <BaseInputSearches
             searches
             searchesType="searches"
             styles={{ minWidth: '350px' }}

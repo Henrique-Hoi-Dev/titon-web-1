@@ -3,10 +3,10 @@ import { Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getDriversRequest } from 'store/modules/driver/driverSlice';
 import { IconAdd } from 'assets/icons/icons';
-import { InputSearches } from 'components/atoms/input/inputSearches/input';
 import { useTranslation } from 'react-i18next';
 
 import Table from './table';
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
 import BaseModalAddDriver from '../../components/molecules/BaseModalAddDriver/BaseModalAddDriver';
 import BaseButton from 'components/atoms/BaseButton/BaseButton';
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
@@ -83,7 +83,7 @@ const Driver = () => {
             <IconAdd sx={{ mb: '4px', ml: '10px' }} />
           </BaseButton>
 
-          <InputSearches
+          <BaseInputSearches
             searches
             searchesType="searches"
             styles={{ minWidth: '350px' }}

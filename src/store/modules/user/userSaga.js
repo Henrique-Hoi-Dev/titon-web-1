@@ -1,5 +1,5 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
-import { errorNotification } from '@utils/notification';
+import { errorNotification, successNotification } from '@utils/notification';
 import api from '@services/api';
 
 import {
@@ -52,6 +52,7 @@ function* createUser({ payload }) {
   try {
     const response = yield call(api.post, 'manager/user', payload);
     yield put(createUserSuccess(response.data));
+    successNotification('Usuário criado com sucesso');
   } catch (error) {
     yield put(createUserFailure(error));
     errorNotification(error);
@@ -64,6 +65,7 @@ function* updateUser({ payload }) {
     const { id, data } = payload;
     const response = yield call(api.patch, `manager/user/${id}`, data);
     yield put(updateUserSuccess(response.data));
+    successNotification('Usuário atualizado com sucesso');
   } catch (error) {
     yield put(updateUserFailure(error));
     errorNotification(error);
@@ -75,6 +77,7 @@ function* deleteUser({ payload }) {
   try {
     yield call(api.delete, `manager/user/${payload}`);
     yield put(deleteUserSuccess(payload));
+    successNotification('Usuário deletado com sucesso');
   } catch (error) {
     yield put(deleteUserFailure(error));
     errorNotification(error);

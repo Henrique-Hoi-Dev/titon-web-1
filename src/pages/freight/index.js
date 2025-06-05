@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
 import { IconAdd } from 'assets/icons/icons';
-import { InputSearches } from 'components/atoms/input/inputSearches/input';
 import { useTranslation } from 'react-i18next';
 
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
 import BaseButton from 'components/atoms/BaseButton/BaseButton';
@@ -59,7 +59,7 @@ const Freight = () => {
         >
           {t('check.button.title')} <IconAdd sx={{ mt: -0.7 }} />
         </BaseButton>
-        <InputSearches
+        <BaseInputSearches
           searches
           searchesType={'searches'}
           styles={{ minWidth: '350px' }}

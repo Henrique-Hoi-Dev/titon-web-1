@@ -98,6 +98,7 @@ function* deleteDriver({ payload }) {
   try {
     yield call(api.delete, `manager/driver/${payload}`);
     yield put(deleteDriverSuccess(payload));
+    successNotification('Motorista deletado com sucesso');
   } catch (error) {
     yield put(deleteDriverFailure(error));
     errorNotification(error);

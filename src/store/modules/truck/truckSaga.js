@@ -1,5 +1,5 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
-import { errorNotification } from '@utils/notification';
+import { errorNotification, successNotification } from '@utils/notification';
 import api from '@services/api';
 
 import {
@@ -55,8 +55,15 @@ function* getTruckById({ payload }) {
 // Criar
 function* createTruck({ payload }) {
   try {
-    const response = yield call(api.post, 'manager/truck', payload);
+    const { onSuccess, ...data } = payload;
+    const response = yield call(api.post, 'manager/truck', data);
+
     yield put(createTruckSuccess(response.data.data));
+
+    if (onSuccess && typeof onSuccess === 'function') {
+      yield call(onSuccess, response.data.data.id);
+      successNotification('Caminhão criado com sucesso');
+    }
   } catch (error) {
     yield put(createTruckFailure(error));
     errorNotification(error);
@@ -69,6 +76,7 @@ function* updateTruck({ payload }) {
     const { id, data } = payload;
     const response = yield call(api.patch, `manager/truck/${id}`, data);
     yield put(updateTruckSuccess(response.data.data));
+    successNotification('Caminhão atualizado com sucesso');
   } catch (error) {
     yield put(updateTruckFailure(error));
     errorNotification(error);
@@ -80,6 +88,7 @@ function* deleteTruck({ payload }) {
   try {
     yield call(api.delete, `manager/truck/${payload}`);
     yield put(deleteTruckSuccess(payload));
+    successNotification('Caminhão deletado com sucesso');
   } catch (error) {
     yield put(deleteTruckFailure(error));
     errorNotification(error);

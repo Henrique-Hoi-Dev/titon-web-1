@@ -119,6 +119,8 @@ const Table = ({ data, query, setQuery, loading }) => {
                   {t('cart.table.label8')}
                 </SLabel>
               </SCell>
+              <SCell></SCell>
+
               <SCell>{t('cart.table.label9')}</SCell>
             </SRow>
           </SHead>

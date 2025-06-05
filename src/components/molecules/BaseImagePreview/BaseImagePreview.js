@@ -1,9 +1,9 @@
-import React, { useRef } from "react";
-import { Fab, Box, Button, Typography } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import AddIcon from "@mui/icons-material/Add";
+import React, { useRef } from 'react';
+import { Fab, Box, Button, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import AddIcon from '@mui/icons-material/Add';
 
-const ImagePreview = (props) => {
+const BaseImagePreview = (props) => {
   const { t } = useTranslation();
   const fileInputRef = useRef();
 
@@ -32,27 +32,27 @@ const ImagePreview = (props) => {
   return (
     <>
       {props.preview ? (
-        <Box sx={{display: 'flex', flexDirection: "column"}}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Box
             style={{
               maxHeight: 182,
               maxWidth: 392,
-              display: "flex",
-              flexDirection: "column",
+              display: 'flex',
+              flexDirection: 'column'
             }}
           >
             <img
               src={props.preview}
               alt="Uploaded img"
-              style={{ width: "100%", height: "100%", objectFit: "contain" }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
             />
           </Box>
 
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              mt: 1,
+              display: 'flex',
+              justifyContent: 'center',
+              mt: 1
             }}
           >
             <Button
@@ -61,28 +61,28 @@ const ImagePreview = (props) => {
               variant="outlined"
               onClick={removeMedia}
             >
-              {t("field.remove")}
+              {t('field.remove')}
             </Button>
           </Box>
         </Box>
       ) : (
         <Box
           sx={{
-            margin: "15px 0",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "23rem",
-            height: "10rem",
-            border: "0.5px dashed #cccccc",
+            margin: '15px 0',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '23rem',
+            height: '10rem',
+            border: '0.5px dashed #cccccc'
           }}
         >
           <input
             onChange={(e) => setMedia(e)}
-            accept={"image"}
+            accept={'image'}
             ref={fileInputRef}
-            style={{ display: "none" }}
+            style={{ display: 'none' }}
             id="icon-button-file"
             type="file"
           />
@@ -92,16 +92,16 @@ const ImagePreview = (props) => {
               elevation="disable"
               onClick={handleClick}
               sx={{
-                width: "56px",
-                height: "56px",
-                marginTop: "16px",
-                marginBottom: "32px",
-                color: "#FFF",
-                backgroundColor: "#009C6D",
-                transform: "translatey(-10px)",
-                "&:hover": {
-                    backgroundColor: "#009C6D",
-                    opacity: 0.8,
+                width: '56px',
+                height: '56px',
+                marginTop: '16px',
+                marginBottom: '32px',
+                color: '#FFF',
+                backgroundColor: '#009C6D',
+                transform: 'translatey(-10px)',
+                '&:hover': {
+                  backgroundColor: '#009C6D',
+                  opacity: 0.8
                 }
               }}
               color="secondary"
@@ -112,11 +112,11 @@ const ImagePreview = (props) => {
             </Fab>
           </label>
 
-          <Typography> {t("messages.add_logo")}</Typography>
+          <Typography> {t('messages.add_logo')}</Typography>
         </Box>
       )}
     </>
   );
 };
 
-export default ImagePreview;
+export default BaseImagePreview;

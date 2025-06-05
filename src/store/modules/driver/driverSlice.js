@@ -71,7 +71,6 @@ const driverSlice = createSlice({
       state.successCreate = false;
     },
     createDriverSuccess(state, action) {
-      state.data.push(action.payload);
       state.loadingCreate = false;
       state.successCreate = true;
       state.errorCreate = null;

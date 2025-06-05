@@ -1,19 +1,36 @@
-import api from './api';
+import api from '@/services/api';
 
-export const uploadImage = async (file) => {
-  try {
-    const formData = new FormData();
-    formData.append('file', file);
+/**
+ * Faz upload de imagem para o backend e retorna a URL.
+ * @param {File} file - Arquivo da imagem
+ * @param {string} url - URL do recurso associado (ex: truck, cart, driver)
+ * @param {string} id - ID do recurso associado (ex: truckId)
+ * @param {Function} [onUploadProgress] - Callback para progresso de upload
+ * @returns {Promise<string>} - URL da imagem no S3 (ou outro storage)
+ */
+export const uploadImage = async ({
+  url,
+  file,
+  body,
+  id,
+  onUploadProgress
+}) => {
+  if (!file || !id || !url)
+    throw new Error('Arquivo, ID e URL são obrigatórios.');
 
-    const response = await api.post('/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
+  const formData = new FormData();
+  formData.append('file', file);
 
-    return response.data.url;
-  } catch (error) {
-    console.error('Erro ao fazer upload da imagem:', error);
-    throw error;
-  }
+  Object.entries(body).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+
+  const response = await api.patch(`/${url}/${id}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    onUploadProgress
+  });
+
+  return response.data?.data;
 };

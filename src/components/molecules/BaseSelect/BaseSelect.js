@@ -16,13 +16,11 @@ const StyledPopper = styled(Popper)(({ theme }) => ({
     color: '#fff!important'
   },
   [`& .${autocompleteClasses.listbox}`]: {
-    color: '#fff',
-    opacity: '0.5'
+    color: '#fff'
   },
   [`& .${autocompleteClasses.noOptions}`]: {
     color: '#fff',
-    textAlign: 'center',
-    opacity: '0.5'
+    textAlign: 'center'
   }
 }));
 
@@ -67,12 +65,10 @@ const BaseSelect = ({
               background: '#31363F',
               borderRadius: '8px 8px 0px 0px',
               '& .MuiFilledInput-input': {
-                color: '#fff',
-                opacity: '0.5'
+                color: '#fff'
               },
               '& .MuiInputLabel-root': {
-                color: '#fff',
-                opacity: '0.5'
+                color: '#fff'
               },
               '& .MuiFilledInput-underline:before': {
                 borderBottomColor: '#1877F2'

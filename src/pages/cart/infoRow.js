@@ -5,12 +5,16 @@ import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
 import { useTranslation } from 'react-i18next';
 
 import enums from '@/utils/enums';
+import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
 
-const InfoRow = (props) => {
+const InfoRow = ({
+  data,
+  index,
+  setShowModalDelete,
+  setShowModalUpdate,
+  setCartId
+}) => {
   const { t } = useTranslation();
-
-  const { data, index, setShowModalDelete, setShowModalUpdate, setCartId } =
-    props;
 
   const [openSettings, setOpenSettings] = useState(false);
   const [anchorEl, setAnchorEl] = useState(false);
@@ -46,6 +50,18 @@ const InfoRow = (props) => {
         <SCell>{getBodywork()?.label?.toUpperCase()}</SCell>
         <SCell>{data?.cartChassis}</SCell>
         <SCell>{data?.cartYear}</SCell>
+        <SCell>
+          <BaseAvatar
+            uuid={data?.imageCart?.uuid}
+            category={data?.imageCart?.category}
+            styles={{
+              height: '70px',
+              width: '70px',
+              marginLeft: '12px',
+              borderRadius: '8px'
+            }}
+          />
+        </SCell>
         <SCell>
           <IconButton
             color="default"

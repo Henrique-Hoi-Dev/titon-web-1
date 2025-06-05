@@ -1,5 +1,5 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
-import { errorNotification } from '@utils/notification';
+import { errorNotification, successNotification } from '@utils/notification';
 import api from '@services/api';
 
 import {
@@ -66,6 +66,7 @@ function* createFreight({ payload }) {
   try {
     const response = yield call(api.post, 'manager/freight', payload);
     yield put(createFreightSuccess(response.data.data));
+    successNotification('Frete criado com sucesso');
   } catch (error) {
     yield put(createFreightFailure(error));
     errorNotification(error);
@@ -78,6 +79,7 @@ function* updateFreight({ payload }) {
     const { id, data } = payload;
     const response = yield call(api.patch, `manager/freight/${id}`, data);
     yield put(updateFreightSuccess(response.data));
+    successNotification('Frete atualizado com sucesso');
   } catch (error) {
     yield put(updateFreightFailure(error));
     errorNotification(error);
@@ -89,6 +91,7 @@ function* deleteFreight({ payload }) {
   try {
     yield call(api.delete, `manager/freight/${payload}`);
     yield put(deleteFreightSuccess(payload));
+    successNotification('Frete deletado com sucesso');
   } catch (error) {
     yield put(deleteFreightFailure(error));
     errorNotification(error);

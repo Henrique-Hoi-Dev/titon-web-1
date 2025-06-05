@@ -13,7 +13,7 @@ import BaseModal from 'components/molecules/BaseModal/BaseModal';
 import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
 import BaseText from 'components/atoms/BaseText/BaseText';
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
-import enums from '@/utils/enums';
+import initialStateQuery from '@/utils/initialStateQuery';
 import BaseContentHeader from '../BaseContentHeader/BaseContentHeader';
 
 const BaseModalDeleteDriver = ({ showModal, setShowModal, data }) => {
@@ -32,9 +32,9 @@ const BaseModalDeleteDriver = ({ showModal, setShowModal, data }) => {
 
   useEffect(() => {
     if (successDelete) {
-      onClose();
-      dispatch(getDriversRequest(enums.INITIAL_STATE_DRIVER));
+      dispatch(getDriversRequest(initialStateQuery.INITIAL_STATE_DRIVER));
       dispatch(resetDeleteDriverStatus());
+      onClose();
     }
   }, [successDelete, onClose, dispatch]);
 

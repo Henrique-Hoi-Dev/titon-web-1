@@ -150,25 +150,25 @@ const truckSlice = createSlice({
     getTruckAvatarFailure(state, action) {
       state.avatarLoading = false;
       state.avatarError = action.payload;
+    },
+
+    resetTruckCreate(state) {
+      state.successCreate = false;
+      state.errorCreate = null;
+      state.loadingCreate = false;
+    },
+
+    resetTruckUpdate(state) {
+      state.successUpdate = false;
+      state.errorUpdate = null;
+      state.loadingUpdate = false;
+    },
+
+    resetTruckDelete(state) {
+      state.successDelete = false;
+      state.errorDelete = null;
+      state.loadingDelete = false;
     }
-  },
-
-  resetTruckCreate(state) {
-    state.successCreate = false;
-    state.errorCreate = null;
-    state.loadingCreate = false;
-  },
-
-  resetTruckUpdate(state) {
-    state.successUpdate = false;
-    state.errorUpdate = null;
-    state.loadingUpdate = false;
-  },
-
-  resetTruckDelete(state) {
-    state.successDelete = false;
-    state.errorDelete = null;
-    state.loadingDelete = false;
   }
 });
 

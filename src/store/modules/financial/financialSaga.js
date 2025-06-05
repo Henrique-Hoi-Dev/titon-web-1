@@ -1,6 +1,6 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
 import api from '@services/api';
-import { errorNotification } from '@utils/notification';
+import { errorNotification, successNotification } from '@utils/notification';
 
 import {
   getFinancialsRequest,
@@ -64,6 +64,7 @@ function* createFinancial({ payload }) {
       payload
     );
     yield put(createFinancialSuccess(response.data));
+    successNotification('Ficha criada com sucesso');
   } catch (error) {
     yield put(createFinancialFailure(error));
     errorNotification(error);
@@ -80,6 +81,7 @@ function* updateFinancial({ payload }) {
       data
     );
     yield put(updateFinancialSuccess(response.data));
+    successNotification('Ficha atualizada com sucesso');
   } catch (error) {
     yield put(updateFinancialFailure(error));
     errorNotification(error);
@@ -96,6 +98,7 @@ function* finishingFinancial({ payload }) {
       data
     );
     yield put(finishingFinancialSuccess(response.data));
+    successNotification('Ficha finalizada com sucesso');
   } catch (error) {
     yield put(finishingFinancialFailure(error));
     errorNotification(error);
@@ -107,6 +110,7 @@ function* deleteFinancial({ payload }) {
   try {
     yield call(api.delete, `manager/financialStatement/${payload}`);
     yield put(deleteFinancialSuccess(payload));
+    successNotification('Ficha deletada com sucesso');
   } catch (error) {
     yield put(deleteFinancialFailure(error));
     errorNotification(error);

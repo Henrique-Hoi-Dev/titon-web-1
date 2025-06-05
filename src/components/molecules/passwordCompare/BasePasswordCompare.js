@@ -1,19 +1,18 @@
-import { Grid } from '@mui/material'
-import Input from 'components/atoms/input/BaseInput'
-import Text from 'components/atoms/BaseText/BaseText'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { passwordVerify } from 'utils/passwordVerify'
+import { Grid } from '@mui/material';
+import Input from 'components/atoms/input/BaseInput';
+import Text from 'components/atoms/BaseText/BaseText';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-const PasswordCompare = ({
+const BasePasswordCompare = ({
   validPassword,
   setPassword,
   setConfirmPassword,
   required
 }) => {
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const { t } = useTranslation()
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <>
@@ -47,7 +46,7 @@ const PasswordCompare = ({
         </Grid>
       )}
     </>
-  )
-}
+  );
+};
 
-export default PasswordCompare
+export default BasePasswordCompare;

@@ -1,8 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Grid } from '@mui/material';
-import { deleteTruckRequest } from 'store/modules/truck/truckSlice';
+import {
+  deleteTruckRequest,
+  getTrucksRequest,
+  resetTruckDelete
+} from 'store/modules/truck/truckSlice';
 
 import BaseButton from 'components/atoms/BaseButton/BaseButton';
 import BaseModal from 'components/molecules/BaseModal/BaseModal';
@@ -15,7 +19,7 @@ const BaseModalDeleteTruck = ({ showModal, setShowModal, data }) => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
-  const { loadingDelete } = useSelector((state) => state.truck);
+  const { loadingDelete, successDelete } = useSelector((state) => state.truck);
 
   const onClose = useCallback(() => {
     setShowModal(false);
@@ -25,6 +29,14 @@ const BaseModalDeleteTruck = ({ showModal, setShowModal, data }) => {
     ev.preventDefault();
     dispatch(deleteTruckRequest(data.id));
   };
+
+  useEffect(() => {
+    if (successDelete) {
+      onClose();
+      dispatch(getTrucksRequest({}));
+      dispatch(resetTruckDelete());
+    }
+  }, [successDelete, onClose, dispatch]);
 
   return (
     <BaseModal

@@ -1,5 +1,5 @@
 import { call, put, takeEvery, all } from 'redux-saga/effects';
-import { errorNotification } from '@utils/notification';
+import { errorNotification, successNotification } from '@utils/notification';
 import api from '@services/api';
 
 import {
@@ -10,7 +10,6 @@ import {
   getCartByIdSuccess,
   getCartByIdFailure,
   createCartRequest,
-  createCartSuccess,
   createCartFailure,
   updateCartRequest,
   updateCartSuccess,
@@ -20,7 +19,8 @@ import {
   deleteCartFailure,
   getCartsSelectRequest,
   getCartsSelectSuccess,
-  getCartsSelectFailure
+  getCartsSelectFailure,
+  createCartSuccess
 } from './cartSlice';
 
 // Listar todos os registros
@@ -53,8 +53,15 @@ function* getCartById({ payload }) {
 // Criar
 function* createCart({ payload }) {
   try {
-    const response = yield call(api.post, 'manager/cart', payload);
+    const { onSuccess, ...data } = payload;
+    const response = yield call(api.post, 'manager/cart', data);
+
     yield put(createCartSuccess(response.data.data));
+
+    if (onSuccess && typeof onSuccess === 'function') {
+      yield call(onSuccess, response.data.data.id);
+      successNotification('Carreta criado com sucesso');
+    }
   } catch (error) {
     yield put(createCartFailure(error));
     errorNotification(error);
@@ -67,6 +74,7 @@ function* updateCart({ payload }) {
     const { id, data } = payload;
     const response = yield call(api.patch, `manager/cart/${id}`, data);
     yield put(updateCartSuccess(response.data.data));
+    successNotification('Carreta atualizado com sucesso');
   } catch (error) {
     yield put(updateCartFailure(error));
     errorNotification(error);
@@ -78,6 +86,7 @@ function* deleteCart({ payload }) {
   try {
     yield call(api.delete, `manager/cart/${payload}`);
     yield put(deleteCartSuccess(payload));
+    successNotification('Carreta deletado com sucesso');
   } catch (error) {
     yield put(deleteCartFailure(error));
     errorNotification(error);

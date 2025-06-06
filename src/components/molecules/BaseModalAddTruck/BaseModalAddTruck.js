@@ -17,6 +17,7 @@ import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseConten
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
 import BaseInput from 'components/molecules/BaseInput/BaseInput';
 import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
+import BaseInputMaskPlate from '../BaseInputMaskPlate/BaseInputMaskPlate';
 
 const ModalAddTruck = ({ showModal, setShowModal }) => {
   const { t } = useTranslation();
@@ -209,6 +210,7 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
               <Grid item xs={6} md={6} lg={6}>
                 <BaseInput
                   required
+                  maxLength={7}
                   label={t('modal_truck.placeholder.plate')}
                   labelText={t('modal_truck.label.plate')}
                   styles={{
@@ -221,7 +223,7 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      truck_board: ev.target.value
+                      truck_board: ev.target.value.toUpperCase()
                     }))
                   }
                 />

@@ -21,6 +21,7 @@ import BaseProgress from '@/components/atoms/BaseProgress/BaseProgress';
 import BaseAvatar from '../BaseAvatar/BaseAvatar';
 import BaseSelect from '../BaseSelect/BaseSelect';
 import enums from '@/utils/enums';
+import BaseInputMaskMil from '../BaseInputMaskMil/BaseInputMaskMil';
 
 const BaseModalUpdateCart = ({ showModal, setShowModal, data }) => {
   const { t } = useTranslation();
@@ -194,7 +195,8 @@ const BaseModalUpdateCart = ({ showModal, setShowModal, data }) => {
           >
             <Grid item xs={6} md={6} lg={6}>
               <BaseInput
-                label={t('modal.edit_cart.brand')}
+                labelText={t('modal.add_cart.brand')}
+                label={t('modal.add_cart_brand_placeholder')}
                 required
                 styles={{
                   maxWidth: '274px',
@@ -214,7 +216,8 @@ const BaseModalUpdateCart = ({ showModal, setShowModal, data }) => {
 
             <Grid item xs={6} md={6} lg={6}>
               <BaseInput
-                label={t('modal.edit_cart.model')}
+                labelText={t('modal.add_cart.model')}
+                label={t('modal.add_cart_model_placeholder')}
                 required
                 styles={{
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
@@ -233,7 +236,8 @@ const BaseModalUpdateCart = ({ showModal, setShowModal, data }) => {
 
             <Grid item xs={12} md={6} lg={6}>
               <BaseSelect
-                placeholder={t('modal.add_cart.type_cart')}
+                labelText={t('modal.add_cart.type_cart')}
+                placeholder={t('modal.add_cart_type_cart_placeholder')}
                 options={enums.typeCart || []}
                 value={
                   body?.cart_bodyworks
@@ -265,8 +269,9 @@ const BaseModalUpdateCart = ({ showModal, setShowModal, data }) => {
 
             {body?.cart_bodyworks === 'TANK' && (
               <Grid item xs={6} md={6} lg={6}>
-                <BaseInput
-                  label={t('modal.edit_cart.liter_capacity')}
+                <BaseInputMaskMil
+                  labelText={t('modal.add_cart.liter_capacity')}
+                  label={t('modal.add_cart_liter_capacity_placeholder')}
                   required
                   styles={{
                     maxWidth: '274px',
@@ -290,8 +295,9 @@ const BaseModalUpdateCart = ({ showModal, setShowModal, data }) => {
               body?.cart_bodyworks === 'CHEST' ||
               body?.cart_bodyworks === 'BUCKET') && (
               <Grid item xs={6} md={6} lg={6}>
-                <BaseInput
-                  label={t('modal.edit_cart.ton_capacity')}
+                <BaseInputMaskMil
+                  labelText={t('modal.add_cart.ton_capacity')}
+                  label={t('modal.add_cart_ton_capacity')}
                   required
                   styles={{
                     maxWidth: '274px',
@@ -312,7 +318,8 @@ const BaseModalUpdateCart = ({ showModal, setShowModal, data }) => {
 
             <Grid item xs={6} md={6} lg={6}>
               <BaseInput
-                label={t('modal.edit_cart.color')}
+                labelText={t('modal.add_cart.color')}
+                label={t('modal.add_cart_color_placeholder')}
                 required
                 styles={{
                   maxWidth: '274px',
@@ -332,7 +339,8 @@ const BaseModalUpdateCart = ({ showModal, setShowModal, data }) => {
 
             <Grid item xs={6} md={6} lg={6}>
               <BaseInput
-                label={t('modal.edit_cart.tara')}
+                labelText={t('modal.add_cart.tara')}
+                label={t('modal.add_cart_tara_placeholder')}
                 required
                 styles={{
                   maxWidth: '274px',
@@ -352,7 +360,9 @@ const BaseModalUpdateCart = ({ showModal, setShowModal, data }) => {
 
             <Grid item xs={6} md={6} lg={6}>
               <BaseInput
-                label={t('modal.edit_cart.year')}
+                type="number"
+                labelText={t('modal.add_cart.year')}
+                label={t('modal.add_cart_year_placeholder')}
                 required
                 styles={{
                   maxWidth: '274px',

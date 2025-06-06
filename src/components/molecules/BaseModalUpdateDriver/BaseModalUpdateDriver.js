@@ -19,7 +19,7 @@ import Title from 'components/atoms/BaseTitle/BaseTitle';
 import PickerDate from 'components/atoms/pickerDate/pickerDate';
 import BaseInput from 'components/molecules/BaseInput/BaseInput';
 import BaseModalResetPassword from 'components/molecules/BaseModalResetPassword/BaseModalResetPassword';
-import enums from '@/utils/enums';
+import initialStateQuery from '@/utils/initialStateQuery';
 
 const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
   const { t } = useTranslation();
@@ -73,9 +73,9 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
 
   useEffect(() => {
     if (driver?.successUpdate) {
-      onClose();
+      dispatch(getDriversRequest(initialStateQuery.INITIAL_STATE_DRIVER));
       dispatch(resetUpdateDriverStatus());
-      dispatch(getDriversRequest(enums.INITIAL_STATE_DRIVER));
+      onClose();
     }
   }, [driver?.successUpdate, onClose, dispatch]);
 

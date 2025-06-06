@@ -58,17 +58,16 @@ const Driver = () => {
       justifyContent="center"
       alignContent={'flex-start'}
     >
-      <BaseContentHeader>
-        <BaseTitle title={t('title.driver')} />
-        <Grid
-          item
-          container
-          xs={12}
-          md={12}
-          lg={12}
-          flexWrap="nowrap"
-          justifyContent="flex-end"
-        >
+      <Grid
+        item
+        container
+        xs={12}
+        md={12}
+        lg={12}
+        flexWrap="nowrap"
+        justifyContent="flex-end"
+      >
+        <Grid item container pl={2} mr={4} justifyContent={'flex-end'}>
           <BaseButton
             onClick={() => setShowModalDriver(true)}
             background="linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
@@ -91,6 +90,10 @@ const Driver = () => {
             onChange={(ev) => setSearch(ev.target.value)}
           />
         </Grid>
+      </Grid>
+
+      <BaseContentHeader>
+        <BaseTitle>{t('title.driver')}</BaseTitle>
       </BaseContentHeader>
 
       <Grid
@@ -119,10 +122,12 @@ const Driver = () => {
         </Grid>
       </Grid>
 
-      <BaseModalAddDriver
-        setShowModal={setShowModalDriver}
-        showModal={showModalDriver}
-      />
+      {showModalDriver && (
+        <BaseModalAddDriver
+          setShowModal={setShowModalDriver}
+          showModal={showModalDriver}
+        />
+      )}
     </Grid>
   );
 };

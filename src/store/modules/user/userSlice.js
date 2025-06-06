@@ -4,7 +4,19 @@ const initialState = {
   data: [],
   selected: null,
   loading: false,
-  error: null
+  loadingCreate: false,
+  loadingUpdate: false,
+  loadingDelete: false,
+  loadingGetById: false,
+  loadingGetUsers: false,
+  errorCreate: null,
+  errorUpdate: null,
+  errorDelete: null,
+  errorGetById: null,
+  errorGetUsers: null,
+  successCreate: false,
+  successUpdate: false,
+  successDelete: false
 };
 
 const userSlice = createSlice({
@@ -13,71 +25,96 @@ const userSlice = createSlice({
   reducers: {
     // Buscar lista
     getUsersRequest(state) {
-      state.loading = true;
-      state.error = null;
+      state.loadingGetUsers = true;
+      state.errorGetUsers = null;
     },
     getUsersSuccess(state, action) {
       state.data = action.payload;
-      state.loading = false;
+      state.loadingGetUsers = false;
     },
     getUsersFailure(state, action) {
-      state.loading = false;
-      state.error = action.payload;
+      state.loadingGetUsers = false;
+      state.errorGetUsers = action.payload;
     },
 
     // Buscar por ID
     getUserByIdRequest(state) {
-      state.loading = true;
-      state.error = null;
+      state.loadingGetById = true;
+      state.errorGetById = null;
     },
     getUserByIdSuccess(state, action) {
       state.selected = action.payload;
-      state.loading = false;
+      state.loadingGetById = false;
     },
     getUserByIdFailure(state, action) {
-      state.loading = false;
-      state.error = action.payload;
+      state.loadingGetById = false;
+      state.errorGetById = action.payload;
     },
 
     // Criar
     createUserRequest(state) {
-      state.loading = true;
-      state.error = null;
+      state.loadingCreate = true;
+      state.errorCreate = null;
     },
-    createUserSuccess(state, action) {
-      state.data.push(action.payload);
-      state.loading = false;
+    createUserSuccess(state) {
+      state.loadingCreate = false;
+      state.successCreate = true;
+      state.errorCreate = null;
     },
     createUserFailure(state, action) {
-      state.loading = false;
-      state.error = action.payload;
+      state.loadingCreate = false;
+      state.successCreate = false;
+      state.errorCreate = action.payload;
     },
 
     // Atualizar
     updateUserRequest(state) {
-      state.loading = true;
-      state.error = null;
+      state.loadingUpdate = true;
+      state.errorUpdate = null;
     },
-    updateUserSuccess(state, action) {
-      state.loading = false;
+    updateUserSuccess(state) {
+      state.loadingUpdate = false;
+      state.successUpdate = true;
+      state.errorUpdate = null;
     },
     updateUserFailure(state, action) {
-      state.loading = false;
-      state.error = action.payload;
+      state.loadingUpdate = false;
+      state.successUpdate = false;
+      state.errorUpdate = action.payload;
     },
 
     // Deletar
     deleteUserRequest(state) {
-      state.loading = true;
-      state.error = null;
+      state.loadingDelete = true;
+      state.errorDelete = null;
     },
     deleteUserSuccess(state, action) {
-      state.data = state.data.filter((item) => item.id !== action.payload);
-      state.loading = false;
+      state.loadingDelete = false;
+      state.successDelete = true;
+      state.errorDelete = null;
     },
     deleteUserFailure(state, action) {
-      state.loading = false;
-      state.error = action.payload;
+      state.loadingDelete = false;
+      state.successDelete = false;
+      state.errorDelete = action.payload;
+    },
+
+    resetUserCreate(state) {
+      state.successCreate = false;
+      state.loadingCreate = false;
+      state.errorCreate = null;
+    },
+
+    resetUserUpdate(state) {
+      state.successUpdate = false;
+      state.loadingUpdate = false;
+      state.errorUpdate = null;
+    },
+
+    resetUserDelete(state) {
+      state.successDelete = false;
+      state.loadingDelete = false;
+      state.errorDelete = null;
     }
   }
 });
@@ -97,7 +134,10 @@ export const {
   updateUserFailure,
   deleteUserRequest,
   deleteUserSuccess,
-  deleteUserFailure
+  deleteUserFailure,
+  resetUserCreate,
+  resetUserUpdate,
+  resetUserDelete
 } = userSlice.actions;
 
 export default userSlice.reducer;

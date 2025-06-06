@@ -19,6 +19,7 @@ import BaseInput from 'components/molecules/BaseInput/BaseInput';
 import BaseSelect from 'components/molecules/BaseSelect/BaseSelect';
 import enums from '@/utils/enums';
 import BaseAvatar from '../BaseAvatar/BaseAvatar';
+import BaseInputMaskMil from '../BaseInputMaskMil/BaseInputMaskMil';
 
 const BaseModalAddCart = ({ showModal, setShowModal }) => {
   const { t } = useTranslation();
@@ -155,7 +156,8 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
           >
             <Grid item xs={12} md={6} lg={6}>
               <BaseInput
-                label={'Marca'}
+                labelText={t('modal.add_cart.brand')}
+                label={t('modal.add_cart_brand_placeholder')}
                 required
                 styles={{
                   maxWidth: '274px',
@@ -175,7 +177,8 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
 
             <Grid item xs={12} md={6} lg={6}>
               <BaseInput
-                label={t('modal.add_cart.model')}
+                labelText={t('modal.add_cart.model')}
+                label={t('modal.add_cart_model_placeholder')}
                 required
                 styles={{
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
@@ -194,8 +197,10 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
 
             <Grid item xs={12} md={6} lg={6}>
               <BaseInput
-                label={t('modal.add_cart.plate')}
+                labelText={t('modal.add_cart.plate')}
+                label={t('modal.add_cart_plate_placeholder')}
                 required
+                maxLength={7}
                 styles={{
                   maxWidth: '274px',
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
@@ -206,7 +211,7 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    cart_board: ev.target.value
+                    cart_board: ev.target.value.toUpperCase()
                   }))
                 }
               />
@@ -214,7 +219,8 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
 
             <Grid item xs={12} md={6} lg={6}>
               <BaseInput
-                label={t('modal.add_cart.color')}
+                labelText={t('modal.add_cart.color')}
+                label={t('modal.add_cart_color_placeholder')}
                 required
                 styles={{
                   maxWidth: '274px',
@@ -234,7 +240,8 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
 
             <Grid item xs={12} md={6} lg={6}>
               <BaseSelect
-                placeholder={t('modal.add_cart.type_cart')}
+                labelText={t('modal.add_cart.type_cart')}
+                placeholder={t('modal.add_cart_type_cart_placeholder')}
                 options={enums.typeCart || []}
                 getOptionLabel={(option) => option.label ?? ''}
                 isOptionEqualToValue={(option, value) =>
@@ -256,8 +263,9 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
 
             {body?.cart_bodyworks === 'TANK' && (
               <Grid item xs={12} md={6} lg={6}>
-                <BaseInput
-                  label={t('modal.add_cart.liter_capacity')}
+                <BaseInputMaskMil
+                  labelText={t('modal.add_cart.liter_capacity')}
+                  label={t('modal.add_cart_liter_capacity_placeholder')}
                   required
                   styles={{
                     maxWidth: '274px',
@@ -281,8 +289,9 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
               body?.cart_bodyworks === 'CHEST' ||
               body?.cart_bodyworks === 'BUCKET') && (
               <Grid item xs={12} md={6} lg={6}>
-                <BaseInput
-                  label={t('modal.add_cart.ton_capacity')}
+                <BaseInputMaskMil
+                  labelText={t('modal.add_cart.ton_capacity')}
+                  label={t('modal.add_cart_ton_capacity')}
                   required
                   styles={{
                     maxWidth: '274px',
@@ -303,7 +312,8 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
 
             <Grid item xs={12} md={6} lg={6}>
               <BaseInput
-                label={t('modal.add_cart.tara')}
+                labelText={t('modal.add_cart.tara')}
+                label={t('modal.add_cart_tara_placeholder')}
                 required
                 styles={{
                   maxWidth: '274px',
@@ -323,7 +333,8 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
 
             <Grid item xs={12} md={6} lg={6}>
               <BaseInput
-                label={t('modal.add_cart.chassis')}
+                labelText={t('modal.add_cart.chassis')}
+                label={t('modal.add_cart_chassis_placeholder')}
                 required
                 styles={{
                   maxWidth: '274px',
@@ -343,8 +354,11 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
 
             <Grid item xs={12} md={6} lg={6}>
               <BaseInput
-                label={t('modal.add_cart.year')}
+                labelText={t('modal.add_cart.year')}
+                label={t('modal.add_cart_year_placeholder')}
                 required
+                type="number"
+                maxLength={4}
                 styles={{
                   maxWidth: '274px',
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {

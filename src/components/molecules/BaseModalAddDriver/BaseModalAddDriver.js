@@ -149,7 +149,7 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
               labelText={t('modal_create_driver.cpf_driver')}
               label={t('placeholder.cpf_driver')}
               styles={{ minWidth: '250px' }}
-              value={body?.cpf ?? ''}
+              value={body?.cpf ? maskCPF(body?.cpf) : ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,

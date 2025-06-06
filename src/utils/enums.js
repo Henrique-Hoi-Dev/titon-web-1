@@ -33,10 +33,10 @@ const statusFreight = [
 ];
 
 const typeUser = [
-  { value: 'MASTER', name: 'Master' },
-  { value: 'DIRECTOR', name: 'Diretor' },
-  { value: 'MANAGER', name: 'Gerente' },
-  { value: 'COLLABORATOR', name: 'Colaborador' }
+  { value: 'MASTER', label: 'Master' },
+  { value: 'DIRECTOR', label: 'Diretor' },
+  { value: 'MANAGER', label: 'Gerente' },
+  { value: 'COLLABORATOR', label: 'Colaborador' }
 ];
 
 const typeFinancial = [

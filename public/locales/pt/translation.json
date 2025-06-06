@@ -1,4 +1,11 @@
 {
+  "title": {
+    "user": "Usuários",
+    "truck": "Caminhões",
+    "cart": "Carretas",
+    "driver": "Motoristas",
+    "financial": "Fichas"
+  },
   "menu": {
     "home": "Home",
     "drivers": "Motoristas",
@@ -168,6 +175,19 @@
     "canceled_total": "Cancelado"
   },
   "modal": {
+    "add_user": {
+      "title": "Adicionar usuário",
+      "success": "Usuário cadastrado com sucesso",
+      "error": "Erro ao cadastrar usuário",
+      "name": "Nome",
+      "email": "E-mail",
+      "password": "Senha",
+      "confirm_password": "Confirmar senha",
+      "type_user": "Tipo de usuário",
+      "type_user_placeholder": "Selecione o tipo de usuário",
+      "cpf": "CPF",
+      "phone": "Telefone"
+    },
     "add": "Adicionar",
     "create": "Criar",
     "edit": "Editar",
@@ -243,7 +263,19 @@
       "chassis": "Chassis",
       "liter_capacity": "Capacidade de litros",
       "ton_capacity": "Capacidade de tonelada"
-    }
+    },
+    "add_cart_ton_capacity": "insira toneladas",
+    "add_cart_brand": "Marca",
+    "add_cart_brand_placeholder": "Insira marca",
+    "add_cart_model": "Modelo",
+    "add_cart_model_placeholder": "Insira modelo",
+    "add_cart_plate_placeholder": "Insira placa",
+    "add_cart_color_placeholder": "Insira cor",
+    "add_cart_type_cart_placeholder": "Insira tipo de carreta",
+    "add_cart_liter_capacity_placeholder": "Insira capacidade de litros",
+    "add_cart_tara_placeholder": "Insira tara",
+    "add_cart_chassis_placeholder": "Insira chassi",
+    "add_cart_year_placeholder": "Insira ano"
   },
   "button": {
     "return": "Voltar",

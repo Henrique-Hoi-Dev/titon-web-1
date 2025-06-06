@@ -1,53 +1,91 @@
 import React from 'react';
-import { TextField, InputAdornment, IconButton } from '@mui/material';
+import { InputAdornment, IconButton, TextField } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-
+import { NumericFormat } from 'react-number-format';
 import Text from 'components/atoms/BaseText/BaseText';
 
+const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(
+  props,
+  ref
+) {
+  const { onChange, name, ...other } = props;
+
+  return (
+    <NumericFormat
+      {...other}
+      getInputRef={ref}
+      thousandSeparator="."
+      decimalSeparator=","
+      allowNegative={false}
+      valueIsNumericString
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name,
+            value: values.floatValue
+          }
+        });
+      }}
+    />
+  );
+});
+
 const BaseInputMaskMil = ({
-  holder,
-  password,
-  showPassword,
-  onClick,
-  isPassword,
-  placeholder,
-  label,
   labelText,
-  type,
-  dark,
-  searches,
-  searchesType,
-  minLength,
-  maxLength,
-  styles,
-  helperText,
+  label,
   error,
-  min,
+  helperText,
+  type = 'text',
+  isPassword,
+  onClick,
+  styles,
+  value,
+  onChange,
+  name,
   ...props
 }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <Text fontsize={'14px'} color={'#1877F2'}>
-        {labelText}
-      </Text>
+      {labelText && (
+        <Text fontsize={'14px'} color={'#1877F2'}>
+          {labelText}
+        </Text>
+      )}
 
       <TextField
         {...props}
-        fullWidth
-        variant="filled"
-        type={type}
+        id={name}
+        name={name}
+        value={value}
+        onChange={onChange}
         error={error}
         helperText={helperText}
-        placeholder={placeholder}
-        label={label}
-        color="primary"
+        label={label} // <-- Isso faz o label animar corretamente
+        variant="filled"
+        fullWidth
+        inputProps={{
+          inputMode: 'numeric'
+        }}
+        InputProps={{
+          inputComponent: NumberFormatCustom,
+          endAdornment: isPassword && (
+            <InputAdornment position="end">
+              <IconButton
+                onClick={onClick}
+                edge="end"
+                sx={{ color: '#fff', opacity: 0.5 }}
+              >
+                {type === 'password' ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          )
+        }}
         sx={{
           fontWeight: 'bold',
-          ...styles,
           mt: '5px',
-          color: '#fff',
           background: '#31363F',
           borderRadius: '8px 8px 0px 0px',
+          ...styles,
           '& .MuiFilledInput-input': {
             color: '#fff',
             opacity: '0.5'
@@ -68,31 +106,6 @@ const BaseInputMaskMil = ({
           '& .MuiFilledInput-underline:hover:before': {
             borderBottomColor: '#1877F2!important'
           }
-        }}
-        inputProps={{
-          minLength: `${minLength}`,
-          maxLength: `${maxLength}`,
-          min: min,
-          ...props.inputProps
-        }}
-        InputProps={{
-          min: min,
-          minLength: `${minLength}`,
-          maxLength: `${maxLength}`,
-          endAdornment: isPassword && (
-            <InputAdornment position="end">
-              <IconButton
-                onClick={onClick}
-                edge="end"
-                sx={{
-                  color: '#fff',
-                  opacity: '0.5'
-                }}
-              >
-                {type === 'password' ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            </InputAdornment>
-          )
         }}
       />
     </div>

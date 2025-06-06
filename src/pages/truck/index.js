@@ -64,17 +64,16 @@ const Truck = () => {
       justifyContent="center"
       alignContent={'flex-start'}
     >
-      <BaseContentHeader>
-        <BaseTitle title={t('title.truck')} />
-        <Grid
-          item
-          container
-          xs={12}
-          md={12}
-          lg={12}
-          flexWrap="nowrap"
-          justifyContent="flex-end"
-        >
+      <Grid
+        item
+        container
+        xs={12}
+        md={12}
+        lg={12}
+        flexWrap="nowrap"
+        justifyContent="flex-end"
+      >
+        <Grid item container pl={2} mr={4} justifyContent={'flex-end'}>
           <BaseButton
             onClick={() => setShowModalTruck(true)}
             background="linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
@@ -98,6 +97,10 @@ const Truck = () => {
             onChange={(ev) => setSearch(ev.target.value)}
           />
         </Grid>
+      </Grid>
+
+      <BaseContentHeader>
+        <BaseTitle>{t('title.truck')}</BaseTitle>
       </BaseContentHeader>
 
       <Grid

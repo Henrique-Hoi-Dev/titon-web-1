@@ -1,9 +1,13 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Grid, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { createUserRequest } from 'store/modules/user/userSlice';
+import {
+  createUserRequest,
+  getUsersRequest,
+  resetUserCreate
+} from 'store/modules/user/userSlice';
 
 import BaseButton from '@/components/atoms/BaseButton/BaseButton';
 import BaseModal from '@/components/molecules/BaseModal/BaseModal';
@@ -13,16 +17,18 @@ import BaseTitle from '@/components/atoms/BaseTitle/BaseTitle';
 import BaseInput from '@/components/molecules/BaseInput/BaseInput';
 import BaseSelect from 'components/molecules/BaseSelect/BaseSelect';
 import enums from '@/utils/enums';
+import { maskCPF, maskPhone } from '@/utils/masks';
 
 const BaseModalAddUser = ({ showModal, setShowModal }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.user);
+  const { loadingCreate, successCreate } = useSelector((state) => state.user);
 
   const [body, setBody] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const onClose = useCallback(() => {
     setShowModal(false);
@@ -33,14 +39,24 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
   const handleSubmit = (ev) => {
     ev.preventDefault();
 
-    if (body?.password !== body?.confirmPassword) {
+    if (body?.password !== confirmPassword) {
       setPasswordError(true);
       return;
     }
 
     dispatch(createUserRequest(body));
+
     setPasswordError(false);
+    setConfirmPassword('');
   };
+
+  useEffect(() => {
+    if (successCreate) {
+      onClose();
+      dispatch(getUsersRequest({}));
+      dispatch(resetUserCreate());
+    }
+  }, [successCreate, onClose, dispatch]);
 
   return (
     <BaseModal
@@ -52,10 +68,10 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
       maxWidth={'600px'}
     >
       <BaseContentHeader>
-        <BaseTitle>{t('modal_user.title_add')}</BaseTitle>
+        <BaseTitle>{t('modal.add_user.title')}</BaseTitle>
       </BaseContentHeader>
 
-      {!loading && (
+      {!loadingCreate && (
         <Grid container item spacing={2}>
           <Grid
             container
@@ -69,8 +85,8 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
             <Grid item xs={6} md={6} lg={6}>
               <BaseInput
                 required
-                label={t('modal_user.placeholder.name')}
-                labelText={t('modal_user.label.name')}
+                label={t('modal.add_user.name')}
+                labelText={t('modal.add_user.name')}
                 styles={{
                   maxWidth: '274px',
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
@@ -90,8 +106,8 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
             <Grid item xs={6} md={6} lg={6}>
               <BaseInput
                 required
-                label={t('modal_user.placeholder.email')}
-                labelText={t('modal_user.label.email')}
+                label={t('modal.add_user.email')}
+                labelText={t('modal.add_user.email')}
                 styles={{
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
                     height: '1.4rem'
@@ -110,19 +126,19 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
             <Grid item xs={6} md={6} lg={6}>
               <BaseInput
                 required
-                label={t('modal_user.placeholder.cpf')}
-                labelText={t('modal_user.label.cpf')}
+                label={t('modal.add_user.cpf')}
+                labelText={t('modal.add_user.cpf')}
                 styles={{
                   maxWidth: '274px',
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
                     height: '1.4rem'
                   }
                 }}
-                value={body?.cpf ?? ''}
+                value={body?.cpf ? maskCPF(body?.cpf) : ''}
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    cpf: ev.target.value
+                    cpf: maskCPF(ev.target.value)
                   }))
                 }
               />
@@ -131,18 +147,18 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
             <Grid item xs={6} md={6} lg={6}>
               <BaseInput
                 required
-                label={t('modal_user.placeholder.phone')}
-                labelText={t('modal_user.label.phone')}
+                label={t('modal.add_user.phone')}
+                labelText={t('modal.add_user.phone')}
                 styles={{
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
                     height: '1.4rem'
                   }
                 }}
-                value={body?.phone ?? ''}
+                value={maskPhone(body?.phone)}
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    phone: ev.target.value
+                    phone: maskPhone(ev.target.value)
                   }))
                 }
               />
@@ -151,8 +167,8 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
             <Grid item xs={6} md={6} lg={6}>
               <BaseInput
                 required
-                label={t('modal_user.placeholder.password')}
-                labelText={t('modal_user.label.password')}
+                label={t('modal.add_user.password')}
+                labelText={t('modal.add_user.password')}
                 styles={{
                   maxWidth: '274px',
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
@@ -168,23 +184,17 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
                   }))
                 }
                 error={passwordError}
-                helperText={passwordError ? t('modal_user.error.password') : ''}
-                endAdornment={
-                  <IconButton
-                    onClick={() => setShowPassword(!showPassword)}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                }
+                helperText={passwordError ? t('modal.add_user.error') : ''}
+                isPassword
+                onClick={() => setShowPassword(!showPassword)}
               />
             </Grid>
 
             <Grid item xs={6} md={6} lg={6}>
               <BaseInput
                 required
-                label={t('modal_user.placeholder.confirm_password')}
-                labelText={t('modal_user.label.confirm_password')}
+                label={t('modal.add_user.confirm_password')}
+                labelText={t('modal.add_user.confirm_password')}
                 styles={{
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
                     height: '1.4rem'
@@ -192,44 +202,35 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
                 }}
                 type={showConfirmPassword ? 'text' : 'password'}
                 value={body?.confirmPassword ?? ''}
-                onChange={(ev) =>
-                  setBody((state) => ({
-                    ...state,
-                    confirmPassword: ev.target.value
-                  }))
-                }
+                onChange={(ev) => setConfirmPassword(ev.target.value)}
                 error={passwordError}
-                helperText={passwordError ? t('modal_user.error.password') : ''}
-                endAdornment={
-                  <IconButton
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    edge="end"
-                  >
-                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                }
+                helperText={passwordError ? t('modal.add_user.error') : ''}
+                isPassword
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               />
             </Grid>
 
             <Grid item xs={6} md={6} lg={6}>
               <BaseSelect
                 required
-                label={t('modal_user.placeholder.type')}
-                labelText={t('modal_user.label.type')}
-                styles={{
-                  maxWidth: '274px',
-                  '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
+                labelText={t('modal.add_user.type_user')}
+                placeholder={t('modal.add_user.type_user')}
+                options={enums.typeUser || []}
+                getOptionLabel={(option) => option.label ?? ''}
+                isOptionEqualToValue={(option, value) =>
+                  option.value === value?.value
+                }
+                onChange={(event, newValue) => {
+                  if (newValue) {
+                    setBody((state) => ({
+                      ...state,
+                      type_role: newValue.value
+                    }));
+                  }
+                  if (newValue === null) {
+                    setBody((state) => ({ ...state, type_role: '' }));
                   }
                 }}
-                value={body?.type ?? ''}
-                onChange={(ev) =>
-                  setBody((state) => ({
-                    ...state,
-                    type: ev.target.value
-                  }))
-                }
-                options={enums.typeUser}
               />
             </Grid>
           </Grid>
@@ -281,7 +282,7 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
         </Grid>
       )}
 
-      {loading && <BaseLoading />}
+      {loadingCreate && <BaseLoading />}
     </BaseModal>
   );
 };

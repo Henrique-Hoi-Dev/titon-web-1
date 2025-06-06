@@ -50,8 +50,8 @@ function* getUserById({ payload }) {
 // Criar
 function* createUser({ payload }) {
   try {
-    const response = yield call(api.post, 'manager/user', payload);
-    yield put(createUserSuccess(response.data));
+    const response = yield call(api.post, 'manager/signup', payload);
+    yield put(createUserSuccess(response.data.data));
     successNotification('Usuário criado com sucesso');
   } catch (error) {
     yield put(createUserFailure(error));

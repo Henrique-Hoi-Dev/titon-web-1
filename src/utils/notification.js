@@ -7,7 +7,7 @@ const successNotification = (successMessage) => {
   const massage = 'Operação realizada com sucesso!';
 
   return toast.success(successMessage ?? massage, {
-    position: 'top-right',
+    position: 'top-center',
     autoClose: 5000,
     toastId: customId,
     hideProgressBar: false,
@@ -28,7 +28,7 @@ const errorNotification = (error) => {
   const massage = 'Erro ao realizar a operação!';
 
   return toast.error(msg ?? massage, {
-    position: 'top-right',
+    position: 'top-center',
     autoClose: 10000,
     toastId: customId,
     hideProgressBar: false,

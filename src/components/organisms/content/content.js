@@ -1,12 +1,12 @@
-import { Grid, Paper } from '@mui/material';
-import { templateContext } from 'components/templates/main';
-import { useContext } from 'react';
+import { Grid, Paper } from '@mui/material'
+import { templateContext } from 'components/templates/main'
+import { useContext } from 'react'
 // import { useMediaQuery } from "react-responsive";
-import { Outlet } from 'react-router-dom';
-import { Wrapper } from './styles';
+import { Outlet } from 'react-router-dom'
+import { Wrapper } from './styles'
 
 const Content = () => {
-  const { openMenu } = useContext(templateContext);
+  const { openMenu } = useContext(templateContext)
 
   // const isDesktop = useMediaQuery({ maxWidth: 1430 });
 
@@ -16,7 +16,7 @@ const Content = () => {
         sx={{
           background: 'transparent',
           boxShadow: 'none',
-          borderRadius: '8px'
+          borderRadius: '8px',
         }}
         p={'10px'}
         ml={`${openMenu ? '280px' : '20px'}`}
@@ -30,7 +30,7 @@ const Content = () => {
         <Outlet />
       </Grid>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Content;
+export default Content

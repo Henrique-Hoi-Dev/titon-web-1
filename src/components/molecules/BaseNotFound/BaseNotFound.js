@@ -1,11 +1,11 @@
-import { useTranslation } from 'react-i18next';
-import { Grid } from '@mui/material';
+import { useTranslation } from 'react-i18next'
+import { Grid } from '@mui/material'
 
-import BaseText from 'components/atoms/BaseText/BaseText';
-import imgNotFound from '../../../assets/NotFound.png';
+import BaseText from 'components/atoms/BaseText/BaseText'
+import imgNotFound from '../../../assets/NotFound.png'
 
 const BaseNotFound = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <Grid container item justifyContent="center" alignItems="center" p={5}>
@@ -17,12 +17,12 @@ const BaseNotFound = () => {
           width={'60px'}
           style={{
             verticalAlign: 'middle',
-            marginLeft: '20px'
+            marginLeft: '20px',
           }}
         />
       </BaseText>
     </Grid>
-  );
-};
+  )
+}
 
-export default BaseNotFound;
+export default BaseNotFound

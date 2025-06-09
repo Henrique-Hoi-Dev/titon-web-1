@@ -1,4 +1,4 @@
-import api from '@/services/api';
+import api from '@/services/api'
 
 /**
  * Faz upload de imagem para o backend e retorna a URL.
@@ -8,29 +8,22 @@ import api from '@/services/api';
  * @param {Function} [onUploadProgress] - Callback para progresso de upload
  * @returns {Promise<string>} - URL da imagem no S3 (ou outro storage)
  */
-export const uploadImage = async ({
-  url,
-  file,
-  body,
-  id,
-  onUploadProgress
-}) => {
-  if (!file || !id || !url)
-    throw new Error('Arquivo, ID e URL são obrigatórios.');
+export const uploadImage = async ({ url, file, body, id, onUploadProgress }) => {
+  if (!file || !id || !url) throw new Error('Arquivo, ID e URL são obrigatórios.')
 
-  const formData = new FormData();
-  formData.append('file', file);
+  const formData = new FormData()
+  formData.append('file', file)
 
   Object.entries(body).forEach(([key, value]) => {
-    formData.append(key, value);
-  });
+    formData.append(key, value)
+  })
 
   const response = await api.patch(`/${url}/${id}`, formData, {
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': 'multipart/form-data',
     },
-    onUploadProgress
-  });
+    onUploadProgress,
+  })
 
-  return response.data?.data;
-};
+  return response.data?.data
+}

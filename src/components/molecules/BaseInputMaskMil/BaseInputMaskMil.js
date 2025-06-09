@@ -1,33 +1,31 @@
-import React from 'react';
-import { InputAdornment, IconButton, TextField } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { NumericFormat } from 'react-number-format';
-import Text from 'components/atoms/BaseText/BaseText';
+import React from 'react'
+import { InputAdornment, IconButton, TextField } from '@mui/material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { NumericFormat } from 'react-number-format'
+import Text from 'components/atoms/BaseText/BaseText'
 
-const NumberFormatCustom = React.forwardRef(
-  function NumberFormatCustom(props, ref) {
-    const { onChange, name, ...other } = props;
+const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, ref) {
+  const { onChange, name, ...other } = props
 
-    return (
-      <NumericFormat
-        {...other}
-        getInputRef={ref}
-        thousandSeparator="."
-        decimalSeparator=","
-        allowNegative={false}
-        valueIsNumericString
-        onValueChange={(values) => {
-          onChange({
-            target: {
-              name,
-              value: values.floatValue
-            }
-          });
-        }}
-      />
-    );
-  }
-);
+  return (
+    <NumericFormat
+      {...other}
+      getInputRef={ref}
+      thousandSeparator="."
+      decimalSeparator=","
+      allowNegative={false}
+      valueIsNumericString
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name,
+            value: values.floatValue,
+          },
+        })
+      }}
+    />
+  )
+})
 
 const BaseInputMaskMil = ({
   labelText,
@@ -63,21 +61,17 @@ const BaseInputMaskMil = ({
         variant="filled"
         fullWidth
         inputProps={{
-          inputMode: 'numeric'
+          inputMode: 'numeric',
         }}
         InputProps={{
           inputComponent: NumberFormatCustom,
           endAdornment: isPassword && (
             <InputAdornment position="end">
-              <IconButton
-                onClick={onClick}
-                edge="end"
-                sx={{ color: '#fff', opacity: 0.5 }}
-              >
+              <IconButton onClick={onClick} edge="end" sx={{ color: '#fff', opacity: 0.5 }}>
                 {type === 'password' ? <Visibility /> : <VisibilityOff />}
               </IconButton>
             </InputAdornment>
-          )
+          ),
         }}
         sx={{
           fontWeight: 'bold',
@@ -87,28 +81,28 @@ const BaseInputMaskMil = ({
           ...styles,
           '& .MuiFilledInput-input': {
             color: '#fff',
-            opacity: '0.5'
+            opacity: '0.5',
           },
           '& .MuiInputLabel-root': {
             color: '#fff',
-            opacity: '0.5'
+            opacity: '0.5',
           },
           '& .MuiFilledInput-underline:before': {
-            borderBottomColor: '#1877F2'
+            borderBottomColor: '#1877F2',
           },
           '& .MuiFilledInput-underline:after': {
-            borderBottomColor: '#1877F2'
+            borderBottomColor: '#1877F2',
           },
           '& .MuiFilledInput-underline:hover:after': {
-            borderBottomColor: '#1877F2!important'
+            borderBottomColor: '#1877F2!important',
           },
           '& .MuiFilledInput-underline:hover:before': {
-            borderBottomColor: '#1877F2!important'
-          }
+            borderBottomColor: '#1877F2!important',
+          },
         }}
       />
     </div>
-  );
-};
+  )
+}
 
-export default BaseInputMaskMil;
+export default BaseInputMaskMil

@@ -1,8 +1,8 @@
-import React from 'react';
-import { TextField, InputAdornment, IconButton } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React from 'react'
+import { TextField, InputAdornment, IconButton } from '@mui/material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 
-import Text from 'components/atoms/BaseText/BaseText';
+import Text from 'components/atoms/BaseText/BaseText'
 
 const BaseInput = ({
   holder,
@@ -50,30 +50,30 @@ const BaseInput = ({
           borderRadius: '8px 8px 0px 0px',
           '& .MuiFilledInput-input': {
             color: '#fff',
-            opacity: '0.5'
+            opacity: '0.5',
           },
           '& .MuiInputLabel-root': {
             color: '#fff',
-            opacity: '0.5'
+            opacity: '0.5',
           },
           '& .MuiFilledInput-underline:before': {
-            borderBottomColor: '#1877F2'
+            borderBottomColor: '#1877F2',
           },
           '& .MuiFilledInput-underline:after': {
-            borderBottomColor: '#1877F2'
+            borderBottomColor: '#1877F2',
           },
           '& .MuiFilledInput-underline:hover:after': {
-            borderBottomColor: '#1877F2!important'
+            borderBottomColor: '#1877F2!important',
           },
           '& .MuiFilledInput-underline:hover:before': {
-            borderBottomColor: '#1877F2!important'
-          }
+            borderBottomColor: '#1877F2!important',
+          },
         }}
         inputProps={{
           minLength: `${minLength}`,
           maxLength: `${maxLength}`,
           min: min,
-          ...props.inputProps
+          ...props.inputProps,
         }}
         InputProps={{
           min: min,
@@ -86,17 +86,17 @@ const BaseInput = ({
                 edge="end"
                 sx={{
                   color: '#fff',
-                  opacity: '0.5'
+                  opacity: '0.5',
                 }}
               >
                 {type === 'password' ? <Visibility /> : <VisibilityOff />}
               </IconButton>
             </InputAdornment>
-          )
+          ),
         }}
       />
     </div>
-  );
-};
+  )
+}
 
-export default BaseInput;
+export default BaseInput

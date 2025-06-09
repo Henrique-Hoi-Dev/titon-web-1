@@ -1,60 +1,56 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { Grid } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useState, useCallback } from 'react'
+import { Grid } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import {
   getFinancialByIdRequest,
-  updateFinancialRequest
-} from 'store/modules/financial/financialSlice';
+  updateFinancialRequest,
+} from 'store/modules/financial/financialSlice'
 
-import Button from 'components/atoms/BaseButton/BaseButton';
-import Modal from 'components/molecules/BaseModal/BaseModal';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
-import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import Title from 'components/atoms/BaseTitle/BaseTitle';
-import BaseInput from 'components/molecules/BaseInput/BaseInput';
+import Button from 'components/atoms/BaseButton/BaseButton'
+import Modal from 'components/molecules/BaseModal/BaseModal'
+import Loading from '@/components/atoms/BaseLoading/BaseLoading'
+import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
+import Title from 'components/atoms/BaseTitle/BaseTitle'
+import BaseInput from 'components/molecules/BaseInput/BaseInput'
 
 const BaseModalUpdateFinancial = ({ showModal, setShowModal, financialId }) => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const {
-    selected: financial,
-    loading,
-    success
-  } = useSelector((state) => state.financial);
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const { selected: financial, loading, success } = useSelector((state) => state.financial)
 
-  const [body, setBody] = useState({});
+  const [body, setBody] = useState({})
 
   const onClose = useCallback(() => {
-    setShowModal(false);
-    setBody({});
-  }, [setShowModal]);
+    setShowModal(false)
+    setBody({})
+  }, [setShowModal])
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
-    dispatch(updateFinancialRequest({ id: financialId, data: body }));
-  };
+    ev.preventDefault()
+    dispatch(updateFinancialRequest({ id: financialId, data: body }))
+  }
 
   useEffect(() => {
     if (financialId) {
-      dispatch(getFinancialByIdRequest(financialId));
+      dispatch(getFinancialByIdRequest(financialId))
     }
-  }, [dispatch, financialId]);
+  }, [dispatch, financialId])
 
   useEffect(() => {
     if (financial) {
       setBody({
         total_value: financial?.total_value,
-        total_amount_paid: financial?.total_amount_paid
-      });
+        total_amount_paid: financial?.total_amount_paid,
+      })
     }
-  }, [financial]);
+  }, [financial])
 
   useEffect(() => {
     if (!loading && success) {
-      onClose();
+      onClose()
     }
-  }, [loading, success, onClose]);
+  }, [loading, success, onClose])
 
   return (
     <Modal
@@ -85,7 +81,7 @@ const BaseModalUpdateFinancial = ({ showModal, setShowModal, financialId }) => {
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  total_value: ev.target.value
+                  total_value: ev.target.value,
                 }))
               }
             />
@@ -100,20 +96,13 @@ const BaseModalUpdateFinancial = ({ showModal, setShowModal, financialId }) => {
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  total_amount_paid: ev.target.value
+                  total_amount_paid: ev.target.value,
                 }))
               }
             />
           </Grid>
 
-          <Grid
-            container
-            item
-            xs={12}
-            spacing={2}
-            mt={2}
-            justifyContent="flex-end"
-          >
+          <Grid container item xs={12} spacing={2} mt={2} justifyContent="flex-end">
             <Grid item xs={12} md={3} lg={3}>
               <Button
                 onClick={onClose}
@@ -122,7 +111,7 @@ const BaseModalUpdateFinancial = ({ showModal, setShowModal, financialId }) => {
                   width: '140px',
                   height: '49px',
                   border: '1px solid #509BFB',
-                  color: '#FFF'
+                  color: '#FFF',
                 }}
                 variant="text"
               >
@@ -139,7 +128,7 @@ const BaseModalUpdateFinancial = ({ showModal, setShowModal, financialId }) => {
                   color: 'white',
                   width: '141px',
                   height: '49px',
-                  marginRight: '15px'
+                  marginRight: '15px',
                 }}
               >
                 {t('button.update')}
@@ -151,7 +140,7 @@ const BaseModalUpdateFinancial = ({ showModal, setShowModal, financialId }) => {
 
       {loading && <Loading />}
     </Modal>
-  );
-};
+  )
+}
 
-export default BaseModalUpdateFinancial;
+export default BaseModalUpdateFinancial

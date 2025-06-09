@@ -161,8 +161,7 @@
   min-height: 80px;
   position: absolute;
   right: 0;
-  transform: translate3d(0, calc(var(--y) * -40%), 0)
-    scale(calc(1 - var(--y) * 0.05));
+  transform: translate3d(0, calc(var(--y) * -40%), 0) scale(calc(1 - var(--y) * 0.05));
   transition: all 0.3s;
   width: 100%;
 }
@@ -204,15 +203,7 @@
   color: var(--toastify-text-color-error);
 }
 .Toastify__progress-bar-theme--light {
-  background: linear-gradient(
-    90deg,
-    #4cd964,
-    #5ac8fa,
-    #007aff,
-    #34aadc,
-    #5856d6,
-    #ff2d55
-  );
+  background: linear-gradient(90deg, #4cd964, #5ac8fa, #007aff, #34aadc, #5856d6, #ff2d55);
   background: var(--toastify-color-progress-light);
 }
 .Toastify__progress-bar-theme--dark {

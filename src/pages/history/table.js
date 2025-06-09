@@ -1,38 +1,38 @@
-import React, { useState } from 'react';
-import { Paper, TableContainer } from '@mui/material';
-import { TablePagination } from 'components/atoms/tablePagination/tablePagination';
-import { useTranslation } from 'react-i18next';
+import React, { useState } from 'react'
+import { Paper, TableContainer } from '@mui/material'
+import { TablePagination } from 'components/atoms/tablePagination/tablePagination'
+import { useTranslation } from 'react-i18next'
 import {
   SCell,
   SHead,
   SRow,
   STable,
   STableBody,
-  SLabel
-} from 'components/atoms/BaseTable/BaseTable';
+  SLabel,
+} from 'components/atoms/BaseTable/BaseTable'
 
-import InfoRow from './infoRow';
-import BaseNotFount from 'components/molecules/BaseNotFound/BaseNotFound';
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
-import BaseModalDeleteFinancial from '@/components/molecules/BaseModalDeleteFinancial/BaseModalDeleteFinancial';
-import BaseModalUpdateFinancial from '@/components/molecules/BaseModalUpdateFinancial/BaseModalUpdateFinancial';
+import InfoRow from './infoRow'
+import BaseNotFount from 'components/molecules/BaseNotFound/BaseNotFound'
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
+import BaseModalDeleteFinancial from '@/components/molecules/BaseModalDeleteFinancial/BaseModalDeleteFinancial'
+import BaseModalUpdateFinancial from '@/components/molecules/BaseModalUpdateFinancial/BaseModalUpdateFinancial'
 
 const Table = ({ data, query, setQuery, loading }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const [showModalDelete, setShowModalDelete] = useState(false);
-  const [showModalUpdate, setShowModalUpdate] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false)
+  const [showModalUpdate, setShowModalUpdate] = useState(false)
 
-  const [financialId, setFinancialId] = useState(null);
+  const [financialId, setFinancialId] = useState(null)
 
   const handleSort = (item) => {
     setQuery((state) => ({
       ...state,
       sort_field: item,
-      sort_order: `${query?.sort_order === 'ASC' ? 'DESC' : 'ASC'}`
-    }));
-    return;
-  };
+      sort_order: `${query?.sort_order === 'ASC' ? 'DESC' : 'ASC'}`,
+    }))
+    return
+  }
 
   return (
     <>
@@ -124,7 +124,7 @@ const Table = ({ data, query, setQuery, loading }) => {
         />
       )}
     </>
-  );
-};
+  )
+}
 
-export default Table;
+export default Table

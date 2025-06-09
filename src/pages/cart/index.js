@@ -1,54 +1,48 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Grid } from '@mui/material';
-import { IconAdd } from 'assets/icons/icons';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { getCartsRequest } from 'store/modules/cart/cartSlice';
+import React, { useEffect, useRef, useState } from 'react'
+import { Grid } from '@mui/material'
+import { IconAdd } from 'assets/icons/icons'
+import { useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCartsRequest } from 'store/modules/cart/cartSlice'
 
-import Table from './table';
-import BaseButton from 'components/atoms/BaseButton/BaseButton';
-import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
-import BaseModalAddCart from 'components/molecules/BaseModalAddCart/BaseModalAddCart';
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import initialStateQuery from '@/utils/initialStateQuery';
+import Table from './table'
+import BaseButton from 'components/atoms/BaseButton/BaseButton'
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches'
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
+import BaseModalAddCart from 'components/molecules/BaseModalAddCart/BaseModalAddCart'
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
+import initialStateQuery from '@/utils/initialStateQuery'
 
 const Cart = () => {
-  const [showModalCart, setShowModalCart] = useState(false);
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const [showModalCart, setShowModalCart] = useState(false)
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
 
-  const {
-    data: carts,
-    loadingGet: loading,
-    errorGet: error
-  } = useSelector((state) => state.cart);
+  const { data: carts, loadingGet: loading, errorGet: error } = useSelector((state) => state.cart)
 
-  const [cardQuery, setCardQuery] = useState(
-    initialStateQuery.INITIAL_STATE_CART
-  );
-  const [search, setSearch] = useState('');
+  const [cardQuery, setCardQuery] = useState(initialStateQuery.INITIAL_STATE_CART)
+  const [search, setSearch] = useState('')
 
-  const isMounted = useRef(false);
+  const isMounted = useRef(false)
 
   useEffect(() => {
     if (!isMounted.current) {
-      isMounted.current = true;
-      dispatch(getCartsRequest(cardQuery));
-      return;
+      isMounted.current = true
+      dispatch(getCartsRequest(cardQuery))
+      return
     }
 
     const timer = setTimeout(() => {
       const newQuery = {
         ...cardQuery,
-        search: search
-      };
-      setCardQuery(newQuery);
-      dispatch(getCartsRequest(newQuery));
-    }, 1200);
+        search: search,
+      }
+      setCardQuery(newQuery)
+      dispatch(getCartsRequest(newQuery))
+    }, 1200)
 
-    return () => clearTimeout(timer);
-  }, [dispatch, search, cardQuery]);
+    return () => clearTimeout(timer)
+  }, [dispatch, search, cardQuery])
 
   return (
     <Grid
@@ -62,14 +56,12 @@ const Cart = () => {
       <Grid item container pl={2} mr={4} justifyContent={'flex-end'}>
         <BaseButton
           onClick={() => setShowModalCart(true)}
-          background={
-            'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
-          }
+          background={'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'}
           sx={{
             fontSize: '14px',
             color: 'white',
             minWidth: '248px',
-            marginRight: '15px'
+            marginRight: '15px',
           }}
         >
           {t('button.add_new_cart')} <IconAdd sx={{ mb: '4px', ml: '10px' }} />
@@ -87,22 +79,8 @@ const Cart = () => {
         <BaseTitle>{t('cart.title')}</BaseTitle>
       </BaseContentHeader>
 
-      <Grid
-        item
-        container
-        mb={5}
-        alignItems="flex-start"
-        justifyContent="flex-start"
-      >
-        <Grid
-          item
-          container
-          pl={2}
-          mr={4}
-          mt={5}
-          mb={3}
-          justifyContent={'center'}
-        >
+      <Grid item container mb={5} alignItems="flex-start" justifyContent="flex-start">
+        <Grid item container pl={2} mr={4} mt={5} mb={3} justifyContent={'center'}>
           <Table
             data={carts}
             query={cardQuery}
@@ -114,13 +92,10 @@ const Cart = () => {
       </Grid>
 
       {showModalCart && (
-        <BaseModalAddCart
-          setShowModal={setShowModalCart}
-          showModal={showModalCart}
-        />
+        <BaseModalAddCart setShowModal={setShowModalCart} showModal={showModalCart} />
       )}
     </Grid>
-  );
-};
+  )
+}
 
-export default Cart;
+export default Cart

@@ -1,5 +1,5 @@
-import { Autocomplete as MuiAutocomplete, TextField } from '@mui/material';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
+import { Autocomplete as MuiAutocomplete, TextField } from '@mui/material'
+import Loading from '@/components/atoms/BaseLoading/BaseLoading'
 
 const BaseAutocomplete = ({
   placeholder,
@@ -27,33 +27,27 @@ const BaseAutocomplete = ({
           sx={{
             background: 'white!important',
             '& .css-1sumxir-MuiFormLabel-root-MuiInputLabel-root.Mui-focused': {
-              color: 'black!important'
+              color: 'black!important',
             },
             '& .css-igs3ac': {
-              border: `2px solid ${
-                dark ? '#FFFFFF!important' : '#2B2B2C!important'
-              }`
+              border: `2px solid ${dark ? '#FFFFFF!important' : '#2B2B2C!important'}`,
             },
             '& .css-p0rm37': {
-              top: '-6px'
+              top: '-6px',
             },
             ' .css-u9osun.Mui-focused': {
-              color: 'black!important'
+              color: 'black!important',
             },
             '& .css-segi59.Mui-focused .MuiOutlinedInput-notchedOutline': {
-              border: `2px solid ${
-                dark ? '#FFFFFF!important' : '#2B2B2C!important'
-              }`,
-              color: 'black!important'
+              border: `2px solid ${dark ? '#FFFFFF!important' : '#2B2B2C!important'}`,
+              color: 'black!important',
             },
             '& .css-1d3z3hw-MuiOutlinedInput-notchedOutline': {
-              border: `2px solid ${
-                dark ? '#FFFFFF!important' : '#2B2B2C!important'
-              }`
+              border: `2px solid ${dark ? '#FFFFFF!important' : '#2B2B2C!important'}`,
             },
             '& .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root': {
-              marginTop: '-5px!important'
-            }
+              marginTop: '-5px!important',
+            },
           }}
           required={required}
           label={placeholder}
@@ -64,12 +58,12 @@ const BaseAutocomplete = ({
                 {loading ? <Loading size={20} /> : null}
                 {params.InputProps.endAdornment}
               </>
-            )
+            ),
           }}
         />
       )}
     />
-  );
-};
+  )
+}
 
-export default BaseAutocomplete;
+export default BaseAutocomplete

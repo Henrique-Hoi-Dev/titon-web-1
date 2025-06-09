@@ -1,5 +1,5 @@
-import { Typography } from '@mui/material';
-import React from 'react';
+import { Typography } from '@mui/material'
+import React from 'react'
 
 const BaseText = ({
   children,
@@ -9,7 +9,7 @@ const BaseText = ({
   fontsize = '18px',
   whiteSpace,
   maxWidth,
-  color = '#FFFFFF'
+  color = '#FFFFFF',
 }) => {
   return (
     <Typography
@@ -21,12 +21,12 @@ const BaseText = ({
         fontSize: `${fontsize}`,
         whiteSpace: `${whiteSpace}`,
         color: `${color}`,
-        fontWeight: `${font_weight}`
+        fontWeight: `${font_weight}`,
       }}
     >
       {children}
     </Typography>
-  );
-};
+  )
+}
 
-export default BaseText;
+export default BaseText

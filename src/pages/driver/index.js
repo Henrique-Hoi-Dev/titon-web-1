@@ -1,53 +1,51 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Grid } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { getDriversRequest } from 'store/modules/driver/driverSlice';
-import { IconAdd } from 'assets/icons/icons';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useRef, useState } from 'react'
+import { Grid } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
+import { getDriversRequest } from 'store/modules/driver/driverSlice'
+import { IconAdd } from 'assets/icons/icons'
+import { useTranslation } from 'react-i18next'
 
-import Table from './table';
-import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
-import BaseModalAddDriver from '../../components/molecules/BaseModalAddDriver/BaseModalAddDriver';
-import BaseButton from 'components/atoms/BaseButton/BaseButton';
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
-import initialStateQuery from 'utils/initialStateQuery';
+import Table from './table'
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches'
+import BaseModalAddDriver from '../../components/molecules/BaseModalAddDriver/BaseModalAddDriver'
+import BaseButton from 'components/atoms/BaseButton/BaseButton'
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
+import initialStateQuery from 'utils/initialStateQuery'
 
 const Driver = () => {
-  const { t } = useTranslation();
-  const [showModalDriver, setShowModalDriver] = useState(false);
-  const dispatch = useDispatch();
+  const { t } = useTranslation()
+  const [showModalDriver, setShowModalDriver] = useState(false)
+  const dispatch = useDispatch()
   const {
     data: drivers,
     loadingGet: loading,
-    errorGet: error
-  } = useSelector((state) => state.driver);
+    errorGet: error,
+  } = useSelector((state) => state.driver)
 
-  const [driverQuery, setDriverQuery] = useState(
-    initialStateQuery.INITIAL_STATE_DRIVER
-  );
-  const [search, setSearch] = useState('');
+  const [driverQuery, setDriverQuery] = useState(initialStateQuery.INITIAL_STATE_DRIVER)
+  const [search, setSearch] = useState('')
 
-  const isMounted = useRef(false);
+  const isMounted = useRef(false)
 
   useEffect(() => {
-    dispatch(getDriversRequest(driverQuery));
-  }, [dispatch, driverQuery]);
+    dispatch(getDriversRequest(driverQuery))
+  }, [dispatch, driverQuery])
 
   useEffect(() => {
     if (!isMounted.current) {
-      isMounted.current = true;
-      return;
+      isMounted.current = true
+      return
     }
 
     const timer = setTimeout(() => {
       setDriverQuery((state) => ({
         ...state,
-        search: search
-      }));
-    }, 1200);
-    return () => clearTimeout(timer);
-  }, [search]);
+        search: search,
+      }))
+    }, 1200)
+    return () => clearTimeout(timer)
+  }, [search])
 
   return (
     <Grid
@@ -58,15 +56,7 @@ const Driver = () => {
       justifyContent="center"
       alignContent={'flex-start'}
     >
-      <Grid
-        item
-        container
-        xs={12}
-        md={12}
-        lg={12}
-        flexWrap="nowrap"
-        justifyContent="flex-end"
-      >
+      <Grid item container xs={12} md={12} lg={12} flexWrap="nowrap" justifyContent="flex-end">
         <Grid item container pl={2} mr={4} justifyContent={'flex-end'}>
           <BaseButton
             onClick={() => setShowModalDriver(true)}
@@ -75,11 +65,10 @@ const Driver = () => {
               fontSize: '14px',
               color: 'white',
               minWidth: '248px',
-              marginRight: '15px'
+              marginRight: '15px',
             }}
           >
-            {t('button.add_new_driver')}{' '}
-            <IconAdd sx={{ mb: '4px', ml: '10px' }} />
+            {t('button.add_new_driver')} <IconAdd sx={{ mb: '4px', ml: '10px' }} />
           </BaseButton>
 
           <BaseInputSearches
@@ -96,22 +85,8 @@ const Driver = () => {
         <BaseTitle>{t('title.driver')}</BaseTitle>
       </BaseContentHeader>
 
-      <Grid
-        item
-        container
-        mb={5}
-        alignItems="flex-start"
-        justifyContent="flex-start"
-      >
-        <Grid
-          item
-          container
-          pl={2}
-          mr={4}
-          mt={5}
-          mb={3}
-          justifyContent={'center'}
-        >
+      <Grid item container mb={5} alignItems="flex-start" justifyContent="flex-start">
+        <Grid item container pl={2} mr={4} mt={5} mb={3} justifyContent={'center'}>
           <Table
             data={drivers}
             query={driverQuery}
@@ -123,13 +98,10 @@ const Driver = () => {
       </Grid>
 
       {showModalDriver && (
-        <BaseModalAddDriver
-          setShowModal={setShowModalDriver}
-          showModal={showModalDriver}
-        />
+        <BaseModalAddDriver setShowModal={setShowModalDriver} showModal={showModalDriver} />
       )}
     </Grid>
-  );
-};
+  )
+}
 
-export default Driver;
+export default Driver

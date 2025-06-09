@@ -1,31 +1,31 @@
-import React from 'react';
-import ReactApexChart from 'react-apexcharts';
-import './style.css';
+import React from 'react'
+import ReactApexChart from 'react-apexcharts'
+import './style.css'
 
 class BaseGraphic extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       series: [
         {
           name: 'Renda',
-          data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 66, 66, 66]
+          data: [44, 55, 57, 56, 61, 58, 63, 60, 66, 66, 66, 66],
         },
         {
           name: 'Gastos',
-          data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 114, 114, 32]
+          data: [76, 85, 101, 98, 87, 105, 91, 114, 94, 114, 114, 32],
         },
         {
           name: 'Lucro líquido',
-          data: [35, 41, 36, 26, 45, 48, 52, 53, 41, 41, 41, 41]
-        }
+          data: [35, 41, 36, 26, 45, 48, 52, 53, 41, 41, 41, 41],
+        },
       ],
       options: {
         colors: ['#1877F2', '#F03D3D', '#0BB07B'],
         chart: {
           type: 'bar',
-          height: 350
+          height: 350,
         },
         legend: {
           position: 'bottom',
@@ -35,24 +35,24 @@ class BaseGraphic extends React.Component {
           labels: {
             colors: ['#fff'], // cores das legendas
             style: {
-              fontSize: '14px'
-            }
-          }
+              fontSize: '14px',
+            },
+          },
         },
         plotOptions: {
           bar: {
             horizontal: false,
             columnWidth: '55%',
-            endingShape: 'rounded'
-          }
+            endingShape: 'rounded',
+          },
         },
         dataLabels: {
-          enabled: false
+          enabled: false,
         },
         stroke: {
           show: true,
           width: 1,
-          colors: ['transparent']
+          colors: ['transparent'],
         },
         xaxis: {
           labels: {
@@ -70,9 +70,9 @@ class BaseGraphic extends React.Component {
                 '#fff',
                 '#fff',
                 '#fff',
-                '#fff'
-              ] // cores das legendas
-            }
+                '#fff',
+              ], // cores das legendas
+            },
           },
           categories: [
             'JAN',
@@ -86,29 +86,29 @@ class BaseGraphic extends React.Component {
             'SET',
             'OUT',
             'NOV',
-            'DEZ'
-          ]
+            'DEZ',
+          ],
         },
         yaxis: {
           labels: {
             style: {
               colors: ['#fff'],
-              fontSize: '14px'
-            }
-          }
+              fontSize: '14px',
+            },
+          },
         },
         fill: {
-          opacity: 1
+          opacity: 1,
         },
         tooltip: {
           y: {
             formatter: function (val) {
-              return 'R$: ' + val + ',00';
-            }
-          }
-        }
-      }
-    };
+              return 'R$: ' + val + ',00'
+            },
+          },
+        },
+      },
+    }
   }
 
   render() {
@@ -122,8 +122,8 @@ class BaseGraphic extends React.Component {
           width={520}
         />
       </div>
-    );
+    )
   }
 }
 
-export default BaseGraphic;
+export default BaseGraphic

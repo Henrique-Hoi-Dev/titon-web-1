@@ -1,30 +1,30 @@
-import * as React from 'react';
-import { useState } from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import { Grid } from '@mui/material';
+import * as React from 'react'
+import { useState } from 'react'
+import { styled, alpha } from '@mui/material/styles'
+import { Grid } from '@mui/material'
 import {
   // IconSubMenuTrendingDownIcon,
   // IconSubMenuTrendingUpIcon,
-  PointIcon
-} from 'assets/icons/icons';
-import { useTranslation } from 'react-i18next';
+  PointIcon,
+} from 'assets/icons/icons'
+import { useTranslation } from 'react-i18next'
 
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Divider from '@mui/material/Divider';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import Button from '@mui/material/Button'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import Divider from '@mui/material/Divider'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
     anchorOrigin={{
       vertical: 'bottom',
-      horizontal: 'right'
+      horizontal: 'right',
     }}
     transformOrigin={{
       vertical: 'top',
-      horizontal: 'right'
+      horizontal: 'right',
     }}
     {...props}
   />
@@ -40,55 +40,46 @@ const StyledMenu = styled((props) => (
         ? 'rgba(255, 255, 255, 0.1) 0px 0px 10px'
         : 'rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px',
     '& .MuiMenu-list': {
-      padding: '4px 0'
+      padding: '4px 0',
     },
     '& .MuiMenuItem-root': {
       '& .MuiSvgIcon-root': {
         fontSize: 18,
         color: theme.palette.text.secondary,
-        marginRight: theme.spacing(1.5)
+        marginRight: theme.spacing(1.5),
       },
       '&:hover': {
         backgroundColor:
           theme.palette.mode === 'dark'
             ? '#1E1E1E'
-            : alpha(
-                theme.palette.primary.main,
-                theme.palette.action.selectedOpacity
-              )
+            : alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
       },
       '&:active': {
-        backgroundColor: alpha(
-          theme.palette.primary.main,
-          theme.palette.action.selectedOpacity
-        )
-      }
-    }
-  }
-}));
+        backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
+      },
+    },
+  },
+}))
 
-export default function BaseMenuHomeFilterFinancial({
-  setSearchStatus,
-  setSearchOrder
-}) {
-  const { t } = useTranslation();
+export default function BaseMenuHomeFilterFinancial({ setSearchStatus, setSearchOrder }) {
+  const { t } = useTranslation()
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const [anchorEl, setAnchorEl] = useState(null)
+  const open = Boolean(anchorEl)
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
   const handleClear = () => {
-    setSearchOrder('');
-    setSearchStatus('');
-    setAnchorEl(null);
-  };
+    setSearchOrder('')
+    setSearchStatus('')
+    setAnchorEl(null)
+  }
 
   return (
     <div>
@@ -107,7 +98,7 @@ export default function BaseMenuHomeFilterFinancial({
       <StyledMenu
         id="demo-customized-menu"
         MenuListProps={{
-          'aria-labelledby': 'demo-customized-button'
+          'aria-labelledby': 'demo-customized-button',
         }}
         anchorEl={anchorEl}
         open={open}
@@ -165,7 +156,7 @@ export default function BaseMenuHomeFilterFinancial({
             sx={{
               verticalAlign: 'middle',
               fontSize: '20px!important',
-              marginRight: '0px!important'
+              marginRight: '0px!important',
             }}
             color={'#FFCE52'}
           />
@@ -181,7 +172,7 @@ export default function BaseMenuHomeFilterFinancial({
             sx={{
               verticalAlign: 'middle',
               fontSize: '20px!important',
-              marginRight: '0px!important'
+              marginRight: '0px!important',
             }}
             color={'#0BB07B'}
           />
@@ -197,7 +188,7 @@ export default function BaseMenuHomeFilterFinancial({
             sx={{
               verticalAlign: 'middle',
               fontSize: '20px!important',
-              marginRight: '0px!important'
+              marginRight: '0px!important',
             }}
             color={'#F03D3D'}
           />
@@ -213,7 +204,7 @@ export default function BaseMenuHomeFilterFinancial({
             sx={{
               verticalAlign: 'middle',
               fontSize: '20px!important',
-              marginRight: '0px!important'
+              marginRight: '0px!important',
             }}
             color={'#86878A'}
           />
@@ -222,5 +213,5 @@ export default function BaseMenuHomeFilterFinancial({
         <Divider sx={{ my: 0.3, width: '85%', ml: 2 }} />
       </StyledMenu>
     </div>
-  );
+  )
 }

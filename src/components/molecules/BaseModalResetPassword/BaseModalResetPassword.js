@@ -1,27 +1,27 @@
-import React, { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { resetDriverPasswordRequest } from 'store/modules/driver/driverSlice';
-import { Grid } from '@mui/material';
+import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+import { resetDriverPasswordRequest } from 'store/modules/driver/driverSlice'
+import { Grid } from '@mui/material'
 
-import Button from 'components/atoms/BaseButton/BaseButton';
-import Modal from 'components/molecules/BaseModal/BaseModal';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
-import Text from 'components/atoms/BaseText/BaseText';
+import Button from 'components/atoms/BaseButton/BaseButton'
+import Modal from 'components/molecules/BaseModal/BaseModal'
+import Loading from '@/components/atoms/BaseLoading/BaseLoading'
+import Text from 'components/atoms/BaseText/BaseText'
 
 const BaseModalResetPassword = ({ showModal, setShowModal, data }) => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.driver);
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const { loading, error } = useSelector((state) => state.driver)
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
-    dispatch(resetDriverPasswordRequest(data?.cpf));
-  };
+    ev.preventDefault()
+    dispatch(resetDriverPasswordRequest(data?.cpf))
+  }
 
   const onClose = useCallback(() => {
-    setShowModal(false);
-  }, [setShowModal]);
+    setShowModal(false)
+  }, [setShowModal])
 
   return (
     <Modal
@@ -33,9 +33,7 @@ const BaseModalResetPassword = ({ showModal, setShowModal, data }) => {
     >
       {!loading && error && (
         <Grid item container justifyContent="center">
-          <Text type="warning">
-            {`messages: ${error?.response?.data?.responseData?.msg}`}
-          </Text>
+          <Text type="warning">{`messages: ${error?.response?.data?.responseData?.msg}`}</Text>
         </Grid>
       )}
 
@@ -45,28 +43,12 @@ const BaseModalResetPassword = ({ showModal, setShowModal, data }) => {
             <Text fontSize={'30px'}>{t('messages.want_to_password')}</Text>
           </Grid>
           <Grid item container xs={12} md={12} lg={12} justifyContent="center">
-            <Grid
-              item
-              xs={6}
-              md={8.3}
-              lg={8.3}
-              mt={1}
-              sx={{ textAlign: 'center' }}
-            >
+            <Grid item xs={6} md={8.3} lg={8.3} mt={1} sx={{ textAlign: 'center' }}>
               <Text fontSize={'16px'}>{t('messages.reset_password')}</Text>
             </Grid>
           </Grid>
 
-          <Grid
-            container
-            item
-            xs={12}
-            md={12}
-            lg={12}
-            spacing={2}
-            mt={2}
-            justifyContent={'center'}
-          >
+          <Grid container item xs={12} md={12} lg={12} spacing={2} mt={2} justifyContent={'center'}>
             <Grid item container xs={12} md={12} lg={3}>
               <Button
                 onClick={() => onClose()}
@@ -75,7 +57,7 @@ const BaseModalResetPassword = ({ showModal, setShowModal, data }) => {
                   width: '140px',
                   height: '49px',
                   border: '1px solid #509BFB',
-                  color: '#FFF'
+                  color: '#FFF',
                 }}
                 variant="text"
               >
@@ -93,7 +75,7 @@ const BaseModalResetPassword = ({ showModal, setShowModal, data }) => {
                   color: 'white',
                   width: '141px',
                   height: '49px',
-                  marginRight: '15px'
+                  marginRight: '15px',
                 }}
               >
                 {t('button.reset')}
@@ -104,7 +86,7 @@ const BaseModalResetPassword = ({ showModal, setShowModal, data }) => {
       )}
       {loading && <Loading />}
     </Modal>
-  );
-};
+  )
+}
 
-export default BaseModalResetPassword;
+export default BaseModalResetPassword

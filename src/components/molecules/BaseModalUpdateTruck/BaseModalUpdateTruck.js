@@ -1,56 +1,56 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Grid, IconButton } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import React, { useState, useEffect, useCallback } from 'react'
+import { Grid, IconButton } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import {
   getTruckByIdRequest,
   getTrucksRequest,
   resetTruckUpdate,
-  updateTruckRequest
-} from 'store/modules/truck/truckSlice';
-import { uploadImage } from '@/services/uploadImage';
-import { errorNotification, successNotification } from '@/utils/notification';
+  updateTruckRequest,
+} from 'store/modules/truck/truckSlice'
+import { uploadImage } from '@/services/uploadImage'
+import { errorNotification, successNotification } from '@/utils/notification'
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton';
-import BaseModal from 'components/molecules/BaseModal/BaseModal';
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
-import BaseProgress from '@/components/atoms/BaseProgress/BaseProgress';
-import BaseInput from 'components/molecules/BaseInput/BaseInput';
-import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseButton from 'components/atoms/BaseButton/BaseButton'
+import BaseModal from 'components/molecules/BaseModal/BaseModal'
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
+import BaseProgress from '@/components/atoms/BaseProgress/BaseProgress'
+import BaseInput from 'components/molecules/BaseInput/BaseInput'
+import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar'
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
 
 const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
   const {
     selected: truck,
     loadingUpdate,
     loadingGetById,
-    successUpdate
-  } = useSelector((state) => state.truck);
+    successUpdate,
+  } = useSelector((state) => state.truck)
 
-  const [body, setBody] = useState({});
-  const [image, setImage] = useState(null);
+  const [body, setBody] = useState({})
+  const [image, setImage] = useState(null)
 
-  const [progressPercent, setProgressPercent] = useState(0);
+  const [progressPercent, setProgressPercent] = useState(0)
 
   const onClose = useCallback(() => {
-    setShowModal(false);
-    setBody({});
-  }, [setShowModal]);
+    setShowModal(false)
+    setBody({})
+  }, [setShowModal])
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
+    ev.preventDefault()
 
-    dispatch(updateTruckRequest({ id: data.id, data: body }));
-  };
+    dispatch(updateTruckRequest({ id: data.id, data: body }))
+  }
 
   useEffect(() => {
     if (data.id) {
-      dispatch(getTruckByIdRequest(data.id));
+      dispatch(getTruckByIdRequest(data.id))
     }
-  }, [dispatch, data.id]);
+  }, [dispatch, data.id])
 
   useEffect(() => {
     if (truck) {
@@ -62,43 +62,43 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
         truck_color: truck?.truckColor,
         truck_km: truck?.truckKm,
         truck_chassis: truck?.truckChassis,
-        truck_year: truck?.truckYear
-      }));
+        truck_year: truck?.truckYear,
+      }))
     }
-  }, [truck]);
+  }, [truck])
 
   useEffect(() => {
     if (successUpdate) {
-      onClose();
-      dispatch(resetTruckUpdate());
-      dispatch(getTrucksRequest({}));
+      onClose()
+      dispatch(resetTruckUpdate())
+      dispatch(getTrucksRequest({}))
     }
-  }, [successUpdate, onClose, dispatch]);
+  }, [successUpdate, onClose, dispatch])
 
   async function handleChange(e) {
-    const file = e.target.files[0];
-    if (!file) return;
+    const file = e.target.files[0]
+    if (!file) return
 
     try {
-      setProgressPercent(10);
+      setProgressPercent(10)
 
       const image = await uploadImage({
         file,
         id: data.id,
         body: {
-          category: 'avatar_truck'
+          category: 'avatar_truck',
         },
         url: 'manager/truck/upload-image',
         onUploadProgress: (event) => {
-          const progress = Math.round((event.loaded * 100) / event.total);
-          setProgressPercent(progress);
-        }
-      });
+          const progress = Math.round((event.loaded * 100) / event.total)
+          setProgressPercent(progress)
+        },
+      })
 
-      setImage(image.imageTruck);
-      successNotification(t('modal.edit_truck.success'));
+      setImage(image.imageTruck)
+      successNotification(t('modal.edit_truck.success'))
     } catch (error) {
-      errorNotification(error);
+      errorNotification(error)
     }
   }
 
@@ -141,8 +141,8 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
               sx={{
                 cursor: 'pointer',
                 '&:hover': {
-                  cursor: 'pointer'
-                }
+                  cursor: 'pointer',
+                },
               }}
             >
               <IconButton
@@ -152,23 +152,18 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
                 sx={{
                   background: 'transparent',
                   '&:hover': {
-                    background: 'transparent'
-                  }
+                    background: 'transparent',
+                  },
                 }}
               >
-                <input
-                  hidden
-                  accept="image/*"
-                  type="file"
-                  onChange={handleChange}
-                />
+                <input hidden accept="image/*" type="file" onChange={handleChange} />
                 <BaseAvatar
                   variant="square"
                   alt="img"
                   styles={{
                     height: 'auto',
                     width: '280px',
-                    borderRadius: '8px'
+                    borderRadius: '8px',
                   }}
                   uuid={image?.uuid || truck?.imageTruck?.uuid}
                   category={image?.category || truck?.imageTruck?.category}
@@ -182,15 +177,7 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
               )}
             </Grid>
 
-            <Grid
-              container
-              item
-              xs={12}
-              md={12}
-              lg={12}
-              spacing={1.5}
-              flexWrap={'wrap'}
-            >
+            <Grid container item xs={12} md={12} lg={12} spacing={1.5} flexWrap={'wrap'}>
               <Grid item xs={6} md={6} lg={6}>
                 <BaseInput
                   required
@@ -198,14 +185,14 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem'
-                    }
+                      height: '1.4rem',
+                    },
                   }}
                   value={body?.truck_name_brand ?? ''}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      truck_name_brand: ev.target.value
+                      truck_name_brand: ev.target.value,
                     }))
                   }
                 />
@@ -217,14 +204,14 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
                   label={'Modelo'}
                   styles={{
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem'
-                    }
+                      height: '1.4rem',
+                    },
                   }}
                   value={body?.truck_models ?? ''}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      truck_models: ev.target.value
+                      truck_models: ev.target.value,
                     }))
                   }
                 />
@@ -237,14 +224,14 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem'
-                    }
+                      height: '1.4rem',
+                    },
                   }}
                   value={body?.truck_board ?? ''}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      truck_board: ev.target.value
+                      truck_board: ev.target.value,
                     }))
                   }
                 />
@@ -257,14 +244,14 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem'
-                    }
+                      height: '1.4rem',
+                    },
                   }}
                   value={body?.truck_color ?? ''}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      truck_color: ev.target.value
+                      truck_color: ev.target.value,
                     }))
                   }
                 />
@@ -277,14 +264,14 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem'
-                    }
+                      height: '1.4rem',
+                    },
                   }}
                   value={body?.truck_km ?? ''}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      truck_km: ev.target.value
+                      truck_km: ev.target.value,
                     }))
                   }
                 />
@@ -297,14 +284,14 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem'
-                    }
+                      height: '1.4rem',
+                    },
                   }}
                   value={body?.truck_chassis ?? ''}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      truck_chassis: ev.target.value
+                      truck_chassis: ev.target.value,
                     }))
                   }
                 />
@@ -317,14 +304,14 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem'
-                    }
+                      height: '1.4rem',
+                    },
                   }}
                   value={body?.truck_year ?? ''}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      truck_year: ev.target.value
+                      truck_year: ev.target.value,
                     }))
                   }
                 />
@@ -350,7 +337,7 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
                   width: '140px',
                   height: '49px',
                   border: '1px solid #509BFB',
-                  color: '#FFF'
+                  color: '#FFF',
                 }}
                 variant="text"
               >
@@ -361,15 +348,13 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
               <BaseButton
                 type="submit"
                 color="success"
-                background={
-                  'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
-                }
+                background={'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'}
                 sx={{
                   fontSize: '14px',
                   color: 'white',
                   width: '139px',
                   height: '49px',
-                  marginRight: '15px'
+                  marginRight: '15px',
                 }}
               >
                 {t('button.update')}
@@ -381,7 +366,7 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
 
       {(loadingUpdate || loadingGetById) && <BaseLoading />}
     </BaseModal>
-  );
-};
+  )
+}
 
-export default BaseModalUpdateTruck;
+export default BaseModalUpdateTruck

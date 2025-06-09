@@ -1,29 +1,29 @@
-import { useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
-import { IconAdd } from 'assets/icons/icons';
-import { InputSearches } from '@/components/atoms/BaseInputSearches/BaseInputSearches';
-import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react'
+import { Grid } from '@mui/material'
+import { IconAdd } from 'assets/icons/icons'
+import { InputSearches } from '@/components/atoms/BaseInputSearches/BaseInputSearches'
+import { useTranslation } from 'react-i18next'
 
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
-import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
+import BaseButton from 'components/atoms/BaseButton/BaseButton'
 
 export const Check = () => {
-  const [, setShowModalCheck] = useState();
-  const [, setCheckQuery] = useState();
-  const [search, setSearch] = useState('');
-  const { t } = useTranslation();
+  const [, setShowModalCheck] = useState()
+  const [, setCheckQuery] = useState()
+  const [search, setSearch] = useState('')
+  const { t } = useTranslation()
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setCheckQuery((state) => ({
         ...state,
-        search: search
-      }));
-    }, 1200);
+        search: search,
+      }))
+    }, 1200)
 
-    return () => clearTimeout(timer);
-  }, [search]);
+    return () => clearTimeout(timer)
+  }, [search])
 
   return (
     <Grid
@@ -35,26 +35,16 @@ export const Check = () => {
       justifyContent="center"
       alignContent={'flex-start'}
     >
-      <Grid
-        item
-        container
-        pl={2}
-        pb={7}
-        mr={4}
-        mt={-6.5}
-        justifyContent={'flex-end'}
-      >
+      <Grid item container pl={2} pb={7} mr={4} mt={-6.5} justifyContent={'flex-end'}>
         <BaseButton
           onClick={() => setShowModalCheck(true)}
-          background={
-            'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
-          }
+          background={'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'}
           fontsize={'12px'}
           sx={{
             color: 'white',
             width: '248px',
             height: '40px',
-            marginRight: '15px'
+            marginRight: '15px',
           }}
         >
           {t('check.button.title')} <IconAdd sx={{ mt: -0.7 }} />
@@ -72,5 +62,5 @@ export const Check = () => {
         <BaseTitle>{t('check.title')}</BaseTitle>
       </BaseContentHeader>
     </Grid>
-  );
-};
+  )
+}

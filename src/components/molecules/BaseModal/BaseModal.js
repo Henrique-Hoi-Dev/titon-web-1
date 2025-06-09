@@ -1,14 +1,13 @@
-import React from 'react';
-import BaseText from 'components/atoms/BaseText/BaseText';
-import BaseButton from 'components/atoms/BaseButton/BaseButton';
-import { styled } from '@mui/material/styles';
-import { Grid, Modal as MuiModal } from '@mui/material';
-import { IconClose } from 'assets/icons/icons';
-import { useTranslation } from 'react-i18next';
+import React from 'react'
+import BaseText from 'components/atoms/BaseText/BaseText'
+import BaseButton from 'components/atoms/BaseButton/BaseButton'
+import { styled } from '@mui/material/styles'
+import { Grid, Modal as MuiModal } from '@mui/material'
+import { IconClose } from 'assets/icons/icons'
+import { useTranslation } from 'react-i18next'
 
 const ModalContainer = styled(Grid, {
-  shouldForwardProp: (prop) =>
-    !['maxWidth', 'maxHeight', 'height', 'minheight'].includes(prop)
+  shouldForwardProp: (prop) => !['maxWidth', 'maxHeight', 'height', 'minheight'].includes(prop),
 })(({ maxWidth, maxHeight, height, minheight }) => ({
   margin: '0 10px 0 10px',
   position: 'absolute',
@@ -21,33 +20,33 @@ const ModalContainer = styled(Grid, {
   maxWidth: maxWidth,
   maxHeight: maxHeight,
   padding: '10px',
-  borderRadius: '20px'
-}));
+  borderRadius: '20px',
+}))
 
 const CloseButtonContainer = styled(Grid, {
-  shouldForwardProp: (prop) => !['isMobile'].includes(prop)
+  shouldForwardProp: (prop) => !['isMobile'].includes(prop),
 })(({ isMobile }) => ({
   display: isMobile ? 'none' : '',
   position: 'absolute',
   top: isMobile ? '3px' : '5px',
-  right: isMobile ? 0 : '5px'
-}));
+  right: isMobile ? 0 : '5px',
+}))
 
 const CloseButton = styled(BaseButton)({
   height: '40px',
   width: '20px',
   backgroundColor: 'transparent',
   ':hover': {
-    backgroundColor: 'transparent'
-  }
-});
+    backgroundColor: 'transparent',
+  },
+})
 
 const ContentContainer = styled(Grid, {
-  shouldForwardProp: (prop) => !['sxGridModal'].includes(prop)
+  shouldForwardProp: (prop) => !['sxGridModal'].includes(prop),
 })(({ sxGridModal }) => ({
   ...sxGridModal,
-  overflowY: 'auto'
-}));
+  overflowY: 'auto',
+}))
 
 const BaseModal = ({
   title,
@@ -63,9 +62,9 @@ const BaseModal = ({
   maxWidth,
   maxHeight,
   minheight,
-  sxGridModal
+  sxGridModal,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <MuiModal open={open} onClose={() => {}}>
@@ -73,7 +72,7 @@ const BaseModal = ({
         item
         container
         sx={{
-          ...sx
+          ...sx,
         }}
         direction="column"
         component={component}
@@ -111,14 +110,12 @@ const BaseModal = ({
         </ContentContainer>
         {showReturn && (
           <Grid item p={1}>
-            {showReturn && (
-              <BaseButton onClick={onClose}>{t('button.return')}</BaseButton>
-            )}
+            {showReturn && <BaseButton onClick={onClose}>{t('button.return')}</BaseButton>}
           </Grid>
         )}
       </ModalContainer>
     </MuiModal>
-  );
-};
+  )
+}
 
-export default BaseModal;
+export default BaseModal

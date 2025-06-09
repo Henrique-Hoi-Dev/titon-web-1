@@ -1,0 +1,80 @@
+name: CI/CD Front - Staging
+
+on:
+  pull_request:
+    branches: [staging, master]
+  push:
+    branches:
+      - staging
+      - master
+      - 'feat/**'
+      - 'fix/**'
+      - 'docs/**'
+      - 'refactor/**'
+      - 'test/**'
+      - 'chore/**'
+      - 'style/**'
+      - 'perf/**'
+      - 'build/**'
+      - 'ci/**'
+      - 'revert/**'
+      - 'release/**'
+      - 'hotfix/**'
+      - 'feature/**'
+
+env:
+  NODE_VERSION: 20.12.2
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: yarn install --frozen-lockfile
+      - run: yarn lint
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
+
+  check-code-quality:
+    runs-on: ubuntu-latest
+    needs: [lint, build]
+    steps:
+      - run: echo "✔️ Código validado com sucesso"
+
+  deploy:
+    needs: check-code-quality
+    if: github.event_name == 'push' && contains('refs/heads/staging,refs/heads/master', github.ref)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Install Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
+
+      - name: Deploy to Heroku (Staging)
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME_STAGING }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}

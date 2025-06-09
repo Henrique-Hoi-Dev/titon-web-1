@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import { IconButton, List, ListItemText, Tooltip } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { signOut } from '@/store/modules/auth/authSlice';
-import { templateContext } from '@/components/templates/main';
-import { useNavigate } from 'react-router-dom';
-import { FiLogOut } from 'react-icons/fi';
-import { useTranslation } from 'react-i18next';
+import React, { useContext } from 'react'
+import { IconButton, List, ListItemText, Tooltip } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
+import { signOut } from '@/store/modules/auth/authSlice'
+import { templateContext } from '@/components/templates/main'
+import { useNavigate } from 'react-router-dom'
+import { FiLogOut } from 'react-icons/fi'
+import { useTranslation } from 'react-i18next'
 import {
   Drawer,
   ListItemCategory,
@@ -14,27 +14,22 @@ import {
   DrawerHeader,
   ListText,
   ListSub,
-  ListItemCategoryUser
-} from './styles';
+  ListItemCategoryUser,
+} from './styles'
 
-import {
-  IconMenuHome,
-  IconMenuTruck,
-  IconMenuUser,
-  IconMenuTrailer
-} from 'assets/icons/icons';
-import { useLocation } from 'react-router-dom';
-import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
+import { IconMenuHome, IconMenuTruck, IconMenuUser, IconMenuTrailer } from 'assets/icons/icons'
+import { useLocation } from 'react-router-dom'
+import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar'
 
 const Menu = ({ setFetch }) => {
-  const user = useSelector((state) => state?.user);
+  const user = useSelector((state) => state?.user)
   // const auth = useSelector((state) => state?.auth);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
 
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   // useEffect(() => {
   //   if (!auth.signed) {
@@ -43,12 +38,12 @@ const Menu = ({ setFetch }) => {
   // }, [auth.signed, navigate]);
 
   const handleLogOut = () => {
-    dispatch(signOut()); // apenas dispara o logout
-  };
+    dispatch(signOut()) // apenas dispara o logout
+  }
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path) => location.pathname === path
 
-  const { openMenu } = useContext(templateContext);
+  const { openMenu } = useContext(templateContext)
 
   return (
     <Drawer variant="permanent" open={openMenu}>
@@ -62,7 +57,7 @@ const Menu = ({ setFetch }) => {
               marginLeft: openMenu ? '25px' : '0px',
               color: isActive('/') ? '#fff' : 'inherit',
               backgroundColor: isActive('/home') ? '#1877F2' : 'inherit',
-              borderRadius: '8px'
+              borderRadius: '8px',
             }}
           >
             <Tooltip title={'Home'} placement="top">
@@ -75,7 +70,7 @@ const Menu = ({ setFetch }) => {
               sx={{
                 opacity: openMenu ? 1 : 0,
                 fontSize: '1.2rem',
-                marginTop: '10px'
+                marginTop: '10px',
               }}
             >
               {t('menu.home')}
@@ -90,7 +85,7 @@ const Menu = ({ setFetch }) => {
               marginLeft: openMenu ? '25px' : '0px',
               color: isActive('/driver') ? '#fff' : 'inherit',
               backgroundColor: isActive('/driver') ? '#1877F2' : 'inherit',
-              borderRadius: '8px'
+              borderRadius: '8px',
             }}
           >
             <Tooltip title={'Motoristas'} placement="top">
@@ -103,7 +98,7 @@ const Menu = ({ setFetch }) => {
               sx={{
                 opacity: openMenu ? 1 : 0,
                 fontSize: '1.2rem',
-                marginTop: '10px'
+                marginTop: '10px',
               }}
             >
               {t('menu.drivers')}
@@ -111,17 +106,14 @@ const Menu = ({ setFetch }) => {
           </ButtonMenu>
         </ListItemCategory>
         {/* truck */}
-        <ListItemCategory
-          onClick={() => navigate('/truck')}
-          sx={{ display: 'block' }}
-        >
+        <ListItemCategory onClick={() => navigate('/truck')} sx={{ display: 'block' }}>
           <ButtonMenu
             sx={{
               justifyContent: openMenu ? 'initial' : 'center',
               marginLeft: openMenu ? '25px' : '0px',
               color: isActive('/truck') ? '#fff' : 'inherit',
               backgroundColor: isActive('/truck') ? '#1877F2' : 'inherit',
-              borderRadius: '8px'
+              borderRadius: '8px',
             }}
           >
             <Tooltip title="Caminhões" placement="top">
@@ -134,7 +126,7 @@ const Menu = ({ setFetch }) => {
               sx={{
                 opacity: openMenu ? 1 : 0,
                 fontSize: '1.2rem',
-                marginTop: '10px'
+                marginTop: '10px',
               }}
             >
               {t('menu.trucks')}
@@ -152,7 +144,7 @@ const Menu = ({ setFetch }) => {
               marginLeft: openMenu ? '25px' : '0px',
               color: isActive('/cart') ? '#fff' : 'inherit',
               backgroundColor: isActive('/cart') ? '#1877F2' : 'inherit',
-              borderRadius: '8px'
+              borderRadius: '8px',
             }}
           >
             <Tooltip title="Carretas" placement="top">
@@ -165,7 +157,7 @@ const Menu = ({ setFetch }) => {
               sx={{
                 opacity: openMenu ? 1 : 0,
                 fontSize: '1.2rem',
-                marginTop: '10px'
+                marginTop: '10px',
               }}
             >
               {t('menu.carts')}
@@ -235,12 +227,12 @@ const Menu = ({ setFetch }) => {
         <ListItemCategoryUser
           onClick={() => navigate('/user')}
           sx={{
-            display: 'block'
+            display: 'block',
           }}
         >
           <ButtonMenu
             sx={{
-              justifyContent: openMenu ? 'initial' : 'center'
+              justifyContent: openMenu ? 'initial' : 'center',
             }}
           >
             <IconMenuCategory sx={{ mr: openMenu ? 0.4 : 'auto' }}>
@@ -258,7 +250,7 @@ const Menu = ({ setFetch }) => {
         </ListItemCategoryUser>
       </ListSub>
     </Drawer>
-  );
-};
+  )
+}
 
-export default Menu;
+export default Menu

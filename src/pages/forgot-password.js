@@ -1,33 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { Grid } from '@mui/material';
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { Grid } from '@mui/material'
 
-import { signInRequest } from 'store/modules/auth/authSlice';
+import { signInRequest } from 'store/modules/auth/authSlice'
 
-import Button from 'components/atoms/BaseButton/BaseButton';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
-import BaseInput from 'components/molecules/BaseInput/BaseInput';
+import Button from 'components/atoms/BaseButton/BaseButton'
+import Loading from '@/components/atoms/BaseLoading/BaseLoading'
+import BaseInput from 'components/molecules/BaseInput/BaseInput'
 
 const ForgotPassword = () => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const [email, setEmail] = useState('');
-  const { loading, success, error } = useSelector((state) => state.auth);
+  const [email, setEmail] = useState('')
+  const { loading, success, error } = useSelector((state) => state.auth)
 
   useEffect(() => {
     if (success) {
-      navigate('/forgot-password-success', { replace: true });
+      navigate('/forgot-password-success', { replace: true })
     }
-  }, [success, navigate]);
+  }, [success, navigate])
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
-    dispatch(signInRequest({ email }));
-  };
+    ev.preventDefault()
+    dispatch(signInRequest({ email }))
+  }
 
   return (
     <Grid
@@ -45,13 +45,11 @@ const ForgotPassword = () => {
         sx={{
           background: '#3A3A3A',
           borderRadius: '8px',
-          padding: '32px'
+          padding: '32px',
         }}
       >
         <Grid item xs={12}>
-          <h1 style={{ color: '#FFF', textAlign: 'center' }}>
-            {t('forgot_password.title')}
-          </h1>
+          <h1 style={{ color: '#FFF', textAlign: 'center' }}>{t('forgot_password.title')}</h1>
         </Grid>
 
         {!loading && (
@@ -64,9 +62,7 @@ const ForgotPassword = () => {
                 value={email}
                 onChange={(ev) => setEmail(ev.target.value)}
                 error={!!error}
-                helperText={
-                  error ? t('forgot_password.error.invalid_email') : ''
-                }
+                helperText={error ? t('forgot_password.error.invalid_email') : ''}
               />
             </Grid>
 
@@ -79,7 +75,7 @@ const ForgotPassword = () => {
                   fontSize: '14px',
                   color: 'white',
                   width: '100%',
-                  height: '49px'
+                  height: '49px',
                 }}
               >
                 {t('button.send')}
@@ -91,7 +87,7 @@ const ForgotPassword = () => {
         {loading && <Loading />}
       </Grid>
     </Grid>
-  );
-};
+  )
+}
 
-export default ForgotPassword;
+export default ForgotPassword

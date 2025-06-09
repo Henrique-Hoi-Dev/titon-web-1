@@ -1,12 +1,12 @@
-import { Grid } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import { Grid } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
-import BaseBreadcrumb from '@/components/atoms/BaseBreadcrumb/BaseBreadcrumb';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
+import BaseBreadcrumb from '@/components/atoms/BaseBreadcrumb/BaseBreadcrumb'
 
 const CreateUser = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <Grid
@@ -22,7 +22,7 @@ const CreateUser = () => {
           links={[
             { label: 'Home', path: '/' },
             { label: 'Usuários', path: '/user' },
-            { label: 'Criar Usuário' }
+            { label: 'Criar Usuário' },
           ]}
         />
         <BaseContentHeader>
@@ -30,7 +30,7 @@ const CreateUser = () => {
         </BaseContentHeader>
       </Grid>
     </Grid>
-  );
-};
+  )
+}
 
-export default CreateUser;
+export default CreateUser

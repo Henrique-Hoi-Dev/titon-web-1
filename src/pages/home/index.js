@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { Grid } from '@mui/material';
-import { IconAdd } from 'assets/icons/icons';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { getFinancialsRequest } from 'store/modules/financial/financialSlice';
+import React, { useState, useEffect } from 'react'
+import { Grid } from '@mui/material'
+import { IconAdd } from 'assets/icons/icons'
+import { useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+import { getFinancialsRequest } from 'store/modules/financial/financialSlice'
 
-import BaseGraphic from 'components/molecules/BaseGraphic/BaseGraphic';
-import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
-import BaseButton from 'components/atoms/BaseButton/BaseButton';
-import BaseMenuHomeFilterFinancial from 'components/molecules/BaseMenuHomeFilterFinancial/BaseMenuHomeFilterFinancial';
-import BaseCardInfoFinancial from 'components/molecules/BaseCardInfoFinancial/BaseCardInfoFinancial';
-import BaseModalAddFinancial from 'components/molecules/BaseModalAddFinancial/BaseModalAddFinancial';
+import BaseGraphic from 'components/molecules/BaseGraphic/BaseGraphic'
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches'
+import BaseButton from 'components/atoms/BaseButton/BaseButton'
+import BaseMenuHomeFilterFinancial from 'components/molecules/BaseMenuHomeFilterFinancial/BaseMenuHomeFilterFinancial'
+import BaseCardInfoFinancial from 'components/molecules/BaseCardInfoFinancial/BaseCardInfoFinancial'
+import BaseModalAddFinancial from 'components/molecules/BaseModalAddFinancial/BaseModalAddFinancial'
 
 const Home = () => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
 
-  const [showModalFicha, setShowModalFicha] = useState(false);
-  const [showModalAddFinancial, setShowModalAddFinancial] = useState(false);
+  const [showModalFicha, setShowModalFicha] = useState(false)
+  const [showModalAddFinancial, setShowModalAddFinancial] = useState(false)
 
-  const [search, setSearch] = useState('');
-  const [searchOrder, setSearchOrder] = useState('');
-  const [searchStatus, setSearchStatus] = useState('');
+  const [search, setSearch] = useState('')
+  const [searchOrder, setSearchOrder] = useState('')
+  const [searchStatus, setSearchStatus] = useState('')
 
-  const { data, loadingGet: loading } = useSelector((state) => state.financial);
+  const { data, loadingGet: loading } = useSelector((state) => state.financial)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -31,13 +31,13 @@ const Home = () => {
         getFinancialsRequest({
           search,
           status_check: searchStatus,
-          sort_order: searchOrder
+          sort_order: searchOrder,
         })
-      );
-    }, 1200);
+      )
+    }, 1200)
 
-    return () => clearTimeout(timer);
-  }, [dispatch, search, searchOrder, searchStatus]);
+    return () => clearTimeout(timer)
+  }, [dispatch, search, searchOrder, searchStatus])
 
   return (
     <>
@@ -50,30 +50,14 @@ const Home = () => {
         alignContent="flex-start"
       >
         <Grid item container pl={2} mr={4} justifyContent="space-between">
-          <Grid
-            item
-            container
-            xs={4}
-            md={4}
-            lg={4}
-            mt={0.6}
-            justifyContent="flex-start"
-          >
+          <Grid item container xs={4} md={4} lg={4} mt={0.6} justifyContent="flex-start">
             <BaseMenuHomeFilterFinancial
               setSearchOrder={setSearchOrder}
               setSearchStatus={setSearchStatus}
             />
           </Grid>
 
-          <Grid
-            item
-            container
-            xs={6}
-            md={6}
-            lg={6}
-            flexWrap="nowrap"
-            justifyContent="flex-end"
-          >
+          <Grid item container xs={6} md={6} lg={6} flexWrap="nowrap" justifyContent="flex-end">
             <BaseButton
               onClick={() => setShowModalAddFinancial(true)}
               background="linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
@@ -81,12 +65,11 @@ const Home = () => {
                 fontSize: '14px',
                 color: 'white',
                 minWidth: '248px',
-                marginRight: '15px'
+                marginRight: '15px',
               }}
               disabled={loading}
             >
-              {t('button.add_new_listing')}{' '}
-              <IconAdd sx={{ mb: '4px', ml: '10px' }} />
+              {t('button.add_new_listing')} <IconAdd sx={{ mb: '4px', ml: '10px' }} />
             </BaseButton>
 
             <BaseInputSearches
@@ -130,7 +113,7 @@ const Home = () => {
         setShowModal={setShowModalAddFinancial}
       />
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

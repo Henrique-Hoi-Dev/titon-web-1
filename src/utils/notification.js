@@ -1,10 +1,10 @@
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import errorMessages from './error/pt.json';
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import errorMessages from './error/pt.json'
 
 const successNotification = (successMessage) => {
-  const customId = successMessage;
-  const massage = 'Operação realizada com sucesso!';
+  const customId = successMessage
+  const massage = 'Operação realizada com sucesso!'
 
   return toast.success(successMessage ?? massage, {
     position: 'top-center',
@@ -14,18 +14,18 @@ const successNotification = (successMessage) => {
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
-    progress: undefined
-  });
-};
+    progress: undefined,
+  })
+}
 
 const errorNotification = (error) => {
-  const customId = error;
+  const customId = error
 
   const msg = errorMessages[error?.response?.data?.key]
     ? errorMessages[error?.response?.data?.key]
-    : error;
+    : error
 
-  const massage = 'Erro ao realizar a operação!';
+  const massage = 'Erro ao realizar a operação!'
 
   return toast.error(msg ?? massage, {
     position: 'top-center',
@@ -35,8 +35,8 @@ const errorNotification = (error) => {
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
-    progress: undefined
-  });
-};
+    progress: undefined,
+  })
+}
 
-export { successNotification, errorNotification };
+export { successNotification, errorNotification }

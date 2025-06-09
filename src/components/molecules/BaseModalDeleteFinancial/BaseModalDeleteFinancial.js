@@ -1,33 +1,33 @@
-import React, { useEffect, useCallback } from 'react';
-import { Grid } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { deleteFinancialRequest } from 'store/modules/financial/financialSlice';
+import React, { useEffect, useCallback } from 'react'
+import { Grid } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import { deleteFinancialRequest } from 'store/modules/financial/financialSlice'
 
-import Button from 'components/atoms/BaseButton/BaseButton';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
-import Text from 'components/atoms/BaseText/BaseText';
-import Modal from 'components/molecules/BaseModal/BaseModal';
+import Button from 'components/atoms/BaseButton/BaseButton'
+import Loading from '@/components/atoms/BaseLoading/BaseLoading'
+import Text from 'components/atoms/BaseText/BaseText'
+import Modal from 'components/molecules/BaseModal/BaseModal'
 
 const BaseModalDeleteFinancial = ({ showModal, setShowModal, id }) => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { loading, success } = useSelector((state) => state.financial);
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const { loading, success } = useSelector((state) => state.financial)
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
-    dispatch(deleteFinancialRequest(id));
-  };
+    ev.preventDefault()
+    dispatch(deleteFinancialRequest(id))
+  }
 
   const onClose = useCallback(() => {
-    setShowModal(false);
-  }, [setShowModal]);
+    setShowModal(false)
+  }, [setShowModal])
 
   useEffect(() => {
     if (!loading && success) {
-      onClose();
+      onClose()
     }
-  }, [loading, success, onClose]);
+  }, [loading, success, onClose])
 
   return (
     <Modal
@@ -40,35 +40,15 @@ const BaseModalDeleteFinancial = ({ showModal, setShowModal, id }) => {
       {!loading && (
         <>
           <Grid item container justifyContent="center">
-            <Text fontSize="30px">
-              {t('messages.want_to_delete_financial')}
-            </Text>
+            <Text fontSize="30px">{t('messages.want_to_delete_financial')}</Text>
           </Grid>
           <Grid item container xs={12} md={12} lg={12} justifyContent="center">
-            <Grid
-              item
-              xs={6}
-              md={8.3}
-              lg={8.3}
-              mt={1}
-              sx={{ textAlign: 'center' }}
-            >
-              <Text fontSize="16px">
-                {t('messages.delete_financial_msg_notice')}
-              </Text>
+            <Grid item xs={6} md={8.3} lg={8.3} mt={1} sx={{ textAlign: 'center' }}>
+              <Text fontSize="16px">{t('messages.delete_financial_msg_notice')}</Text>
             </Grid>
           </Grid>
 
-          <Grid
-            container
-            item
-            xs={12}
-            md={12}
-            lg={12}
-            spacing={2}
-            mt={2}
-            justifyContent="center"
-          >
+          <Grid container item xs={12} md={12} lg={12} spacing={2} mt={2} justifyContent="center">
             <Grid item container xs={12} md={12} lg={3}>
               <Button
                 onClick={onClose}
@@ -77,7 +57,7 @@ const BaseModalDeleteFinancial = ({ showModal, setShowModal, id }) => {
                   width: '140px',
                   height: '49px',
                   border: '1px solid #509BFB',
-                  color: '#FFF'
+                  color: '#FFF',
                 }}
                 variant="text"
               >
@@ -95,7 +75,7 @@ const BaseModalDeleteFinancial = ({ showModal, setShowModal, id }) => {
                   color: 'white',
                   width: '141px',
                   height: '49px',
-                  marginRight: '15px'
+                  marginRight: '15px',
                 }}
               >
                 {t('button.delete')}
@@ -111,7 +91,7 @@ const BaseModalDeleteFinancial = ({ showModal, setShowModal, id }) => {
         </Grid>
       )}
     </Modal>
-  );
-};
+  )
+}
 
-export default BaseModalDeleteFinancial;
+export default BaseModalDeleteFinancial

@@ -1,34 +1,34 @@
-import React, { useState } from 'react';
-import { IconButton, Menu, MenuItem } from '@mui/material';
-import { DropUpSharpIcon } from 'assets/icons/icons';
-import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
+import React, { useState } from 'react'
+import { IconButton, Menu, MenuItem } from '@mui/material'
+import { DropUpSharpIcon } from 'assets/icons/icons'
+import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable'
 
 export default function InfoRow({
   data,
   index,
   setShowModalDelete,
   setShowModalUpdate,
-  setUserId
+  setUserId,
 }) {
-  const [openSettings, setOpenSettings] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(false);
+  const [openSettings, setOpenSettings] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(false)
 
   const handleClick = (ev) => {
-    setOpenSettings(!openSettings);
-    setAnchorEl(ev.currentTarget);
-  };
+    setOpenSettings(!openSettings)
+    setAnchorEl(ev.currentTarget)
+  }
 
   const handleDelete = (id, name) => {
-    setShowModalDelete(true);
-    setUserId({ id: id, name: name });
-    setOpenSettings(false);
-  };
+    setShowModalDelete(true)
+    setUserId({ id: id, name: name })
+    setOpenSettings(false)
+  }
 
   const handleUpdate = (id) => {
-    setShowModalUpdate(true);
-    setUserId({ id: id });
-    setOpenSettings(false);
-  };
+    setShowModalUpdate(true)
+    setUserId({ id: id })
+    setOpenSettings(false)
+  }
 
   return (
     <>
@@ -44,13 +44,13 @@ export default function InfoRow({
             sx={{
               background: '#1877F2',
               '& .icon': {
-                transition: 'transform 0.3s ease-in-out'
+                transition: 'transform 0.3s ease-in-out',
               },
               '&:hover': {
                 backgroundColor: '#1657A2',
                 transform: 'scale(1.1)',
-                transition: 'background-color 0.3s ease, transform 0.3s ease'
-              }
+                transition: 'background-color 0.3s ease, transform 0.3s ease',
+              },
             }}
             onClick={(ev) => handleClick(ev)}
           >
@@ -58,7 +58,7 @@ export default function InfoRow({
               className="icon"
               sx={{
                 color: '#fff',
-                transform: `${openSettings ? '' : 'rotate(180deg)'}`
+                transform: `${openSettings ? '' : 'rotate(180deg)'}`,
               }}
             />
           </IconButton>
@@ -69,11 +69,11 @@ export default function InfoRow({
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'top',
-          horizontal: 'center'
+          horizontal: 'center',
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'center'
+          horizontal: 'center',
         }}
         sx={{
           zIndex: 10,
@@ -83,19 +83,17 @@ export default function InfoRow({
             color: '#fff',
             '& .MuiMenuItem-root': {
               '&:hover': {
-                bgcolor: '#444'
-              }
-            }
-          }
+                bgcolor: '#444',
+              },
+            },
+          },
         }}
         open={openSettings}
         onClose={() => setOpenSettings(!openSettings)}
       >
         <MenuItem onClick={() => handleUpdate(data?.id)}>Editar</MenuItem>
-        <MenuItem onClick={() => handleDelete(data?.id, data.name)}>
-          Excluir
-        </MenuItem>
+        <MenuItem onClick={() => handleDelete(data?.id, data.name)}>Excluir</MenuItem>
       </Menu>
     </>
-  );
+  )
 }

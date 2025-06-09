@@ -1,9 +1,9 @@
-import * as React from 'react';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import BaseLink from '../BaseLink/BaseLink';
+import * as React from 'react'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
+import BaseLink from '../BaseLink/BaseLink'
 
 function handleClick(event) {
-  event.preventDefault();
+  event.preventDefault()
 }
 
 export default function BaseBreadcrumb({ links = [] }) {
@@ -11,14 +11,9 @@ export default function BaseBreadcrumb({ links = [] }) {
     <div role="presentation" onClick={handleClick}>
       <Breadcrumbs aria-label="breadcrumb">
         {links.map((link) => (
-          <BaseLink
-            key={link.label}
-            to={link.path}
-            label={link.label}
-            color="white"
-          />
+          <BaseLink key={link.label} to={link.path} label={link.label} color="white" />
         ))}
       </Breadcrumbs>
     </div>
-  );
+  )
 }

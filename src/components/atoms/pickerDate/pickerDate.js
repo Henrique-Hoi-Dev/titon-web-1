@@ -1,39 +1,30 @@
-import React from 'react';
-import { TextField } from '@mui/material';
-import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { ptBR } from 'date-fns/locale';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React from 'react'
+import { TextField } from '@mui/material'
+import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { ptBR } from 'date-fns/locale'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-import Text from 'components/atoms/BaseText/BaseText';
+import Text from 'components/atoms/BaseText/BaseText'
 
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#1877F2' // Cor primária
+      main: '#1877F2', // Cor primária
     },
     background: {
       default: '#31363F', // Cor de fundo
-      paper: '#424242' // Cor de fundo dos componentes
+      paper: '#424242', // Cor de fundo dos componentes
     },
     text: {
       primary: '#fff',
-      secondary: '#B0B0B0'
-    }
-  }
-});
+      secondary: '#B0B0B0',
+    },
+  },
+})
 
-const PickerDate = ({
-  minWidth,
-  size,
-  label,
-  readOnly,
-  height,
-  styles,
-  labelText,
-  ...props
-}) => {
+const PickerDate = ({ minWidth, size, label, readOnly, height, styles, labelText, ...props }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <Text fontsize={'14px'} color={'#1877F2'}>
@@ -59,24 +50,24 @@ const PickerDate = ({
                   borderRadius: '8px 8px 0px 0px',
                   '& .MuiFilledInput-input': {
                     color: '#fff',
-                    opacity: '0.5'
+                    opacity: '0.5',
                   },
                   '& .MuiInputLabel-root': {
                     color: '#fff',
-                    opacity: '0.5'
+                    opacity: '0.5',
                   },
                   '& .MuiFilledInput-underline:before': {
-                    borderBottomColor: '#1877F2'
+                    borderBottomColor: '#1877F2',
                   },
                   '& .MuiFilledInput-underline:after': {
-                    borderBottomColor: '#1877F2'
+                    borderBottomColor: '#1877F2',
                   },
                   '& .MuiFilledInput-underline:hover:after': {
-                    borderBottomColor: '#1877F2!important'
+                    borderBottomColor: '#1877F2!important',
                   },
                   '& .MuiFilledInput-underline:hover:before': {
-                    borderBottomColor: '#1877F2!important'
-                  }
+                    borderBottomColor: '#1877F2!important',
+                  },
                 }}
               />
             )}
@@ -84,7 +75,7 @@ const PickerDate = ({
         </LocalizationProvider>
       </ThemeProvider>
     </div>
-  );
-};
+  )
+}
 
-export default PickerDate;
+export default PickerDate

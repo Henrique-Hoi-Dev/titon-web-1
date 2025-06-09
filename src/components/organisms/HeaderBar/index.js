@@ -1,9 +1,9 @@
-import React from 'react';
-import { Grid } from '@mui/material';
+import React from 'react'
+import { Grid } from '@mui/material'
 
-import logo from '../../../assets/logo.png';
+import logo from '../../../assets/logo.png'
 
-import BaseNotificationsPopover from '@/components/atoms/BaseNotificationsPopover/BaseNotificationsPopover';
+import BaseNotificationsPopover from '@/components/atoms/BaseNotificationsPopover/BaseNotificationsPopover'
 
 const HeaderBar = () => {
   return (
@@ -19,18 +19,12 @@ const HeaderBar = () => {
           background: '#1C1C1C',
           width: '100%',
           height: '64px',
-          zIndex: 10
+          zIndex: 10,
         }}
         alignItems="center"
         justifyContent={'flex-end'}
       >
-        <Grid
-          item
-          container
-          flexWrap="nowrap"
-          alignItems="center"
-          justifyContent={'flex-start'}
-        >
+        <Grid item container flexWrap="nowrap" alignItems="center" justifyContent={'flex-start'}>
           <img
             width={'200px'}
             height={'30px'}
@@ -43,7 +37,7 @@ const HeaderBar = () => {
         </Grid>
       </Grid>
     </>
-  );
-};
+  )
+}
 
-export default HeaderBar;
+export default HeaderBar

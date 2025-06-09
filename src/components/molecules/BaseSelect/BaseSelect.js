@@ -1,28 +1,24 @@
-import {
-  Autocomplete as MuiAutocomplete,
-  Popper,
-  TextField
-} from '@mui/material';
-import { autocompleteClasses } from '@mui/material/Autocomplete';
-import { styled } from '@mui/material/styles';
+import { Autocomplete as MuiAutocomplete, Popper, TextField } from '@mui/material'
+import { autocompleteClasses } from '@mui/material/Autocomplete'
+import { styled } from '@mui/material/styles'
 
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
-import Text from 'components/atoms/BaseText/BaseText';
-import { ArrowDownIcon } from '../../../assets/icons/icons';
+import Loading from '@/components/atoms/BaseLoading/BaseLoading'
+import Text from 'components/atoms/BaseText/BaseText'
+import { ArrowDownIcon } from '../../../assets/icons/icons'
 
 const StyledPopper = styled(Popper)(({ theme }) => ({
   [`& .${autocompleteClasses.paper}`]: {
     backgroundColor: '#31363F',
-    color: '#fff!important'
+    color: '#fff!important',
   },
   [`& .${autocompleteClasses.listbox}`]: {
-    color: '#fff'
+    color: '#fff',
   },
   [`& .${autocompleteClasses.noOptions}`]: {
     color: '#fff',
-    textAlign: 'center'
-  }
-}));
+    textAlign: 'center',
+  },
+}))
 
 const BaseSelect = ({
   placeholder,
@@ -45,7 +41,7 @@ const BaseSelect = ({
       <MuiAutocomplete
         sx={{
           ...sx,
-          mt: '5px'
+          mt: '5px',
         }}
         size="medium"
         popupIcon={<ArrowDownIcon />}
@@ -65,26 +61,26 @@ const BaseSelect = ({
               background: '#31363F',
               borderRadius: '8px 8px 0px 0px',
               '& .MuiFilledInput-input': {
-                color: '#fff'
+                color: '#fff',
               },
               '& .MuiInputLabel-root': {
-                color: '#fff'
+                color: '#fff',
               },
               '& .MuiFilledInput-underline:before': {
-                borderBottomColor: '#1877F2'
+                borderBottomColor: '#1877F2',
               },
               '& .MuiFilledInput-underline:after': {
-                borderBottomColor: '#1877F2'
+                borderBottomColor: '#1877F2',
               },
               '& .MuiFilledInput-underline:hover:after': {
-                borderBottomColor: '#1877F2!important'
+                borderBottomColor: '#1877F2!important',
               },
               '& .MuiFilledInput-underline:hover:before': {
-                borderBottomColor: '#1877F2!important'
+                borderBottomColor: '#1877F2!important',
               },
               '& .MuiSvgIcon-root': {
-                color: '#1877F2'
-              }
+                color: '#1877F2',
+              },
             }}
             required={required}
             label={placeholder}
@@ -95,13 +91,13 @@ const BaseSelect = ({
                   {loading ? <Loading size={20} /> : null}
                   {params.InputProps.endAdornment}
                 </>
-              )
+              ),
             }}
           />
         )}
       />
     </div>
-  );
-};
+  )
+}
 
-export default BaseSelect;
+export default BaseSelect

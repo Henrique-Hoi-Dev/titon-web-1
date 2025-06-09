@@ -1,38 +1,32 @@
-import React, { useState } from 'react';
-import { IconButton, Menu, MenuItem } from '@mui/material';
-import { DropUpSharpIcon } from 'assets/icons/icons';
-import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
-import { useTranslation } from 'react-i18next';
-import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
+import React, { useState } from 'react'
+import { IconButton, Menu, MenuItem } from '@mui/material'
+import { DropUpSharpIcon } from 'assets/icons/icons'
+import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable'
+import { useTranslation } from 'react-i18next'
+import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar'
 
-const InfoRow = ({
-  data,
-  index,
-  setShowModalDelete,
-  setShowModalUpdate,
-  setTruckId
-}) => {
-  const { t } = useTranslation();
+const InfoRow = ({ data, index, setShowModalDelete, setShowModalUpdate, setTruckId }) => {
+  const { t } = useTranslation()
 
-  const [openSettings, setOpenSettings] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(false);
+  const [openSettings, setOpenSettings] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(false)
 
   const handleClick = (ev) => {
-    setOpenSettings(!openSettings);
-    setAnchorEl(ev.currentTarget);
-  };
+    setOpenSettings(!openSettings)
+    setAnchorEl(ev.currentTarget)
+  }
 
   const handleDelete = (id, name) => {
-    setTruckId({ id: id, name: name });
-    setShowModalDelete(true);
-    setOpenSettings(false);
-  };
+    setTruckId({ id: id, name: name })
+    setShowModalDelete(true)
+    setOpenSettings(false)
+  }
 
   const handleUpdate = (id) => {
-    setTruckId({ id: id });
-    setShowModalUpdate(true);
-    setOpenSettings(false);
-  };
+    setTruckId({ id: id })
+    setShowModalUpdate(true)
+    setOpenSettings(false)
+  }
 
   return (
     <>
@@ -52,7 +46,7 @@ const InfoRow = ({
               height: '70px',
               width: '70px',
               marginLeft: '12px',
-              borderRadius: '8px'
+              borderRadius: '8px',
             }}
           />
         </SCell>
@@ -63,13 +57,13 @@ const InfoRow = ({
             sx={{
               background: '#1877F2',
               '& .icon': {
-                transition: 'transform 0.3s ease-in-out'
+                transition: 'transform 0.3s ease-in-out',
               },
               '&:hover': {
                 backgroundColor: '#1657A2',
                 transform: 'scale(1.1)',
-                transition: 'background-color 0.3s ease, transform 0.3s ease'
-              }
+                transition: 'background-color 0.3s ease, transform 0.3s ease',
+              },
             }}
             onClick={(ev) => handleClick(ev)}
           >
@@ -77,7 +71,7 @@ const InfoRow = ({
               className="icon"
               sx={{
                 color: '#fff',
-                transform: `${openSettings ? '' : 'rotate(180deg)'}`
+                transform: `${openSettings ? '' : 'rotate(180deg)'}`,
               }}
             />
           </IconButton>
@@ -88,11 +82,11 @@ const InfoRow = ({
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'top',
-          horizontal: 'center'
+          horizontal: 'center',
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'center'
+          horizontal: 'center',
         }}
         sx={{
           zIndex: 10,
@@ -102,30 +96,25 @@ const InfoRow = ({
             color: '#fff',
             '& .MuiMenuItem-root': {
               '&:hover': {
-                bgcolor: '#444'
-              }
-            }
-          }
+                bgcolor: '#444',
+              },
+            },
+          },
         }}
         open={openSettings}
         onClose={() => setOpenSettings(!openSettings)}
       >
-        <MenuItem onClick={() => handleUpdate(data?.id)}>
-          {t('modal.edit')}
-        </MenuItem>
+        <MenuItem onClick={() => handleUpdate(data?.id)}>{t('modal.edit')}</MenuItem>
         <MenuItem
           onClick={() =>
-            handleDelete(
-              data?.id,
-              `${data?.truckNameBrand + ' ' + data?.truckModels}`
-            )
+            handleDelete(data?.id, `${data?.truckNameBrand + ' ' + data?.truckModels}`)
           }
         >
           {t('button.delete')}
         </MenuItem>
       </Menu>
     </>
-  );
-};
+  )
+}
 
-export default InfoRow;
+export default InfoRow

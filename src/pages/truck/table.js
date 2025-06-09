@@ -1,38 +1,38 @@
-import React, { useState } from 'react';
-import { Grid, Paper, TableContainer } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { TablePagination } from 'components/atoms/tablePagination/tablePagination';
+import React, { useState } from 'react'
+import { Grid, Paper, TableContainer } from '@mui/material'
+import { useTranslation } from 'react-i18next'
+import { TablePagination } from 'components/atoms/tablePagination/tablePagination'
 import {
   SCell,
   SHead,
   SRow,
   STable,
   STableBody,
-  SLabel
-} from 'components/atoms/BaseTable/BaseTable';
+  SLabel,
+} from 'components/atoms/BaseTable/BaseTable'
 
-import BaseNotFount from 'components/molecules/BaseNotFound/BaseNotFound';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
-import InfoRow from './infoRow';
-import BaseModalDeleteTruck from 'components/molecules/BaseModalDeleteTruck/BaseModalDeleteTruck';
-import BaseModalUpdateTruck from 'components/molecules/BaseModalUpdateTruck/BaseModalUpdateTruck';
+import BaseNotFount from 'components/molecules/BaseNotFound/BaseNotFound'
+import Loading from '@/components/atoms/BaseLoading/BaseLoading'
+import InfoRow from './infoRow'
+import BaseModalDeleteTruck from 'components/molecules/BaseModalDeleteTruck/BaseModalDeleteTruck'
+import BaseModalUpdateTruck from 'components/molecules/BaseModalUpdateTruck/BaseModalUpdateTruck'
 
 const Table = ({ data, query, setQuery, loading }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const [showModalDelete, setShowModalDelete] = useState(false);
-  const [showModalUpdate, setShowModalUpdate] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false)
+  const [showModalUpdate, setShowModalUpdate] = useState(false)
 
-  const [truckId, setTruckId] = useState(null);
+  const [truckId, setTruckId] = useState(null)
 
   const handleSort = (item) => {
     setQuery((state) => ({
       ...state,
       sort_field: item,
-      sort_order: `${query?.sort_order === 'ASC' ? 'DESC' : 'ASC'}`
-    }));
-    return;
-  };
+      sort_order: `${query?.sort_order === 'ASC' ? 'DESC' : 'ASC'}`,
+    }))
+    return
+  }
 
   return (
     <>
@@ -41,7 +41,7 @@ const Table = ({ data, query, setQuery, loading }) => {
         sx={{
           background: '#3A3A3A',
           boxShadow: 'none!important',
-          borderRadius: '16px'
+          borderRadius: '16px',
         }}
       >
         <STable>
@@ -163,7 +163,7 @@ const Table = ({ data, query, setQuery, loading }) => {
         />
       )}
     </>
-  );
-};
+  )
+}
 
-export default Table;
+export default Table

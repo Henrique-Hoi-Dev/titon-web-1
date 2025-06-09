@@ -1,5 +1,5 @@
-import React from 'react';
-import { Checkbox, FormControlLabel, FormControl } from '@mui/material';
+import React from 'react'
+import { Checkbox, FormControlLabel, FormControl } from '@mui/material'
 
 const BaseCheckbox = ({ label, checked, onChange, sx }) => {
   return (
@@ -7,14 +7,12 @@ const BaseCheckbox = ({ label, checked, onChange, sx }) => {
       <FormControl component="fieldset" variant="standard">
         <FormControlLabel
           sx={{ transform: 'translateY(15px)', p: '2px 5px 0 5px' }}
-          control={
-            <Checkbox checked={checked} onChange={onChange} name={'checkbox'} />
-          }
+          control={<Checkbox checked={checked} onChange={onChange} name={'checkbox'} />}
           label={label}
         />
       </FormControl>
     </div>
-  );
-};
+  )
+}
 
-export default BaseCheckbox;
+export default BaseCheckbox

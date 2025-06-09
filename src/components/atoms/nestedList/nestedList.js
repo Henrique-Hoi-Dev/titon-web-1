@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { ListItem } from '@mui/material';
+import * as React from 'react'
+import { ListItem } from '@mui/material'
 
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import Text from '../BaseText/BaseText';
+import List from '@mui/material/List'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemText from '@mui/material/ListItemText'
+import Collapse from '@mui/material/Collapse'
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
+import Text from '../BaseText/BaseText'
 
 export default function NestedList({
   titleOne,
@@ -17,13 +17,13 @@ export default function NestedList({
   valuesFirstCheck,
   statusSecondCheck,
   maxwidth,
-  sx
+  sx,
 }) {
-  const [openOne, setOpenOne] = React.useState(false);
+  const [openOne, setOpenOne] = React.useState(false)
 
   const handleClickOne = () => {
-    setOpenOne(!openOne);
-  };
+    setOpenOne(!openOne)
+  }
 
   return (
     <>
@@ -36,7 +36,7 @@ export default function NestedList({
           bgcolor: 'background.paper',
           boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
           borderRadius: '8px',
-          flexDirection: 'column'
+          flexDirection: 'column',
         }}
         component="nav"
         aria-labelledby="nested-list-subheader"
@@ -48,48 +48,44 @@ export default function NestedList({
             sx={{
               '& .css-10hburv-MuiTypography-root': {
                 fontSize: '24px',
-                fontWeight: '500!important'
+                fontWeight: '500!important',
               },
               '& .css-83ijpv-MuiTypography-root': {
                 fontWeight: '500',
                 fontSize: '18px',
-                color: '#1877F2'
+                color: '#1877F2',
               },
 
               '& .css-yb0lig': {
                 fontSize: '24px',
-                fontWeight: '500!important'
+                fontWeight: '500!important',
               },
               '& .css-mbfek': {
                 fontWeight: '500',
                 fontSize: '18px',
-                color: '#1877F2'
-              }
+                color: '#1877F2',
+              },
             }}
           />
           {openOne ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
 
         <Collapse in={openOne} timeout="auto" unmountOnExit>
-          <List
-            component="div"
-            disablePadding
-            sx={{ alignItems: 'flex-start' }}
-          >
+          <List component="div" disablePadding sx={{ alignItems: 'flex-start' }}>
             <ListItemButton
               sx={{
                 pl: statusSecondCheck ? 0 : 4,
                 display: 'flex',
                 flexDirection: 'column',
                 // justifyContent: "flex-start",
-                alignItems: 'flex-start'
+                alignItems: 'flex-start',
               }}
             >
               <ListItem
                 sx={{
                   fontSize: '12px',
                   paddingBottom: statusSecondCheck ? 0 : '8px',
-                  flexDirection: statusSecondCheck ? 'column' : 'row'
+                  flexDirection: statusSecondCheck ? 'column' : 'row',
                 }}
               >
                 {'Combustível'}
@@ -98,7 +94,7 @@ export default function NestedList({
                   color={'#F03D3D'}
                   sx={{
                     ml: statusSecondCheck ? 0 : 3,
-                    alignItems: statusSecondCheck ? 'center' : 'flex-start'
+                    alignItems: statusSecondCheck ? 'center' : 'flex-start',
                   }}
                 >
                   {`${valuesFirstCheck?.value?.liter}L / ${valuesFirstCheck?.value?.fuelValue}`}
@@ -108,7 +104,7 @@ export default function NestedList({
                 sx={{
                   fontSize: '12px',
                   paddingBottom: statusSecondCheck ? 0 : '8px',
-                  flexDirection: statusSecondCheck ? 'column' : 'row'
+                  flexDirection: statusSecondCheck ? 'column' : 'row',
                 }}
               >
                 {'Despesas'}
@@ -118,7 +114,7 @@ export default function NestedList({
                   whiteSpace={'nowrap'}
                   sx={{
                     ml: statusSecondCheck ? 0 : 3,
-                    alignItems: statusSecondCheck ? 'center' : 'flex-start'
+                    alignItems: statusSecondCheck ? 'center' : 'flex-start',
                   }}
                 >
                   {valuesFirstCheck?.value2}
@@ -128,7 +124,7 @@ export default function NestedList({
                 sx={{
                   fontSize: '12px',
                   paddingBottom: statusSecondCheck ? 0 : '8px',
-                  flexDirection: statusSecondCheck ? 'column' : 'row'
+                  flexDirection: statusSecondCheck ? 'column' : 'row',
                 }}
               >
                 {'Motorista'}
@@ -138,7 +134,7 @@ export default function NestedList({
                   color={'#F03D3D'}
                   sx={{
                     ml: statusSecondCheck ? 0 : 3,
-                    alignItems: statusSecondCheck ? 'center' : 'flex-start'
+                    alignItems: statusSecondCheck ? 'center' : 'flex-start',
                   }}
                 >
                   {valuesFirstCheck?.value3}
@@ -155,27 +151,27 @@ export default function NestedList({
             sx={{
               '& .css-10hburv-MuiTypography-root': {
                 fontSize: '24px',
-                fontWeight: '500!important'
+                fontWeight: '500!important',
               },
               '& .css-83ijpv-MuiTypography-root': {
                 fontWeight: '500',
                 fontSize: '18px',
-                color: '#0BB07B'
+                color: '#0BB07B',
               },
 
               '& .css-yb0lig': {
                 fontSize: '24px',
-                fontWeight: '500!important'
+                fontWeight: '500!important',
               },
               '& .css-mbfek': {
                 fontWeight: '500',
                 fontSize: '18px',
-                color: '#0BB07B'
-              }
+                color: '#0BB07B',
+              },
             }}
           />
         </ListItemButton>
       </List>
     </>
-  );
+  )
 }

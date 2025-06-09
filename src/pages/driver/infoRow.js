@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { IconButton, Menu, MenuItem } from '@mui/material';
-import { moneyMask } from 'utils/masks';
-import { DropUpSharpIcon } from 'assets/icons/icons';
-import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
-import { useTranslation } from 'react-i18next';
+import React, { useState } from 'react'
+import { IconButton, Menu, MenuItem } from '@mui/material'
+import { moneyMask } from 'utils/masks'
+import { DropUpSharpIcon } from 'assets/icons/icons'
+import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable'
+import { useTranslation } from 'react-i18next'
 
 const InfoRow = ({
   data,
@@ -11,35 +11,35 @@ const InfoRow = ({
   setShowModalDelete,
   setShowModalUpdate,
   setShowModalCredit,
-  setDriveId
+  setDriveId,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const [openSettings, setOpenSettings] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(false);
+  const [openSettings, setOpenSettings] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(false)
 
   const handleClick = (ev) => {
-    setOpenSettings(!openSettings);
-    setAnchorEl(ev.currentTarget);
-  };
+    setOpenSettings(!openSettings)
+    setAnchorEl(ev.currentTarget)
+  }
 
   const handleDelete = (id, name) => {
-    setShowModalDelete(true);
-    setDriveId({ id: id, name: name });
-    setOpenSettings(false);
-  };
+    setShowModalDelete(true)
+    setDriveId({ id: id, name: name })
+    setOpenSettings(false)
+  }
 
   const handleUpdate = (id) => {
-    setShowModalUpdate(true);
-    setDriveId({ id: id });
-    setOpenSettings(false);
-  };
+    setShowModalUpdate(true)
+    setDriveId({ id: id })
+    setOpenSettings(false)
+  }
 
   const handleCredit = (id, name) => {
-    setShowModalCredit(true);
-    setDriveId({ id: id, name: name });
-    setOpenSettings(false);
-  };
+    setShowModalCredit(true)
+    setDriveId({ id: id, name: name })
+    setOpenSettings(false)
+  }
 
   return (
     <>
@@ -48,9 +48,7 @@ const InfoRow = ({
         <SCell>{data.name}</SCell>
         <SCell
           sx={{
-            color: `${
-              (data.credit > 0 && 'green') || (data.credit < 0 && 'red')
-            }`
+            color: `${(data.credit > 0 && 'green') || (data.credit < 0 && 'red')}`,
           }}
         >
           {moneyMask(data.credit || [0])}
@@ -64,13 +62,13 @@ const InfoRow = ({
             sx={{
               background: '#1877F2',
               '& .icon': {
-                transition: 'transform 0.3s ease-in-out'
+                transition: 'transform 0.3s ease-in-out',
               },
               '&:hover': {
                 backgroundColor: '#1657A2',
                 transform: 'scale(1.1)',
-                transition: 'background-color 0.3s ease, transform 0.3s ease'
-              }
+                transition: 'background-color 0.3s ease, transform 0.3s ease',
+              },
             }}
             onClick={(ev) => handleClick(ev)}
           >
@@ -78,7 +76,7 @@ const InfoRow = ({
               className="icon"
               sx={{
                 color: '#fff',
-                transform: `${openSettings ? '' : 'rotate(180deg)'}`
+                transform: `${openSettings ? '' : 'rotate(180deg)'}`,
               }}
             />
           </IconButton>
@@ -89,11 +87,11 @@ const InfoRow = ({
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'top',
-          horizontal: 'center'
+          horizontal: 'center',
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'center'
+          horizontal: 'center',
         }}
         sx={{
           zIndex: 10,
@@ -103,29 +101,25 @@ const InfoRow = ({
             color: '#fff',
             '& .MuiMenuItem-root': {
               '&:hover': {
-                bgcolor: '#444'
-              }
-            }
-          }
+                bgcolor: '#444',
+              },
+            },
+          },
         }}
         MenuListProps={{
-          'aria-labelledby': 'basic-button'
+          'aria-labelledby': 'basic-button',
         }}
         open={openSettings}
         onClose={() => setOpenSettings(!openSettings)}
       >
-        <MenuItem onClick={() => handleUpdate(data?.id)}>
-          {t('button.edit')}
-        </MenuItem>
+        <MenuItem onClick={() => handleUpdate(data?.id)}>{t('button.edit')}</MenuItem>
         <MenuItem onClick={() => handleCredit(data?.id, data.name)}>
           {t('button.credit/debit')}
         </MenuItem>
-        <MenuItem onClick={() => handleDelete(data?.id, data.name)}>
-          {t('button.delete')}
-        </MenuItem>
+        <MenuItem onClick={() => handleDelete(data?.id, data.name)}>{t('button.delete')}</MenuItem>
       </Menu>
     </>
-  );
-};
+  )
+}
 
-export default InfoRow;
+export default InfoRow

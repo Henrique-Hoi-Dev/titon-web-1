@@ -1,25 +1,19 @@
-import React, { useState } from 'react';
-import { Paper, TableContainer } from '@mui/material';
-import {
-  SCell,
-  SHead,
-  SRow,
-  STable,
-  STableBody
-} from 'components/atoms/BaseTable/BaseTable';
-import { useTranslation } from 'react-i18next';
+import React, { useState } from 'react'
+import { Paper, TableContainer } from '@mui/material'
+import { SCell, SHead, SRow, STable, STableBody } from 'components/atoms/BaseTable/BaseTable'
+import { useTranslation } from 'react-i18next'
 
-import BaseModalAction from '@/components/molecules/BaseModalAction/BaseModalAction';
-import BaseNotFound from '@components/molecules/BaseNotFound/BaseNotFound';
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
-import InfoRow from './infoRow';
+import BaseModalAction from '@/components/molecules/BaseModalAction/BaseModalAction'
+import BaseNotFound from '@components/molecules/BaseNotFound/BaseNotFound'
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
+import InfoRow from './infoRow'
 
 const Table = ({ data, loading }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const [showModalAction, setShowModalAction] = useState(false);
+  const [showModalAction, setShowModalAction] = useState(false)
 
-  const [freightId, setFreightId] = useState();
+  const [freightId, setFreightId] = useState()
 
   return (
     <>
@@ -28,7 +22,7 @@ const Table = ({ data, loading }) => {
         sx={{
           background: '#3A3A3A',
           borderRadius: '16px',
-          boxShadow: 'none!important'
+          boxShadow: 'none!important',
         }}
       >
         <STable>
@@ -69,7 +63,7 @@ const Table = ({ data, loading }) => {
         />
       )}
     </>
-  );
-};
+  )
+}
 
-export default Table;
+export default Table

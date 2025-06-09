@@ -1,43 +1,36 @@
-import React, { useState } from 'react';
-import { IconButton, Menu, MenuItem } from '@mui/material';
-import { DropUpSharpIcon } from 'assets/icons/icons';
-import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
-import { useTranslation } from 'react-i18next';
+import React, { useState } from 'react'
+import { IconButton, Menu, MenuItem } from '@mui/material'
+import { DropUpSharpIcon } from 'assets/icons/icons'
+import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable'
+import { useTranslation } from 'react-i18next'
 
-import enums from '@/utils/enums';
-import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
+import enums from '@/utils/enums'
+import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar'
 
-const InfoRow = ({
-  data,
-  index,
-  setShowModalDelete,
-  setShowModalUpdate,
-  setCartId
-}) => {
-  const { t } = useTranslation();
+const InfoRow = ({ data, index, setShowModalDelete, setShowModalUpdate, setCartId }) => {
+  const { t } = useTranslation()
 
-  const [openSettings, setOpenSettings] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(false);
+  const [openSettings, setOpenSettings] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(false)
 
-  const getBodywork = () =>
-    enums.typeBodywork.find((item) => item.value === data?.cartBodyworks);
+  const getBodywork = () => enums.typeBodywork.find((item) => item.value === data?.cartBodyworks)
 
   const handleClick = (ev) => {
-    setOpenSettings(!openSettings);
-    setAnchorEl(ev.currentTarget);
-  };
+    setOpenSettings(!openSettings)
+    setAnchorEl(ev.currentTarget)
+  }
 
   const handleDelete = (id, name) => {
-    setShowModalDelete(true);
-    setCartId({ id: id, name: name });
-    setOpenSettings(false);
-  };
+    setShowModalDelete(true)
+    setCartId({ id: id, name: name })
+    setOpenSettings(false)
+  }
 
   const handleUpdate = (id) => {
-    setShowModalUpdate(true);
-    setCartId({ id: id });
-    setOpenSettings(false);
-  };
+    setShowModalUpdate(true)
+    setCartId({ id: id })
+    setOpenSettings(false)
+  }
 
   return (
     <>
@@ -58,7 +51,7 @@ const InfoRow = ({
               height: '70px',
               width: '70px',
               marginLeft: '12px',
-              borderRadius: '8px'
+              borderRadius: '8px',
             }}
           />
         </SCell>
@@ -69,13 +62,13 @@ const InfoRow = ({
             sx={{
               background: '#1877F2',
               '& .icon': {
-                transition: 'transform 0.3s ease-in-out'
+                transition: 'transform 0.3s ease-in-out',
               },
               '&:hover': {
                 backgroundColor: '#1657A2',
                 transform: 'scale(1.1)',
-                transition: 'background-color 0.3s ease, transform 0.3s ease'
-              }
+                transition: 'background-color 0.3s ease, transform 0.3s ease',
+              },
             }}
             onClick={(ev) => handleClick(ev)}
           >
@@ -83,7 +76,7 @@ const InfoRow = ({
               className="icon"
               sx={{
                 color: '#fff',
-                transform: `${openSettings ? '' : 'rotate(180deg)'}`
+                transform: `${openSettings ? '' : 'rotate(180deg)'}`,
               }}
             />
           </IconButton>
@@ -94,11 +87,11 @@ const InfoRow = ({
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'top',
-          horizontal: 'center'
+          horizontal: 'center',
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'center'
+          horizontal: 'center',
         }}
         sx={{
           zIndex: 10,
@@ -108,23 +101,21 @@ const InfoRow = ({
             color: '#fff',
             '& .MuiMenuItem-root': {
               '&:hover': {
-                bgcolor: '#444'
-              }
-            }
-          }
+                bgcolor: '#444',
+              },
+            },
+          },
         }}
         open={openSettings}
         onClose={() => setOpenSettings(!openSettings)}
       >
-        <MenuItem onClick={() => handleUpdate(data?.id)}>
-          {t('modal.edit')}
-        </MenuItem>
+        <MenuItem onClick={() => handleUpdate(data?.id)}>{t('modal.edit')}</MenuItem>
         <MenuItem onClick={() => handleDelete(data?.id, data?.cartModels)}>
           {t('button.delete')}
         </MenuItem>
       </Menu>
     </>
-  );
-};
+  )
+}
 
-export default InfoRow;
+export default InfoRow

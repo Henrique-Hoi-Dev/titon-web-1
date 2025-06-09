@@ -1,79 +1,71 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, Paper } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
-import { Box } from '@mui/system';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useState } from 'react'
+import { Grid, Paper } from '@mui/material'
+import { useSelector, useDispatch } from 'react-redux'
+import { Box } from '@mui/system'
+import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
-import { signInRequest } from 'store/modules/auth/authSlice';
+import { signInRequest } from 'store/modules/auth/authSlice'
 
-import Button from 'components/atoms/BaseButton/BaseButton';
-import Text from 'components/atoms/BaseText/BaseText';
-import logo from '../assets/logo.png';
-import bannerLogin from '../assets/background-login.png';
-import BaseInput from 'components/molecules/BaseInput/BaseInput';
-import BaseLink from 'components/atoms/BaseLink/BaseLink';
+import Button from 'components/atoms/BaseButton/BaseButton'
+import Text from 'components/atoms/BaseText/BaseText'
+import logo from '../assets/logo.png'
+import bannerLogin from '../assets/background-login.png'
+import BaseInput from 'components/molecules/BaseInput/BaseInput'
+import BaseLink from 'components/atoms/BaseLink/BaseLink'
 
 const Login = () => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false)
+  const [errors, setErrors] = useState({})
 
-  const auth = useSelector(
-    (state) => state?.auth || { loading: false, token: null }
-  );
-  const { token, loading } = auth;
+  const auth = useSelector((state) => state?.auth || { loading: false, token: null })
+  const { token, loading } = auth
 
   useEffect(() => {
     if (token) {
-      navigate('/home', { replace: true });
+      navigate('/', { replace: true })
     }
-  }, [token, navigate]);
+  }, [token, navigate])
 
   const validateForm = (form) => {
-    const newErrors = {};
-    const email = form.get('email');
-    const password = form.get('password');
+    const newErrors = {}
+    const email = form.get('email')
+    const password = form.get('password')
 
     if (!email) {
-      newErrors.email = t('validation.email_required');
+      newErrors.email = t('validation.email_required')
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = t('validation.email_invalid');
+      newErrors.email = t('validation.email_invalid')
     }
 
     if (!password) {
-      newErrors.password = t('validation.password_required');
+      newErrors.password = t('validation.password_required')
     }
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = new FormData(e.target);
+    e.preventDefault()
+    const form = new FormData(e.target)
 
     if (validateForm(form)) {
       dispatch(
         signInRequest({
           email: form.get('email'),
-          password: form.get('password')
+          password: form.get('password'),
         })
-      );
+      )
     }
-  };
+  }
 
   return (
-    <Grid
-      container
-      item
-      justifyContent="space-between"
-      alignItems="center"
-      flexWrap="nowrap"
-    >
+    <Grid container item justifyContent="space-between" alignItems="center" flexWrap="nowrap">
       <Grid container height="100vh" width="auto">
         <Paper
           elevation={3}
@@ -83,7 +75,7 @@ const Login = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            flexDirection: 'column'
+            flexDirection: 'column',
           }}
         >
           <Box
@@ -95,7 +87,7 @@ const Login = () => {
               width: '700px',
               height: '100%',
               background: '#2B2B2C',
-              boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+              boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
             }}
             component="form"
             onSubmit={handleSubmit}
@@ -103,7 +95,7 @@ const Login = () => {
             <Text
               id="title"
               sx={{
-                marginBottom: '14px!important'
+                marginBottom: '14px!important',
               }}
             >
               <img src={logo} alt="img" />
@@ -149,10 +141,7 @@ const Login = () => {
               </Grid>
 
               <Grid item container justifyContent="flex-end">
-                <BaseLink
-                  label={t('label.forgot_password')}
-                  to="/forgot-password"
-                />
+                <BaseLink label={t('label.forgot_password')} to="/forgot-password" />
               </Grid>
 
               <Grid item>
@@ -163,7 +152,7 @@ const Login = () => {
                     fontSize: '14px',
                     color: 'white',
                     width: '168px',
-                    height: '50px'
+                    height: '50px',
                   }}
                   fullWidth
                   type="submit"
@@ -184,7 +173,7 @@ const Login = () => {
         sx={{
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center center'
+          backgroundPosition: 'center center',
         }}
       >
         <img
@@ -194,7 +183,7 @@ const Login = () => {
         />
       </Grid>
     </Grid>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

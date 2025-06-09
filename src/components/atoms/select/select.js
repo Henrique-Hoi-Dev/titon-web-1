@@ -1,5 +1,5 @@
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
-import { Grid, TextField, Autocomplete } from '@mui/material';
+import Loading from '@/components/atoms/BaseLoading/BaseLoading'
+import { Grid, TextField, Autocomplete } from '@mui/material'
 
 const SelectComponent = ({
   filterValue,
@@ -9,7 +9,7 @@ const SelectComponent = ({
   loading,
   required,
   disabled,
-  sx
+  sx,
 }) => {
   return (
     <Grid>
@@ -23,7 +23,7 @@ const SelectComponent = ({
         loading={loading}
         sx={{ sx }}
         onChange={(event, newValue) => {
-          setFilterValue(newValue?.value);
+          setFilterValue(newValue?.value)
         }}
         renderInput={(params) => (
           <TextField
@@ -37,13 +37,13 @@ const SelectComponent = ({
                   {loading ? <Loading size={20} /> : null}
                   {params.InputProps.endAdornment}
                 </>
-              )
+              ),
             }}
           />
         )}
       />
     </Grid>
-  );
-};
+  )
+}
 
-export default SelectComponent;
+export default SelectComponent

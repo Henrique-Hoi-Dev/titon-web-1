@@ -1,64 +1,62 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { Grid } from '@mui/material';
-import { zonedTimeToUtc } from 'date-fns-tz';
+import React, { useState, useCallback, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import { Grid } from '@mui/material'
+import { zonedTimeToUtc } from 'date-fns-tz'
 import {
   createFinancialRequest,
-  getFinancialsRequest
-} from 'store/modules/financial/financialSlice';
-import { getDriversSelectRequest } from 'store/modules/driver/driverSlice';
-import { getTrucksSelectRequest } from 'store/modules/truck/truckSlice';
-import { getCartsSelectRequest } from 'store/modules/cart/cartSlice';
+  getFinancialsRequest,
+} from 'store/modules/financial/financialSlice'
+import { getDriversSelectRequest } from 'store/modules/driver/driverSlice'
+import { getTrucksSelectRequest } from 'store/modules/truck/truckSlice'
+import { getCartsSelectRequest } from 'store/modules/cart/cartSlice'
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton';
-import BaseModal from 'components/molecules/BaseModal/BaseModal';
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
-import BaseText from 'components/atoms/BaseText/BaseText';
-import BaseSelect from 'components/molecules/BaseSelect/BaseSelect';
-import initialStateQuery from 'utils/initialStateQuery';
+import BaseButton from 'components/atoms/BaseButton/BaseButton'
+import BaseModal from 'components/molecules/BaseModal/BaseModal'
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
+import BaseText from 'components/atoms/BaseText/BaseText'
+import BaseSelect from 'components/molecules/BaseSelect/BaseSelect'
+import initialStateQuery from 'utils/initialStateQuery'
 
 const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
 
-  const { loadingCreate: loading, successCreate } = useSelector(
-    (state) => state.financial
-  );
+  const { loadingCreate: loading, successCreate } = useSelector((state) => state.financial)
 
-  const { selectOptions: drivers } = useSelector((state) => state.driver);
-  const { selectOptions: trucks } = useSelector((state) => state.truck);
-  const { selectOptions: carts } = useSelector((state) => state.cart);
+  const { selectOptions: drivers } = useSelector((state) => state.driver)
+  const { selectOptions: trucks } = useSelector((state) => state.truck)
+  const { selectOptions: carts } = useSelector((state) => state.cart)
 
-  const saoPauloTimezone = 'America/Sao_Paulo';
-  const currentDate = zonedTimeToUtc(new Date(), saoPauloTimezone);
+  const saoPauloTimezone = 'America/Sao_Paulo'
+  const currentDate = zonedTimeToUtc(new Date(), saoPauloTimezone)
 
-  const [body, setBody] = useState({});
-  const [truckId, setTruckId] = useState('');
-  const [cartId, setCartId] = useState('');
-  const [driverId, setDriverId] = useState('');
-  const [date] = useState(currentDate);
+  const [body, setBody] = useState({})
+  const [truckId, setTruckId] = useState('')
+  const [cartId, setCartId] = useState('')
+  const [driverId, setDriverId] = useState('')
+  const [date] = useState(currentDate)
 
   useEffect(() => {
-    dispatch(getDriversSelectRequest());
-    dispatch(getTrucksSelectRequest());
-    dispatch(getCartsSelectRequest());
-  }, [dispatch]);
+    dispatch(getDriversSelectRequest())
+    dispatch(getTrucksSelectRequest())
+    dispatch(getCartsSelectRequest())
+  }, [dispatch])
 
   const onClose = useCallback(() => {
-    setBody({});
-    setTruckId('');
-    setDriverId('');
-    setCartId('');
-    setShowModal(false);
-  }, [setShowModal]);
+    setBody({})
+    setTruckId('')
+    setDriverId('')
+    setCartId('')
+    setShowModal(false)
+  }, [setShowModal])
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
-    dispatch(createFinancialRequest(body));
-  };
+    ev.preventDefault()
+    dispatch(createFinancialRequest(body))
+  }
 
   useEffect(() => {
     setBody((state) => ({
@@ -66,28 +64,21 @@ const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
       start_date: date,
       truck_id: truckId,
       driver_id: driverId,
-      cart_id: cartId
-    }));
-  }, [truckId, driverId, cartId, date]);
+      cart_id: cartId,
+    }))
+  }, [truckId, driverId, cartId, date])
 
   useEffect(() => {
     if (successCreate) {
-      onClose();
-      dispatch(getFinancialsRequest(initialStateQuery.INITIAL_STATE_FINANCIAL));
+      onClose()
+      dispatch(getFinancialsRequest(initialStateQuery.INITIAL_STATE_FINANCIAL))
     }
-  }, [successCreate, onClose, dispatch]);
+  }, [successCreate, onClose, dispatch])
 
   return (
-    <BaseModal
-      open={showModal}
-      onClose={onClose}
-      maxWidth={'335px'}
-      maxHeight={'600px'}
-    >
+    <BaseModal open={showModal} onClose={onClose} maxWidth={'335px'} maxHeight={'600px'}>
       <BaseContentHeader mt={2}>
-        <BaseTitle
-          sx={{ fontFamily: 'Poppins, sans-serif!important', fontSize: '24px' }}
-        >
+        <BaseTitle sx={{ fontFamily: 'Poppins, sans-serif!important', fontSize: '24px' }}>
           {t('financial.new_financial')}
         </BaseTitle>
       </BaseContentHeader>
@@ -108,7 +99,7 @@ const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
               options={drivers ?? []}
               getOptionLabel={(option) => option.name}
               onChange={(event, newValue) => {
-                setDriverId(newValue.id);
+                setDriverId(newValue.id)
               }}
             />
           </Grid>
@@ -120,7 +111,7 @@ const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
               options={trucks ?? []}
               getOptionLabel={(option) => `${option.id} - ${option.truckBoard}`}
               onChange={(event, newValue) => {
-                setTruckId(newValue?.id);
+                setTruckId(newValue?.id)
               }}
             />
           </Grid>
@@ -133,7 +124,7 @@ const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
               options={carts ?? []}
               getOptionLabel={(option) => `${option.id} - ${option.cartModels}`}
               onChange={(event, newValue) => {
-                setCartId(newValue.id);
+                setCartId(newValue.id)
               }}
             />
           </Grid>
@@ -149,7 +140,7 @@ const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
               width: '140px',
               height: '49px',
               border: '1px solid #509BFB',
-              color: '#FFF'
+              color: '#FFF',
             }}
             variant="text"
           >
@@ -159,9 +150,7 @@ const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
         <Grid container item xs={12} md={12} lg={6}>
           <BaseButton
             onClick={(ev) => handleSubmit(ev)}
-            background={
-              'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
-            }
+            background={'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'}
             sx={{ width: '140px', height: '49px' }}
           >
             {t('button.confirm')}
@@ -171,7 +160,7 @@ const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
 
       {loading && <BaseLoading />}
     </BaseModal>
-  );
-};
+  )
+}
 
-export default BaseModalAddFinancial;
+export default BaseModalAddFinancial

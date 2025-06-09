@@ -1,7 +1,7 @@
-import { Grid } from '@mui/material';
-import { useMediaQuery } from 'react-responsive';
-import BaseSelect from '../BaseSelect/BaseSelect';
-import BaseInput from '../BaseInput/BaseInput';
+import { Grid } from '@mui/material'
+import { useMediaQuery } from 'react-responsive'
+import BaseSelect from '../BaseSelect/BaseSelect'
+import BaseInput from '../BaseInput/BaseInput'
 
 const BaseSelectWithInput = ({
   selectValue,
@@ -18,9 +18,9 @@ const BaseSelectWithInput = ({
   getOptionLabel,
   xs,
   md,
-  lg
+  lg,
 }) => {
-  const isMobile = useMediaQuery({ maxWidth: 500 });
+  const isMobile = useMediaQuery({ maxWidth: 500 })
 
   return (
     <Grid
@@ -49,7 +49,7 @@ const BaseSelectWithInput = ({
         onChange={onChange}
       />
     </Grid>
-  );
-};
+  )
+}
 
-export default BaseSelectWithInput;
+export default BaseSelectWithInput

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { STablePagination } from '../BaseTable/BaseTable';
+import { useEffect, useState } from 'react'
+import { STablePagination } from '../BaseTable/BaseTable'
 
 export const TablePagination = ({
   data,
@@ -8,40 +8,40 @@ export const TablePagination = ({
   allowRowsPerPage,
   arrayRowPerPage,
   labelRowsPerPage,
-  sx
+  sx,
 }) => {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(0)
 
   useEffect(() => {
     if (data?.totalPages < data?.currentPage) {
       if (data?.dataResult === null) {
         setQuery((state) => ({
           ...state,
-          page: 1
-        }));
+          page: 1,
+        }))
       }
     }
-  }, [data, setQuery, page]);
+  }, [data, setQuery, page])
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    setPage(newPage)
     setQuery((state) => ({
       ...state,
-      page: newPage + 1
-    }));
-  };
+      page: newPage + 1,
+    }))
+  }
 
   const handleChangeRowsPerPage = (event) => {
     setQuery((state) => ({
       ...state,
       limit: parseInt(event.target.value, 10),
-      page: 1
-    }));
-  };
+      page: 1,
+    }))
+  }
 
   const handleRowsPerPage = () => {
-    return [25, 50, 100];
-  };
+    return [25, 50, 100]
+  }
 
   return (
     <STablePagination
@@ -49,14 +49,10 @@ export const TablePagination = ({
       sx={{
         ...sx,
         marginLeft: 'auto',
-        color: '#939395'
+        color: '#939395',
       }}
       rowsPerPageOptions={
-        allowRowsPerPage
-          ? arrayRowPerPage
-            ? arrayRowPerPage
-            : handleRowsPerPage()
-          : []
+        allowRowsPerPage ? (arrayRowPerPage ? arrayRowPerPage : handleRowsPerPage()) : []
       }
       count={data?.total ?? 0}
       rowsPerPage={query?.limit}
@@ -66,5 +62,5 @@ export const TablePagination = ({
       onPageChange={handleChangePage}
       onRowsPerPageChange={handleChangeRowsPerPage}
     />
-  );
-};
+  )
+}

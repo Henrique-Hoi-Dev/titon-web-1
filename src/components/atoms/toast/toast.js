@@ -1,5 +1,5 @@
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Toast = () => {
   return (
@@ -15,7 +15,7 @@ const Toast = () => {
       draggable
       pauseOnHover
     />
-  );
-};
+  )
+}
 
-export default Toast;
+export default Toast

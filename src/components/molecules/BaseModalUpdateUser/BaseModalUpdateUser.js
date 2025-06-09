@@ -1,59 +1,52 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { Grid } from '@mui/material';
-import {
-  getUserByIdRequest,
-  updateUserRequest
-} from 'store/modules/user/userSlice';
-import { maskCPF } from '@/utils/masks';
+import React, { useState, useEffect, useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import { Grid } from '@mui/material'
+import { getUserByIdRequest, updateUserRequest } from 'store/modules/user/userSlice'
+import { maskCPF } from '@/utils/masks'
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton';
-import BaseModal from 'components/molecules/BaseModal/BaseModal';
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
-import BaseInput from 'components/molecules/BaseInput/BaseInput';
-import BaseSelect from 'components/molecules/BaseSelect/BaseSelect';
-import enums from '@/utils/enums';
+import BaseButton from 'components/atoms/BaseButton/BaseButton'
+import BaseModal from 'components/molecules/BaseModal/BaseModal'
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
+import BaseInput from 'components/molecules/BaseInput/BaseInput'
+import BaseSelect from 'components/molecules/BaseSelect/BaseSelect'
+import enums from '@/utils/enums'
 
 const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const {
-    selected: user,
-    loading,
-    success
-  } = useSelector((state) => state.user);
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
+  const { selected: user, loading, success } = useSelector((state) => state.user)
 
-  const [body, setBody] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+  const [body, setBody] = useState({})
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [passwordError, setPasswordError] = useState(false)
 
   const onClose = useCallback(() => {
-    setShowModal(false);
-    setBody({});
-    setPasswordError(false);
-  }, [setShowModal]);
+    setShowModal(false)
+    setBody({})
+    setPasswordError(false)
+  }, [setShowModal])
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
+    ev.preventDefault()
 
     if (body?.password !== body?.confirmPassword) {
-      setPasswordError(true);
-      return;
+      setPasswordError(true)
+      return
     }
 
-    dispatch(updateUserRequest({ id: data.id, data: body }));
-    setPasswordError(false);
-  };
+    dispatch(updateUserRequest({ id: data.id, data: body }))
+    setPasswordError(false)
+  }
 
   useEffect(() => {
     if (data.id) {
-      dispatch(getUserByIdRequest(data.id));
+      dispatch(getUserByIdRequest(data.id))
     }
-  }, [dispatch, data.id]);
+  }, [dispatch, data.id])
 
   useEffect(() => {
     if (user) {
@@ -62,16 +55,16 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
         name: user?.name,
         email: user?.email,
         cpf: user?.cpf,
-        type_position: user?.type_position
-      }));
+        type_position: user?.type_position,
+      }))
     }
-  }, [user]);
+  }, [user])
 
   useEffect(() => {
     if (success) {
-      onClose();
+      onClose()
     }
-  }, [success, onClose]);
+  }, [success, onClose])
 
   return (
     <BaseModal
@@ -99,14 +92,14 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
               label={'Name'}
               styles={{
                 '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                  height: '1.4rem'
-                }
+                  height: '1.4rem',
+                },
               }}
               value={body?.name ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  name: ev.target.value
+                  name: ev.target.value,
                 }))
               }
             />
@@ -119,14 +112,14 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
               styles={{
                 maxWidth: '274px',
                 '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                  height: '1.4rem'
-                }
+                  height: '1.4rem',
+                },
               }}
               value={body?.email ?? ''}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  email: ev.target.value
+                  email: ev.target.value,
                 }))
               }
             />
@@ -141,7 +134,7 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cpf: maskCPF(ev.target.value)
+                  cpf: maskCPF(ev.target.value),
                 }))
               }
             />
@@ -153,21 +146,17 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
                 placeholder={'Tipo usuário'}
                 options={enums.typeUser ?? []}
                 getOptionLabel={(option) => option.name ?? ''}
-                isOptionEqualToValue={(option, value) =>
-                  option.value === value.value
-                }
-                value={enums.typeUser.find(
-                  (option) => option.value === user?.type_position
-                )}
+                isOptionEqualToValue={(option, value) => option.value === value.value}
+                value={enums.typeUser.find((option) => option.value === user?.type_position)}
                 onChange={(event, newValue) => {
                   if (newValue) {
                     setBody((state) => ({
                       ...state,
-                      type_position: newValue.value
-                    }));
+                      type_position: newValue.value,
+                    }))
                   }
                   if (newValue === null) {
-                    setBody((state) => ({ ...state, type_position: '' }));
+                    setBody((state) => ({ ...state, type_position: '' }))
                   }
                 }}
               />
@@ -182,8 +171,8 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
               isPassword
               styles={{
                 '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                  height: '1.4rem'
-                }
+                  height: '1.4rem',
+                },
               }}
               error={passwordError}
               helperText={passwordError ? 'Senhas não conferem' : ''}
@@ -191,7 +180,7 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  password: ev.target.value
+                  password: ev.target.value,
                 }))
               }
             />
@@ -203,8 +192,8 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
               type={showConfirmPassword ? 'text' : 'password'}
               styles={{
                 '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                  height: '1.4em'
-                }
+                  height: '1.4em',
+                },
               }}
               isPassword
               value={body?.confirmPassword ?? ''}
@@ -212,8 +201,8 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
               onChange={(ev) => {
                 setBody((state) => ({
                   ...state,
-                  confirmPassword: ev.target.value
-                }));
+                  confirmPassword: ev.target.value,
+                }))
               }}
             />
           </Grid>
@@ -236,7 +225,7 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
                   width: '140px',
                   height: '49px',
                   border: '1px solid #509BFB',
-                  color: '#FFF'
+                  color: '#FFF',
                 }}
                 variant="text"
               >
@@ -247,15 +236,13 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
               <BaseButton
                 type="submit"
                 color="success"
-                background={
-                  'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
-                }
+                background={'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'}
                 sx={{
                   fontSize: '14px',
                   color: 'white',
                   width: '139px',
                   height: '49px',
-                  marginRight: '15px'
+                  marginRight: '15px',
                 }}
               >
                 {t('button.update')}
@@ -267,7 +254,7 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
 
       {loading && <BaseLoading />}
     </BaseModal>
-  );
-};
+  )
+}
 
-export default BaseModalUpdateUser;
+export default BaseModalUpdateUser

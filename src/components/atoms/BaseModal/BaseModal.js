@@ -1,5 +1,5 @@
-import React from 'react';
-import { Modal, Box } from '@mui/material';
+import React from 'react'
+import { Modal, Box } from '@mui/material'
 
 const BaseModal = ({ children, showModal, setShowModal, ...props }) => {
   return (
@@ -15,13 +15,13 @@ const BaseModal = ({ children, showModal, setShowModal, ...props }) => {
           bgcolor: 'background.paper',
           boxShadow: 24,
           p: 4,
-          borderRadius: '8px'
+          borderRadius: '8px',
         }}
       >
         {children}
       </Box>
     </Modal>
-  );
-};
+  )
+}
 
-export default BaseModal;
+export default BaseModal

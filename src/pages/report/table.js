@@ -1,23 +1,17 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Grid, Paper, TableContainer, Checkbox } from '@mui/material';
-import {
-  SCell,
-  SHead,
-  SRow,
-  STable,
-  STableBody
-} from 'components/atoms/BaseTable/BaseTable';
-import { TablePagination } from 'components/atoms/tablePagination/tablePagination';
-import { formatDate } from 'utils/formatDate';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
-import Text from 'components/atoms/BaseText/BaseText';
-import imgNotFound from '../../assets/NotFound.png';
+import React, { useState, useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Grid, Paper, TableContainer, Checkbox } from '@mui/material'
+import { SCell, SHead, SRow, STable, STableBody } from 'components/atoms/BaseTable/BaseTable'
+import { TablePagination } from 'components/atoms/tablePagination/tablePagination'
+import { formatDate } from 'utils/formatDate'
+import Loading from '@/components/atoms/BaseLoading/BaseLoading'
+import Text from 'components/atoms/BaseText/BaseText'
+import imgNotFound from '../../assets/NotFound.png'
 
 const TableReport = ({ data, query, setQuery, isFetching, loading }) => {
-  const { t } = useTranslation();
-  const [selected, setSelected] = useState([]);
-  const [visibleRows, setVisibleRows] = useState(null);
+  const { t } = useTranslation()
+  const [selected, setSelected] = useState([])
+  const [visibleRows, setVisibleRows] = useState(null)
 
   const rows = useMemo(
     () =>
@@ -26,38 +20,38 @@ const TableReport = ({ data, query, setQuery, isFetching, loading }) => {
         driver: item?.driver_name,
         date: formatDate(item?.start_date),
         truck: item?.truck_models,
-        cart: item?.cart_models
+        cart: item?.cart_models,
       })) ?? [],
     [data]
-  );
+  )
 
   useEffect(() => {
-    setVisibleRows(rows);
-  }, [data, rows]);
+    setVisibleRows(rows)
+  }, [data, rows])
 
   const handleSelectAllClick = (event) => {
-    setSelected(event.target.checked ? rows.map((n) => n.id) : []);
-  };
+    setSelected(event.target.checked ? rows.map((n) => n.id) : [])
+  }
 
   const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
+    const selectedIndex = selected.indexOf(id)
+    let newSelected = []
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
+      newSelected = newSelected.concat(selected, id)
     } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
+      newSelected = newSelected.concat(selected.slice(1))
     } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
+      newSelected = newSelected.concat(selected.slice(0, -1))
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
         selected.slice(selectedIndex + 1)
-      );
+      )
     }
 
-    setSelected(newSelected);
-  };
+    setSelected(newSelected)
+  }
 
   return (
     <TableContainer
@@ -70,9 +64,7 @@ const TableReport = ({ data, query, setQuery, isFetching, loading }) => {
             <SCell>
               <Checkbox
                 color="primary"
-                indeterminate={
-                  selected.length > 0 && selected.length < rows.length
-                }
+                indeterminate={selected.length > 0 && selected.length < rows.length}
                 checked={rows.length > 0 && selected.length === rows.length}
                 onChange={handleSelectAllClick}
               />
@@ -86,8 +78,8 @@ const TableReport = ({ data, query, setQuery, isFetching, loading }) => {
         </SHead>
         <STableBody>
           {visibleRows?.map((row, index) => {
-            const isItemSelected = selected.indexOf(row.id) !== -1;
-            const labelId = `enhanced-table-checkbox-${index}`;
+            const isItemSelected = selected.indexOf(row.id) !== -1
+            const labelId = `enhanced-table-checkbox-${index}`
 
             return (
               <SRow
@@ -116,7 +108,7 @@ const TableReport = ({ data, query, setQuery, isFetching, loading }) => {
                 <SCell align="right">{row.truck}</SCell>
                 <SCell align="right">{row.cart}</SCell>
               </SRow>
-            );
+            )
           })}
         </STableBody>
       </STable>
@@ -147,14 +139,14 @@ const TableReport = ({ data, query, setQuery, isFetching, loading }) => {
               width={'60px'}
               style={{
                 verticalAlign: 'middle',
-                marginLeft: '24px'
+                marginLeft: '24px',
               }}
             />
           </Text>
         </Grid>
       )}
     </TableContainer>
-  );
-};
+  )
+}
 
-export default TableReport;
+export default TableReport

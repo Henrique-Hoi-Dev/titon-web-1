@@ -1,69 +1,65 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { Grid, IconButton } from '@mui/material';
-import {
-  createCartRequest,
-  getCartsRequest,
-  resetCartCreate
-} from 'store/modules/cart/cartSlice';
-import { uploadImage } from '@/services/uploadImage';
-import { errorNotification } from '@/utils/notification';
+import React, { useState, useCallback, useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import { Grid, IconButton } from '@mui/material'
+import { createCartRequest, getCartsRequest, resetCartCreate } from 'store/modules/cart/cartSlice'
+import { uploadImage } from '@/services/uploadImage'
+import { errorNotification } from '@/utils/notification'
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton';
-import BaseModal from 'components/molecules/BaseModal/BaseModal';
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
-import BaseInput from 'components/molecules/BaseInput/BaseInput';
-import BaseSelect from 'components/molecules/BaseSelect/BaseSelect';
-import enums from '@/utils/enums';
-import BaseAvatar from '../BaseAvatar/BaseAvatar';
-import BaseInputMaskMil from '../BaseInputMaskMil/BaseInputMaskMil';
+import BaseButton from 'components/atoms/BaseButton/BaseButton'
+import BaseModal from 'components/molecules/BaseModal/BaseModal'
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
+import BaseInput from 'components/molecules/BaseInput/BaseInput'
+import BaseSelect from 'components/molecules/BaseSelect/BaseSelect'
+import enums from '@/utils/enums'
+import BaseAvatar from '../BaseAvatar/BaseAvatar'
+import BaseInputMaskMil from '../BaseInputMaskMil/BaseInputMaskMil'
 
 const BaseModalAddCart = ({ showModal, setShowModal }) => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const { t } = useTranslation()
+  const dispatch = useDispatch()
 
-  const { loadingGet: loading } = useSelector((state) => state.cart);
+  const { loadingGet: loading } = useSelector((state) => state.cart)
 
-  const [file, setFile] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null);
+  const [file, setFile] = useState(null)
+  const [previewImage, setPreviewImage] = useState(null)
 
-  const [body, setBody] = useState({});
+  const [body, setBody] = useState({})
 
-  const isMountedRef = useRef(true);
+  const isMountedRef = useRef(true)
 
   useEffect(() => {
-    isMountedRef.current = true;
+    isMountedRef.current = true
     return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
+      isMountedRef.current = false
+    }
+  }, [])
 
   const onClose = useCallback(() => {
-    if (!isMountedRef.current) return;
-    setShowModal(false);
-    setBody({});
-    setPreviewImage(null);
-  }, [setShowModal]);
+    if (!isMountedRef.current) return
+    setShowModal(false)
+    setBody({})
+    setPreviewImage(null)
+  }, [setShowModal])
 
   const handleChange = (e) => {
-    e.preventDefault();
-    const selectedFile = e.target.files[0];
-    if (!selectedFile) return;
-    setFile(selectedFile);
-    setPreviewImage(URL.createObjectURL(selectedFile));
-  };
+    e.preventDefault()
+    const selectedFile = e.target.files[0]
+    if (!selectedFile) return
+    setFile(selectedFile)
+    setPreviewImage(URL.createObjectURL(selectedFile))
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     dispatch(
       createCartRequest({
         ...body,
         onSuccess: async (createdCartId) => {
-          if (!isMountedRef.current) return;
+          if (!isMountedRef.current) return
 
           try {
             if (file && createdCartId) {
@@ -71,22 +67,22 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
                 url: 'manager/cart/upload-image',
                 file,
                 id: createdCartId,
-                body: { category: 'avatar_cart' }
-              });
+                body: { category: 'avatar_cart' },
+              })
             }
 
-            if (!isMountedRef.current) return;
+            if (!isMountedRef.current) return
 
-            dispatch(getCartsRequest({}));
-            dispatch(resetCartCreate());
-            onClose();
+            dispatch(getCartsRequest({}))
+            dispatch(resetCartCreate())
+            onClose()
           } catch (error) {
-            if (isMountedRef.current) errorNotification(error);
+            if (isMountedRef.current) errorNotification(error)
           }
-        }
+        },
       })
-    );
-  };
+    )
+  }
 
   return (
     <BaseModal
@@ -115,8 +111,8 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
             sx={{
               cursor: 'pointer',
               '&:hover': {
-                cursor: 'pointer'
-              }
+                cursor: 'pointer',
+              },
             }}
           >
             <IconButton
@@ -126,22 +122,17 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
               sx={{
                 background: 'transparent',
                 '&:hover': {
-                  background: 'transparent'
-                }
+                  background: 'transparent',
+                },
               }}
             >
-              <input
-                hidden
-                accept="image/*"
-                type="file"
-                onChange={handleChange}
-              />
+              <input hidden accept="image/*" type="file" onChange={handleChange} />
               <BaseAvatar
                 src={previewImage}
                 styles={{
                   height: 'auto',
                   width: '200px',
-                  borderRadius: '8px'
+                  borderRadius: '8px',
                 }}
               />
             </IconButton>
@@ -162,14 +153,14 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
                 styles={{
                   maxWidth: '274px',
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
+                    height: '1.4rem',
+                  },
                 }}
                 value={body?.cart_brand ?? ''}
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    cart_brand: ev.target.value
+                    cart_brand: ev.target.value,
                   }))
                 }
               />
@@ -182,14 +173,14 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
                 required
                 styles={{
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
+                    height: '1.4rem',
+                  },
                 }}
                 value={body?.cart_models ?? ''}
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    cart_models: ev.target.value
+                    cart_models: ev.target.value,
                   }))
                 }
               />
@@ -204,14 +195,14 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
                 styles={{
                   maxWidth: '274px',
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
+                    height: '1.4rem',
+                  },
                 }}
                 value={body?.cart_board ?? ''}
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    cart_board: ev.target.value.toUpperCase()
+                    cart_board: ev.target.value.toUpperCase(),
                   }))
                 }
               />
@@ -225,14 +216,14 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
                 styles={{
                   maxWidth: '274px',
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
+                    height: '1.4rem',
+                  },
                 }}
                 value={body?.cart_color ?? ''}
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    cart_color: ev.target.value
+                    cart_color: ev.target.value,
                   }))
                 }
               />
@@ -244,18 +235,16 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
                 placeholder={t('modal.add_cart_type_cart_placeholder')}
                 options={enums.typeCart || []}
                 getOptionLabel={(option) => option.label ?? ''}
-                isOptionEqualToValue={(option, value) =>
-                  option.value === value?.value
-                }
+                isOptionEqualToValue={(option, value) => option.value === value?.value}
                 onChange={(event, newValue) => {
                   if (newValue) {
                     setBody((state) => ({
                       ...state,
-                      cart_bodyworks: newValue.value
-                    }));
+                      cart_bodyworks: newValue.value,
+                    }))
                   }
                   if (newValue === null) {
-                    setBody((state) => ({ ...state, cart_bodyworks: '' }));
+                    setBody((state) => ({ ...state, cart_bodyworks: '' }))
                   }
                 }}
               />
@@ -270,14 +259,14 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem'
-                    }
+                      height: '1.4rem',
+                    },
                   }}
                   value={body?.cart_liter_capacity ?? ''}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      cart_liter_capacity: ev.target.value
+                      cart_liter_capacity: ev.target.value,
                     }))
                   }
                 />
@@ -296,14 +285,14 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
                   styles={{
                     maxWidth: '274px',
                     '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem'
-                    }
+                      height: '1.4rem',
+                    },
                   }}
                   value={body?.cart_ton_capacity ?? ''}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      cart_ton_capacity: ev.target.value
+                      cart_ton_capacity: ev.target.value,
                     }))
                   }
                 />
@@ -318,14 +307,14 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
                 styles={{
                   maxWidth: '274px',
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
+                    height: '1.4rem',
+                  },
                 }}
                 value={body?.cart_tara ?? ''}
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    cart_tara: ev.target.value
+                    cart_tara: ev.target.value,
                   }))
                 }
               />
@@ -339,14 +328,14 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
                 styles={{
                   maxWidth: '274px',
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
+                    height: '1.4rem',
+                  },
                 }}
                 value={body?.cart_chassis ?? ''}
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    cart_chassis: ev.target.value
+                    cart_chassis: ev.target.value,
                   }))
                 }
               />
@@ -362,14 +351,14 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
                 styles={{
                   maxWidth: '274px',
                   '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                    height: '1.4rem'
-                  }
+                    height: '1.4rem',
+                  },
                 }}
                 value={body?.cart_year ?? ''}
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    cart_year: ev.target.value
+                    cart_year: ev.target.value,
                   }))
                 }
               />
@@ -393,7 +382,7 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
                     width: '140px',
                     height: '49px',
                     border: '1px solid #509BFB',
-                    color: '#FFF'
+                    color: '#FFF',
                   }}
                   variant="text"
                 >
@@ -404,15 +393,13 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
                 <BaseButton
                   type="submit"
                   color="success"
-                  background={
-                    'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
-                  }
+                  background={'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'}
                   sx={{
                     fontSize: '14px',
                     color: 'white',
                     width: '139px',
                     height: '49px',
-                    marginRight: '15px'
+                    marginRight: '15px',
                   }}
                 >
                   {t('button.register')}
@@ -425,7 +412,7 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
 
       {loading && <BaseLoading />}
     </BaseModal>
-  );
-};
+  )
+}
 
-export default BaseModalAddCart;
+export default BaseModalAddCart

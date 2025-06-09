@@ -1,33 +1,33 @@
-import React, { useRef } from 'react';
-import { Fab, Box, Button, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import AddIcon from '@mui/icons-material/Add';
+import React, { useRef } from 'react'
+import { Fab, Box, Button, Typography } from '@mui/material'
+import { useTranslation } from 'react-i18next'
+import AddIcon from '@mui/icons-material/Add'
 
 const BaseImagePreview = (props) => {
-  const { t } = useTranslation();
-  const fileInputRef = useRef();
+  const { t } = useTranslation()
+  const fileInputRef = useRef()
 
   const handleClick = (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    fileInputRef.current.click();
-  };
+    fileInputRef.current.click()
+  }
 
   const setMedia = (e) => {
-    const selectedFile = e.target.files[0];
+    const selectedFile = e.target.files[0]
 
-    const reader = new FileReader();
+    const reader = new FileReader()
 
     reader.onloadend = () => {
-      props.setPreviewMedia(reader.result);
-    };
+      props.setPreviewMedia(reader.result)
+    }
 
-    reader.readAsDataURL(selectedFile);
-  };
+    reader.readAsDataURL(selectedFile)
+  }
 
   const removeMedia = () => {
-    props.setPreviewMedia(null);
-  };
+    props.setPreviewMedia(null)
+  }
 
   return (
     <>
@@ -38,7 +38,7 @@ const BaseImagePreview = (props) => {
               maxHeight: 182,
               maxWidth: 392,
               display: 'flex',
-              flexDirection: 'column'
+              flexDirection: 'column',
             }}
           >
             <img
@@ -52,15 +52,10 @@ const BaseImagePreview = (props) => {
             sx={{
               display: 'flex',
               justifyContent: 'center',
-              mt: 1
+              mt: 1,
             }}
           >
-            <Button
-              disableElevation
-              size="medium"
-              variant="outlined"
-              onClick={removeMedia}
-            >
+            <Button disableElevation size="medium" variant="outlined" onClick={removeMedia}>
               {t('field.remove')}
             </Button>
           </Box>
@@ -75,7 +70,7 @@ const BaseImagePreview = (props) => {
             alignItems: 'center',
             width: '23rem',
             height: '10rem',
-            border: '0.5px dashed #cccccc'
+            border: '0.5px dashed #cccccc',
           }}
         >
           <input
@@ -101,8 +96,8 @@ const BaseImagePreview = (props) => {
                 transform: 'translatey(-10px)',
                 '&:hover': {
                   backgroundColor: '#009C6D',
-                  opacity: 0.8
-                }
+                  opacity: 0.8,
+                },
               }}
               color="secondary"
               aria-label="upload multimedia"
@@ -116,7 +111,7 @@ const BaseImagePreview = (props) => {
         </Box>
       )}
     </>
-  );
-};
+  )
+}
 
-export default BaseImagePreview;
+export default BaseImagePreview

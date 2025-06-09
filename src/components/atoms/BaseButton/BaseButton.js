@@ -1,6 +1,6 @@
-import React from 'react';
-import { CircularProgress } from '@mui/material';
-import { Button as ButtonComponent } from '@mui/material';
+import React from 'react'
+import { CircularProgress } from '@mui/material'
+import { Button as ButtonComponent } from '@mui/material'
 
 const BaseButton = ({
   disabled,
@@ -26,7 +26,7 @@ const BaseButton = ({
             paddingTop: '8px',
             lineHeight: '0px',
             fontSize: `${fontsize ? fontsize : '14px'}`,
-            background: `${background}`
+            background: `${background}`,
           }}
           {...props}
         >
@@ -40,7 +40,7 @@ const BaseButton = ({
           sx={{
             background: '#fff',
             position: 'relative',
-            fontSize: '14px'
+            fontSize: '14px',
           }}
           fullWidth
           {...props}
@@ -54,13 +54,13 @@ const BaseButton = ({
               top: '50%',
               left: '50%',
               marginTop: '-12px',
-              marginLeft: '-12px'
+              marginLeft: '-12px',
             }}
           />
         </ButtonComponent>
       )}
     </>
-  );
-};
+  )
+}
 
-export default BaseButton;
+export default BaseButton

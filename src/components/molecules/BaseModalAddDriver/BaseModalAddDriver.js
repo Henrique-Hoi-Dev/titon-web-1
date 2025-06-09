@@ -1,51 +1,45 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import {
-  Grid,
-  LinearProgress,
-  linearProgressClasses,
-  styled
-} from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { formatMoney, maskCPF, maskPhone } from 'utils/masks';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState, useCallback } from 'react'
+import { Grid, LinearProgress, linearProgressClasses, styled } from '@mui/material'
+import { useTranslation } from 'react-i18next'
+import { formatMoney, maskCPF, maskPhone } from 'utils/masks'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   createDriverRequest,
   getDriversRequest,
-  resetCreateDriverStatus
-} from 'store/modules/driver/driverSlice';
-import { unmaskPhone } from '@/utils/unmask';
-import { unmaskMoney } from '@/utils/unmaskMoney';
-import { evaluateStrongPassword } from '@/utils/passwordVerify';
+  resetCreateDriverStatus,
+} from 'store/modules/driver/driverSlice'
+import { unmaskPhone } from '@/utils/unmask'
+import { unmaskMoney } from '@/utils/unmaskMoney'
+import { evaluateStrongPassword } from '@/utils/passwordVerify'
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton';
-import BaseModal from 'components/molecules/BaseModal/BaseModal';
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
-import BaseContentHeader from '@/components/molecules/BaseContentHeader/BaseContentHeader';
-import BaseInput from '@/components/molecules/BaseInput/BaseInput';
-import BaseTitle from '@/components/atoms/BaseTitle/BaseTitle';
-import initialStateQuery from '@/utils/initialStateQuery';
+import BaseButton from 'components/atoms/BaseButton/BaseButton'
+import BaseModal from 'components/molecules/BaseModal/BaseModal'
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
+import BaseContentHeader from '@/components/molecules/BaseContentHeader/BaseContentHeader'
+import BaseInput from '@/components/molecules/BaseInput/BaseInput'
+import BaseTitle from '@/components/atoms/BaseTitle/BaseTitle'
+import initialStateQuery from '@/utils/initialStateQuery'
 
 const BaseModalAddDriver = ({ showModal, setShowModal }) => {
-  const { t } = useTranslation();
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const { t } = useTranslation()
+  const [confirmPassword, setConfirmPassword] = useState('')
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
-  const [passwordError, setPasswordError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false)
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 5,
     borderRadius: 2,
     [`&.${linearProgressClasses.colorPrimary}`]: {
-      backgroundColor:
-        theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800]
+      backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
     },
     [`& .${linearProgressClasses.bar}`]: {
       borderRadius: 2,
-      backgroundColor: evaluateStrongPassword(body.password).color
-    }
-  }));
+      backgroundColor: evaluateStrongPassword(body.password).color,
+    },
+  }))
 
   const [body, setBody] = useState({
     name: '',
@@ -53,25 +47,25 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
     email: '',
     phone: '',
     password: '',
-    confirm_password: ''
-  });
-  const [data, setData] = useState({});
+    confirm_password: '',
+  })
+  const [data, setData] = useState({})
 
-  const dispatch = useDispatch();
-  const { loadingCreate, successCreate } = useSelector((state) => state.driver);
+  const dispatch = useDispatch()
+  const { loadingCreate, successCreate } = useSelector((state) => state.driver)
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
+    ev.preventDefault()
 
     if (body?.password !== confirmPassword) {
-      setPasswordError(true);
-      return;
+      setPasswordError(true)
+      return
     }
-    dispatch(createDriverRequest(data));
+    dispatch(createDriverRequest(data))
 
-    setPasswordError(false);
-    setConfirmPassword('');
-  };
+    setPasswordError(false)
+    setConfirmPassword('')
+  }
 
   const onClose = useCallback(() => {
     setBody({
@@ -80,10 +74,10 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
       email: '',
       phone: '',
       password: '',
-      confirm_password: ''
-    });
-    setShowModal(false);
-  }, [setShowModal]);
+      confirm_password: '',
+    })
+    setShowModal(false)
+  }, [setShowModal])
 
   useEffect(() => {
     setData((state) => ({
@@ -94,17 +88,17 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
       percentage: Number(body?.percentage),
       phone: unmaskPhone(body?.phone),
       daily: unmaskMoney(body?.daily),
-      value_fix: unmaskMoney(body?.value_fix)
-    }));
-  }, [body]);
+      value_fix: unmaskMoney(body?.value_fix),
+    }))
+  }, [body])
 
   useEffect(() => {
     if (successCreate) {
-      dispatch(getDriversRequest(initialStateQuery.INITIAL_STATE_DRIVER));
-      dispatch(resetCreateDriverStatus());
-      onClose();
+      dispatch(getDriversRequest(initialStateQuery.INITIAL_STATE_DRIVER))
+      dispatch(resetCreateDriverStatus())
+      onClose()
     }
-  }, [successCreate, onClose, dispatch]);
+  }, [successCreate, onClose, dispatch])
 
   return (
     <BaseModal
@@ -137,7 +131,7 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  name: ev.target.value
+                  name: ev.target.value,
                 }))
               }
             />
@@ -153,7 +147,7 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  cpf: maskCPF(ev.target.value)
+                  cpf: maskCPF(ev.target.value),
                 }))
               }
             />
@@ -172,7 +166,7 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  password: ev.target.value
+                  password: ev.target.value,
                 }))
               }
               isPassword
@@ -210,7 +204,7 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  phone: ev.target.value
+                  phone: ev.target.value,
                 }))
               }
             />
@@ -225,7 +219,7 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  daily: ev.target.value
+                  daily: ev.target.value,
                 }))
               }
             />
@@ -234,15 +228,13 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
           <Grid item xs={12} md={6} lg={6}>
             <BaseInput
               required
-              labelText={t(
-                'modal_create_driver.value_fixed_remuneration_driver'
-              )}
+              labelText={t('modal_create_driver.value_fixed_remuneration_driver')}
               styles={{ minWidth: '250px' }}
               value={formatMoney(body?.value_fix)}
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  value_fix: ev.target.value
+                  value_fix: ev.target.value,
                 }))
               }
             />
@@ -258,7 +250,7 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
               onChange={(ev) =>
                 setBody((state) => ({
                   ...state,
-                  percentage: ev.target.value
+                  percentage: ev.target.value,
                 }))
               }
             />
@@ -283,7 +275,7 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
                   width: '140px',
                   height: '49px',
                   border: '1px solid #509BFB',
-                  color: '#FFF'
+                  color: '#FFF',
                 }}
                 variant="text"
               >
@@ -293,9 +285,7 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
             <Grid container item xs={12} md={12} lg={3}>
               <BaseButton
                 onClick={(ev) => handleSubmit(ev)}
-                background={
-                  'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
-                }
+                background={'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'}
                 sx={{ width: '140px', height: '49px' }}
               >
                 {t('button.register')}
@@ -307,7 +297,7 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
 
       {loadingCreate && <BaseLoading />}
     </BaseModal>
-  );
-};
+  )
+}
 
-export default BaseModalAddDriver;
+export default BaseModalAddDriver

@@ -1,39 +1,39 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { Grid } from '@mui/material';
-import { formatDatePicker } from 'utils/formatDate';
-import { useTranslation } from 'react-i18next';
-import { maskCPF } from 'utils/masks';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState, useCallback } from 'react'
+import { Grid } from '@mui/material'
+import { formatDatePicker } from 'utils/formatDate'
+import { useTranslation } from 'react-i18next'
+import { maskCPF } from 'utils/masks'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   updateDriverRequest,
   getDriverByIdRequest,
   resetUpdateDriverStatus,
-  getDriversRequest
-} from 'store/modules/driver/driverSlice';
+  getDriversRequest,
+} from 'store/modules/driver/driverSlice'
 
-import Button from 'components/atoms/BaseButton/BaseButton';
-import Modal from 'components/molecules/BaseModal/BaseModal';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
-import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import Title from 'components/atoms/BaseTitle/BaseTitle';
-import PickerDate from 'components/atoms/pickerDate/pickerDate';
-import BaseInput from 'components/molecules/BaseInput/BaseInput';
-import BaseModalResetPassword from 'components/molecules/BaseModalResetPassword/BaseModalResetPassword';
-import initialStateQuery from '@/utils/initialStateQuery';
+import Button from 'components/atoms/BaseButton/BaseButton'
+import Modal from 'components/molecules/BaseModal/BaseModal'
+import Loading from '@/components/atoms/BaseLoading/BaseLoading'
+import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
+import Title from 'components/atoms/BaseTitle/BaseTitle'
+import PickerDate from 'components/atoms/pickerDate/pickerDate'
+import BaseInput from 'components/molecules/BaseInput/BaseInput'
+import BaseModalResetPassword from 'components/molecules/BaseModalResetPassword/BaseModalResetPassword'
+import initialStateQuery from '@/utils/initialStateQuery'
 
 const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
-  const { t } = useTranslation();
-  const [showModalResetPassword, setShowModalResetPassword] = useState(false);
-  const [body, setBody] = useState({});
+  const { t } = useTranslation()
+  const [showModalResetPassword, setShowModalResetPassword] = useState(false)
+  const [body, setBody] = useState({})
 
-  const dispatch = useDispatch();
-  const driver = useSelector((state) => state.driver);
+  const dispatch = useDispatch()
+  const driver = useSelector((state) => state.driver)
 
   useEffect(() => {
     if (data?.id) {
-      dispatch(getDriverByIdRequest(data?.id));
+      dispatch(getDriverByIdRequest(data?.id))
     }
-  }, [dispatch, data?.id]);
+  }, [dispatch, data?.id])
 
   useEffect(() => {
     if (driver?.selected) {
@@ -46,15 +46,15 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
         date_valid_nr35: driver?.selected?.dateValidNr35,
         cpf: driver?.selected?.cpf,
         date_admission: driver?.selected?.dateAdmission,
-        date_birthday: driver?.selected?.dateBirthday
-      });
+        date_birthday: driver?.selected?.dateBirthday,
+      })
     }
-  }, [driver]);
+  }, [driver])
 
   const handleSubmit = (ev) => {
-    ev.preventDefault();
-    dispatch(updateDriverRequest({ id: data.id, data: body }));
-  };
+    ev.preventDefault()
+    dispatch(updateDriverRequest({ id: data.id, data: body }))
+  }
 
   const onClose = useCallback(() => {
     setBody({
@@ -66,18 +66,18 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
       date_valid_nr35: '',
       cpf: '',
       date_admission: '',
-      date_birthday: ''
-    });
-    setShowModal(false);
-  }, [setShowModal]);
+      date_birthday: '',
+    })
+    setShowModal(false)
+  }, [setShowModal])
 
   useEffect(() => {
     if (driver?.successUpdate) {
-      dispatch(getDriversRequest(initialStateQuery.INITIAL_STATE_DRIVER));
-      dispatch(resetUpdateDriverStatus());
-      onClose();
+      dispatch(getDriversRequest(initialStateQuery.INITIAL_STATE_DRIVER))
+      dispatch(resetUpdateDriverStatus())
+      onClose()
     }
-  }, [driver?.successUpdate, onClose, dispatch]);
+  }, [driver?.successUpdate, onClose, dispatch])
 
   return (
     <>
@@ -110,7 +110,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    name: ev.target.value
+                    name: ev.target.value,
                   }))
                 }
               />
@@ -126,7 +126,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
                 onChange={(newValue) =>
                   setBody((state) => ({
                     ...state,
-                    date_admission: formatDatePicker(newValue)
+                    date_admission: formatDatePicker(newValue),
                   }))
                 }
               />
@@ -142,7 +142,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
                 onChange={(newValue) =>
                   setBody((state) => ({
                     ...state,
-                    date_birthday: formatDatePicker(newValue)
+                    date_birthday: formatDatePicker(newValue),
                   }))
                 }
               />
@@ -156,7 +156,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    number_cnh: ev.target.value
+                    number_cnh: ev.target.value,
                   }))
                 }
               />
@@ -172,7 +172,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
                 onChange={(ev) =>
                   setBody((state) => ({
                     ...state,
-                    cpf: maskCPF(ev.target.value)
+                    cpf: maskCPF(ev.target.value),
                   }))
                 }
               />
@@ -188,7 +188,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
                 onChange={(newValue) =>
                   setBody((state) => ({
                     ...state,
-                    valid_cnh: formatDatePicker(newValue)
+                    valid_cnh: formatDatePicker(newValue),
                   }))
                 }
               />
@@ -204,7 +204,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
                 onChange={(newValue) =>
                   setBody((state) => ({
                     ...state,
-                    date_valid_mopp: formatDatePicker(newValue)
+                    date_valid_mopp: formatDatePicker(newValue),
                   }))
                 }
               />
@@ -220,7 +220,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
                 onChange={(newValue) =>
                   setBody((state) => ({
                     ...state,
-                    date_valid_nr20: formatDatePicker(newValue)
+                    date_valid_nr20: formatDatePicker(newValue),
                   }))
                 }
               />
@@ -236,7 +236,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
                 onChange={(newValue) =>
                   setBody((state) => ({
                     ...state,
-                    date_valid_nr35: formatDatePicker(newValue)
+                    date_valid_nr35: formatDatePicker(newValue),
                   }))
                 }
               />
@@ -253,9 +253,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
             >
               <Button
                 onClick={() => setShowModalResetPassword(true)}
-                background={
-                  'linear-gradient(224.78deg, #FF4B4B 8.12%, #FF0000 92.21%)'
-                }
+                background={'linear-gradient(224.78deg, #FF4B4B 8.12%, #FF0000 92.21%)'}
                 sx={{ width: '100%', height: '49px' }}
               >
                 {t('label.reset_password')}
@@ -280,7 +278,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
                     width: '140px',
                     height: '49px',
                     border: '1px solid #509BFB',
-                    color: '#FFF'
+                    color: '#FFF',
                   }}
                   variant="text"
                 >
@@ -291,15 +289,13 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
                 <Button
                   type="submit"
                   color="success"
-                  background={
-                    'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'
-                  }
+                  background={'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'}
                   sx={{
                     fontSize: '14px',
                     color: 'white',
                     width: '141px',
                     height: '49px',
-                    marginRight: '15px'
+                    marginRight: '15px',
                   }}
                 >
                   {t('button.update')}
@@ -320,7 +316,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
         />
       )}
     </>
-  );
-};
+  )
+}
 
-export default BaseModalUpdateDriver;
+export default BaseModalUpdateDriver

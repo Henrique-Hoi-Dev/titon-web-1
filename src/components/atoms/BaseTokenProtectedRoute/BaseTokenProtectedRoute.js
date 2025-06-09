@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import logo from '../../../assets/logo.png';
 import jwt_decode from 'jwt-decode';
-import Text from '../BaseText/BaseText';
+import BseText from '../BaseText/BaseText';
 
 const BaseTokenProtectedRoute = ({ children }) => {
   const { t } = useTranslation();
@@ -24,14 +24,14 @@ const BaseTokenProtectedRoute = ({ children }) => {
           p={4}
           gap={2}
         >
-          <Text
+          <BseText
             id="title"
             sx={{
               marginBottom: '14px!important'
             }}
           >
             <img src={logo} alt="img" width={300} height={50} />
-          </Text>
+          </BseText>
           <div style={{ color: '#fff', fontSize: 20 }}>
             {t('error.expired_error_token')}
           </div>
@@ -55,14 +55,14 @@ const BaseTokenProtectedRoute = ({ children }) => {
             p={4}
             gap={2}
           >
-            <Text
+            <BseText
               id="title"
               sx={{
                 marginBottom: '14px!important'
               }}
             >
               <img src={logo} alt="img" width={300} height={50} />
-            </Text>
+            </BseText>
             <div style={{ color: '#fff', fontSize: 20 }}>
               {t('error.expired_token')}
             </div>
@@ -81,14 +81,14 @@ const BaseTokenProtectedRoute = ({ children }) => {
           p={4}
           gap={2}
         >
-          <Text
+          <BseText
             id="title"
             sx={{
               marginBottom: '14px!important'
             }}
           >
             <img src={logo} alt="img" width={300} height={50} />
-          </Text>
+          </BseText>
           <div style={{ color: '#fff', fontSize: 20 }}>{t('error.token')}</div>
         </Grid>
       </Grid>

@@ -1,13 +1,13 @@
-import * as React from 'react'
-import { ListItem } from '@mui/material'
+import * as React from 'react';
+import { ListItem } from '@mui/material';
 
-import List from '@mui/material/List'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemText from '@mui/material/ListItemText'
-import Collapse from '@mui/material/Collapse'
-import ExpandLess from '@mui/icons-material/ExpandLess'
-import ExpandMore from '@mui/icons-material/ExpandMore'
-import Text from '../BaseText/BaseText'
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Text from '../BaseText/BaseText';
 
 export default function NestedList({
   titleOne,
@@ -19,11 +19,11 @@ export default function NestedList({
   maxwidth,
   sx
 }) {
-  const [openOne, setOpenOne] = React.useState(false)
+  const [openOne, setOpenOne] = React.useState(false);
 
   const handleClickOne = () => {
-    setOpenOne(!openOne)
-  }
+    setOpenOne(!openOne);
+  };
 
   return (
     <>
@@ -177,5 +177,5 @@ export default function NestedList({
         </ListItemButton>
       </List>
     </>
-  )
+  );
 }

@@ -53,7 +53,7 @@ const Table = ({ data, query, setQuery, loading }) => {
                   direction={query?.sort_order?.toLowerCase()}
                   onClick={() => handleSort('id')}
                 >
-                  ID
+                  {t('modal.id')}
                 </SLabel>
               </SCell>
               <SCell>
@@ -62,7 +62,7 @@ const Table = ({ data, query, setQuery, loading }) => {
                   direction={query?.sort_order?.toLowerCase()}
                   onClick={() => handleSort('name')}
                 >
-                  Usuário
+                  {t('modal.user')}
                 </SLabel>
               </SCell>
               <SCell>
@@ -71,7 +71,7 @@ const Table = ({ data, query, setQuery, loading }) => {
                   direction={query?.sort_order?.toLowerCase()}
                   onClick={() => handleSort('email')}
                 >
-                  Email
+                  {t('modal.email')}
                 </SLabel>
               </SCell>
               <SCell>
@@ -80,10 +80,10 @@ const Table = ({ data, query, setQuery, loading }) => {
                   direction={query?.sort_order?.toLowerCase()}
                   onClick={() => handleSort('type_position')}
                 >
-                  Tipo Usuário
+                  {t('modal.add_user.type_user')}
                 </SLabel>
               </SCell>
-              <SCell>Ações</SCell>
+              <SCell>{t('button.actions')}</SCell>
             </SRow>
           </SHead>
           {!loading && data && data?.docs?.length > 0 && (

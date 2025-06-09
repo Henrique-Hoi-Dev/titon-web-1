@@ -1,6 +1,6 @@
-import React from "react";
-import { TextField } from "@mui/material";
-import { MobileDateTimePicker } from "@mui/lab";
+import React from 'react';
+import { TextField } from '@mui/material';
+import { MobileDateTimePicker } from '@mui/lab';
 
 const PickerDateTime = ({
   minWidth,
@@ -20,21 +20,21 @@ const PickerDateTime = ({
       ampm={false}
       ampmInClock={false}
       inputFormat="yyyy-MM-dd HH:mm"
-      renderInput={props => (
+      renderInput={(props) => (
         <TextField
-          size={`${size === "medium" ? "medium" : "small"}`}
+          size={`${size === 'medium' ? 'medium' : 'small'}`}
           {...props}
           sx={{
-            width: `${minWidth ? minWidth : "100%"}`,
-            "& .MuiSvgIcon-root": {
-              color: "black !important",
+            width: `${minWidth ? minWidth : '100%'}`,
+            '& .MuiSvgIcon-root': {
+              color: 'black !important'
             },
-            "& .MuiIconButton-root": {
-              color: "black !important",
+            '& .MuiIconButton-root': {
+              color: 'black !important'
             },
-            "& .MuiOutlinedInput-root": {
-              color: "black !important",
-            },
+            '& .MuiOutlinedInput-root': {
+              color: 'black !important'
+            }
           }}
         />
       )}

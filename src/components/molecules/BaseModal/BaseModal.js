@@ -1,57 +1,28 @@
-import Text from 'components/atoms/BaseText/BaseText';
-import Button from 'components/atoms/BaseButton/BaseButton';
 import React from 'react';
+import BaseText from 'components/atoms/BaseText/BaseText';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
 import { styled } from '@mui/material/styles';
 import { Grid, Modal as MuiModal } from '@mui/material';
 import { IconClose } from 'assets/icons/icons';
 import { useTranslation } from 'react-i18next';
-import { useMediaQuery } from 'react-responsive';
 
 const ModalContainer = styled(Grid, {
   shouldForwardProp: (prop) =>
-    ![
-      'isMobile',
-      'isTable',
-      'isSmallDesktop',
-      'isDesktop',
-      'maxWidth',
-      'maxHeight',
-      'height',
-      'minheight'
-    ].includes(prop)
-})(
-  ({
-    isMobile,
-    isTable,
-    isSmallDesktop,
-    isDesktop,
-    maxWidth,
-    maxHeight,
-    height,
-    minheight
-  }) => ({
-    margin: '0 10px 0 10px',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: '#2B2B2C',
-    height: height ? height : 'auto',
-    minHeight: minheight,
-    maxWidth: isMobile
-      ? '370px'
-      : isTable
-      ? '470px'
-      : isSmallDesktop
-      ? '700px'
-      : isDesktop
-      ? '1000px'
-      : maxWidth || '1100px',
-    maxHeight: isDesktop ? '650px' : maxHeight || '600px',
-    padding: '10px',
-    borderRadius: '20px'
-  })
-);
+    !['maxWidth', 'maxHeight', 'height', 'minheight'].includes(prop)
+})(({ maxWidth, maxHeight, height, minheight }) => ({
+  margin: '0 10px 0 10px',
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  backgroundColor: '#2B2B2C',
+  height: height ? height : 'auto',
+  minHeight: minheight,
+  maxWidth: maxWidth,
+  maxHeight: maxHeight,
+  padding: '10px',
+  borderRadius: '20px'
+}));
 
 const CloseButtonContainer = styled(Grid, {
   shouldForwardProp: (prop) => !['isMobile'].includes(prop)
@@ -62,7 +33,7 @@ const CloseButtonContainer = styled(Grid, {
   right: isMobile ? 0 : '5px'
 }));
 
-const CloseButton = styled(Button)({
+const CloseButton = styled(BaseButton)({
   height: '40px',
   width: '20px',
   backgroundColor: 'transparent',
@@ -96,11 +67,6 @@ const BaseModal = ({
 }) => {
   const { t } = useTranslation();
 
-  const isDesktop = useMediaQuery({ maxWidth: '1400px' });
-  const isSmallDesktop = useMediaQuery({ maxWidth: '910px' });
-  const isTable = useMediaQuery({ maxWidth: '610px' });
-  const isMobile = useMediaQuery({ maxWidth: '430px' });
-
   return (
     <MuiModal open={open} onClose={() => {}}>
       <ModalContainer
@@ -112,10 +78,6 @@ const BaseModal = ({
         direction="column"
         component={component}
         onSubmit={onSubmit}
-        isMobile={isMobile}
-        isTable={isTable}
-        isSmallDesktop={isSmallDesktop}
-        isDesktop={isDesktop}
         maxWidth={maxWidth}
         maxHeight={maxHeight}
         height={height}
@@ -134,14 +96,14 @@ const BaseModal = ({
           sxGridModal={sxGridModal}
         >
           {showCloseIcon && (
-            <CloseButtonContainer item isMobile={isMobile}>
+            <CloseButtonContainer item>
               <CloseButton onClick={onClose}>
                 <IconClose sx={{ height: '32px' }} />
               </CloseButton>
             </CloseButtonContainer>
           )}
           <Grid item container>
-            <Text>{title}</Text>
+            <BaseText>{title}</BaseText>
           </Grid>
           <Grid item container spacing={2} justifyContent="center">
             {children}
@@ -150,7 +112,7 @@ const BaseModal = ({
         {showReturn && (
           <Grid item p={1}>
             {showReturn && (
-              <Button onClick={onClose}>{t('button.return')}</Button>
+              <BaseButton onClick={onClose}>{t('button.return')}</BaseButton>
             )}
           </Grid>
         )}

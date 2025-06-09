@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Grid, Paper, TableContainer } from '@mui/material';
+import { Paper, TableContainer } from '@mui/material';
 import { TablePagination } from 'components/atoms/tablePagination/tablePagination';
-import { useMediaQuery } from 'react-responsive';
+import { useTranslation } from 'react-i18next';
 import {
   SCell,
   SHead,
@@ -11,25 +11,14 @@ import {
   SLabel
 } from 'components/atoms/BaseTable/BaseTable';
 
-import BaseNotFount from 'components/molecules/BaseNotFound/BaseNotFound';
-import BaseError from 'components/molecules/BaseError/BaseError';
 import InfoRow from './infoRow';
-import Loading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseNotFount from 'components/molecules/BaseNotFound/BaseNotFound';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
 import BaseModalDeleteFinancial from '@/components/molecules/BaseModalDeleteFinancial/BaseModalDeleteFinancial';
 import BaseModalUpdateFinancial from '@/components/molecules/BaseModalUpdateFinancial/BaseModalUpdateFinancial';
 
-const Table = ({
-  data,
-  query,
-  setQuery,
-  isFetching,
-  mutate,
-  error,
-  loading
-}) => {
-  const isDesktop = useMediaQuery({ maxWidth: '1250px' });
-  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' });
-  const isMobile = useMediaQuery({ maxWidth: '730px' });
+const Table = ({ data, query, setQuery, loading }) => {
+  const { t } = useTranslation();
 
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [showModalUpdate, setShowModalUpdate] = useState(false);
@@ -58,41 +47,41 @@ const Table = ({
                   direction={query?.sort_order?.toLowerCase()}
                   onClick={() => handleSort('id')}
                 >
-                  Motorista
+                  {t('modal.driver')}
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isMobile ? 1 : 0}>
+              <SCell>
                 <SLabel
                   active={query?.sort_field === 'truck_models'}
                   direction={query?.sort_order?.toLowerCase()}
                   onClick={() => handleSort('truck_models')}
                 >
-                  Caminhão
+                  {t('modal.truck')}
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isSmallDesktop ? 1 : 0}>
+              <SCell>
                 <SLabel
                   active={query?.sort_field === 'cart_models'}
                   direction={query?.sort_order?.toLowerCase()}
                   onClick={() => handleSort('cart_models')}
                 >
-                  Carreta
+                  {t('modal.cart')}
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isSmallDesktop ? 1 : 0}>
+              <SCell>
                 <SLabel
                   active={query?.sort_field === 'start_date'}
                   direction={query?.sort_order?.toLowerCase()}
                   onClick={() => handleSort('start_date')}
                 >
-                  Inici da Ficha
+                  {t('modal.start_date')}
                 </SLabel>
               </SCell>
-              <SCell displaywidth={isDesktop ? 1 : 0}>Avatar</SCell>
-              <SCell displaywidth={isDesktop ? 1 : 0}>Ações</SCell>
+              <SCell>{t('modal.avatar')}</SCell>
+              <SCell>{t('button.actions')}</SCell>
             </SRow>
           </SHead>
-          {!isFetching && data && data.docs?.length > 0 && (
+          {!loading && data && data.docs?.length > 0 && (
             <>
               <STableBody>
                 {data?.docs.map((item, index) => (
@@ -110,29 +99,11 @@ const Table = ({
           )}
         </STable>
 
-        {(loading || isFetching) && (
-          <Grid container justifyContent="center" alignItems="center" mt={3}>
-            <Loading />
-          </Grid>
-        )}
+        {loading && <BaseLoading />}
 
-        <Grid
-          item
-          container
-          spacing={2}
-          mt={1}
-          mb={1}
-          p={'18px'}
-          alignItems="center"
-          flexWrap="nowrap"
-          justifyContent="center"
-        >
-          {data?.dataResult?.length === 0 && !isFetching && <BaseNotFount />}
+        {data?.docs?.length === 0 && !loading && <BaseNotFount />}
 
-          {error && <BaseError />}
-        </Grid>
-
-        {!isFetching && data?.dataResult?.length > 0 && (
+        {!loading && data?.docs?.length > 0 && (
           <TablePagination data={data} query={query} setQuery={setQuery} />
         )}
       </TableContainer>
@@ -142,7 +113,6 @@ const Table = ({
           setShowModal={setShowModalDelete}
           showModal={showModalDelete}
           id={financialId}
-          mutate={mutate}
         />
       )}
 
@@ -151,7 +121,6 @@ const Table = ({
           setShowModal={setShowModalUpdate}
           showModal={showModalUpdate}
           financialId={financialId}
-          mutate={mutate}
         />
       )}
     </>

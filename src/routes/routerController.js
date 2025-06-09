@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import Truck from 'pages/truck';
 import Report from 'pages/report';
-import Check from 'pages/freight';
+import Freight from 'pages/freight';
 import Login from 'pages/login';
 import Home from 'pages/home';
 import Driver from 'pages/driver';
@@ -12,6 +12,7 @@ import History from 'pages/history';
 import InfoFinancial from 'pages/infoFinancial';
 import ForgotPassword from 'pages/forgot-password';
 import ForgotPasswordDriver from 'pages/forgot-password-driver';
+import CreateUser from '@/pages/user/create';
 
 import RequireAuth from 'utils/requireAuth';
 import MainTemplate from 'components/templates/main';
@@ -22,6 +23,7 @@ const RouterController = () => {
   const initialPage = () => {
     return <Home />;
   };
+
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
@@ -42,7 +44,7 @@ const RouterController = () => {
       <Route element={<RequireAuth />}>
         <Route element={<MainTemplate />}>
           <Route path="/" element={initialPage()} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/user/create" element={<CreateUser />} />
           <Route path="/info-financial/:id" element={<InfoFinancial />} />
           <Route path="/driver" element={<Driver />} />
           <Route path="/user" element={<User />} />
@@ -50,7 +52,7 @@ const RouterController = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/historic" element={<History />} />
           <Route path="/report" element={<Report />} />
-          <Route path="/check" element={<Check />} />
+          <Route path="/check" element={<Freight />} />
         </Route>
       </Route>
     </Routes>

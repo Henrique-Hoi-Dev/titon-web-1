@@ -19,7 +19,10 @@ const User = () => {
   const { data: users, loading } = useSelector((state) => state.user);
   const { t } = useTranslation();
   const [showModalUser, setShowModalUser] = useState(false);
-  const [search, setSearch] = useState('');
+  const [
+    //search,
+    setSearch
+  ] = useState('');
 
   const [userQuery, setUserQuery] = useState(
     initialStateQuery.INITIAL_STATE_USER
@@ -58,7 +61,7 @@ const User = () => {
               marginRight: '15px'
             }}
           >
-            {t('button.add_new_user')}{' '}
+            {t('button.add_new_user')}
             <IconAdd sx={{ mb: '4px', ml: '10px' }} />
           </BaseButton>
 

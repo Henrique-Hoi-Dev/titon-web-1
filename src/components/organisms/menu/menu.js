@@ -55,12 +55,12 @@ const Menu = ({ setFetch }) => {
       <DrawerHeader></DrawerHeader>
       <List sx={{ marginTop: '20px', border: 'none' }}>
         {/* home */}
-        <ListItemCategory onClick={() => navigate('/home') || setFetch(true)}>
+        <ListItemCategory onClick={() => navigate('/') || setFetch(true)}>
           <ButtonMenu
             sx={{
               justifyContent: openMenu ? 'initial' : 'center',
               marginLeft: openMenu ? '25px' : '0px',
-              color: isActive('/home') ? '#fff' : 'inherit',
+              color: isActive('/') ? '#fff' : 'inherit',
               backgroundColor: isActive('/home') ? '#1877F2' : 'inherit',
               borderRadius: '8px'
             }}

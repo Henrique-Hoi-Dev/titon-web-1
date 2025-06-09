@@ -1,6 +1,6 @@
 const initialState = {
-  roomId: null,
-}
+  roomId: null
+};
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -9,5 +9,5 @@ const reducer = (state, action) => {
     default:
       return state;
   }
-}
-export { initialState, reducer }
+};
+export { initialState, reducer };

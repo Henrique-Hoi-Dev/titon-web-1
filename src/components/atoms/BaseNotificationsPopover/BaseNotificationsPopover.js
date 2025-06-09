@@ -5,11 +5,11 @@ import { formatDistance, parseISO } from 'date-fns';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { pt } from 'date-fns/locale';
+import { PointIcon } from '@/assets/icons/icons';
 
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import api from '@/services/api';
 import BaseText from '../BaseText/BaseText';
-import { PointIcon } from '@/assets/icons/icons';
 import BaseLoading from '../BaseLoading/BaseLoading';
 
 const BaseNotificationsPopover = () => {

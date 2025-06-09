@@ -1,20 +1,21 @@
-import i18n from 'i18next'
-import { initReactI18next } from 'react-i18next'
-// import EN_US from './locales/en/en.json'
-// import PT_BR from './locales/pt-br/pt-br.json'
-import Backend from 'i18next-http-backend'
-import LanguageDetector from 'i18next-browser-languagedetector'
+import i18n from 'i18next';
+import enus from './locales/en/en.json';
+import ptbr from './locales/pt/pt.json';
+import es from './locales/es/es.json';
+import LanguageDetector from 'i18next-browser-languagedetector';
+import { initReactI18next } from 'react-i18next';
 
-// const resources = {
-//   en: { translation: EN_US },
-//   pt_br: { translation: PT_BR },
-// };
+const resources = {
+  pt: { translation: ptbr },
+  en: { translation: enus },
+  es: { translation: es }
+};
 
 i18n
-  .use(Backend)
   .use(initReactI18next)
   .use(LanguageDetector)
   .init({
+    resources,
     fallbackLng: 'pt',
     // debug: true,
     detection: {
@@ -24,6 +25,6 @@ i18n
     interpolation: {
       escapeValue: false
     }
-  })
+  });
 
-export default i18n
+export default i18n;

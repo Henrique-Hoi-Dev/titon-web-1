@@ -77,11 +77,11 @@ const TableReport = ({ data, query, setQuery, isFetching, loading }) => {
                 onChange={handleSelectAllClick}
               />
             </SCell>
-            <SCell>ID</SCell>
-            <SCell>Motorista</SCell>
-            <SCell>Data</SCell>
-            <SCell>Caminhão</SCell>
-            <SCell>Carreta</SCell>
+            <SCell>{t('modal.id')}</SCell>
+            <SCell>{t('modal.driver')}</SCell>
+            <SCell>{t('modal.date')}</SCell>
+            <SCell>{t('modal.truck')}</SCell>
+            <SCell>{t('modal.cart')}</SCell>
           </SRow>
         </SHead>
         <STableBody>

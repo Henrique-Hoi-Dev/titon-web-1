@@ -2,6 +2,7 @@
   "main": "index.js",
   "license": "MIT",
   "name": "api-web-titon",
+  "type": "module",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -57,7 +58,11 @@
     "start": "node server.js",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint:js": "eslint --ext \".js,.jsx\" .",
+    "lint:prettier": "prettier --check .",
+    "lint": "npm run lint:js && npm run lint:prettier",
+    "lintfix": "prettier --write --list-different . && npm run lint:js --fix"
   },
   "engines": {
     "node": ">=18.x"
@@ -81,6 +86,18 @@
     ]
   },
   "devDependencies": {
-    "@craco/craco": "^7.1.0"
+    "@craco/craco": "^7.1.0",
+    "eslint": "^9.28.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-prettier": "^5.4.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "prettier": "^3.5.3"
+  },
+  "prettierConfig": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 100
   }
 }

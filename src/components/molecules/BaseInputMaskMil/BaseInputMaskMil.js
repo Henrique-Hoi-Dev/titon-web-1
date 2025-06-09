@@ -4,31 +4,30 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { NumericFormat } from 'react-number-format';
 import Text from 'components/atoms/BaseText/BaseText';
 
-const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(
-  props,
-  ref
-) {
-  const { onChange, name, ...other } = props;
+const NumberFormatCustom = React.forwardRef(
+  function NumberFormatCustom(props, ref) {
+    const { onChange, name, ...other } = props;
 
-  return (
-    <NumericFormat
-      {...other}
-      getInputRef={ref}
-      thousandSeparator="."
-      decimalSeparator=","
-      allowNegative={false}
-      valueIsNumericString
-      onValueChange={(values) => {
-        onChange({
-          target: {
-            name,
-            value: values.floatValue
-          }
-        });
-      }}
-    />
-  );
-});
+    return (
+      <NumericFormat
+        {...other}
+        getInputRef={ref}
+        thousandSeparator="."
+        decimalSeparator=","
+        allowNegative={false}
+        valueIsNumericString
+        onValueChange={(values) => {
+          onChange({
+            target: {
+              name,
+              value: values.floatValue
+            }
+          });
+        }}
+      />
+    );
+  }
+);
 
 const BaseInputMaskMil = ({
   labelText,

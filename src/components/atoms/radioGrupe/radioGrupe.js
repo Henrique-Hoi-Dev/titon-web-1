@@ -1,16 +1,16 @@
-import * as React from "react";
-import PropTypes from "prop-types";
-import { styled } from "@mui/material/styles";
-import RadioGroup, { useRadioGroup } from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Radio from "@mui/material/Radio";
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import { styled } from '@mui/material/styles';
+import RadioGroup, { useRadioGroup } from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Radio from '@mui/material/Radio';
 
 const StyledFormControlLabel = styled((props) => (
   <FormControlLabel {...props} />
 ))(({ theme, checked }) => ({
-  ".MuiFormControlLabel-label": checked && {
-    color: theme.palette.primary.main,
-  },
+  '.MuiFormControlLabel-label': checked && {
+    color: theme.palette.primary.main
+  }
 }));
 
 function MyFormControlLabel(props) {
@@ -29,14 +29,14 @@ MyFormControlLabel.propTypes = {
   /**
    * The value of the component.
    */
-  value: PropTypes.any,
+  value: PropTypes.any
 };
 
 export default function RRadioGroup({
   labelOne,
   labelTwo,
   defaultValue,
-  value,
+  value
 }) {
   return (
     <RadioGroup

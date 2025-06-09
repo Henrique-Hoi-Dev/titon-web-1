@@ -1,4 +1,4 @@
-import { Link } from '@mui/material'
+import { Link } from '@mui/material';
 
 const BaseLink = ({ to, label, color, style }) => {
   return (
@@ -11,7 +11,7 @@ const BaseLink = ({ to, label, color, style }) => {
     >
       {label}
     </Link>
-  )
-}
+  );
+};
 
-export default BaseLink
+export default BaseLink;

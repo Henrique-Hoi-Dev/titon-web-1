@@ -30,94 +30,94 @@ const status = [
     color: '#b590db',
     background: '#f3e2fe'
   }
-]
+];
 
 export const typeStatus = (res) => {
   if (!Array.isArray(res) || res.length === 0) {
-    return { label: 'SEM STATUS', color: 'grey' }
+    return { label: 'SEM STATUS', color: 'grey' };
   }
 
-  const firstStatus = res.find((item) => item.status === 'STARTING_TRIP') ?? ''
+  const firstStatus = res.find((item) => item.status === 'STARTING_TRIP') ?? '';
   const firstStatusProps =
-    status.find((item) => item.value === firstStatus?.status) ?? ''
+    status.find((item) => item.value === firstStatus?.status) ?? '';
 
-  const secondStatus = res.find((item) => item.status === 'PENDING') ?? ''
+  const secondStatus = res.find((item) => item.status === 'PENDING') ?? '';
   const secondStatusProps =
-    status.find((item) => item.value === secondStatus?.status) ?? ''
+    status.find((item) => item.value === secondStatus?.status) ?? '';
 
-  const thirdStatus = res.find((item) => item.status === 'APPROVED') ?? ''
+  const thirdStatus = res.find((item) => item.status === 'APPROVED') ?? '';
   const thirdStatusProps =
-    status.find((item) => item.value === thirdStatus?.status) ?? ''
+    status.find((item) => item.value === thirdStatus?.status) ?? '';
 
-  const fourthStatus = res.find((item) => item.status === 'DENIED') ?? ''
+  const fourthStatus = res.find((item) => item.status === 'DENIED') ?? '';
   const fourthStatusProps =
-    status.find((item) => item.value === fourthStatus?.status) ?? ''
+    status.find((item) => item.value === fourthStatus?.status) ?? '';
 
-  const fifthStatus = res.find((item) => item.status === 'FINISHED') ?? ''
+  const fifthStatus = res.find((item) => item.status === 'FINISHED') ?? '';
   const fifthStatusProps =
-    status.find((item) => item.value === fifthStatus?.status) ?? ''
+    status.find((item) => item.value === fifthStatus?.status) ?? '';
 
-  const fifthStatus1 = res.find((item) => item.status === 'DRAFT') ?? ''
+  const fifthStatus1 = res.find((item) => item.status === 'DRAFT') ?? '';
   const fifthStatusProps1 =
-    status.find((item) => item.value === fifthStatus1?.status) ?? ''
+    status.find((item) => item.value === fifthStatus1?.status) ?? '';
 
-  const nonEmptyStatus = status.find((item) => item.value === '') ?? ''
+  const nonEmptyStatus = status.find((item) => item.value === '') ?? '';
 
   if (firstStatus) {
-    return firstStatusProps
+    return firstStatusProps;
   } else if (secondStatus) {
-    return secondStatusProps
+    return secondStatusProps;
   } else if (thirdStatus) {
-    return thirdStatusProps
+    return thirdStatusProps;
   } else if (fourthStatus) {
-    return fourthStatusProps
+    return fourthStatusProps;
   } else if (fifthStatus) {
-    return fifthStatusProps
+    return fifthStatusProps;
   } else if (nonEmptyStatus) {
-    return nonEmptyStatus
+    return nonEmptyStatus;
   } else if (fifthStatusProps1) {
-    return fifthStatusProps1
+    return fifthStatusProps1;
   } else {
-    return ''
+    return '';
   }
-}
+};
 
 export const typeStatusTable = (res) => {
   const firstStatusProps =
-    status.find((item) => item.value === res?.status) ?? ''
+    status.find((item) => item.value === res?.status) ?? '';
 
   const secondStatusProps =
-    status.find((item) => item.value === res?.status) ?? ''
+    status.find((item) => item.value === res?.status) ?? '';
 
   const thirdStatusProps =
-    status.find((item) => item.value === res?.status) ?? ''
+    status.find((item) => item.value === res?.status) ?? '';
 
   const fourthStatusProps =
-    status.find((item) => item.value === res?.status) ?? ''
+    status.find((item) => item.value === res?.status) ?? '';
 
   const fifthStatusProps =
-    status.find((item) => item.value === res?.status) ?? ''
+    status.find((item) => item.value === res?.status) ?? '';
 
   const fifthStatusProps1 =
-    status.find((item) => item.value === res?.status) ?? ''
+    status.find((item) => item.value === res?.status) ?? '';
 
-  const nonEmptyStatus = status.find((item) => item.value === '') ?? ''
+  const nonEmptyStatus = status.find((item) => item.value === '') ?? '';
 
   if (firstStatusProps) {
-    return firstStatusProps
+    return firstStatusProps;
   } else if (secondStatusProps) {
-    return secondStatusProps
+    return secondStatusProps;
   } else if (thirdStatusProps) {
-    return thirdStatusProps
+    return thirdStatusProps;
   } else if (fourthStatusProps) {
-    return fourthStatusProps
+    return fourthStatusProps;
   } else if (fifthStatusProps) {
-    return fifthStatusProps
+    return fifthStatusProps;
   } else if (nonEmptyStatus) {
-    return nonEmptyStatus
+    return nonEmptyStatus;
   } else if (fifthStatusProps1) {
-    return fifthStatusProps1
+    return fifthStatusProps1;
   } else {
-    return ''
+    return '';
   }
-}
+};

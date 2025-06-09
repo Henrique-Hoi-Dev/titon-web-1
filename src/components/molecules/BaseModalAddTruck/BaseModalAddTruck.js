@@ -17,7 +17,6 @@ import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseConten
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
 import BaseInput from 'components/molecules/BaseInput/BaseInput';
 import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
-import BaseInputMaskPlate from '../BaseInputMaskPlate/BaseInputMaskPlate';
 
 const ModalAddTruck = ({ showModal, setShowModal }) => {
   const { t } = useTranslation();

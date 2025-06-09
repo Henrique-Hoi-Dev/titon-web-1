@@ -7,8 +7,8 @@ import {
   styled,
   TablePagination,
   TableSortLabel
-} from '@mui/material'
-import { DataGrid } from '@mui/x-data-grid'
+} from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 
 export const SCell = styled(TableCell)(
   ({
@@ -34,7 +34,7 @@ export const SCell = styled(TableCell)(
       textDecorationLine: 'underline'
     }
   })
-)
+);
 
 export const SLabel = styled(TableSortLabel)(
   ({ color, theme, hideSortIcon }) => ({
@@ -58,20 +58,20 @@ export const SLabel = styled(TableSortLabel)(
       color: '#CCCCCC'
     }
   })
-)
+);
 
 export const STableGrid = styled(DataGrid)(({ display }) => ({
   display: `${display ? '' : 'table'}`,
   overflow: 'auto',
   borderRadius: '8px'
-}))
+}));
 
 export const STable = styled(Table)(({ display }) => ({
   display: `${display ? '' : 'table'}`,
   overflow: 'auto',
   borderRadius: '16px',
   backgroundColor: `#3A3A3A`
-}))
+}));
 
 export const SHead = styled(TableHead)(
   ({
@@ -96,14 +96,14 @@ export const SHead = styled(TableHead)(
       color: '#939395'
     }
   })
-)
+);
 
 export const SRow = styled(TableRow)(
   ({ theme, displaywidth, alternatingcolors }) => ({
     display: `${displaywidth ? 'none' : ''}`,
     backgroundColor: `#3A3A3A`
   })
-)
+);
 
 export const SCellTwoHead = styled(TableCell)(
   ({ color, textAlign, fontWeight, fontSize, displaywidth, minwidth }) => ({
@@ -120,12 +120,12 @@ export const SCellTwoHead = styled(TableCell)(
       textDecorationLine: 'underline'
     }
   })
-)
+);
 
 export const STableBody = styled(TableBody)(({ border }) => ({
   border: `0.5px solid #545454`,
   backgroundColor: `#3A3A3A`
-}))
+}));
 
 export const STablePagination = styled(TablePagination)(({ theme }) => ({
   '& .MuiIconButton-root': {
@@ -138,4 +138,4 @@ export const STablePagination = styled(TablePagination)(({ theme }) => ({
       opacity: 0.8
     }
   }
-}))
+}));

@@ -25,8 +25,8 @@ function App() {
         window.location.reload();
       }
 
-      if (statusText?.data?.error) {
-        errorNotification(statusText);
+      if (error) {
+        errorNotification(error);
       }
 
       return Promise.reject(error);

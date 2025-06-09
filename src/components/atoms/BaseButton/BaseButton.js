@@ -1,6 +1,6 @@
 import React from 'react'
-import { CircularProgress } from '@mui/material'
-import { Button as ButtonComponent } from '@mui/material'
+
+import { Button as ButtonComponent, CircularProgress } from '@mui/material'
 
 const BaseButton = ({
   disabled,
@@ -35,26 +35,24 @@ const BaseButton = ({
       )}
       {loading && (
         <ButtonComponent
+          disabled={disabled}
           disableElevation
           variant={variant ? variant : 'default'}
+          color={color}
           sx={{
-            background: '#fff',
-            position: 'relative',
-            fontSize: '14px',
+            ...sx,
+            paddingTop: '8px',
+            lineHeight: '0px',
+            fontSize: `${fontsize ? fontsize : '14px'}`,
+            background: `${background}`,
           }}
-          fullWidth
           {...props}
         >
           <CircularProgress
-            size={24}
             sx={{
-              background: '#fff',
-              color: 'text.disabled',
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              marginTop: '-12px',
-              marginLeft: '-12px',
+              color: `${color ? color : '#F1F3F9'}`,
+              width: '25px!important',
+              height: '25px!important',
             }}
           />
         </ButtonComponent>

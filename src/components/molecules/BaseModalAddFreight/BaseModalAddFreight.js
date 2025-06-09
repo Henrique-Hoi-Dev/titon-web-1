@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
+// import { useTranslation } from 'react-i18next'
 import { Divider, Grid, IconButton } from '@mui/material'
 import { createFreightRequest } from 'store/modules/freight/freightSlice'
 import { unmaskMoney } from '@/utils/unmaskMoney'
@@ -17,7 +17,7 @@ import BaseAutocomplete from '@/components/atoms/BaseAutocomplete/BaseAutocomple
 import RRadioGroup from '@/components/atoms/radioGrupe/radioGrupe'
 
 const BaseModalAddFreight = ({ showModal, setShowModal, financialId }) => {
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
   const dispatch = useDispatch()
 
   const { loading } = useSelector((state) => state.freight)
@@ -33,45 +33,16 @@ const BaseModalAddFreight = ({ showModal, setShowModal, financialId }) => {
     ev.preventDefault()
     dispatch(createFreightRequest(body))
   }
+  // eslint-disable-next-line no-unused-vars
   const [localityUf, setLocalityUf] = useState([])
 
-  const [, setMatch] = useState([])
+  // eslint-disable-next-line no-unused-vars
   const [leavingFor, setLeavingFor] = useState([])
+  // eslint-disable-next-line no-unused-vars
   const [forState, setForState] = useState([])
 
-  const [matchUF] = useState('')
   const [leavingForUF, setLeavingForUF] = useState('')
   const [forStateUF, setForStateUF] = useState('')
-
-  function localityUFFetch() {
-    fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados`)
-      .then((res) => res.json())
-      .then((data) => setLocalityUf(data))
-  }
-
-  function localityFetch() {
-    if (matchUF) {
-      fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${matchUF}/distritos`)
-        .then((res) => res.json())
-        .then((data) => setMatch(data))
-    } else {
-      setMatch([])
-    }
-    if (leavingForUF) {
-      fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${leavingForUF}/distritos`)
-        .then((res) => res.json())
-        .then((data) => setLeavingFor(data))
-    } else {
-      setLeavingFor([])
-    }
-    if (forStateUF) {
-      fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${forStateUF}/distritos`)
-        .then((res) => res.json())
-        .then((data) => setForState(data))
-    } else {
-      setForState([])
-    }
-  }
 
   // const matchCitys = [...new Set(match.map((res, i) => res.nome))] ?? [];
   const leavingForCitys = [...new Set(leavingFor.map((res) => res.nome))] ?? []

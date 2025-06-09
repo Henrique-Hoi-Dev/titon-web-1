@@ -1,11 +1,9 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects'
-import jwt from 'jwt-decode'
-
-import api from '../../../services/api'
-import history from '../../../services/history'
-
 import { signInRequest, signInSuccess, signFailure } from './authSlice'
 import { errorNotification } from '@/utils/notification'
+import history from '../../../services/history'
+import api from '../../../services/api'
+import jwt from 'jwt-decode'
 
 function* signIn({ payload }) {
   try {
@@ -23,6 +21,7 @@ function* signIn({ payload }) {
   }
 }
 
+// eslint-disable-next-line require-yield
 function* setToken({ payload }) {
   if (!payload) return
   const { token } = payload.auth

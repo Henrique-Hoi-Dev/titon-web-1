@@ -4,13 +4,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Box } from '@mui/system'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-
 import { signInRequest } from 'store/modules/auth/authSlice'
 
-import Button from 'components/atoms/BaseButton/BaseButton'
-import Text from 'components/atoms/BaseText/BaseText'
 import logo from '../assets/logo.png'
 import bannerLogin from '../assets/background-login.png'
+import BaseButton from 'components/atoms/BaseButton/BaseButton'
+import BaseText from 'components/atoms/BaseText/BaseText'
 import BaseInput from 'components/molecules/BaseInput/BaseInput'
 import BaseLink from 'components/atoms/BaseLink/BaseLink'
 
@@ -92,14 +91,14 @@ const Login = () => {
             component="form"
             onSubmit={handleSubmit}
           >
-            <Text
+            <BaseText
               id="title"
               sx={{
                 marginBottom: '14px!important',
               }}
             >
               <img src={logo} alt="img" />
-            </Text>
+            </BaseText>
 
             <Grid
               container
@@ -145,8 +144,7 @@ const Login = () => {
               </Grid>
 
               <Grid item>
-                <Button
-                  disableElevation
+                <BaseButton
                   background="linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
                   sx={{
                     fontSize: '14px',
@@ -156,10 +154,10 @@ const Login = () => {
                   }}
                   fullWidth
                   type="submit"
-                  disabled={loading}
+                  loading={loading}
                 >
-                  {loading ? t('button.loading') : t('field.login')}
-                </Button>
+                  {t('field.login')}
+                </BaseButton>
               </Grid>
             </Grid>
           </Box>

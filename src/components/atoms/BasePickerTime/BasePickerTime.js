@@ -1,17 +1,16 @@
 import React from 'react'
 import { TextField } from '@mui/material'
-import { MobileDateTimePicker } from '@mui/lab'
+import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker'
 
-const PickerDateTime = ({ minWidth, value, onChange, size, label, readOnly, ...props }) => {
+const BasePickerTime = ({ minWidth, value, onChange, size, label, height, ...props }) => {
   return (
-    <MobileDateTimePicker
+    <MobileTimePicker
       {...props}
       label={label}
       value={value}
       onChange={onChange}
       ampm={false}
-      ampmInClock={false}
-      inputFormat="yyyy-MM-dd HH:mm"
+      inputFormat="HH:mm"
       renderInput={(props) => (
         <TextField
           size={`${size === 'medium' ? 'medium' : 'small'}`}
@@ -20,12 +19,15 @@ const PickerDateTime = ({ minWidth, value, onChange, size, label, readOnly, ...p
             width: `${minWidth ? minWidth : '100%'}`,
             '& .MuiSvgIcon-root': {
               color: 'black !important',
+              height: `${height}`,
             },
             '& .MuiIconButton-root': {
               color: 'black !important',
+              height: `${height}`,
             },
             '& .MuiOutlinedInput-root': {
               color: 'black !important',
+              height: `${height}`,
             },
           }}
         />
@@ -34,4 +36,4 @@ const PickerDateTime = ({ minWidth, value, onChange, size, label, readOnly, ...p
   )
 }
 
-export default PickerDateTime
+export default BasePickerTime

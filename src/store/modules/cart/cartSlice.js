@@ -89,7 +89,7 @@ const cartSlice = createSlice({
       state.errorUpdate = null
       state.successUpdate = false
     },
-    updateCartSuccess(state, action) {
+    updateCartSuccess(state) {
       state.loadingUpdate = false
       state.errorUpdate = null
       state.successUpdate = true
@@ -106,7 +106,7 @@ const cartSlice = createSlice({
       state.errorDelete = null
       state.successDelete = false
     },
-    deleteCartSuccess(state, action) {
+    deleteCartSuccess(state) {
       state.loadingDelete = false
       state.errorDelete = null
       state.successDelete = true

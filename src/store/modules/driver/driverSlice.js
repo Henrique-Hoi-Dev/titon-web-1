@@ -70,7 +70,7 @@ const driverSlice = createSlice({
       state.errorCreate = null
       state.successCreate = false
     },
-    createDriverSuccess(state, action) {
+    createDriverSuccess(state) {
       state.loadingCreate = false
       state.successCreate = true
       state.errorCreate = null

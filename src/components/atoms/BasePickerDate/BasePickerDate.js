@@ -5,7 +5,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { ptBR } from 'date-fns/locale'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-import Text from 'components/atoms/BaseText/BaseText'
+import BaseText from 'components/atoms/BaseText/BaseText'
 
 const darkTheme = createTheme({
   palette: {
@@ -24,12 +24,12 @@ const darkTheme = createTheme({
   },
 })
 
-const PickerDate = ({ minWidth, size, label, readOnly, height, styles, labelText, ...props }) => {
+const BasePickerDate = ({ size, label, styles, labelText, ...props }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <Text fontsize={'14px'} color={'#1877F2'}>
+      <BaseText fontsize={'14px'} color={'#1877F2'}>
         {labelText}
-      </Text>
+      </BaseText>
       <ThemeProvider theme={darkTheme}>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
           <DesktopDatePicker
@@ -78,4 +78,4 @@ const PickerDate = ({ minWidth, size, label, readOnly, height, styles, labelText
   )
 }
 
-export default PickerDate
+export default BasePickerDate

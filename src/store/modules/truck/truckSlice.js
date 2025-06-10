@@ -93,7 +93,7 @@ const truckSlice = createSlice({
       state.errorUpdate = null
       state.successUpdate = false
     },
-    updateTruckSuccess: (state, action) => {
+    updateTruckSuccess: (state) => {
       state.loadingUpdate = false
       state.errorUpdate = null
       state.successUpdate = true
@@ -110,7 +110,7 @@ const truckSlice = createSlice({
       state.errorDelete = null
       state.successDelete = false
     },
-    deleteTruckSuccess: (state, action) => {
+    deleteTruckSuccess: (state) => {
       state.loadingDelete = false
       state.errorDelete = null
       state.successDelete = true

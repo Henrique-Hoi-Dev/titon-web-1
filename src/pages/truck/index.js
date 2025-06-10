@@ -26,30 +26,38 @@ const Truck = () => {
 
   const [truckQuery, setTruckQuery] = useState(INITIAL_STATE_USER)
   const [search, setSearch] = useState('')
+  const [shouldRefresh, setShouldRefresh] = useState(false)
 
   const isMounted = useRef(false)
 
   const { data: trucks, loadingGet: loading, errorGet: error } = useSelector((state) => state.truck)
 
   useEffect(() => {
-    dispatch(getTrucksRequest(truckQuery))
-  }, [dispatch, truckQuery])
-
-  useEffect(() => {
     if (!isMounted.current) {
       isMounted.current = true
+      dispatch(getTrucksRequest(truckQuery))
       return
     }
 
     const timer = setTimeout(() => {
-      setTruckQuery((state) => ({
-        ...state,
-        search: search,
-      }))
+      if (shouldRefresh || search) {
+        dispatch(
+          getTrucksRequest({
+            ...truckQuery,
+            search: search,
+          })
+        )
+        setShouldRefresh(false)
+      }
     }, 1200)
 
     return () => clearTimeout(timer)
-  }, [search])
+  }, [dispatch, search, shouldRefresh, truckQuery])
+
+  const handleModalClose = () => {
+    setShowModalTruck(false)
+    setShouldRefresh(true)
+  }
 
   return (
     <Grid
@@ -102,7 +110,7 @@ const Truck = () => {
         </Grid>
       </Grid>
 
-      <BaseModalAddTruck setShowModal={setShowModalTruck} showModal={showModalTruck} />
+      <BaseModalAddTruck setShowModal={handleModalClose} showModal={showModalTruck} />
     </Grid>
   )
 }

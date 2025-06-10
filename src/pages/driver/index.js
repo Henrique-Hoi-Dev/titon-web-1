@@ -25,27 +25,36 @@ const Driver = () => {
 
   const [driverQuery, setDriverQuery] = useState(initialStateQuery.INITIAL_STATE_DRIVER)
   const [search, setSearch] = useState('')
+  const [shouldRefresh, setShouldRefresh] = useState(false)
 
   const isMounted = useRef(false)
 
   useEffect(() => {
-    dispatch(getDriversRequest(driverQuery))
-  }, [dispatch, driverQuery])
-
-  useEffect(() => {
     if (!isMounted.current) {
       isMounted.current = true
+      dispatch(getDriversRequest(driverQuery))
       return
     }
 
     const timer = setTimeout(() => {
-      setDriverQuery((state) => ({
-        ...state,
-        search: search,
-      }))
+      if (shouldRefresh || search) {
+        dispatch(
+          getDriversRequest({
+            ...driverQuery,
+            search: search,
+          })
+        )
+        setShouldRefresh(false)
+      }
     }, 1200)
+
     return () => clearTimeout(timer)
-  }, [search])
+  }, [dispatch, search, shouldRefresh, driverQuery])
+
+  const handleModalClose = () => {
+    setShowModalDriver(false)
+    setShouldRefresh(true)
+  }
 
   return (
     <Grid
@@ -98,7 +107,7 @@ const Driver = () => {
       </Grid>
 
       {showModalDriver && (
-        <BaseModalAddDriver setShowModal={setShowModalDriver} showModal={showModalDriver} />
+        <BaseModalAddDriver setShowModal={handleModalClose} showModal={showModalDriver} />
       )}
     </Grid>
   )

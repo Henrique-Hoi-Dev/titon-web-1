@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  data: [],
+  states: [],
+  cities: [],
   selected: null,
-  loading: false,
-  error: null,
+  loadingCities: false,
+  loadingStates: false,
+  errorCities: null,
+  errorStates: null,
 }
 
 const locationSlice = createSlice({
@@ -13,30 +16,30 @@ const locationSlice = createSlice({
   reducers: {
     // Listar todos os registros
     getLocationCityRequest: (state) => {
-      state.loading = true
-      state.error = null
+      state.loadingCities = true
+      state.errorCities = null
     },
     getLocationCitySuccess: (state, action) => {
-      state.data = action.payload
-      state.loading = false
+      state.cities = action.payload
+      state.loadingCities = false
     },
     getLocationCityFailure: (state, action) => {
-      state.loading = false
+      state.loadingCities = false
       state.error = action.payload
     },
 
     // Buscar por ID
     getLocationStateRequest: (state) => {
-      state.loading = true
-      state.error = null
+      state.loadingStates = true
+      state.errorStates = null
     },
     getLocationStateSuccess: (state, action) => {
-      state.selected = action.payload
-      state.loading = false
+      state.states = action.payload
+      state.loadingStates = false
     },
     getLocationStateFailure: (state, action) => {
-      state.loading = false
-      state.error = action.payload
+      state.loadingStates = false
+      state.errorStates = action.payload
     },
   },
 })

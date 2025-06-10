@@ -2,21 +2,15 @@ import React from 'react'
 import { TextField, InputAdornment, IconButton } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
-import Text from 'components/atoms/BaseText/BaseText'
+import BaseText from 'components/atoms/BaseText/BaseText'
 
 const BaseInput = ({
-  holder,
-  password,
-  showPassword,
   onClick,
   isPassword,
   placeholder,
   label,
   labelText,
   type,
-  dark,
-  searches,
-  searchesType,
   minLength,
   maxLength,
   styles,
@@ -27,9 +21,9 @@ const BaseInput = ({
 }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <Text fontsize={'14px'} color={'#1877F2'}>
+      <BaseText fontsize={'14px'} color={'#1877F2'}>
         {labelText}
-      </Text>
+      </BaseText>
 
       <TextField
         {...props}

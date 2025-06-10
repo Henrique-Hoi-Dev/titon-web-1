@@ -1,7 +1,7 @@
 import React from 'react'
 import { Checkbox, FormControlLabel, FormControl } from '@mui/material'
 
-const BaseCheckbox = ({ label, checked, onChange, sx }) => {
+const BaseCheckbox = ({ label, checked, onChange }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <FormControl component="fieldset" variant="standard">

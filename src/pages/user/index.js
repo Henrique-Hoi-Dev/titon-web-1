@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useState } from 'react'
 import { Grid } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,16 +19,38 @@ const User = () => {
   const { data: users, loading } = useSelector((state) => state.user)
   const { t } = useTranslation()
   const [showModalUser, setShowModalUser] = useState(false)
-  const [
-    //search,
-    setSearch,
-  ] = useState('')
+  const [search, setSearch] = useState('')
+  const [shouldRefresh, setShouldRefresh] = useState(false)
 
   const [userQuery, setUserQuery] = useState(initialStateQuery.INITIAL_STATE_USER)
+  const isMounted = useRef(false)
 
   useEffect(() => {
-    dispatch(getUsersRequest(userQuery))
-  }, [dispatch, userQuery])
+    if (!isMounted.current) {
+      isMounted.current = true
+      dispatch(getUsersRequest(userQuery))
+      return
+    }
+
+    const timer = setTimeout(() => {
+      if (shouldRefresh || search) {
+        dispatch(
+          getUsersRequest({
+            ...userQuery,
+            search: search,
+          })
+        )
+        setShouldRefresh(false)
+      }
+    }, 1200)
+
+    return () => clearTimeout(timer)
+  }, [dispatch, search, shouldRefresh, userQuery])
+
+  const handleModalClose = () => {
+    setShowModalUser(false)
+    setShouldRefresh(true)
+  }
 
   return (
     <Grid
@@ -76,7 +98,7 @@ const User = () => {
       </Grid>
 
       {showModalUser && (
-        <BaseModalAddUser setShowModal={setShowModalUser} showModal={showModalUser} />
+        <BaseModalAddUser setShowModal={handleModalClose} showModal={showModalUser} />
       )}
     </Grid>
   )

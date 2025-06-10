@@ -22,6 +22,7 @@ const Cart = () => {
 
   const [cardQuery, setCardQuery] = useState(initialStateQuery.INITIAL_STATE_CART)
   const [search, setSearch] = useState('')
+  const [shouldRefresh, setShouldRefresh] = useState(false)
 
   const isMounted = useRef(false)
 
@@ -33,16 +34,24 @@ const Cart = () => {
     }
 
     const timer = setTimeout(() => {
-      const newQuery = {
-        ...cardQuery,
-        search: search,
+      if (shouldRefresh || search) {
+        dispatch(
+          getCartsRequest({
+            ...cardQuery,
+            search: search,
+          })
+        )
+        setShouldRefresh(false)
       }
-      setCardQuery(newQuery)
-      dispatch(getCartsRequest(newQuery))
     }, 1200)
 
     return () => clearTimeout(timer)
-  }, [dispatch, search, cardQuery])
+  }, [dispatch, search, shouldRefresh, cardQuery])
+
+  const handleModalClose = () => {
+    setShowModalCart(false)
+    setShouldRefresh(true)
+  }
 
   return (
     <Grid
@@ -92,7 +101,7 @@ const Cart = () => {
       </Grid>
 
       {showModalCart && (
-        <BaseModalAddCart setShowModal={setShowModalCart} showModal={showModalCart} />
+        <BaseModalAddCart setShowModal={handleModalClose} showModal={showModalCart} />
       )}
     </Grid>
   )

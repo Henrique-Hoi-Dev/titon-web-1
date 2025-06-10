@@ -103,7 +103,6 @@ const BaseModalUpdateCart = ({ showModal, setShowModal, data }) => {
 
       setImageCart(image.imageCart)
     } catch (error) {
-      console.error('Erro ao fazer upload:', error)
       errorNotification(error)
     }
   }

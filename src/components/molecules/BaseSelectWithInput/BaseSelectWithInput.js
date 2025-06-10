@@ -1,11 +1,10 @@
 import { Grid } from '@mui/material'
 import { useMediaQuery } from 'react-responsive'
+
 import BaseSelect from '../BaseSelect/BaseSelect'
 import BaseInput from '../BaseInput/BaseInput'
 
 const BaseSelectWithInput = ({
-  selectValue,
-  setSelectValue,
   labelTextSelect,
   requiredInput,
   onChangeSelect,

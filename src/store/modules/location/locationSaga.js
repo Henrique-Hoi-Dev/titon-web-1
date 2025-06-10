@@ -16,7 +16,7 @@ function* getLocationCity({ payload }) {
   try {
     if (!payload.search) delete payload.search
 
-    const response = yield call(api.get, 'manager/locations', {
+    const response = yield call(api.get, 'manager/driver/cities', {
       params: payload,
     })
 
@@ -30,8 +30,10 @@ function* getLocationCity({ payload }) {
 // Buscar por ID
 function* getLocationState({ payload }) {
   try {
-    const response = yield call(api.get, `manager/location/status`)
-    yield put(getLocationStateSuccess(response.data))
+    const response = yield call(api.get, `manager/driver/states`, {
+      params: payload,
+    })
+    yield put(getLocationStateSuccess(response.data.data))
   } catch (error) {
     yield put(getLocationStateFailure(error))
     errorNotification(error)

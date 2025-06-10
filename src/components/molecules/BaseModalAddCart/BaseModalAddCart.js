@@ -19,6 +19,7 @@ import BaseInputMaskMil from '../BaseInputMaskMil/BaseInputMaskMil'
 
 const BaseModalAddCart = ({ showModal, setShowModal }) => {
   const { t } = useTranslation()
+
   const dispatch = useDispatch()
 
   const { loadingGet: loading } = useSelector((state) => state.cart)

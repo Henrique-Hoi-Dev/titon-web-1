@@ -28,7 +28,7 @@ export const SCell = styled(TableCell)(
   })
 )
 
-export const SLabel = styled(TableSortLabel)(({ color, theme, hideSortIcon }) => ({
+export const SLabel = styled(TableSortLabel)(({ hideSortIcon }) => ({
   '& :hover': {
     color: '#939395',
     cursor: hideSortIcon ? 'default' : 'pointer',
@@ -63,25 +63,23 @@ export const STable = styled(Table)(({ display }) => ({
   backgroundColor: `#3A3A3A`,
 }))
 
-export const SHead = styled(TableHead)(
-  ({ color, backgroundcolor, fontweight, displaywidth, tableLayout, border }) => ({
-    tableLayout: `${tableLayout}`,
-    display: `${displaywidth ? 'none' : ''}`,
-    fontSize: 18,
-    height: '70px',
-    backgroundColor: `${backgroundcolor ? backgroundcolor : '#545454'}`,
-    '&.MuiTableCell-root': {
-      color: `${color ? 'black' : '#939395'}`,
-      fontWeight: `${'900'}`,
-    },
+export const SHead = styled(TableHead)(({ color, backgroundcolor, displaywidth, tableLayout }) => ({
+  tableLayout: `${tableLayout}`,
+  display: `${displaywidth ? 'none' : ''}`,
+  fontSize: 18,
+  height: '70px',
+  backgroundColor: `${backgroundcolor ? backgroundcolor : '#545454'}`,
+  '&.MuiTableCell-root': {
+    color: `${color ? 'black' : '#939395'}`,
+    fontWeight: `${'900'}`,
+  },
+  color: '#939395',
+  '& :hover': {
     color: '#939395',
-    '& :hover': {
-      color: '#939395',
-    },
-  })
-)
+  },
+}))
 
-export const SRow = styled(TableRow)(({ theme, displaywidth, alternatingcolors }) => ({
+export const SRow = styled(TableRow)(({ displaywidth }) => ({
   display: `${displaywidth ? 'none' : ''}`,
   backgroundColor: `#3A3A3A`,
 }))
@@ -103,7 +101,7 @@ export const SCellTwoHead = styled(TableCell)(
   })
 )
 
-export const STableBody = styled(TableBody)(({ border }) => ({
+export const STableBody = styled(TableBody)(() => ({
   border: `0.5px solid #545454`,
   backgroundColor: `#3A3A3A`,
 }))

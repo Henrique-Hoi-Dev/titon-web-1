@@ -11,6 +11,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 import api from '@/services/api'
 import BaseText from '../BaseText/BaseText'
 import BaseLoading from '../BaseLoading/BaseLoading'
+import { errorNotification } from '@/utils/notification'
 
 const BaseNotificationsPopover = () => {
   const { user } = useSelector((state) => state?.auth)
@@ -60,7 +61,7 @@ const BaseNotificationsPopover = () => {
         setTotalPages(totalPages)
         setPage(pageToLoad)
       } catch (error) {
-        console.error('Erro ao carregar notificacoes:', error)
+        errorNotification(error)
       } finally {
         setIsLoadingMore(false)
       }
@@ -90,7 +91,7 @@ const BaseNotificationsPopover = () => {
 
       redirection(result?.data?.data?.financialStatementsId)
     } catch (error) {
-      console.error('Erro ao marcar notificação como lida:', error)
+      errorNotification(error)
     }
   }
 

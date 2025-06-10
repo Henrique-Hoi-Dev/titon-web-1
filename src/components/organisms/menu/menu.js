@@ -19,31 +19,25 @@ import {
 
 import { IconMenuHome, IconMenuTruck, IconMenuUser, IconMenuTrailer } from 'assets/icons/icons'
 import { useLocation } from 'react-router-dom'
+
 import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar'
 
 const Menu = ({ setFetch }) => {
-  const user = useSelector((state) => state?.user)
-  // const auth = useSelector((state) => state?.auth);
-
+  const user = useSelector((state) => state?.auth?.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
 
   const { t } = useTranslation()
-
-  // useEffect(() => {
-  //   if (!auth.signed) {
-  //     navigate('/login');
-  //   }
-  // }, [auth.signed, navigate]);
+  const { openMenu } = useContext(templateContext)
 
   const handleLogOut = () => {
-    dispatch(signOut()) // apenas dispara o logout
+    dispatch(signOut())
   }
 
   const isActive = (path) => location.pathname === path
 
-  const { openMenu } = useContext(templateContext)
+  if (!openMenu) return null
 
   return (
     <Drawer variant="permanent" open={openMenu}>
@@ -239,9 +233,7 @@ const Menu = ({ setFetch }) => {
               <BaseAvatar src={user?.avatar} styles={{ fontSize: '30px' }} />
             </IconMenuCategory>
 
-            <ListText sx={{ opacity: openMenu ? 1 : 0 }}>
-              {user?.data?.userProps?.name ?? 'user'}
-            </ListText>
+            <ListText sx={{ opacity: openMenu ? 1 : 0 }}>{user?.name ?? 'user'}</ListText>
           </ButtonMenu>
 
           <IconButton onClick={() => handleLogOut()} sx={{ color: '#fff' }}>

@@ -88,7 +88,7 @@ const userSlice = createSlice({
       state.loadingDelete = true
       state.errorDelete = null
     },
-    deleteUserSuccess(state, action) {
+    deleteUserSuccess(state) {
       state.loadingDelete = false
       state.successDelete = true
       state.errorDelete = null

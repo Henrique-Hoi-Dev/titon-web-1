@@ -16,7 +16,7 @@ import BaseInput from '@/components/molecules/BaseInput/BaseInput'
 import BaseAutocomplete from '@/components/atoms/BaseAutocomplete/BaseAutocomplete'
 import RRadioGroup from '@/components/atoms/radioGrupe/radioGrupe'
 
-const BaseModalAddFreight = ({ showModal, setShowModal, financialId }) => {
+const BaseModalAddFreight = ({ showModal, setShowModal }) => {
   // const { t } = useTranslation()
   const dispatch = useDispatch()
 

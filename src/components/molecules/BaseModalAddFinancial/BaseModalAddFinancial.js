@@ -40,10 +40,12 @@ const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
   const [date] = useState(currentDate)
 
   useEffect(() => {
-    dispatch(getDriversSelectRequest())
-    dispatch(getTrucksSelectRequest())
-    dispatch(getCartsSelectRequest())
-  }, [dispatch])
+    if (showModal) {
+      dispatch(getDriversSelectRequest())
+      dispatch(getTrucksSelectRequest())
+      dispatch(getCartsSelectRequest())
+    }
+  }, [dispatch, showModal])
 
   const onClose = useCallback(() => {
     setBody({})

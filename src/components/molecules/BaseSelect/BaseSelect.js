@@ -30,6 +30,7 @@ const BaseSelect = ({
   required,
   labelText,
   loading,
+  isOptionEqualToValue,
   ...props
 }) => {
   return (
@@ -49,6 +50,7 @@ const BaseSelect = ({
         options={options}
         getOptionLabel={getOptionLabel}
         onChange={onChange}
+        isOptionEqualToValue={isOptionEqualToValue || ((option, value) => option?.id === value?.id)}
         {...props}
         renderInput={(params) => (
           <TextField

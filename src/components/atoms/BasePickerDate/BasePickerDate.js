@@ -41,6 +41,10 @@ const BasePickerDate = ({ size, label, styles, labelText, ...props }) => {
                 size={`${size === 'medium' ? 'medium' : 'small'}`}
                 variant="filled"
                 {...props}
+                inputProps={{
+                  ...props.inputProps,
+                  readOnly: true,
+                }}
                 sx={{
                   fontWeight: 'bold',
                   ...styles,

@@ -16,7 +16,6 @@ import BaseModal from 'components/molecules/BaseModal/BaseModal'
 import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseText from 'components/atoms/BaseText/BaseText'
 import BaseSelect from 'components/molecules/BaseSelect/BaseSelect'
 import initialStateQuery from 'utils/initialStateQuery'
 
@@ -40,10 +39,12 @@ const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
   const [date] = useState(currentDate)
 
   useEffect(() => {
-    dispatch(getDriversSelectRequest())
-    dispatch(getTrucksSelectRequest())
-    dispatch(getCartsSelectRequest())
-  }, [dispatch])
+    if (showModal) {
+      dispatch(getDriversSelectRequest())
+      dispatch(getTrucksSelectRequest())
+      dispatch(getCartsSelectRequest())
+    }
+  }, [dispatch, showModal])
 
   const onClose = useCallback(() => {
     setBody({})
@@ -84,79 +85,80 @@ const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
       </BaseContentHeader>
 
       {!loading && (
-        <Grid
-          container
-          item
-          spacing={2}
-          mt={1}
-          justifyContent={'flex-start'}
-          sx={{ minHeight: '300px' }}
-        >
-          <Grid item xs={12} md={12} lg={12}>
-            <BaseSelect
-              labelText={t('placeholder.driver')}
-              placeholder={t('messages.select')}
-              options={drivers ?? []}
-              getOptionLabel={(option) => option.name}
-              onChange={(event, newValue) => {
-                setDriverId(newValue.id)
-              }}
-            />
+        <>
+          <Grid
+            container
+            item
+            spacing={2}
+            mt={1}
+            justifyContent={'flex-start'}
+            sx={{ minHeight: '300px' }}
+          >
+            <Grid item xs={12} md={12} lg={12}>
+              <BaseSelect
+                labelText={t('placeholder.driver')}
+                placeholder={t('messages.select')}
+                options={drivers ?? []}
+                getOptionLabel={(option) => option.name}
+                onChange={(event, newValue) => {
+                  setDriverId(newValue.id)
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={12} lg={12}>
+              <BaseSelect
+                labelText={t('placeholder.truck')}
+                placeholder={t('messages.select')}
+                options={trucks ?? []}
+                getOptionLabel={(option) => `${option.id} - ${option.truckBoard}`}
+                onChange={(event, newValue) => {
+                  setTruckId(newValue?.id)
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={12} lg={12}>
+              <BaseSelect
+                labelText={t('placeholder.cart')}
+                placeholder={t('messages.select')}
+                options={carts ?? []}
+                getOptionLabel={(option) => `${option.id} - ${option.cartBoard}`}
+                onChange={(event, newValue) => {
+                  setCartId(newValue.id)
+                }}
+              />
+            </Grid>
           </Grid>
 
-          <Grid item xs={12} md={12} lg={12}>
-            <BaseSelect
-              labelText={t('placeholder.truck')}
-              placeholder={t('messages.select')}
-              options={trucks ?? []}
-              getOptionLabel={(option) => `${option.id} - ${option.truckBoard}`}
-              onChange={(event, newValue) => {
-                setTruckId(newValue?.id)
-              }}
-            />
+          <Grid container item xs={12} md={12} lg={12} spacing={2} mt={1} p={2}>
+            <Grid item xs={12} md={12} lg={6}>
+              <BaseButton
+                onClick={() => onClose()}
+                background={''}
+                sx={{
+                  width: '140px',
+                  height: '49px',
+                  border: '1px solid #509BFB',
+                  color: '#FFF',
+                }}
+                variant="text"
+              >
+                {t('button.cancel')}
+              </BaseButton>
+            </Grid>
+            <Grid container item xs={12} md={12} lg={6}>
+              <BaseButton
+                onClick={(ev) => handleSubmit(ev)}
+                background={'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'}
+                sx={{ width: '140px', height: '49px' }}
+              >
+                {t('button.confirm')}
+              </BaseButton>
+            </Grid>
           </Grid>
-
-          <Grid item xs={12} md={12} lg={12}>
-            <BaseText></BaseText>
-            <BaseSelect
-              labelText={t('placeholder.cart')}
-              placeholder={t('messages.select')}
-              options={carts ?? []}
-              getOptionLabel={(option) => `${option.id} - ${option.cartModels}`}
-              onChange={(event, newValue) => {
-                setCartId(newValue.id)
-              }}
-            />
-          </Grid>
-        </Grid>
+        </>
       )}
-
-      <Grid container item xs={12} md={12} lg={12} spacing={2} mt={1} p={2}>
-        <Grid item xs={12} md={12} lg={6}>
-          <BaseButton
-            onClick={() => onClose()}
-            background={''}
-            sx={{
-              width: '140px',
-              height: '49px',
-              border: '1px solid #509BFB',
-              color: '#FFF',
-            }}
-            variant="text"
-          >
-            {t('button.cancel')}
-          </BaseButton>
-        </Grid>
-        <Grid container item xs={12} md={12} lg={6}>
-          <BaseButton
-            onClick={(ev) => handleSubmit(ev)}
-            background={'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'}
-            sx={{ width: '140px', height: '49px' }}
-          >
-            {t('button.confirm')}
-          </BaseButton>
-        </Grid>
-      </Grid>
 
       {loading && <BaseLoading />}
     </BaseModal>

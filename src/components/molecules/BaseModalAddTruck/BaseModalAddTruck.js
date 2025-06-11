@@ -25,7 +25,8 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
   const { loadingCreate: loading } = useSelector((state) => state.truck)
 
   const [file, setFile] = useState(null)
-  const [previewImage, setPreviewImage] = useState(null)
+  const [previewImage, setPreviewImage] = useState({})
+  const [loadingImage, setLoadingImage] = useState(false)
 
   const [body, setBody] = useState({})
 
@@ -42,7 +43,8 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
     if (!isMountedRef.current) return
     setShowModal(false)
     setBody({})
-    setPreviewImage(null)
+    setPreviewImage({})
+    setFile(null)
   }, [setShowModal])
 
   const handleChange = (e) => {
@@ -64,12 +66,16 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
 
           try {
             if (file && createdTruckId) {
+              setLoadingImage(true)
+
               await uploadImage({
                 url: 'manager/truck/upload-image',
                 file,
                 id: createdTruckId,
                 body: { category: 'avatar_truck' },
               })
+
+              setLoadingImage(false)
             }
 
             if (!isMountedRef.current) return
@@ -78,6 +84,7 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
             dispatch(resetTruckCreate())
             onClose()
           } catch (error) {
+            setLoadingImage(false)
             if (isMountedRef.current) errorNotification(error)
           }
         },
@@ -98,7 +105,7 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
         <BaseTitle>{t('button.add_new_truck')}</BaseTitle>
       </BaseContentHeader>
 
-      {!loading && (
+      {!loading && !loadingImage && (
         <>
           <Grid
             container
@@ -121,12 +128,7 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
               mb={2}
               mr={2}
               justifyContent={'center'}
-              sx={{
-                cursor: 'pointer',
-                '&:hover': {
-                  cursor: 'pointer',
-                },
-              }}
+              sx={{ cursor: 'pointer' }}
             >
               <IconButton
                 color="info"
@@ -152,152 +154,40 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
             </Grid>
 
             <Grid container item xs={12} md={12} lg={12} spacing={1.5} flexWrap={'wrap'}>
-              <Grid item xs={6} md={6} lg={6}>
-                <BaseInput
-                  required
-                  label={t('modal_truck.placeholder.mark')}
-                  labelText={t('modal_truck.label.mark')}
-                  styles={{
-                    maxWidth: '274px',
-                    '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem',
-                    },
-                  }}
-                  value={body?.truck_name_brand ?? ''}
-                  onChange={(ev) =>
-                    setBody((state) => ({
-                      ...state,
-                      truck_name_brand: ev.target.value,
-                    }))
-                  }
-                />
-              </Grid>
-
-              <Grid item xs={6} md={6} lg={6}>
-                <BaseInput
-                  required
-                  label={t('modal_truck.placeholder.model')}
-                  labelText={t('modal_truck.label.model')}
-                  styles={{
-                    '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem',
-                    },
-                  }}
-                  value={body?.truck_models ?? ''}
-                  onChange={(ev) =>
-                    setBody((state) => ({
-                      ...state,
-                      truck_models: ev.target.value,
-                    }))
-                  }
-                />
-              </Grid>
-
-              <Grid item xs={6} md={6} lg={6}>
-                <BaseInput
-                  required
-                  maxLength={7}
-                  label={t('modal_truck.placeholder.plate')}
-                  labelText={t('modal_truck.label.plate')}
-                  styles={{
-                    maxWidth: '274px',
-                    '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem',
-                    },
-                  }}
-                  value={body?.truck_board ?? ''}
-                  onChange={(ev) =>
-                    setBody((state) => ({
-                      ...state,
-                      truck_board: ev.target.value.toUpperCase(),
-                    }))
-                  }
-                />
-              </Grid>
-
-              <Grid item xs={6} md={6} lg={6}>
-                <BaseInput
-                  required
-                  label={t('modal_truck.placeholder.color')}
-                  labelText={t('modal_truck.label.color')}
-                  styles={{
-                    maxWidth: '274px',
-                    '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem',
-                    },
-                  }}
-                  value={body?.truck_color ?? ''}
-                  onChange={(ev) =>
-                    setBody((state) => ({
-                      ...state,
-                      truck_color: ev.target.value,
-                    }))
-                  }
-                />
-              </Grid>
-
-              <Grid item xs={6} md={6} lg={6}>
-                <BaseInput
-                  required
-                  label={t('modal_truck.placeholder.truck_km')}
-                  labelText={t('modal_truck.label.truck_km')}
-                  styles={{
-                    maxWidth: '274px',
-                    '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem',
-                    },
-                  }}
-                  value={body?.truck_km ?? ''}
-                  onChange={(ev) =>
-                    setBody((state) => ({
-                      ...state,
-                      truck_km: ev.target.value,
-                    }))
-                  }
-                />
-              </Grid>
-
-              <Grid item xs={6} md={6} lg={6}>
-                <BaseInput
-                  required
-                  label={t('modal_truck.placeholder.chassis_number')}
-                  labelText={t('modal_truck.label.chassis_number')}
-                  styles={{
-                    maxWidth: '274px',
-                    '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem',
-                    },
-                  }}
-                  value={body?.truck_chassis ?? ''}
-                  onChange={(ev) =>
-                    setBody((state) => ({
-                      ...state,
-                      truck_chassis: ev.target.value,
-                    }))
-                  }
-                />
-              </Grid>
-
-              <Grid item xs={12} md={6} lg={6}>
-                <BaseInput
-                  required
-                  label={t('modal_truck.placeholder.year_manufacture')}
-                  labelText={t('modal_truck.label.year_manufacture')}
-                  styles={{
-                    maxWidth: '274px',
-                    '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem',
-                    },
-                  }}
-                  value={body?.truck_year ?? ''}
-                  onChange={(ev) =>
-                    setBody((state) => ({
-                      ...state,
-                      truck_year: ev.target.value,
-                    }))
-                  }
-                />
-              </Grid>
+              {[
+                { name: 'truck_name_brand', label: 'mark' },
+                { name: 'truck_models', label: 'model' },
+                { name: 'truck_board', label: 'plate', maxLength: 7 },
+                { name: 'truck_color', label: 'color' },
+                { name: 'truck_km', label: 'truck_km' },
+                { name: 'truck_chassis', label: 'chassis_number' },
+                { name: 'truck_year', label: 'year_manufacture' },
+              ].map((field) => (
+                <Grid item xs={6} md={6} lg={field.name === 'truck_year' ? 12 : 6} key={field.name}>
+                  <BaseInput
+                    required
+                    label={t(`modal_truck.placeholder.${field.label}`)}
+                    labelText={t(`modal_truck.label.${field.label}`)}
+                    maxLength={field.maxLength}
+                    styles={{
+                      maxWidth: '274px',
+                      '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                        height: '1.4rem',
+                      },
+                    }}
+                    value={body?.[field.name] ?? ''}
+                    onChange={(ev) =>
+                      setBody((state) => ({
+                        ...state,
+                        [field.name]:
+                          field.name === 'truck_board'
+                            ? ev.target.value.toUpperCase()
+                            : ev.target.value,
+                      }))
+                    }
+                  />
+                </Grid>
+              ))}
             </Grid>
           </Grid>
 
@@ -346,7 +236,7 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
         </>
       )}
 
-      {loading && <BaseLoading />}
+      {(loading || loadingImage) && <BaseLoading />}
     </BaseModal>
   )
 }

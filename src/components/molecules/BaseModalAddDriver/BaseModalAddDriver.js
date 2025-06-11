@@ -19,6 +19,10 @@ import BaseContentHeader from '@/components/molecules/BaseContentHeader/BaseCont
 import BaseInput from '@/components/molecules/BaseInput/BaseInput'
 import BaseTitle from '@/components/atoms/BaseTitle/BaseTitle'
 import initialStateQuery from '@/utils/initialStateQuery'
+import BaseSelect from '../BaseSelect/BaseSelect'
+import enums from '@/utils/enums'
+import BasePickerDate from '@/components/atoms/BasePickerDate/BasePickerDate'
+import { formatDatePicker, formatDatePickerToUTC } from '@/utils/formatDate'
 
 const BaseModalAddDriver = ({ showModal, setShowModal }) => {
   const { t } = useTranslation()
@@ -46,8 +50,10 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
     cpf: '',
     email: '',
     phone: '',
+    gender: '',
     password: '',
     confirm_password: '',
+    date_birthday: null,
   })
   const [data, setData] = useState({})
 
@@ -73,8 +79,10 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
       cpf: '',
       email: '',
       phone: '',
+      gender: '',
       password: '',
       confirm_password: '',
+      date_birthday: '',
     })
     setShowModal(false)
   }, [setShowModal])
@@ -86,9 +94,12 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
       cpf: body?.cpf?.replace(/\D/g, ''),
       password: body?.password,
       percentage: Number(body?.percentage),
+      gender: body?.gender,
+      email: body?.email,
       phone: unmaskPhone(body?.phone),
       daily: unmaskMoney(body?.daily),
       value_fix: unmaskMoney(body?.value_fix),
+      date_birthday: body?.date_birthday,
     }))
   }, [body])
 
@@ -156,6 +167,77 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
           <Grid item xs={12} md={6} lg={6}>
             <BaseInput
               required
+              labelText={t('modal.email_driver')}
+              label={t('placeholder.email_driver')}
+              type="email"
+              styles={{ minWidth: '250px' }}
+              value={body?.email ?? ''}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  email: ev.target.value,
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
+            <BaseInput
+              required
+              labelText={t('modal_create_driver.phone_driver')}
+              label={t('placeholder.phone_driver')}
+              styles={{ minWidth: '250px' }}
+              value={maskPhone(body?.phone)}
+              onChange={(ev) =>
+                setBody((state) => ({
+                  ...state,
+                  phone: ev.target.value,
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
+            <BaseSelect
+              required
+              labelText={t('modal.gender_driver')}
+              placeholder={t('placeholder.gender_driver')}
+              options={enums.gender || []}
+              getOptionLabel={(option) => option.label ?? ''}
+              isOptionEqualToValue={(option, value) => option.value === value?.value}
+              onChange={(event, newValue) => {
+                if (newValue) {
+                  setBody((state) => ({
+                    ...state,
+                    gender: newValue.value,
+                  }))
+                }
+                if (newValue === null) {
+                  setBody((state) => ({ ...state, gender: '' }))
+                }
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
+            <BasePickerDate
+              labelText={t('modal_create_driver.date_of_birth')}
+              label={t('placeholder.date_of_birth')}
+              value={body?.date_birthday ? formatDatePicker(body?.date_birthday) : ''}
+              size="medium"
+              height="2.4em"
+              onChange={(newValue) =>
+                setBody((state) => ({
+                  ...state,
+                  date_birthday: formatDatePickerToUTC(newValue),
+                }))
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={6}>
+            <BaseInput
+              required
               type={showPassword ? 'text' : 'password'}
               labelText={t('label.password')}
               label={t('placeholder.login_password')}
@@ -191,22 +273,6 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
               value={confirmPassword ?? ''}
               onChange={(ev) => setConfirmPassword(ev.target.value)}
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={6}>
-            <BaseInput
-              required
-              labelText={t('modal_create_driver.phone_driver')}
-              label={t('placeholder.phone_driver')}
-              styles={{ minWidth: '250px' }}
-              value={maskPhone(body?.phone)}
-              onChange={(ev) =>
-                setBody((state) => ({
-                  ...state,
-                  phone: ev.target.value,
-                }))
-              }
             />
           </Grid>
 

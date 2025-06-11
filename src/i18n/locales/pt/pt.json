@@ -186,6 +186,9 @@
     "truck": "Caminhão",
     "cart": "Carreta",
     "start_date": "Início da Ficha",
+    "gender": "Gênero",
+    "email_driver": "E-mail",
+    "gender_driver": "Gênero",
     "avatar": "Avatar",
     "add_user": {
       "user": "Usuário",
@@ -461,6 +464,8 @@
     "phone_driver": "(DDD) 00000-0000",
     "value_driver": "R$ 0,00",
     "percentage_driver": "0%",
+    "email_driver": "Insira o e-mail",
+    "gender_driver": "Insira o gênero",
     "truck": "Caminhão",
     "cart": "Carreta",
     "name_driver": "Insira o nome completo",

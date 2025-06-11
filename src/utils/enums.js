@@ -50,6 +50,12 @@ const statusFinancial = [
   { value: 'OVERDUE', label: 'Atrasado' },
 ]
 
+const gender = [
+  { value: 'MALE', label: 'Masculino' },
+  { value: 'FEMALE', label: 'Feminino' },
+  { value: 'OTHER', label: 'Outro' },
+]
+
 const enums = {
   typeCart,
   typeBodywork,
@@ -58,6 +64,7 @@ const enums = {
   typeUser,
   typeFinancial,
   statusFinancial,
+  gender,
 }
 
 export default enums

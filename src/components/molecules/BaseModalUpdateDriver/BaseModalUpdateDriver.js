@@ -11,12 +11,12 @@ import {
   getDriversRequest,
 } from 'store/modules/driver/driverSlice'
 
-import Button from 'components/atoms/BaseButton/BaseButton'
-import Modal from 'components/molecules/BaseModal/BaseModal'
-import Loading from '@/components/atoms/BaseLoading/BaseLoading'
-import ContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import Title from 'components/atoms/BaseTitle/BaseTitle'
-import PickerDate from '@/components/atoms/BasePickerDate/BasePickerDate'
+import BaseButton from 'components/atoms/BaseButton/BaseButton'
+import BaseModal from 'components/molecules/BaseModal/BaseModal'
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
+import BasePickerDate from '@/components/atoms/BasePickerDate/BasePickerDate'
 import BaseInput from 'components/molecules/BaseInput/BaseInput'
 import BaseModalResetPassword from 'components/molecules/BaseModalResetPassword/BaseModalResetPassword'
 import initialStateQuery from '@/utils/initialStateQuery'
@@ -27,7 +27,9 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
   const [body, setBody] = useState({})
 
   const dispatch = useDispatch()
-  const driver = useSelector((state) => state.driver)
+  const { selected, loadingGetById, loadingUpdate, successUpdate } = useSelector(
+    (state) => state.driver
+  )
 
   useEffect(() => {
     if (data?.id) {
@@ -36,20 +38,20 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
   }, [dispatch, data?.id])
 
   useEffect(() => {
-    if (driver?.selected) {
+    if (selected) {
       setBody({
-        name: driver?.selected?.name,
-        number_cnh: driver?.selected?.numberCnh,
-        valid_cnh: driver?.selected?.validCnh,
-        date_valid_mopp: driver?.selected?.dateValidMopp,
-        date_valid_nr20: driver?.selected?.dateValidNr20,
-        date_valid_nr35: driver?.selected?.dateValidNr35,
-        cpf: driver?.selected?.cpf,
-        date_admission: driver?.selected?.dateAdmission,
-        date_birthday: driver?.selected?.dateBirthday,
+        name: selected?.name,
+        number_cnh: selected?.numberCnh,
+        valid_cnh: selected?.validCnh,
+        date_valid_mopp: selected?.dateValidMopp,
+        date_valid_nr20: selected?.dateValidNr20,
+        date_valid_nr35: selected?.dateValidNr35,
+        cpf: selected?.cpf,
+        date_admission: selected?.dateAdmission,
+        date_birthday: selected?.dateBirthday,
       })
     }
-  }, [driver])
+  }, [selected])
 
   const handleSubmit = (ev) => {
     ev.preventDefault()
@@ -57,6 +59,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
   }
 
   const onClose = useCallback(() => {
+    setShowModal(false)
     setBody({
       name: '',
       number_cnh: '',
@@ -68,31 +71,30 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
       date_admission: '',
       date_birthday: '',
     })
-    setShowModal(false)
   }, [setShowModal])
 
   useEffect(() => {
-    if (driver?.successUpdate) {
+    if (successUpdate) {
       dispatch(getDriversRequest(initialStateQuery.INITIAL_STATE_DRIVER))
       dispatch(resetUpdateDriverStatus())
       onClose()
     }
-  }, [driver?.successUpdate, onClose, dispatch])
+  }, [successUpdate, onClose, dispatch])
 
   return (
     <>
-      <Modal
+      <BaseModal
         open={showModal}
         onClose={onClose}
         component="form"
         onSubmit={handleSubmit}
         maxWidth={'600px'}
       >
-        <ContentHeader>
-          <Title>{t('modal_user.title_edit_driver')}</Title>
-        </ContentHeader>
+        <BaseContentHeader>
+          <BaseTitle>{t('modal_user.title_edit_driver')}</BaseTitle>
+        </BaseContentHeader>
 
-        {!driver?.loadingGetById && (
+        {!loadingGetById && !loadingUpdate && (
           <Grid
             container
             item
@@ -117,7 +119,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
             </Grid>
 
             <Grid item xs={12} md={6} lg={6}>
-              <PickerDate
+              <BasePickerDate
                 labelText={t('modal_create_driver.admission_date')}
                 label={t('placeholder.enter_admission_date')}
                 value={body?.date_admission}
@@ -133,7 +135,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
             </Grid>
 
             <Grid item xs={12} md={6} lg={6}>
-              <PickerDate
+              <BasePickerDate
                 labelText={t('modal_create_driver.date_of_birth')}
                 label={t('placeholder.date_of_birth')}
                 value={body?.date_birthday}
@@ -179,7 +181,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
             </Grid>
 
             <Grid item xs={12} md={6} lg={6}>
-              <PickerDate
+              <BasePickerDate
                 labelText={t('modal_create_driver.cnh_validity')}
                 label={t('placeholder.cnh_validity')}
                 height="2.4em"
@@ -195,7 +197,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
             </Grid>
 
             <Grid item xs={12} md={6} lg={6}>
-              <PickerDate
+              <BasePickerDate
                 labelText={t('modal_create_driver.mopp_validity')}
                 label={t('placeholder.mopp_validity')}
                 value={body?.date_valid_mopp}
@@ -211,7 +213,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
             </Grid>
 
             <Grid item xs={12} md={6} lg={6}>
-              <PickerDate
+              <BasePickerDate
                 labelText={t('modal_create_driver.nr20_validity')}
                 label={t('placeholder.nr20_validity')}
                 value={body?.date_valid_nr20}
@@ -227,7 +229,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
             </Grid>
 
             <Grid item xs={12} md={6} lg={6}>
-              <PickerDate
+              <BasePickerDate
                 labelText={t('modal_create_driver.nr35_validity')}
                 label={t('placeholder.nr35_validity')}
                 value={body?.date_valid_nr35}
@@ -251,13 +253,13 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
               justifyContent={'center'}
               alignItems={'flex-end'}
             >
-              <Button
+              <BaseButton
                 onClick={() => setShowModalResetPassword(true)}
                 background={'linear-gradient(224.78deg, #FF4B4B 8.12%, #FF0000 92.21%)'}
                 sx={{ width: '100%', height: '49px' }}
               >
                 {t('label.reset_password')}
-              </Button>
+              </BaseButton>
             </Grid>
 
             <Grid
@@ -271,7 +273,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
               justifyContent={'flex-end'}
             >
               <Grid item container xs={12} md={12} lg={3}>
-                <Button
+                <BaseButton
                   onClick={() => onClose()}
                   background={''}
                   sx={{
@@ -283,10 +285,10 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
                   variant="text"
                 >
                   {t('button.cancel')}
-                </Button>
+                </BaseButton>
               </Grid>
               <Grid container item xs={12} md={3} lg={3}>
-                <Button
+                <BaseButton
                   type="submit"
                   color="success"
                   background={'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'}
@@ -299,20 +301,20 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
                   }}
                 >
                   {t('button.update')}
-                </Button>
+                </BaseButton>
               </Grid>
             </Grid>
           </Grid>
         )}
 
-        {driver?.loadingGetById && <Loading />}
-      </Modal>
+        {(loadingGetById || loadingUpdate) && <BaseLoading />}
+      </BaseModal>
 
       {showModalResetPassword && (
         <BaseModalResetPassword
           setShowModal={setShowModalResetPassword}
           showModal={showModalResetPassword}
-          data={driver?.selected}
+          data={selected}
         />
       )}
     </>

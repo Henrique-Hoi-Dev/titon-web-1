@@ -22,10 +22,11 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
 
   const dispatch = useDispatch()
 
-  const { loadingGet: loading } = useSelector((state) => state.cart)
+  const { loadingCreate: loading } = useSelector((state) => state.cart)
 
   const [file, setFile] = useState(null)
-  const [previewImage, setPreviewImage] = useState(null)
+  const [previewImage, setPreviewImage] = useState({})
+  const [loadingImage, setLoadingImage] = useState(false)
 
   const [body, setBody] = useState({})
 
@@ -42,7 +43,7 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
     if (!isMountedRef.current) return
     setShowModal(false)
     setBody({})
-    setPreviewImage(null)
+    setPreviewImage({})
   }, [setShowModal])
 
   const handleChange = (e) => {
@@ -64,12 +65,16 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
 
           try {
             if (file && createdCartId) {
+              setLoadingImage(true)
+
               await uploadImage({
                 url: 'manager/cart/upload-image',
                 file,
                 id: createdCartId,
                 body: { category: 'avatar_cart' },
               })
+
+              setLoadingImage(false)
             }
 
             if (!isMountedRef.current) return
@@ -78,6 +83,7 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
             dispatch(resetCartCreate())
             onClose()
           } catch (error) {
+            setLoadingImage(false)
             if (isMountedRef.current) errorNotification(error)
           }
         },
@@ -98,7 +104,7 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
         <BaseTitle>{t('modal.add_cart.title')}</BaseTitle>
       </BaseContentHeader>
 
-      {!loading && (
+      {!loading && !loadingImage && (
         <>
           <Grid
             item
@@ -411,7 +417,7 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
         </>
       )}
 
-      {loading && <BaseLoading />}
+      {(loading || loadingImage) && <BaseLoading />}
     </BaseModal>
   )
 }

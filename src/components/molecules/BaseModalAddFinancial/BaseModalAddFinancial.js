@@ -16,7 +16,6 @@ import BaseModal from 'components/molecules/BaseModal/BaseModal'
 import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseText from 'components/atoms/BaseText/BaseText'
 import BaseSelect from 'components/molecules/BaseSelect/BaseSelect'
 import initialStateQuery from 'utils/initialStateQuery'
 
@@ -120,7 +119,6 @@ const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
             </Grid>
 
             <Grid item xs={12} md={12} lg={12}>
-              <BaseText></BaseText>
               <BaseSelect
                 labelText={t('placeholder.cart')}
                 placeholder={t('messages.select')}

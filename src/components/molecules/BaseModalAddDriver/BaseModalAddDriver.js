@@ -3,11 +3,7 @@ import { Grid, LinearProgress, linearProgressClasses, styled } from '@mui/materi
 import { useTranslation } from 'react-i18next'
 import { formatMoney, maskCPF, maskPhone } from 'utils/masks'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  createDriverRequest,
-  getDriversRequest,
-  resetCreateDriverStatus,
-} from 'store/modules/driver/driverSlice'
+import { createDriverRequest, resetCreateDriverStatus } from 'store/modules/driver/driverSlice'
 import { unmaskPhone } from '@/utils/unmask'
 import { unmaskMoney } from '@/utils/unmaskMoney'
 import { evaluateStrongPassword } from '@/utils/passwordVerify'
@@ -18,13 +14,12 @@ import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
 import BaseContentHeader from '@/components/molecules/BaseContentHeader/BaseContentHeader'
 import BaseInput from '@/components/molecules/BaseInput/BaseInput'
 import BaseTitle from '@/components/atoms/BaseTitle/BaseTitle'
-import initialStateQuery from '@/utils/initialStateQuery'
 import BaseSelect from '../BaseSelect/BaseSelect'
 import enums from '@/utils/enums'
 import BasePickerDate from '@/components/atoms/BasePickerDate/BasePickerDate'
 import { formatDatePicker, formatDatePickerToUTC } from '@/utils/formatDate'
 
-const BaseModalAddDriver = ({ showModal, setShowModal }) => {
+const BaseModalAddDriver = ({ showModal, setShowModal, onCreated }) => {
   const { t } = useTranslation()
   const [confirmPassword, setConfirmPassword] = useState('')
 
@@ -45,16 +40,8 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
     },
   }))
 
-  const [body, setBody] = useState({
-    name: '',
-    cpf: '',
-    email: '',
-    phone: '',
-    gender: '',
-    password: '',
-    confirm_password: '',
-    date_birthday: null,
-  })
+  const [body, setBody] = useState({})
+
   const [data, setData] = useState({})
 
   const dispatch = useDispatch()
@@ -74,42 +61,28 @@ const BaseModalAddDriver = ({ showModal, setShowModal }) => {
   }
 
   const onClose = useCallback(() => {
-    setBody({
-      name: '',
-      cpf: '',
-      email: '',
-      phone: '',
-      gender: '',
-      password: '',
-      confirm_password: '',
-      date_birthday: '',
-    })
+    setBody({})
     setShowModal(false)
-  }, [setShowModal])
+    dispatch(resetCreateDriverStatus())
+  }, [setShowModal, dispatch])
 
   useEffect(() => {
     setData((state) => ({
       ...state,
-      name: body?.name,
       cpf: body?.cpf?.replace(/\D/g, ''),
-      password: body?.password,
       percentage: Number(body?.percentage),
-      gender: body?.gender,
-      email: body?.email,
       phone: unmaskPhone(body?.phone),
       daily: unmaskMoney(body?.daily),
       value_fix: unmaskMoney(body?.value_fix),
-      date_birthday: body?.date_birthday,
     }))
   }, [body])
 
   useEffect(() => {
-    if (successCreate) {
-      dispatch(getDriversRequest(initialStateQuery.INITIAL_STATE_DRIVER))
-      dispatch(resetCreateDriverStatus())
+    if (successCreate && typeof onCreated === 'function') {
+      onCreated()
       onClose()
     }
-  }, [successCreate, onClose, dispatch])
+  }, [successCreate, onClose, onCreated])
 
   return (
     <BaseModal

@@ -37,13 +37,13 @@ const Driver = () => {
     }
 
     const timer = setTimeout(() => {
-      if (shouldRefresh || search) {
-        dispatch(
-          getDriversRequest({
-            ...driverQuery,
-            search: search,
-          })
-        )
+      if (shouldRefresh || search.length >= 0) {
+        const query = {
+          ...driverQuery,
+          ...(search.trim() ? { search } : {}),
+        }
+
+        dispatch(getDriversRequest(query))
         setShouldRefresh(false)
       }
     }, 1200)
@@ -53,7 +53,6 @@ const Driver = () => {
 
   const handleModalClose = () => {
     setShowModalDriver(false)
-    setShouldRefresh(true)
   }
 
   return (
@@ -107,7 +106,11 @@ const Driver = () => {
       </Grid>
 
       {showModalDriver && (
-        <BaseModalAddDriver setShowModal={handleModalClose} showModal={showModalDriver} />
+        <BaseModalAddDriver
+          setShowModal={handleModalClose}
+          showModal={showModalDriver}
+          onCreated={() => setShouldRefresh(true)}
+        />
       )}
     </Grid>
   )

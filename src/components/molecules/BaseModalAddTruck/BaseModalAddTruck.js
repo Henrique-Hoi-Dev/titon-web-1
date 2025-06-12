@@ -1,11 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { Grid, IconButton } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  createTruckRequest,
-  getTrucksRequest,
-  resetTruckCreate,
-} from 'store/modules/truck/truckSlice'
+import { createTruckRequest, resetTruckCreate } from 'store/modules/truck/truckSlice'
 import { useTranslation } from 'react-i18next'
 import { uploadImage } from '@/services/uploadImage'
 import { errorNotification } from '@/utils/notification'
@@ -18,7 +14,7 @@ import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
 import BaseInput from 'components/molecules/BaseInput/BaseInput'
 import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar'
 
-const ModalAddTruck = ({ showModal, setShowModal }) => {
+const ModalAddTruck = ({ showModal, setShowModal, onCreated }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
 
@@ -45,7 +41,8 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
     setBody({})
     setPreviewImage({})
     setFile(null)
-  }, [setShowModal])
+    dispatch(resetTruckCreate())
+  }, [setShowModal, dispatch])
 
   const handleChange = (e) => {
     e.preventDefault()
@@ -80,8 +77,10 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
 
             if (!isMountedRef.current) return
 
-            dispatch(getTrucksRequest({}))
-            dispatch(resetTruckCreate())
+            if (typeof onCreated === 'function') {
+              onCreated()
+            }
+
             onClose()
           } catch (error) {
             setLoadingImage(false)
@@ -203,7 +202,7 @@ const ModalAddTruck = ({ showModal, setShowModal }) => {
           >
             <Grid item container xs={12} md={12} lg={3}>
               <BaseButton
-                onClick={() => onClose()}
+                onClick={() => setShowModal(false)}
                 background={''}
                 sx={{
                   width: '140px',

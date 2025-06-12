@@ -34,7 +34,7 @@ const BaseSelect = ({
   ...props
 }) => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
       <BaseText fontsize={'14px'} color={'#1877F2'}>
         {labelText}
       </BaseText>
@@ -50,7 +50,16 @@ const BaseSelect = ({
         options={options}
         getOptionLabel={getOptionLabel}
         onChange={onChange}
-        isOptionEqualToValue={isOptionEqualToValue || ((option, value) => option?.id === value?.id)}
+        isOptionEqualToValue={
+          isOptionEqualToValue ||
+          ((option, value) => {
+            if (!option || !value) return false
+            return (
+              option.id === value.id ||
+              (option.name === value.name && option.states?.uf === value.states?.uf)
+            )
+          })
+        }
         {...props}
         renderInput={(params) => (
           <TextField

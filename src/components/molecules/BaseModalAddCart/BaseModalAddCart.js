@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { Grid, IconButton } from '@mui/material'
-import { createCartRequest, getCartsRequest, resetCartCreate } from 'store/modules/cart/cartSlice'
+import { createCartRequest, resetCartCreate } from 'store/modules/cart/cartSlice'
 import { uploadImage } from '@/services/uploadImage'
 import { errorNotification } from '@/utils/notification'
 
@@ -17,7 +17,7 @@ import enums from '@/utils/enums'
 import BaseAvatar from '../BaseAvatar/BaseAvatar'
 import BaseInputMaskMil from '../BaseInputMaskMil/BaseInputMaskMil'
 
-const BaseModalAddCart = ({ showModal, setShowModal }) => {
+const BaseModalAddCart = ({ showModal, setShowModal, onCreated }) => {
   const { t } = useTranslation()
 
   const dispatch = useDispatch()
@@ -44,7 +44,9 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
     setShowModal(false)
     setBody({})
     setPreviewImage({})
-  }, [setShowModal])
+    setFile(null)
+    dispatch(resetCartCreate())
+  }, [setShowModal, dispatch])
 
   const handleChange = (e) => {
     e.preventDefault()
@@ -79,8 +81,10 @@ const BaseModalAddCart = ({ showModal, setShowModal }) => {
 
             if (!isMountedRef.current) return
 
-            dispatch(getCartsRequest({}))
-            dispatch(resetCartCreate())
+            if (typeof onCreated === 'function') {
+              onCreated()
+            }
+
             onClose()
           } catch (error) {
             setLoadingImage(false)

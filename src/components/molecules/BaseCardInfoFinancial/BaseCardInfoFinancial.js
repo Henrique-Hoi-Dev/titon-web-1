@@ -84,8 +84,13 @@ const BaseCardInfoFinancial = ({ loading, financials }) => {
                     >
                       <CardMedia
                         component="img"
-                        height="190px"
-                        sx={{ borderRadius: '8px' }}
+                        sx={{
+                          borderRadius: '8px',
+                          maxWidth: '300px',
+                          maxHeight: '190px',
+                          minWidth: '300px',
+                          minHeight: '190px',
+                        }}
                         image={getAvatar(
                           financial?.truck?.imageTruck?.uuid,
                           financial?.truck?.imageTruck?.category
@@ -111,7 +116,6 @@ const BaseCardInfoFinancial = ({ loading, financials }) => {
                         <BaseText fontsize={'24px'} color="#F1F3F9">
                           {financial?.truck?.truckBoard?.toUpperCase() || '-'}
                         </BaseText>
-                        <BaseTypeStatus props={financial?.freight} />
                       </Grid>
 
                       <Grid container justifyContent={'space-between'}>
@@ -123,6 +127,18 @@ const BaseCardInfoFinancial = ({ loading, financials }) => {
                         <BaseText fontsize={'16px'}>{t('card_financial.label2')} </BaseText>
                         <BaseText fontsize={'16px'}>
                           {formatDate(financial?.startDate) || '-'}
+                        </BaseText>
+                      </Grid>
+
+                      <Grid container item justifyContent="space-between">
+                        <BaseText fontsize="16px">{t('card_financial.status')}</BaseText>
+                        <BaseTypeStatus props={financial?.freight} />
+                      </Grid>
+
+                      <Grid container item justifyContent="space-between">
+                        <BaseText fontsize="16px">{t('info_financial.start')}:</BaseText>
+                        <BaseText fontsize="16px">
+                          {financial?.freight?.[0]?.startFreightCity?.toUpperCase() || '-'}
                         </BaseText>
                       </Grid>
 

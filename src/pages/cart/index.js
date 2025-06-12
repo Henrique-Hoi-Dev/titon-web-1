@@ -34,13 +34,13 @@ const Cart = () => {
     }
 
     const timer = setTimeout(() => {
-      if (shouldRefresh || search) {
-        dispatch(
-          getCartsRequest({
-            ...cardQuery,
-            search: search,
-          })
-        )
+      if (shouldRefresh || search.length >= 0) {
+        const query = {
+          ...cardQuery,
+          ...(search.trim() ? { search } : {}),
+        }
+
+        dispatch(getCartsRequest(query))
         setShouldRefresh(false)
       }
     }, 1200)
@@ -50,7 +50,6 @@ const Cart = () => {
 
   const handleModalClose = () => {
     setShowModalCart(false)
-    setShouldRefresh(true)
   }
 
   return (
@@ -101,7 +100,11 @@ const Cart = () => {
       </Grid>
 
       {showModalCart && (
-        <BaseModalAddCart setShowModal={handleModalClose} showModal={showModalCart} />
+        <BaseModalAddCart
+          setShowModal={handleModalClose}
+          showModal={showModalCart}
+          onCreated={() => setShouldRefresh(true)}
+        />
       )}
     </Grid>
   )

@@ -25,7 +25,7 @@ const InfoFinancial = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
 
-  const { selected: financial, loadingGet } = useSelector((state) => state.financial)
+  const { selected: financial, loadingById } = useSelector((state) => state.financial)
 
   const [freight, setFreight] = useState('')
 
@@ -88,8 +88,7 @@ const InfoFinancial = () => {
                 >
                   <CardMedia
                     component="img"
-                    height="185px"
-                    sx={{ borderRadius: '4px' }}
+                    sx={{ borderRadius: '4px', width: '268px', height: '268px' }}
                     image={getAvatar(
                       financial?.truck?.imageTruck?.uuid,
                       financial?.truck?.imageTruck?.category
@@ -109,10 +108,9 @@ const InfoFinancial = () => {
                     fontWeight: '400',
                     lineHeight: '25px',
                   }}
+                  gap={1}
                 >
-                  <Grid container item pb={2} justifyContent="space-between">
-                    <BaseTypeStatus props={financial?.freight} />
-                  </Grid>
+                  <Grid container item pb={2} justifyContent="space-between"></Grid>
 
                   <Grid container item justifyContent="space-between">
                     <BaseText fontsize="16px">{t('info_financial.driver')}:</BaseText>
@@ -120,8 +118,20 @@ const InfoFinancial = () => {
                   </Grid>
 
                   <Grid container item justifyContent="space-between">
-                    <BaseText fontsize="16px">{t('info_financial.startDate')}:</BaseText>
+                    <BaseText fontsize="16px">{t('card_financial.label2')}</BaseText>
                     <BaseText fontsize="16px">{formatDate(financial?.startDate)}</BaseText>
+                  </Grid>
+
+                  <Grid container item justifyContent="space-between">
+                    <BaseText fontsize="16px">{t('card_financial.status')}</BaseText>
+                    <BaseTypeStatus props={financial?.freight} />
+                  </Grid>
+
+                  <Grid container item justifyContent="space-between">
+                    <BaseText fontsize="16px">{t('info_financial.start')}:</BaseText>
+                    <BaseText fontsize="16px">
+                      {financial?.freight[0]?.startFreightCity?.toUpperCase()}
+                    </BaseText>
                   </Grid>
 
                   <Grid container item justifyContent="space-between">
@@ -133,9 +143,7 @@ const InfoFinancial = () => {
 
                   <Grid container item justifyContent="space-between">
                     <BaseText fontsize="16px">{t('info_financial.credit')}:</BaseText>
-                    <BaseText fontsize="16px">
-                      {moneyMask(financial?.driver?.credit || [0])}
-                    </BaseText>
+                    <BaseText fontsize="16px">{moneyMask(financial?.driver?.credit || 0)}</BaseText>
                   </Grid>
 
                   <Grid container justifyContent="flex-start" alignItems="flex-end">
@@ -150,9 +158,7 @@ const InfoFinancial = () => {
               <Grid item container mt={18} xs={10} md={10} lg={10}>
                 <BaseText fontSize="24px" sx={{ verticalAlign: 'super', fontWeight: '700' }}>
                   {t('info_financial.invoicing')}:{' '}
-                  <span style={{ fontWeight: '500' }}>
-                    {moneyMask(financial?.totalValue || [0])}
-                  </span>
+                  <span style={{ fontWeight: '500' }}>{moneyMask(financial?.totalValue || 0)}</span>
                 </BaseText>
 
                 <BaseButton
@@ -242,7 +248,7 @@ const InfoFinancial = () => {
               height="270px"
               overflow="auto"
             >
-              <Table data={financial} loading={loadingGet} />
+              <Table data={financial} loading={loadingById} />
             </Grid>
 
             <Grid item container justifyContent="flex-end" alignItems="flex-end" m="20px 0 0 0">

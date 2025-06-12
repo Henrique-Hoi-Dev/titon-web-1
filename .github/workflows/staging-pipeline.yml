@@ -138,7 +138,7 @@ jobs:
       - name: Send Discord Notification
         uses: Ilshidur/action-discord@master
         with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
           message: |
             📦 **CI/CD Front - Staging**

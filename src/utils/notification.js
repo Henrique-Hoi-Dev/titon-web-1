@@ -19,11 +19,14 @@ const successNotification = (successMessage) => {
 }
 
 const errorNotification = (error) => {
-  const customId = error
+  const customId =
+    error?.response?.data?.key ||
+    error?.message ||
+    (typeof error === 'string' ? error : 'erro_desconhecido')
 
   const msg = errorMessages[error?.response?.data?.key]
     ? errorMessages[error?.response?.data?.key]
-    : error
+    : error?.message || error
 
   const massage = 'Erro ao realizar a operação!'
 

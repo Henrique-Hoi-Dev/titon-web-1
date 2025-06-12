@@ -1,8 +1,6 @@
 name: CI/CD Front - Staging
 
 on:
-  pull_request:
-    branches: [staging, master]
   push:
     branches:
       - staging
@@ -24,33 +22,27 @@ on:
 
 env:
   NODE_VERSION: 20.12.2
+  YARN_REGISTRY: https://registry.npmjs.org
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Set Yarn registry
-        run: yarn config set registry https://registry.npmjs.org
+        run: yarn config set registry ${{ env.YARN_REGISTRY }}
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            node_modules
-            .yarn/cache
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+      - name: Clean Yarn cache
+        run: yarn cache clean
 
-      - name: Install dependencies with retry
+      - name: Install dependencies (with retry)
         run: |
-          for i in 1 2 3; do
+          rm -rf node_modules
+          for i in 1 2; do
             yarn install --frozen-lockfile && break
             echo "Retrying yarn install in 5s..."
             sleep 5
@@ -60,35 +52,32 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.build-status.outcome }}
     steps:
       - uses: actions/checkout@v3
-
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Set Yarn registry
-        run: yarn config set registry https://registry.npmjs.org
+        run: yarn config set registry ${{ env.YARN_REGISTRY }}
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            node_modules
-            .yarn/cache
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+      - name: Clean Yarn cache
+        run: yarn cache clean
 
-      - name: Install dependencies with retry
+      - name: Install dependencies (with retry)
         run: |
-          for i in 1 2 3; do
+          rm -rf node_modules
+          for i in 1 2; do
             yarn install --frozen-lockfile && break
             echo "Retrying yarn install in 5s..."
             sleep 5
           done
 
-      - run: yarn build
+      - name: Build project
+        id: build-status
+        run: yarn build
 
   check-code-quality:
     runs-on: ubuntu-latest
@@ -110,11 +99,13 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Set Yarn registry
-        run: yarn config set registry https://registry.npmjs.org
+        run: yarn config set registry ${{ env.YARN_REGISTRY }}
 
-      - name: Install dependencies with retry
+      - name: Install dependencies (with retry)
         run: |
-          for i in 1 2 3; do
+          rm -rf node_modules
+          yarn cache clean
+          for i in 1 2; do
             yarn install --frozen-lockfile && break
             echo "Retrying yarn install in 5s..."
             sleep 5
@@ -131,7 +122,7 @@ jobs:
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
 
   notify-discord:
-    needs: deploy
+    needs: [build]
     runs-on: ubuntu-latest
     if: always()
     steps:
@@ -139,10 +130,10 @@ jobs:
         uses: Ilshidur/action-discord@master
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          status: ${{ job.status }}
+          status: ${{ needs.build.result }}
           message: |
             📦 **CI/CD Front - Staging**
-            > **Status**: `${{ job.status }}`
-            > **Branch**: `${{ github.ref_name }}`
-            > **Autor**: `${{ github.actor }}`
-            > **Mensagem**: `${{ github.event.head_commit.message }}`
+            **Status**: `${{ needs.build.result }}`
+            **Branch**: `${{ github.ref_name }}`
+            **Autor**: `${{ github.actor }}`
+            **Workflow**: [${{ github.workflow }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})

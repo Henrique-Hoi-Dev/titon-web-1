@@ -149,17 +149,21 @@ jobs:
             esac
           }
 
-          echo "🔔 **CI/CD Front - Staging**" > message.txt
-          echo "**Branch**: \`${{ github.ref_name }}\`" >> message.txt
-          echo "**Autor**: \`${{ github.actor }}\`" >> message.txt
-          echo "**Status por etapa:**" >> message.txt
-          echo "- 🧹 Lint: $(format_status '${{ needs.lint.result }}')" >> message.txt
-          echo "- 🔧 Build: $(format_status '${{ needs.build.result }}')" >> message.txt
-          echo "- ✅ Code Quality: $(format_status '${{ needs.check-code-quality.result }}')" >> message.txt
-          echo "- 🚀 Deploy: $(format_status '${{ needs.deploy.result }}')" >> message.txt
-          echo "👉 [Ver execução](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> message.txt
+          {
+            echo "🔔 **CI/CD Front - Staging**"
+            echo "**Branch**: \`${{ github.ref_name }}\`"
+            echo "**Autor**: \`${{ github.actor }}\`"
+            echo "**Status por etapa:**"
+            echo "- 🧹 Lint: $(format_status '${{ needs.lint.result }}')"
+            echo "- 🔧 Build: $(format_status '${{ needs.build.result }}')"
+            echo "- ✅ Code Quality: $(format_status '${{ needs.check-code-quality.result }}')"
+            echo "- 🚀 Deploy: $(format_status '${{ needs.deploy.result || 'skipped' }}')"
+            echo "👉 [Ver execução](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          } > message.txt
 
-          echo "message=$(cat message.txt)" >> $GITHUB_OUTPUT
+          echo "message<<EOF" >> $GITHUB_OUTPUT
+          cat message.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Send Discord Notification
         uses: Ilshidur/action-discord@master

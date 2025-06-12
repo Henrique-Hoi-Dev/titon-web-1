@@ -122,18 +122,22 @@ jobs:
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
 
   notify-discord:
-    needs: [build]
+    needs: [lint, build, check-code-quality, deploy]
     runs-on: ubuntu-latest
     if: always()
     steps:
       - name: Send Discord Notification
-        uses: Ilshidur/action-discord@master
+        uses: appleboy/discord-action@master
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ needs.build.result }}
           message: |
-            📦 **CI/CD Front - Staging**
-            **Status**: `${{ needs.build.result }}`
+            🔔 **CI/CD Front - Staging**
             **Branch**: `${{ github.ref_name }}`
             **Autor**: `${{ github.actor }}`
-            **Workflow**: [${{ github.workflow }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            **Status por etapa:**
+            - 🧹 Lint: `${{ needs.lint.result }}`
+            - 🔧 Build: `${{ needs.build.result }}`
+            - ✅ Code Quality: `${{ needs.check-code-quality.result }}`
+            - 🚀 Deploy: `${{ needs.deploy.result || 'skipped' }}`
+            👉 [Ver execução](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})

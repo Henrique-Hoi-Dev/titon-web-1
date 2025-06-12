@@ -74,6 +74,11 @@ const BaseModalAddDriver = ({ showModal, setShowModal, onCreated }) => {
       phone: unmaskPhone(body?.phone),
       daily: unmaskMoney(body?.daily),
       value_fix: unmaskMoney(body?.value_fix),
+      date_birthday: body?.date_birthday,
+      password: body?.password,
+      email: body?.email,
+      name: body?.name,
+      gender: body?.gender,
     }))
   }, [body])
 
@@ -127,6 +132,7 @@ const BaseModalAddDriver = ({ showModal, setShowModal, onCreated }) => {
               labelText={t('modal_create_driver.cpf_driver')}
               label={t('placeholder.cpf_driver')}
               styles={{ minWidth: '250px' }}
+              maxLength={14}
               value={body?.cpf ? maskCPF(body?.cpf) : ''}
               onChange={(ev) =>
                 setBody((state) => ({

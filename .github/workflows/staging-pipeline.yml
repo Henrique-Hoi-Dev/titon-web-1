@@ -30,20 +30,64 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - run: yarn install --frozen-lockfile
+
+      - name: Set Yarn registry
+        run: yarn config set registry https://registry.npmjs.org
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            .yarn/cache
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies with retry
+        run: |
+          for i in 1 2 3; do
+            yarn install --frozen-lockfile && break
+            echo "Retrying yarn install in 5s..."
+            sleep 5
+          done
+
       - run: yarn lint
 
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - run: yarn install --frozen-lockfile
+
+      - name: Set Yarn registry
+        run: yarn config set registry https://registry.npmjs.org
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            .yarn/cache
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install dependencies with retry
+        run: |
+          for i in 1 2 3; do
+            yarn install --frozen-lockfile && break
+            echo "Retrying yarn install in 5s..."
+            sleep 5
+          done
+
       - run: yarn build
 
   check-code-quality:
@@ -65,7 +109,9 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - run: yarn config set registry https://registry.npmjs.org
+      - name: Set Yarn registry
+        run: yarn config set registry https://registry.npmjs.org
+
       - name: Install dependencies with retry
         run: |
           for i in 1 2 3; do
@@ -75,8 +121,7 @@ jobs:
           done
 
       - name: Install Heroku CLI
-        run: |
-          curl https://cli-assets.heroku.com/install.sh | sh
+        run: curl https://cli-assets.heroku.com/install.sh | sh
 
       - name: Deploy to Heroku (Staging)
         uses: akhileshns/heroku-deploy@v3.12.12
@@ -84,3 +129,20 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME_STAGING }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
+
+  notify-discord:
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Send Discord Notification
+        uses: Ilshidur/action-discord@master
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          status: ${{ job.status }}
+          message: |
+            📦 **CI/CD Front - Staging**
+            > **Status**: `${{ job.status }}`
+            > **Branch**: `${{ github.ref_name }}`
+            > **Autor**: `${{ github.actor }}`
+            > **Mensagem**: `${{ github.event.head_commit.message }}`

@@ -1,56 +1,56 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { Grid, IconButton } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
+import React, { useState, useEffect, useCallback } from 'react';
+import { Grid, IconButton } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   getTruckByIdRequest,
   getTrucksRequest,
   resetTruckUpdate,
   updateTruckRequest,
-} from 'store/modules/truck/truckSlice'
-import { uploadImage } from '@/services/uploadImage'
-import { errorNotification, successNotification } from '@/utils/notification'
+} from 'store/modules/truck/truckSlice';
+import { uploadImage } from '@/services/uploadImage';
+import { errorNotification, successNotification } from '@/utils/notification';
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseModal from 'components/molecules/BaseModal/BaseModal'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseProgress from '@/components/atoms/BaseProgress/BaseProgress'
-import BaseInput from 'components/molecules/BaseInput/BaseInput'
-import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseProgress from '@/components/atoms/BaseProgress/BaseProgress';
+import BaseInput from 'components/molecules/BaseInput/BaseInput';
+import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
 
 const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
   const {
     selected: truck,
     loadingUpdate,
     loadingGetById,
     successUpdate,
-  } = useSelector((state) => state.truck)
+  } = useSelector((state) => state.truck);
 
-  const [body, setBody] = useState({})
-  const [image, setImage] = useState(null)
+  const [body, setBody] = useState({});
+  const [image, setImage] = useState(null);
 
-  const [progressPercent, setProgressPercent] = useState(0)
+  const [progressPercent, setProgressPercent] = useState(0);
 
   const onClose = useCallback(() => {
-    setShowModal(false)
-    setBody({})
-  }, [setShowModal])
+    setShowModal(false);
+    setBody({});
+  }, [setShowModal]);
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
+    ev.preventDefault();
 
-    dispatch(updateTruckRequest({ id: data.id, data: body }))
-  }
+    dispatch(updateTruckRequest({ id: data.id, data: body }));
+  };
 
   useEffect(() => {
     if (data.id) {
-      dispatch(getTruckByIdRequest(data.id))
+      dispatch(getTruckByIdRequest(data.id));
     }
-  }, [dispatch, data.id])
+  }, [dispatch, data.id]);
 
   useEffect(() => {
     if (truck) {
@@ -63,24 +63,24 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
         truck_km: truck?.truckKm,
         truck_chassis: truck?.truckChassis,
         truck_year: truck?.truckYear,
-      }))
+      }));
     }
-  }, [truck])
+  }, [truck]);
 
   useEffect(() => {
     if (successUpdate) {
-      onClose()
-      dispatch(resetTruckUpdate())
-      dispatch(getTrucksRequest({}))
+      onClose();
+      dispatch(resetTruckUpdate());
+      dispatch(getTrucksRequest({}));
     }
-  }, [successUpdate, onClose, dispatch])
+  }, [successUpdate, onClose, dispatch]);
 
   async function handleChange(e) {
-    const file = e.target.files[0]
-    if (!file) return
+    const file = e.target.files[0];
+    if (!file) return;
 
     try {
-      setProgressPercent(10)
+      setProgressPercent(10);
 
       const image = await uploadImage({
         file,
@@ -90,15 +90,15 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
         },
         url: 'manager/truck/upload-image',
         onUploadProgress: (event) => {
-          const progress = Math.round((event.loaded * 100) / event.total)
-          setProgressPercent(progress)
+          const progress = Math.round((event.loaded * 100) / event.total);
+          setProgressPercent(progress);
         },
-      })
+      });
 
-      setImage(image.imageTruck)
-      successNotification(t('modal.edit_truck.success'))
+      setImage(image.imageTruck);
+      successNotification(t('modal.edit_truck.success'));
     } catch (error) {
-      errorNotification(error)
+      errorNotification(error);
     }
   }
 
@@ -366,7 +366,7 @@ const BaseModalUpdateTruck = ({ showModal, setShowModal, data }) => {
 
       {(loadingUpdate || loadingGetById) && <BaseLoading />}
     </BaseModal>
-  )
-}
+  );
+};
 
-export default BaseModalUpdateTruck
+export default BaseModalUpdateTruck;

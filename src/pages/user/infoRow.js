@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { IconButton, Menu, MenuItem } from '@mui/material'
-import { DropUpSharpIcon } from 'assets/icons/icons'
-import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable'
+import React, { useState } from 'react';
+import { IconButton, Menu, MenuItem } from '@mui/material';
+import { DropUpSharpIcon } from 'assets/icons/icons';
+import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
 
 export default function InfoRow({
   data,
@@ -10,25 +10,25 @@ export default function InfoRow({
   setShowModalUpdate,
   setUserId,
 }) {
-  const [openSettings, setOpenSettings] = useState(false)
-  const [anchorEl, setAnchorEl] = useState(false)
+  const [openSettings, setOpenSettings] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(false);
 
   const handleClick = (ev) => {
-    setOpenSettings(!openSettings)
-    setAnchorEl(ev.currentTarget)
-  }
+    setOpenSettings(!openSettings);
+    setAnchorEl(ev.currentTarget);
+  };
 
   const handleDelete = (id, name) => {
-    setShowModalDelete(true)
-    setUserId({ id: id, name: name })
-    setOpenSettings(false)
-  }
+    setShowModalDelete(true);
+    setUserId({ id: id, name: name });
+    setOpenSettings(false);
+  };
 
   const handleUpdate = (id) => {
-    setShowModalUpdate(true)
-    setUserId({ id: id })
-    setOpenSettings(false)
-  }
+    setShowModalUpdate(true);
+    setUserId({ id: id });
+    setOpenSettings(false);
+  };
 
   return (
     <>
@@ -95,5 +95,5 @@ export default function InfoRow({
         <MenuItem onClick={() => handleDelete(data?.id, data.name)}>Excluir</MenuItem>
       </Menu>
     </>
-  )
+  );
 }

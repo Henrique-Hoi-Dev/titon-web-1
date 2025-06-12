@@ -1,15 +1,15 @@
-import { Avatar } from '@mui/material'
-import preview from 'assets/preview.png'
+import { Avatar } from '@mui/material';
+import preview from 'assets/preview.png';
 
 const BaseAvatar = ({ src = {}, uuid, styles, category }) => {
-  let srcImage = ''
+  let srcImage = '';
   if (Object?.entries(src).length === 0) {
-    srcImage = preview
+    srcImage = preview;
   } else {
-    srcImage = src
+    srcImage = src;
   }
 
-  const imagem = `https://titon-file-storage.s3.us-east-1.amazonaws.com/${category}/${uuid}`
+  const imagem = `https://titon-file-storage.s3.us-east-1.amazonaws.com/${category}/${uuid}`;
 
   return (
     <>
@@ -25,7 +25,7 @@ const BaseAvatar = ({ src = {}, uuid, styles, category }) => {
         <Avatar alt="avatar" sx={{ ...styles }} src={srcImage} />
       )}
     </>
-  )
-}
+  );
+};
 
-export default BaseAvatar
+export default BaseAvatar;

@@ -1,33 +1,33 @@
-import React, { useRef } from 'react'
-import { Fab, Box, Button, Typography } from '@mui/material'
-import { useTranslation } from 'react-i18next'
-import AddIcon from '@mui/icons-material/Add'
+import React, { useRef } from 'react';
+import { Fab, Box, Button, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import AddIcon from '@mui/icons-material/Add';
 
 const BaseImagePreview = (props) => {
-  const { t } = useTranslation()
-  const fileInputRef = useRef()
+  const { t } = useTranslation();
+  const fileInputRef = useRef();
 
   const handleClick = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    fileInputRef.current.click()
-  }
+    fileInputRef.current.click();
+  };
 
   const setMedia = (e) => {
-    const selectedFile = e.target.files[0]
+    const selectedFile = e.target.files[0];
 
-    const reader = new FileReader()
+    const reader = new FileReader();
 
     reader.onloadend = () => {
-      props.setPreviewMedia(reader.result)
-    }
+      props.setPreviewMedia(reader.result);
+    };
 
-    reader.readAsDataURL(selectedFile)
-  }
+    reader.readAsDataURL(selectedFile);
+  };
 
   const removeMedia = () => {
-    props.setPreviewMedia(null)
-  }
+    props.setPreviewMedia(null);
+  };
 
   return (
     <>
@@ -111,7 +111,7 @@ const BaseImagePreview = (props) => {
         </Box>
       )}
     </>
-  )
-}
+  );
+};
 
-export default BaseImagePreview
+export default BaseImagePreview;

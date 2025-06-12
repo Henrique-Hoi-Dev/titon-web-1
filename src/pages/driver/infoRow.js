@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import { IconButton, Menu, MenuItem } from '@mui/material'
-import { moneyMask } from 'utils/masks'
-import { DropUpSharpIcon } from 'assets/icons/icons'
-import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable'
-import { useTranslation } from 'react-i18next'
+import React, { useState } from 'react';
+import { IconButton, Menu, MenuItem } from '@mui/material';
+import { moneyMask } from 'utils/masks';
+import { DropUpSharpIcon } from 'assets/icons/icons';
+import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
+import { useTranslation } from 'react-i18next';
 
 const InfoRow = ({
   data,
@@ -13,33 +13,33 @@ const InfoRow = ({
   setShowModalCredit,
   setDriveId,
 }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
-  const [openSettings, setOpenSettings] = useState(false)
-  const [anchorEl, setAnchorEl] = useState(false)
+  const [openSettings, setOpenSettings] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(false);
 
   const handleClick = (ev) => {
-    setOpenSettings(!openSettings)
-    setAnchorEl(ev.currentTarget)
-  }
+    setOpenSettings(!openSettings);
+    setAnchorEl(ev.currentTarget);
+  };
 
   const handleDelete = (id, name) => {
-    setShowModalDelete(true)
-    setDriveId({ id: id, name: name })
-    setOpenSettings(false)
-  }
+    setShowModalDelete(true);
+    setDriveId({ id: id, name: name });
+    setOpenSettings(false);
+  };
 
   const handleUpdate = (id) => {
-    setShowModalUpdate(true)
-    setDriveId({ id: id })
-    setOpenSettings(false)
-  }
+    setShowModalUpdate(true);
+    setDriveId({ id: id });
+    setOpenSettings(false);
+  };
 
   const handleCredit = (id, name) => {
-    setShowModalCredit(true)
-    setDriveId({ id: id, name: name })
-    setOpenSettings(false)
-  }
+    setShowModalCredit(true);
+    setDriveId({ id: id, name: name });
+    setOpenSettings(false);
+  };
 
   return (
     <>
@@ -119,7 +119,7 @@ const InfoRow = ({
         <MenuItem onClick={() => handleDelete(data?.id, data.name)}>{t('button.delete')}</MenuItem>
       </Menu>
     </>
-  )
-}
+  );
+};
 
-export default InfoRow
+export default InfoRow;

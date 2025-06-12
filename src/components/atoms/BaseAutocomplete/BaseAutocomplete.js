@@ -1,5 +1,5 @@
-import { Autocomplete as MuiAutocomplete, TextField } from '@mui/material'
-import Loading from '@/components/atoms/BaseLoading/BaseLoading'
+import { Autocomplete as MuiAutocomplete, TextField } from '@mui/material';
+import Loading from '@/components/atoms/BaseLoading/BaseLoading';
 
 const BaseAutocomplete = ({
   placeholder,
@@ -63,7 +63,7 @@ const BaseAutocomplete = ({
         />
       )}
     />
-  )
-}
+  );
+};
 
-export default BaseAutocomplete
+export default BaseAutocomplete;

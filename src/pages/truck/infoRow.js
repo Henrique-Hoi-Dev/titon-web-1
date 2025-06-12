@@ -1,32 +1,32 @@
-import React, { useState } from 'react'
-import { IconButton, Menu, MenuItem } from '@mui/material'
-import { DropUpSharpIcon } from 'assets/icons/icons'
-import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable'
-import { useTranslation } from 'react-i18next'
-import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar'
+import React, { useState } from 'react';
+import { IconButton, Menu, MenuItem } from '@mui/material';
+import { DropUpSharpIcon } from 'assets/icons/icons';
+import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
+import { useTranslation } from 'react-i18next';
+import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
 
 const InfoRow = ({ data, index, setShowModalDelete, setShowModalUpdate, setTruckId }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
-  const [openSettings, setOpenSettings] = useState(false)
-  const [anchorEl, setAnchorEl] = useState(false)
+  const [openSettings, setOpenSettings] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(false);
 
   const handleClick = (ev) => {
-    setOpenSettings(!openSettings)
-    setAnchorEl(ev.currentTarget)
-  }
+    setOpenSettings(!openSettings);
+    setAnchorEl(ev.currentTarget);
+  };
 
   const handleDelete = (id, name) => {
-    setTruckId({ id: id, name: name })
-    setShowModalDelete(true)
-    setOpenSettings(false)
-  }
+    setTruckId({ id: id, name: name });
+    setShowModalDelete(true);
+    setOpenSettings(false);
+  };
 
   const handleUpdate = (id) => {
-    setTruckId({ id: id })
-    setShowModalUpdate(true)
-    setOpenSettings(false)
-  }
+    setTruckId({ id: id });
+    setShowModalUpdate(true);
+    setOpenSettings(false);
+  };
 
   return (
     <>
@@ -114,7 +114,7 @@ const InfoRow = ({ data, index, setShowModalDelete, setShowModalUpdate, setTruck
         </MenuItem>
       </Menu>
     </>
-  )
-}
+  );
+};
 
-export default InfoRow
+export default InfoRow;

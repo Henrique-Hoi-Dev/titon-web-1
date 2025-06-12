@@ -1,10 +1,10 @@
-import { Autocomplete as MuiAutocomplete, Popper, TextField } from '@mui/material'
-import { autocompleteClasses } from '@mui/material/Autocomplete'
-import { styled } from '@mui/material/styles'
-import { ArrowDownIcon } from '../../../assets/icons/icons'
+import { Autocomplete as MuiAutocomplete, Popper, TextField } from '@mui/material';
+import { autocompleteClasses } from '@mui/material/Autocomplete';
+import { styled } from '@mui/material/styles';
+import { ArrowDownIcon } from '../../../assets/icons/icons';
 
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseText from 'components/atoms/BaseText/BaseText'
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseText from 'components/atoms/BaseText/BaseText';
 
 const StyledPopper = styled(Popper)(() => ({
   [`& .${autocompleteClasses.paper}`]: {
@@ -18,7 +18,7 @@ const StyledPopper = styled(Popper)(() => ({
     color: '#fff',
     textAlign: 'center',
   },
-}))
+}));
 
 const BaseSelect = ({
   placeholder,
@@ -53,11 +53,11 @@ const BaseSelect = ({
         isOptionEqualToValue={
           isOptionEqualToValue ||
           ((option, value) => {
-            if (!option || !value) return false
+            if (!option || !value) return false;
             return (
               option.id === value.id ||
               (option.name === value.name && option.states?.uf === value.states?.uf)
-            )
+            );
           })
         }
         {...props}
@@ -107,7 +107,7 @@ const BaseSelect = ({
         )}
       />
     </div>
-  )
-}
+  );
+};
 
-export default BaseSelect
+export default BaseSelect;

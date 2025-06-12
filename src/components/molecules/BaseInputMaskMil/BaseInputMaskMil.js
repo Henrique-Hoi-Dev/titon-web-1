@@ -1,11 +1,11 @@
-import React from 'react'
-import { InputAdornment, IconButton, TextField } from '@mui/material'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { NumericFormat } from 'react-number-format'
-import Text from 'components/atoms/BaseText/BaseText'
+import React from 'react';
+import { InputAdornment, IconButton, TextField } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { NumericFormat } from 'react-number-format';
+import Text from 'components/atoms/BaseText/BaseText';
 
 const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, ref) {
-  const { onChange, name, ...other } = props
+  const { onChange, name, ...other } = props;
 
   return (
     <NumericFormat
@@ -21,11 +21,11 @@ const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, r
             name,
             value: values.floatValue,
           },
-        })
+        });
       }}
     />
-  )
-})
+  );
+});
 
 const BaseInputMaskMil = ({
   labelText,
@@ -102,7 +102,7 @@ const BaseInputMaskMil = ({
         }}
       />
     </div>
-  )
-}
+  );
+};
 
-export default BaseInputMaskMil
+export default BaseInputMaskMil;

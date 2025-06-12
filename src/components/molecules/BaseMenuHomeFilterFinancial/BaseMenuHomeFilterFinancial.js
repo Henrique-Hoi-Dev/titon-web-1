@@ -1,19 +1,19 @@
-import * as React from 'react'
-import { useState } from 'react'
-import { styled, alpha } from '@mui/material/styles'
-import { Grid } from '@mui/material'
+import * as React from 'react';
+import { useState } from 'react';
+import { styled, alpha } from '@mui/material/styles';
+import { Grid } from '@mui/material';
 import {
   // IconSubMenuTrendingDownIcon,
   // IconSubMenuTrendingUpIcon,
   PointIcon,
-} from 'assets/icons/icons'
-import { useTranslation } from 'react-i18next'
+} from 'assets/icons/icons';
+import { useTranslation } from 'react-i18next';
 
-import Button from '@mui/material/Button'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import Divider from '@mui/material/Divider'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Divider from '@mui/material/Divider';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -59,27 +59,27 @@ const StyledMenu = styled((props) => (
       },
     },
   },
-}))
+}));
 
 export default function BaseMenuHomeFilterFinancial({ setSearchStatus, setSearchOrder }) {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
-  const [anchorEl, setAnchorEl] = useState(null)
-  const open = Boolean(anchorEl)
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
+    setAnchorEl(event.currentTarget);
+  };
 
   const handleClose = () => {
-    setAnchorEl(null)
-  }
+    setAnchorEl(null);
+  };
 
   const handleClear = () => {
-    setSearchOrder('')
-    setSearchStatus('')
-    setAnchorEl(null)
-  }
+    setSearchOrder('');
+    setSearchStatus('');
+    setAnchorEl(null);
+  };
 
   return (
     <div>
@@ -213,5 +213,5 @@ export default function BaseMenuHomeFilterFinancial({ setSearchStatus, setSearch
         <Divider sx={{ my: 0.3, width: '85%', ml: 2 }} />
       </StyledMenu>
     </div>
-  )
+  );
 }

@@ -1,17 +1,17 @@
-import React from 'react'
-import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable'
-import { formatDate } from 'utils/formatDate'
+import React from 'react';
+import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
+import { formatDate } from 'utils/formatDate';
 
-import BaseTypeStatus from '@components/molecules/BaseTypeStatus/BaseTypeStatus'
+import BaseTypeStatus from '@components/molecules/BaseTypeStatus/BaseTypeStatus';
 
 const InfoRow = (props) => {
-  const { data, setFreightId, setShowModalAction } = props
+  const { data, setFreightId, setShowModalAction } = props;
 
   const handleAction = (ev, id) => {
-    ev.preventDefault()
-    setFreightId(id)
-    setShowModalAction(true)
-  }
+    ev.preventDefault();
+    setFreightId(id);
+    setShowModalAction(true);
+  };
 
   return (
     <>
@@ -32,7 +32,7 @@ const InfoRow = (props) => {
         <SCell>{data?.totalFreight}</SCell>
       </SRow>
     </>
-  )
-}
+  );
+};
 
-export default InfoRow
+export default InfoRow;

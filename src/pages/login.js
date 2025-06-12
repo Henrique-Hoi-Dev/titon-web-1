@@ -1,57 +1,57 @@
-import React, { useEffect, useState } from 'react'
-import { Grid, Paper } from '@mui/material'
-import { useSelector, useDispatch } from 'react-redux'
-import { Box } from '@mui/system'
-import { useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { signInRequest } from 'store/modules/auth/authSlice'
+import React, { useEffect, useState } from 'react';
+import { Grid, Paper } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { Box } from '@mui/system';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { signInRequest } from 'store/modules/auth/authSlice';
 
-import logo from '../assets/logo.png'
-import bannerLogin from '../assets/background-login.png'
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseText from 'components/atoms/BaseText/BaseText'
-import BaseInput from 'components/molecules/BaseInput/BaseInput'
-import BaseLink from 'components/atoms/BaseLink/BaseLink'
+import logo from '../assets/logo.png';
+import bannerLogin from '../assets/background-login.png';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseText from 'components/atoms/BaseText/BaseText';
+import BaseInput from 'components/molecules/BaseInput/BaseInput';
+import BaseLink from 'components/atoms/BaseLink/BaseLink';
 
 const Login = () => {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const [showPassword, setShowPassword] = useState(false)
-  const [errors, setErrors] = useState({})
+  const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
 
-  const auth = useSelector((state) => state?.auth || { loading: false, token: null })
-  const { token, loading } = auth
+  const auth = useSelector((state) => state?.auth || { loading: false, token: null });
+  const { token, loading } = auth;
 
   useEffect(() => {
     if (token) {
-      navigate('/', { replace: true })
+      navigate('/', { replace: true });
     }
-  }, [token, navigate])
+  }, [token, navigate]);
 
   const validateForm = (form) => {
-    const newErrors = {}
-    const email = form.get('email')
-    const password = form.get('password')
+    const newErrors = {};
+    const email = form.get('email');
+    const password = form.get('password');
 
     if (!email) {
-      newErrors.email = t('validation.email_required')
+      newErrors.email = t('validation.email_required');
     } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = t('validation.email_invalid')
+      newErrors.email = t('validation.email_invalid');
     }
 
     if (!password) {
-      newErrors.password = t('validation.password_required')
+      newErrors.password = t('validation.password_required');
     }
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    const form = new FormData(e.target)
+    e.preventDefault();
+    const form = new FormData(e.target);
 
     if (validateForm(form)) {
       dispatch(
@@ -59,9 +59,9 @@ const Login = () => {
           email: form.get('email'),
           password: form.get('password'),
         })
-      )
+      );
     }
-  }
+  };
 
   return (
     <Grid container item justifyContent="space-between" alignItems="center" flexWrap="nowrap">
@@ -181,7 +181,7 @@ const Login = () => {
         />
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

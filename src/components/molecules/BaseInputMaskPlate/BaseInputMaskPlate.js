@@ -1,6 +1,6 @@
-import React from 'react'
-import { PatternFormat } from 'react-number-format'
-import { TextField } from '@mui/material'
+import React from 'react';
+import { PatternFormat } from 'react-number-format';
+import { TextField } from '@mui/material';
 
 const BaseInputMaskPlate = ({ labelText, value, onChange, name, label, ...props }) => {
   return (
@@ -23,7 +23,7 @@ const BaseInputMaskPlate = ({ labelText, value, onChange, name, label, ...props 
               name,
               value: values.value.toUpperCase(),
             },
-          })
+          });
         }}
         inputProps={{
           style: {
@@ -34,7 +34,7 @@ const BaseInputMaskPlate = ({ labelText, value, onChange, name, label, ...props 
         {...props} // aqui NÃO terá mais labelText
       />
     </div>
-  )
-}
+  );
+};
 
-export default BaseInputMaskPlate
+export default BaseInputMaskPlate;

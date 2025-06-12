@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
-import { IconButton, List, ListItemText, Tooltip } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
-import { signOut } from '@/store/modules/auth/authSlice'
-import { templateContext } from '@/components/templates/main'
-import { useNavigate } from 'react-router-dom'
-import { FiLogOut } from 'react-icons/fi'
-import { useTranslation } from 'react-i18next'
+import React, { useContext } from 'react';
+import { IconButton, List, ListItemText, Tooltip } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { signOut } from '@/store/modules/auth/authSlice';
+import { templateContext } from '@/components/templates/main';
+import { useNavigate } from 'react-router-dom';
+import { FiLogOut } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 import {
   Drawer,
   ListItemCategory,
@@ -15,29 +15,29 @@ import {
   ListText,
   ListSub,
   ListItemCategoryUser,
-} from './styles'
+} from './styles';
 
-import { IconMenuHome, IconMenuTruck, IconMenuUser, IconMenuTrailer } from 'assets/icons/icons'
-import { useLocation } from 'react-router-dom'
+import { IconMenuHome, IconMenuTruck, IconMenuUser, IconMenuTrailer } from 'assets/icons/icons';
+import { useLocation } from 'react-router-dom';
 
-import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar'
+import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
 
 const Menu = ({ setFetch }) => {
-  const user = useSelector((state) => state?.auth?.user)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const location = useLocation()
+  const user = useSelector((state) => state?.auth?.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const { t } = useTranslation()
-  const { openMenu } = useContext(templateContext)
+  const { t } = useTranslation();
+  const { openMenu } = useContext(templateContext);
 
   const handleLogOut = () => {
-    dispatch(signOut())
-  }
+    dispatch(signOut());
+  };
 
-  const isActive = (path) => location.pathname === path
+  const isActive = (path) => location.pathname === path;
 
-  if (!openMenu) return null
+  if (!openMenu) return null;
 
   return (
     <Drawer variant="permanent" open={openMenu}>
@@ -242,7 +242,7 @@ const Menu = ({ setFetch }) => {
         </ListItemCategoryUser>
       </ListSub>
     </Drawer>
-  )
-}
+  );
+};
 
-export default Menu
+export default Menu;

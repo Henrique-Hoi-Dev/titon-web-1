@@ -1,33 +1,33 @@
-import React, { useEffect, useCallback } from 'react'
-import { Grid } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
-import { deleteFinancialRequest } from 'store/modules/financial/financialSlice'
+import React, { useEffect, useCallback } from 'react';
+import { Grid } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { deleteFinancialRequest } from 'store/modules/financial/financialSlice';
 
-import Button from 'components/atoms/BaseButton/BaseButton'
-import Loading from '@/components/atoms/BaseLoading/BaseLoading'
-import Text from 'components/atoms/BaseText/BaseText'
-import Modal from 'components/molecules/BaseModal/BaseModal'
+import Button from 'components/atoms/BaseButton/BaseButton';
+import Loading from '@/components/atoms/BaseLoading/BaseLoading';
+import Text from 'components/atoms/BaseText/BaseText';
+import Modal from 'components/molecules/BaseModal/BaseModal';
 
 const BaseModalDeleteFinancial = ({ showModal, setShowModal, id }) => {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
-  const { loading, success } = useSelector((state) => state.financial)
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { loading, success } = useSelector((state) => state.financial);
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
-    dispatch(deleteFinancialRequest(id))
-  }
+    ev.preventDefault();
+    dispatch(deleteFinancialRequest(id));
+  };
 
   const onClose = useCallback(() => {
-    setShowModal(false)
-  }, [setShowModal])
+    setShowModal(false);
+  }, [setShowModal]);
 
   useEffect(() => {
     if (!loading && success) {
-      onClose()
+      onClose();
     }
-  }, [loading, success, onClose])
+  }, [loading, success, onClose]);
 
   return (
     <Modal
@@ -91,7 +91,7 @@ const BaseModalDeleteFinancial = ({ showModal, setShowModal, id }) => {
         </Grid>
       )}
     </Modal>
-  )
-}
+  );
+};
 
-export default BaseModalDeleteFinancial
+export default BaseModalDeleteFinancial;

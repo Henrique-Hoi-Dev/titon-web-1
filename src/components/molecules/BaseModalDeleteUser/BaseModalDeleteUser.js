@@ -1,29 +1,29 @@
-import React, { useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
-import { Grid } from '@mui/material'
-import { deleteUserRequest } from 'store/modules/user/userSlice'
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { Grid } from '@mui/material';
+import { deleteUserRequest } from 'store/modules/user/userSlice';
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseModal from 'components/molecules/BaseModal/BaseModal'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseText from '@/components/atoms/BaseText/BaseText'
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseText from '@/components/atoms/BaseText/BaseText';
 
 const BaseModalDeleteUser = ({ showModal, setShowModal, data }) => {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
-  const { loading } = useSelector((state) => state.user)
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.user);
 
   const onClose = useCallback(() => {
-    setShowModal(false)
-  }, [setShowModal])
+    setShowModal(false);
+  }, [setShowModal]);
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
-    dispatch(deleteUserRequest(data?.id))
-  }
+    ev.preventDefault();
+    dispatch(deleteUserRequest(data?.id));
+  };
 
   return (
     <BaseModal
@@ -81,7 +81,7 @@ const BaseModalDeleteUser = ({ showModal, setShowModal, data }) => {
       )}
       {loading && <BaseLoading />}
     </BaseModal>
-  )
-}
+  );
+};
 
-export default BaseModalDeleteUser
+export default BaseModalDeleteUser;

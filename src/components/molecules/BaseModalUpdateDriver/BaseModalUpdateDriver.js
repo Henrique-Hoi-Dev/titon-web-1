@@ -1,41 +1,41 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import { Grid } from '@mui/material'
-import { formatDatePicker } from 'utils/formatDate'
-import { useTranslation } from 'react-i18next'
-import { maskCPF } from 'utils/masks'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState, useCallback } from 'react';
+import { Grid } from '@mui/material';
+import { formatDatePicker } from 'utils/formatDate';
+import { useTranslation } from 'react-i18next';
+import { maskCPF } from 'utils/masks';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   updateDriverRequest,
   getDriverByIdRequest,
   resetUpdateDriverStatus,
   getDriversRequest,
-} from 'store/modules/driver/driverSlice'
+} from 'store/modules/driver/driverSlice';
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseModal from 'components/molecules/BaseModal/BaseModal'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BasePickerDate from '@/components/atoms/BasePickerDate/BasePickerDate'
-import BaseInput from 'components/molecules/BaseInput/BaseInput'
-import BaseModalResetPassword from 'components/molecules/BaseModalResetPassword/BaseModalResetPassword'
-import initialStateQuery from '@/utils/initialStateQuery'
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BasePickerDate from '@/components/atoms/BasePickerDate/BasePickerDate';
+import BaseInput from 'components/molecules/BaseInput/BaseInput';
+import BaseModalResetPassword from 'components/molecules/BaseModalResetPassword/BaseModalResetPassword';
+import initialStateQuery from '@/utils/initialStateQuery';
 
 const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
-  const { t } = useTranslation()
-  const [showModalResetPassword, setShowModalResetPassword] = useState(false)
-  const [body, setBody] = useState({})
+  const { t } = useTranslation();
+  const [showModalResetPassword, setShowModalResetPassword] = useState(false);
+  const [body, setBody] = useState({});
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { selected, loadingGetById, loadingUpdate, successUpdate } = useSelector(
     (state) => state.driver
-  )
+  );
 
   useEffect(() => {
     if (data?.id) {
-      dispatch(getDriverByIdRequest(data?.id))
+      dispatch(getDriverByIdRequest(data?.id));
     }
-  }, [dispatch, data?.id])
+  }, [dispatch, data?.id]);
 
   useEffect(() => {
     if (selected) {
@@ -49,17 +49,17 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
         cpf: selected?.cpf,
         date_admission: selected?.dateAdmission,
         date_birthday: selected?.dateBirthday,
-      })
+      });
     }
-  }, [selected])
+  }, [selected]);
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
-    dispatch(updateDriverRequest({ id: data.id, data: body }))
-  }
+    ev.preventDefault();
+    dispatch(updateDriverRequest({ id: data.id, data: body }));
+  };
 
   const onClose = useCallback(() => {
-    setShowModal(false)
+    setShowModal(false);
     setBody({
       name: '',
       number_cnh: '',
@@ -70,16 +70,16 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
       cpf: '',
       date_admission: '',
       date_birthday: '',
-    })
-  }, [setShowModal])
+    });
+  }, [setShowModal]);
 
   useEffect(() => {
     if (successUpdate) {
-      dispatch(getDriversRequest(initialStateQuery.INITIAL_STATE_DRIVER))
-      dispatch(resetUpdateDriverStatus())
-      onClose()
+      dispatch(getDriversRequest(initialStateQuery.INITIAL_STATE_DRIVER));
+      dispatch(resetUpdateDriverStatus());
+      onClose();
     }
-  }, [successUpdate, onClose, dispatch])
+  }, [successUpdate, onClose, dispatch]);
 
   return (
     <>
@@ -318,7 +318,7 @@ const BaseModalUpdateDriver = ({ showModal, setShowModal, data }) => {
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default BaseModalUpdateDriver
+export default BaseModalUpdateDriver;

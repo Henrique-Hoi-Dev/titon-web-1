@@ -1,46 +1,46 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import { Grid } from '@mui/material'
-import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
-import { createCreditRequest } from 'store/modules/credit/creditSlice'
-import { formatMoney } from '@/utils/masks'
-import { unmaskMoney } from '@/utils/unmaskMoney'
+import React, { useEffect, useState, useCallback } from 'react';
+import { Grid } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { createCreditRequest } from 'store/modules/credit/creditSlice';
+import { formatMoney } from '@/utils/masks';
+import { unmaskMoney } from '@/utils/unmaskMoney';
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseModal from 'components/molecules/BaseModal/BaseModal'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseInput from 'components/molecules/BaseInput/BaseInput'
-import BaseSelectWithInput from '../BaseSelectWithInput/BaseSelectWithInput'
-import BaseText from 'components/atoms/BaseText/BaseText'
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseInput from 'components/molecules/BaseInput/BaseInput';
+import BaseSelectWithInput from '../BaseSelectWithInput/BaseSelectWithInput';
+import BaseText from 'components/atoms/BaseText/BaseText';
 
 const BaseModalAddCreditDriver = ({ showModal, setShowModal, data }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const [body, setBody] = useState({
     driver_id: data?.id,
     description: '',
-  })
-  const dispatch = useDispatch()
+  });
+  const dispatch = useDispatch();
 
-  const { loading, successCreate } = useSelector((state) => state.credit)
+  const { loading, successCreate } = useSelector((state) => state.credit);
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
-    dispatch(createCreditRequest(body))
-  }
+    ev.preventDefault();
+    dispatch(createCreditRequest(body));
+  };
 
   const onClose = useCallback(() => {
-    setShowModal(false)
+    setShowModal(false);
     setBody({
       driver_id: data?.id,
       description: '',
-    })
-  }, [setShowModal, data?.id])
+    });
+  }, [setShowModal, data?.id]);
 
   useEffect(() => {
     if (successCreate) {
-      onClose()
+      onClose();
     }
-  }, [successCreate, onClose])
+  }, [successCreate, onClose]);
 
   return (
     <BaseModal
@@ -142,7 +142,7 @@ const BaseModalAddCreditDriver = ({ showModal, setShowModal, data }) => {
       )}
       {loading && <BaseLoading />}
     </BaseModal>
-  )
-}
+  );
+};
 
-export default BaseModalAddCreditDriver
+export default BaseModalAddCreditDriver;

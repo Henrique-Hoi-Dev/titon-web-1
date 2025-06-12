@@ -22,6 +22,16 @@
       "city": "insira a cidade"
     }
   },
+  "forgot_password": {
+    "title": "Recuperar senha",
+    "description": "Insira seu e-mail para recuperar sua senha",
+    "label": {
+      "email": "E-mail"
+    },
+    "placeholder": {
+      "email": "Insira seu e-mail"
+    }
+  },
   "menu": {
     "home": "Home",
     "drivers": "Motoristas",
@@ -312,6 +322,7 @@
     "return": "Voltar",
     "reset": "Resetar",
     "confirm": "Confirmar",
+    "send": "Enviar",
     "create": "Criar",
     "edit": "Editar",
     "to_alter": "Alterar",

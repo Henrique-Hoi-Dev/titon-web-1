@@ -1,99 +1,99 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
-import { Grid, IconButton } from '@mui/material'
-import { createCartRequest, resetCartCreate } from 'store/modules/cart/cartSlice'
-import { uploadImage } from '@/services/uploadImage'
-import { errorNotification } from '@/utils/notification'
+import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { Grid, IconButton } from '@mui/material';
+import { createCartRequest, resetCartCreate } from 'store/modules/cart/cartSlice';
+import { uploadImage } from '@/services/uploadImage';
+import { errorNotification } from '@/utils/notification';
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseModal from 'components/molecules/BaseModal/BaseModal'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseInput from 'components/molecules/BaseInput/BaseInput'
-import BaseSelect from 'components/molecules/BaseSelect/BaseSelect'
-import enums from '@/utils/enums'
-import BaseAvatar from '../BaseAvatar/BaseAvatar'
-import BaseInputMaskMil from '../BaseInputMaskMil/BaseInputMaskMil'
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseInput from 'components/molecules/BaseInput/BaseInput';
+import BaseSelect from 'components/molecules/BaseSelect/BaseSelect';
+import enums from '@/utils/enums';
+import BaseAvatar from '../BaseAvatar/BaseAvatar';
+import BaseInputMaskMil from '../BaseInputMaskMil/BaseInputMaskMil';
 
 const BaseModalAddCart = ({ showModal, setShowModal, onCreated }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const { loadingCreate: loading } = useSelector((state) => state.cart)
+  const { loadingCreate: loading } = useSelector((state) => state.cart);
 
-  const [file, setFile] = useState(null)
-  const [previewImage, setPreviewImage] = useState({})
-  const [loadingImage, setLoadingImage] = useState(false)
+  const [file, setFile] = useState(null);
+  const [previewImage, setPreviewImage] = useState({});
+  const [loadingImage, setLoadingImage] = useState(false);
 
-  const [body, setBody] = useState({})
+  const [body, setBody] = useState({});
 
-  const isMountedRef = useRef(true)
+  const isMountedRef = useRef(true);
 
   useEffect(() => {
-    isMountedRef.current = true
+    isMountedRef.current = true;
     return () => {
-      isMountedRef.current = false
-    }
-  }, [])
+      isMountedRef.current = false;
+    };
+  }, []);
 
   const onClose = useCallback(() => {
-    if (!isMountedRef.current) return
-    setShowModal(false)
-    setBody({})
-    setPreviewImage({})
-    setFile(null)
-    dispatch(resetCartCreate())
-  }, [setShowModal, dispatch])
+    if (!isMountedRef.current) return;
+    setShowModal(false);
+    setBody({});
+    setPreviewImage({});
+    setFile(null);
+    dispatch(resetCartCreate());
+  }, [setShowModal, dispatch]);
 
   const handleChange = (e) => {
-    e.preventDefault()
-    const selectedFile = e.target.files[0]
-    if (!selectedFile) return
-    setFile(selectedFile)
-    setPreviewImage(URL.createObjectURL(selectedFile))
-  }
+    e.preventDefault();
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
+    setFile(selectedFile);
+    setPreviewImage(URL.createObjectURL(selectedFile));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     dispatch(
       createCartRequest({
         ...body,
         onSuccess: async (createdCartId) => {
-          if (!isMountedRef.current) return
+          if (!isMountedRef.current) return;
 
           try {
             if (file && createdCartId) {
-              setLoadingImage(true)
+              setLoadingImage(true);
 
               await uploadImage({
                 url: 'manager/cart/upload-image',
                 file,
                 id: createdCartId,
                 body: { category: 'avatar_cart' },
-              })
+              });
 
-              setLoadingImage(false)
+              setLoadingImage(false);
             }
 
-            if (!isMountedRef.current) return
+            if (!isMountedRef.current) return;
 
             if (typeof onCreated === 'function') {
-              onCreated()
+              onCreated();
             }
 
-            onClose()
+            onClose();
           } catch (error) {
-            setLoadingImage(false)
-            if (isMountedRef.current) errorNotification(error)
+            setLoadingImage(false);
+            if (isMountedRef.current) errorNotification(error);
           }
         },
       })
-    )
-  }
+    );
+  };
 
   return (
     <BaseModal
@@ -252,10 +252,10 @@ const BaseModalAddCart = ({ showModal, setShowModal, onCreated }) => {
                     setBody((state) => ({
                       ...state,
                       cart_bodyworks: newValue.value,
-                    }))
+                    }));
                   }
                   if (newValue === null) {
-                    setBody((state) => ({ ...state, cart_bodyworks: '' }))
+                    setBody((state) => ({ ...state, cart_bodyworks: '' }));
                   }
                 }}
               />
@@ -423,7 +423,7 @@ const BaseModalAddCart = ({ showModal, setShowModal, onCreated }) => {
 
       {(loading || loadingImage) && <BaseLoading />}
     </BaseModal>
-  )
-}
+  );
+};
 
-export default BaseModalAddCart
+export default BaseModalAddCart;

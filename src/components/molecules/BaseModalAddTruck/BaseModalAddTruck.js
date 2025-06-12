@@ -1,95 +1,95 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react'
-import { Grid, IconButton } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
-import { createTruckRequest, resetTruckCreate } from 'store/modules/truck/truckSlice'
-import { useTranslation } from 'react-i18next'
-import { uploadImage } from '@/services/uploadImage'
-import { errorNotification } from '@/utils/notification'
+import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { Grid, IconButton } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { createTruckRequest, resetTruckCreate } from 'store/modules/truck/truckSlice';
+import { useTranslation } from 'react-i18next';
+import { uploadImage } from '@/services/uploadImage';
+import { errorNotification } from '@/utils/notification';
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseModal from 'components/molecules/BaseModal/BaseModal'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseInput from 'components/molecules/BaseInput/BaseInput'
-import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar'
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseInput from 'components/molecules/BaseInput/BaseInput';
+import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
 
 const ModalAddTruck = ({ showModal, setShowModal, onCreated }) => {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
 
-  const { loadingCreate: loading } = useSelector((state) => state.truck)
+  const { loadingCreate: loading } = useSelector((state) => state.truck);
 
-  const [file, setFile] = useState(null)
-  const [previewImage, setPreviewImage] = useState({})
-  const [loadingImage, setLoadingImage] = useState(false)
+  const [file, setFile] = useState(null);
+  const [previewImage, setPreviewImage] = useState({});
+  const [loadingImage, setLoadingImage] = useState(false);
 
-  const [body, setBody] = useState({})
+  const [body, setBody] = useState({});
 
-  const isMountedRef = useRef(true)
+  const isMountedRef = useRef(true);
 
   useEffect(() => {
-    isMountedRef.current = true
+    isMountedRef.current = true;
     return () => {
-      isMountedRef.current = false
-    }
-  }, [])
+      isMountedRef.current = false;
+    };
+  }, []);
 
   const onClose = useCallback(() => {
-    if (!isMountedRef.current) return
-    setShowModal(false)
-    setBody({})
-    setPreviewImage({})
-    setFile(null)
-    dispatch(resetTruckCreate())
-  }, [setShowModal, dispatch])
+    if (!isMountedRef.current) return;
+    setShowModal(false);
+    setBody({});
+    setPreviewImage({});
+    setFile(null);
+    dispatch(resetTruckCreate());
+  }, [setShowModal, dispatch]);
 
   const handleChange = (e) => {
-    e.preventDefault()
-    const selectedFile = e.target.files[0]
-    if (!selectedFile) return
-    setFile(selectedFile)
-    setPreviewImage(URL.createObjectURL(selectedFile))
-  }
+    e.preventDefault();
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
+    setFile(selectedFile);
+    setPreviewImage(URL.createObjectURL(selectedFile));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     dispatch(
       createTruckRequest({
         ...body,
         onSuccess: async (createdTruckId) => {
-          if (!isMountedRef.current) return
+          if (!isMountedRef.current) return;
 
           try {
             if (file && createdTruckId) {
-              setLoadingImage(true)
+              setLoadingImage(true);
 
               await uploadImage({
                 url: 'manager/truck/upload-image',
                 file,
                 id: createdTruckId,
                 body: { category: 'avatar_truck' },
-              })
+              });
 
-              setLoadingImage(false)
+              setLoadingImage(false);
             }
 
-            if (!isMountedRef.current) return
+            if (!isMountedRef.current) return;
 
             if (typeof onCreated === 'function') {
-              onCreated()
+              onCreated();
             }
 
-            onClose()
+            onClose();
           } catch (error) {
-            setLoadingImage(false)
-            if (isMountedRef.current) errorNotification(error)
+            setLoadingImage(false);
+            if (isMountedRef.current) errorNotification(error);
           }
         },
       })
-    )
-  }
+    );
+  };
 
   return (
     <BaseModal
@@ -237,7 +237,7 @@ const ModalAddTruck = ({ showModal, setShowModal, onCreated }) => {
 
       {(loading || loadingImage) && <BaseLoading />}
     </BaseModal>
-  )
-}
+  );
+};
 
-export default ModalAddTruck
+export default ModalAddTruck;

@@ -1,88 +1,88 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
-import { Divider, Grid, IconButton } from '@mui/material'
-import { createFreightRequest } from 'store/modules/freight/freightSlice'
-import { unmaskMoney } from '@/utils/unmaskMoney'
-import { formatMil, formatMoney, formatMédia } from '@/utils/masks'
+import React, { useState, useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { Divider, Grid, IconButton } from '@mui/material';
+import { createFreightRequest } from 'store/modules/freight/freightSlice';
+import { unmaskMoney } from '@/utils/unmaskMoney';
+import { formatMil, formatMoney, formatMédia } from '@/utils/masks';
 import {
   getLocationCityRequest,
   getLocationStateRequest,
-} from '@/store/modules/location/locationSlice'
+} from '@/store/modules/location/locationSlice';
 
-import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove'
-import HighlightOffIcon from '@mui/icons-material/HighlightOff'
+import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
-import BaseButton from '@/components/atoms/BaseButton/BaseButton'
-import BaseModal from '@/components/molecules/BaseModal/BaseModal'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseContentHeader from '@/components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from '@/components/atoms/BaseTitle/BaseTitle'
-import BaseInput from '@/components/molecules/BaseInput/BaseInput'
-import BaseRRadioGroup from '@/components/atoms/BaseRadioGrupe/BaseRadioGrupe'
-import BaseSelect from '@/components/molecules/BaseSelect/BaseSelect'
-import BaseText from '@/components/atoms/BaseText/BaseText'
+import BaseButton from '@/components/atoms/BaseButton/BaseButton';
+import BaseModal from '@/components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseContentHeader from '@/components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from '@/components/atoms/BaseTitle/BaseTitle';
+import BaseInput from '@/components/molecules/BaseInput/BaseInput';
+import BaseRRadioGroup from '@/components/atoms/BaseRadioGrupe/BaseRadioGrupe';
+import BaseSelect from '@/components/molecules/BaseSelect/BaseSelect';
+import BaseText from '@/components/atoms/BaseText/BaseText';
 
 const BaseModalAddFreight = ({ showModal, setShowModal }) => {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
 
-  const { loadingCreate: loading } = useSelector((state) => state.freight)
-  const { cities, states } = useSelector((state) => state.location)
+  const { loadingCreate: loading } = useSelector((state) => state.freight);
+  const { cities, states } = useSelector((state) => state.location);
 
-  const [stateUFStart, setStateUFStart] = useState('')
-  const [stateUFEnd, setStateUFEnd] = useState('')
+  const [stateUFStart, setStateUFStart] = useState('');
+  const [stateUFEnd, setStateUFEnd] = useState('');
 
-  const [citysStart, setCitysStart] = useState([])
-  const [citysEnd, setCitysEnd] = useState([])
+  const [citysStart, setCitysStart] = useState([]);
+  const [citysEnd, setCitysEnd] = useState([]);
 
-  const [typeForm, setTypeForm] = useState('manual')
+  const [typeForm, setTypeForm] = useState('manual');
 
-  const [body, setBody] = useState({})
+  const [body, setBody] = useState({});
 
   const onClose = useCallback(() => {
-    setShowModal(false)
-    setBody({})
-    setStateUFStart('')
-    setStateUFEnd('')
-    setCitysStart([])
-    setCitysEnd([])
-  }, [setShowModal])
+    setShowModal(false);
+    setBody({});
+    setStateUFStart('');
+    setStateUFEnd('');
+    setCitysStart([]);
+    setCitysEnd([]);
+  }, [setShowModal]);
 
   useEffect(() => {
     if (showModal) {
-      dispatch(getLocationStateRequest())
+      dispatch(getLocationStateRequest());
     }
-  }, [showModal, dispatch])
+  }, [showModal, dispatch]);
 
   useEffect(() => {
     if (stateUFStart) {
-      dispatch(getLocationCityRequest({ uf: stateUFStart }))
+      dispatch(getLocationCityRequest({ uf: stateUFStart }));
     }
-  }, [stateUFStart, dispatch])
+  }, [stateUFStart, dispatch]);
 
   useEffect(() => {
     if (stateUFEnd) {
-      dispatch(getLocationCityRequest({ uf: stateUFEnd }))
+      dispatch(getLocationCityRequest({ uf: stateUFEnd }));
     }
-  }, [stateUFEnd, dispatch])
+  }, [stateUFEnd, dispatch]);
 
   useEffect(() => {
     if (stateUFStart && cities.length > 0) {
-      setCitysStart(cities)
+      setCitysStart(cities);
     }
-  }, [cities, stateUFStart])
+  }, [cities, stateUFStart]);
 
   useEffect(() => {
     if (stateUFEnd && cities.length > 0) {
-      setCitysEnd(cities)
+      setCitysEnd(cities);
     }
-  }, [cities, stateUFEnd])
+  }, [cities, stateUFEnd]);
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
-    dispatch(createFreightRequest(body))
-  }
+    ev.preventDefault();
+    dispatch(createFreightRequest(body));
+  };
 
   return (
     <BaseModal
@@ -107,7 +107,7 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
               ]}
               defaultValue={'manual'}
               onChange={(event) => {
-                setTypeForm(event.target.value)
+                setTypeForm(event.target.value);
               }}
             />
           </Grid>
@@ -126,8 +126,8 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
                   getOptionLabel={(option) => option?.name}
                   isOptionEqualToValue={(option, value) => option?.uf === value?.uf}
                   onChange={(event, newValue) => {
-                    setStateUFStart(newValue?.uf)
-                    setCitysStart([])
+                    setStateUFStart(newValue?.uf);
+                    setCitysStart([]);
                   }}
                 />
               </Grid>
@@ -143,7 +143,7 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
                     setBody((state) => ({
                       ...state,
                       start_freight_city: newValue ? `${newValue.name} ${stateUFStart}` : '',
-                    }))
+                    }));
                   }}
                 />
               </Grid>
@@ -160,8 +160,8 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
                   getOptionLabel={(option) => option?.name}
                   isOptionEqualToValue={(option, value) => option?.uf === value?.uf}
                   onChange={(event, newValue) => {
-                    setStateUFEnd(newValue?.uf)
-                    setCitysEnd([])
+                    setStateUFEnd(newValue?.uf);
+                    setCitysEnd([]);
                   }}
                 />
               </Grid>
@@ -177,7 +177,7 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
                     setBody((state) => ({
                       ...state,
                       final_freight_city: newValue ? `${newValue.name} ${stateUFEnd}` : '',
-                    }))
+                    }));
                   }}
                 />
               </Grid>
@@ -414,11 +414,11 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
                     hidden
                     accept=".xml"
                     onChange={(e) => {
-                      const file = e.target.files[0]
+                      const file = e.target.files[0];
                       if (file && file.type === 'text/xml') {
-                        setBody((prev) => ({ ...prev, xmlFile: file }))
+                        setBody((prev) => ({ ...prev, xmlFile: file }));
                       } else {
-                        alert('Por favor, selecione um arquivo XML válido.')
+                        alert('Por favor, selecione um arquivo XML válido.');
                       }
                     }}
                   />
@@ -512,7 +512,7 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
 
       {loading && <BaseLoading />}
     </BaseModal>
-  )
-}
+  );
+};
 
-export default BaseModalAddFreight
+export default BaseModalAddFreight;

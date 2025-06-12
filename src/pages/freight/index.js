@@ -1,29 +1,29 @@
-import { useEffect, useState } from 'react'
-import { Grid } from '@mui/material'
-import { IconAdd } from 'assets/icons/icons'
-import { useTranslation } from 'react-i18next'
+import { useEffect, useState } from 'react';
+import { Grid } from '@mui/material';
+import { IconAdd } from 'assets/icons/icons';
+import { useTranslation } from 'react-i18next';
 
-import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
 
 const Freight = () => {
-  const [, setShowModalCheck] = useState()
-  const [, setCheckQuery] = useState()
-  const [search, setSearch] = useState('')
-  const { t } = useTranslation()
+  const [, setShowModalCheck] = useState();
+  const [, setCheckQuery] = useState();
+  const [search, setSearch] = useState('');
+  const { t } = useTranslation();
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setCheckQuery((state) => ({
         ...state,
         search: search,
-      }))
-    }, 1200)
+      }));
+    }, 1200);
 
-    return () => clearTimeout(timer)
-  }, [search])
+    return () => clearTimeout(timer);
+  }, [search]);
 
   return (
     <Grid
@@ -62,7 +62,7 @@ const Freight = () => {
         <BaseTitle>{t('check.title')}</BaseTitle>
       </BaseContentHeader>
     </Grid>
-  )
-}
+  );
+};
 
-export default Freight
+export default Freight;

@@ -1,8 +1,8 @@
-import React from 'react'
-import { TextField, InputAdornment, IconButton } from '@mui/material'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
+import React from 'react';
+import { TextField, InputAdornment, IconButton } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
-import BaseText from 'components/atoms/BaseText/BaseText'
+import BaseText from 'components/atoms/BaseText/BaseText';
 
 const BaseInput = ({
   onClick,
@@ -90,7 +90,7 @@ const BaseInput = ({
         }}
       />
     </div>
-  )
-}
+  );
+};
 
-export default BaseInput
+export default BaseInput;

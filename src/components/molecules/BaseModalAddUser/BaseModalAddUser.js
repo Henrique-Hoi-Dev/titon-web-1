@@ -1,57 +1,57 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
-import { Grid } from '@mui/material'
-import { createUserRequest, getUsersRequest, resetUserCreate } from 'store/modules/user/userSlice'
+import React, { useState, useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { Grid } from '@mui/material';
+import { createUserRequest, getUsersRequest, resetUserCreate } from 'store/modules/user/userSlice';
 
-import BaseButton from '@/components/atoms/BaseButton/BaseButton'
-import BaseModal from '@/components/molecules/BaseModal/BaseModal'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseContentHeader from '@/components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from '@/components/atoms/BaseTitle/BaseTitle'
-import BaseInput from '@/components/molecules/BaseInput/BaseInput'
-import BaseSelect from 'components/molecules/BaseSelect/BaseSelect'
-import enums from '@/utils/enums'
-import { maskCPF, maskPhone } from '@/utils/masks'
+import BaseButton from '@/components/atoms/BaseButton/BaseButton';
+import BaseModal from '@/components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseContentHeader from '@/components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from '@/components/atoms/BaseTitle/BaseTitle';
+import BaseInput from '@/components/molecules/BaseInput/BaseInput';
+import BaseSelect from 'components/molecules/BaseSelect/BaseSelect';
+import enums from '@/utils/enums';
+import { maskCPF, maskPhone } from '@/utils/masks';
 
 const BaseModalAddUser = ({ showModal, setShowModal }) => {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
-  const { loadingCreate, successCreate } = useSelector((state) => state.user)
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { loadingCreate, successCreate } = useSelector((state) => state.user);
 
-  const [body, setBody] = useState({})
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [passwordError, setPasswordError] = useState(false)
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [body, setBody] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const onClose = useCallback(() => {
-    setShowModal(false)
-    setBody({})
-    setPasswordError(false)
-  }, [setShowModal])
+    setShowModal(false);
+    setBody({});
+    setPasswordError(false);
+  }, [setShowModal]);
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
+    ev.preventDefault();
 
     if (body?.password !== confirmPassword) {
-      setPasswordError(true)
-      return
+      setPasswordError(true);
+      return;
     }
 
-    dispatch(createUserRequest(body))
+    dispatch(createUserRequest(body));
 
-    setPasswordError(false)
-    setConfirmPassword('')
-  }
+    setPasswordError(false);
+    setConfirmPassword('');
+  };
 
   useEffect(() => {
     if (successCreate) {
-      onClose()
-      dispatch(getUsersRequest({}))
-      dispatch(resetUserCreate())
+      onClose();
+      dispatch(getUsersRequest({}));
+      dispatch(resetUserCreate());
     }
-  }, [successCreate, onClose, dispatch])
+  }, [successCreate, onClose, dispatch]);
 
   return (
     <BaseModal
@@ -210,10 +210,10 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
                     setBody((state) => ({
                       ...state,
                       type_role: newValue.value,
-                    }))
+                    }));
                   }
                   if (newValue === null) {
-                    setBody((state) => ({ ...state, type_role: '' }))
+                    setBody((state) => ({ ...state, type_role: '' }));
                   }
                 }}
               />
@@ -267,7 +267,7 @@ const BaseModalAddUser = ({ showModal, setShowModal }) => {
 
       {loadingCreate && <BaseLoading />}
     </BaseModal>
-  )
-}
+  );
+};
 
-export default BaseModalAddUser
+export default BaseModalAddUser;

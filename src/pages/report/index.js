@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
-import { getFinancialsRequest } from 'store/modules/financial/financialSlice'
-import { Grid } from '@mui/material'
-import { IconAdd } from 'assets/icons/icons'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { getFinancialsRequest } from 'store/modules/financial/financialSlice';
+import { Grid } from '@mui/material';
+import { IconAdd } from 'assets/icons/icons';
 
-import TableReport from './table'
-import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches'
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
+import TableReport from './table';
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
 
 const Report = () => {
-  const [, setShowModalReport] = useState(false)
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
-  const { data: financials, loading } = useSelector((state) => state.financial)
+  const [, setShowModalReport] = useState(false);
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { data: financials, loading } = useSelector((state) => state.financial);
 
   const INITIAL_STATE_FINANCIAL = {
     limit: 10,
@@ -23,25 +23,25 @@ const Report = () => {
     sort_field: 'id',
     sort_order: 'ASC',
     status: false,
-  }
+  };
 
-  const [financialQuery, setFinancialQuery] = useState(INITIAL_STATE_FINANCIAL)
-  const [search, setSearch] = useState('')
+  const [financialQuery, setFinancialQuery] = useState(INITIAL_STATE_FINANCIAL);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setFinancialQuery((state) => ({
         ...state,
         search: search,
-      }))
-    }, 1200)
+      }));
+    }, 1200);
 
-    return () => clearTimeout(timer)
-  }, [search])
+    return () => clearTimeout(timer);
+  }, [search]);
 
   useEffect(() => {
-    dispatch(getFinancialsRequest(financialQuery))
-  }, [dispatch, financialQuery])
+    dispatch(getFinancialsRequest(financialQuery));
+  }, [dispatch, financialQuery]);
 
   return (
     <Grid
@@ -101,7 +101,7 @@ const Report = () => {
         </Grid>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default Report
+export default Report;

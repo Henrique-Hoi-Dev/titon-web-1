@@ -1,63 +1,63 @@
-import React, { useState, useCallback, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
-import { Grid } from '@mui/material'
-import { zonedTimeToUtc } from 'date-fns-tz'
+import React, { useState, useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { Grid } from '@mui/material';
+import { zonedTimeToUtc } from 'date-fns-tz';
 import {
   createFinancialRequest,
   getFinancialsRequest,
-} from 'store/modules/financial/financialSlice'
-import { getDriversSelectRequest } from 'store/modules/driver/driverSlice'
-import { getTrucksSelectRequest } from 'store/modules/truck/truckSlice'
-import { getCartsSelectRequest } from 'store/modules/cart/cartSlice'
+} from 'store/modules/financial/financialSlice';
+import { getDriversSelectRequest } from 'store/modules/driver/driverSlice';
+import { getTrucksSelectRequest } from 'store/modules/truck/truckSlice';
+import { getCartsSelectRequest } from 'store/modules/cart/cartSlice';
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseModal from 'components/molecules/BaseModal/BaseModal'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseSelect from 'components/molecules/BaseSelect/BaseSelect'
-import initialStateQuery from 'utils/initialStateQuery'
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseSelect from 'components/molecules/BaseSelect/BaseSelect';
+import initialStateQuery from 'utils/initialStateQuery';
 
 const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
 
-  const { loadingCreate: loading, successCreate } = useSelector((state) => state.financial)
+  const { loadingCreate: loading, successCreate } = useSelector((state) => state.financial);
 
-  const { selectOptions: drivers } = useSelector((state) => state.driver)
-  const { selectOptions: trucks } = useSelector((state) => state.truck)
-  const { selectOptions: carts } = useSelector((state) => state.cart)
+  const { selectOptions: drivers } = useSelector((state) => state.driver);
+  const { selectOptions: trucks } = useSelector((state) => state.truck);
+  const { selectOptions: carts } = useSelector((state) => state.cart);
 
-  const saoPauloTimezone = 'America/Sao_Paulo'
-  const currentDate = zonedTimeToUtc(new Date(), saoPauloTimezone)
+  const saoPauloTimezone = 'America/Sao_Paulo';
+  const currentDate = zonedTimeToUtc(new Date(), saoPauloTimezone);
 
-  const [body, setBody] = useState({})
-  const [truckId, setTruckId] = useState('')
-  const [cartId, setCartId] = useState('')
-  const [driverId, setDriverId] = useState('')
-  const [date] = useState(currentDate)
+  const [body, setBody] = useState({});
+  const [truckId, setTruckId] = useState('');
+  const [cartId, setCartId] = useState('');
+  const [driverId, setDriverId] = useState('');
+  const [date] = useState(currentDate);
 
   useEffect(() => {
     if (showModal) {
-      dispatch(getDriversSelectRequest())
-      dispatch(getTrucksSelectRequest())
-      dispatch(getCartsSelectRequest())
+      dispatch(getDriversSelectRequest());
+      dispatch(getTrucksSelectRequest());
+      dispatch(getCartsSelectRequest());
     }
-  }, [dispatch, showModal])
+  }, [dispatch, showModal]);
 
   const onClose = useCallback(() => {
-    setBody({})
-    setTruckId('')
-    setDriverId('')
-    setCartId('')
-    setShowModal(false)
-  }, [setShowModal])
+    setBody({});
+    setTruckId('');
+    setDriverId('');
+    setCartId('');
+    setShowModal(false);
+  }, [setShowModal]);
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
-    dispatch(createFinancialRequest(body))
-  }
+    ev.preventDefault();
+    dispatch(createFinancialRequest(body));
+  };
 
   useEffect(() => {
     setBody((state) => ({
@@ -66,15 +66,15 @@ const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
       truck_id: truckId,
       driver_id: driverId,
       cart_id: cartId,
-    }))
-  }, [truckId, driverId, cartId, date])
+    }));
+  }, [truckId, driverId, cartId, date]);
 
   useEffect(() => {
     if (successCreate) {
-      onClose()
-      dispatch(getFinancialsRequest(initialStateQuery.INITIAL_STATE_FINANCIAL))
+      onClose();
+      dispatch(getFinancialsRequest(initialStateQuery.INITIAL_STATE_FINANCIAL));
     }
-  }, [successCreate, onClose, dispatch])
+  }, [successCreate, onClose, dispatch]);
 
   return (
     <BaseModal open={showModal} onClose={onClose} maxWidth={'335px'} maxHeight={'600px'}>
@@ -101,7 +101,7 @@ const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
                 options={drivers ?? []}
                 getOptionLabel={(option) => option.name}
                 onChange={(event, newValue) => {
-                  setDriverId(newValue.id)
+                  setDriverId(newValue.id);
                 }}
               />
             </Grid>
@@ -113,7 +113,7 @@ const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
                 options={trucks ?? []}
                 getOptionLabel={(option) => `${option.id} - ${option.truckBoard}`}
                 onChange={(event, newValue) => {
-                  setTruckId(newValue?.id)
+                  setTruckId(newValue?.id);
                 }}
               />
             </Grid>
@@ -125,7 +125,7 @@ const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
                 options={carts ?? []}
                 getOptionLabel={(option) => `${option.id} - ${option.cartBoard}`}
                 onChange={(event, newValue) => {
-                  setCartId(newValue.id)
+                  setCartId(newValue.id);
                 }}
               />
             </Grid>
@@ -162,7 +162,7 @@ const BaseModalAddFinancial = ({ showModal, setShowModal }) => {
 
       {loading && <BaseLoading />}
     </BaseModal>
-  )
-}
+  );
+};
 
-export default BaseModalAddFinancial
+export default BaseModalAddFinancial;

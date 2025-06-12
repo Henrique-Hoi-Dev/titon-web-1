@@ -1,36 +1,36 @@
-import React, { useEffect, useRef } from 'react'
-import { Box, Card, Grid, CardMedia } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
-import { moneyMask } from 'utils/masks'
-import { IconMenuTruck } from 'assets/icons/icons'
-import { formatDate } from 'utils/formatDate'
-import { useTranslation } from 'react-i18next'
+import React, { useEffect, useRef } from 'react';
+import { Box, Card, Grid, CardMedia } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { moneyMask } from 'utils/masks';
+import { IconMenuTruck } from 'assets/icons/icons';
+import { formatDate } from 'utils/formatDate';
+import { useTranslation } from 'react-i18next';
 
-import CardContent from '@mui/material/CardContent'
-import Typography from '@mui/material/Typography'
-import BaseNotFound from 'components/molecules/BaseNotFound/BaseNotFound'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseText from 'components/atoms/BaseText/BaseText'
-import BaseTypeStatus from 'components/molecules/BaseTypeStatus/BaseTypeStatus'
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import BaseNotFound from 'components/molecules/BaseNotFound/BaseNotFound';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseText from 'components/atoms/BaseText/BaseText';
+import BaseTypeStatus from 'components/molecules/BaseTypeStatus/BaseTypeStatus';
 
 const BaseCardInfoFinancial = ({ loading, financials }) => {
-  const { t } = useTranslation()
-  const navigate = useNavigate()
-  const isMounted = useRef(false)
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const isMounted = useRef(false);
 
   useEffect(() => {
     if (!isMounted.current) {
-      isMounted.current = true
-      return
+      isMounted.current = true;
+      return;
     }
-  }, [])
+  }, []);
 
   const getAvatar = (id, category) => {
     if (id) {
-      return `https://titon-file-storage.s3.us-east-1.amazonaws.com/${category}/${id}`
+      return `https://titon-file-storage.s3.us-east-1.amazonaws.com/${category}/${id}`;
     }
-    return 'https://titon-file-storage.s3.us-east-1.amazonaws.com/images-public/exemple-truck.webp'
-  }
+    return 'https://titon-file-storage.s3.us-east-1.amazonaws.com/images-public/exemple-truck.webp';
+  };
 
   return (
     <>
@@ -175,7 +175,7 @@ const BaseCardInfoFinancial = ({ loading, financials }) => {
 
       {loading && <BaseLoading color={'white'} />}
     </>
-  )
-}
+  );
+};
 
-export default BaseCardInfoFinancial
+export default BaseCardInfoFinancial;

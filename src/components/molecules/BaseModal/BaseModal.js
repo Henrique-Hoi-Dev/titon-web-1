@@ -1,10 +1,10 @@
-import React from 'react'
-import BaseText from 'components/atoms/BaseText/BaseText'
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import { styled } from '@mui/material/styles'
-import { Grid, Modal as MuiModal } from '@mui/material'
-import { IconClose } from 'assets/icons/icons'
-import { useTranslation } from 'react-i18next'
+import React from 'react';
+import BaseText from 'components/atoms/BaseText/BaseText';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import { styled } from '@mui/material/styles';
+import { Grid, Modal as MuiModal } from '@mui/material';
+import { IconClose } from 'assets/icons/icons';
+import { useTranslation } from 'react-i18next';
 
 const ModalContainer = styled(Grid, {
   shouldForwardProp: (prop) => !['maxWidth', 'maxHeight', 'height', 'minheight'].includes(prop),
@@ -21,7 +21,7 @@ const ModalContainer = styled(Grid, {
   maxHeight: maxHeight,
   padding: '10px',
   borderRadius: '20px',
-}))
+}));
 
 const CloseButtonContainer = styled(Grid, {
   shouldForwardProp: (prop) => !['isMobile'].includes(prop),
@@ -30,7 +30,7 @@ const CloseButtonContainer = styled(Grid, {
   position: 'absolute',
   top: isMobile ? '3px' : '5px',
   right: isMobile ? 0 : '5px',
-}))
+}));
 
 const CloseButton = styled(BaseButton)({
   height: '40px',
@@ -39,14 +39,14 @@ const CloseButton = styled(BaseButton)({
   ':hover': {
     backgroundColor: 'transparent',
   },
-})
+});
 
 const ContentContainer = styled(Grid, {
   shouldForwardProp: (prop) => !['sxGridModal'].includes(prop),
 })(({ sxGridModal }) => ({
   ...sxGridModal,
   overflowY: 'auto',
-}))
+}));
 
 const BaseModal = ({
   title,
@@ -64,7 +64,7 @@ const BaseModal = ({
   minheight,
   sxGridModal,
 }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <MuiModal open={open} onClose={() => {}}>
@@ -115,7 +115,7 @@ const BaseModal = ({
         )}
       </ModalContainer>
     </MuiModal>
-  )
-}
+  );
+};
 
-export default BaseModal
+export default BaseModal;

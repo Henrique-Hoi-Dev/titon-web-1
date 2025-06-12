@@ -1,6 +1,6 @@
-import { call, put, takeEvery, all } from 'redux-saga/effects'
-import { errorNotification, successNotification } from '@utils/notification'
-import api from '@services/api'
+import { call, put, takeEvery, all } from 'redux-saga/effects';
+import { errorNotification, successNotification } from '@utils/notification';
+import api from '@services/api';
 
 import {
   getDriversRequest,
@@ -27,117 +27,117 @@ import {
   resetDriverPasswordRequest,
   resetDriverPasswordSuccess,
   resetDriverPasswordFailure,
-} from './driverSlice'
+} from './driverSlice';
 
 // Listar todos os registros
 function* getDrivers({ payload }) {
   try {
-    if (!payload.search) delete payload.search
+    if (!payload.search) delete payload.search;
 
     const response = yield call(api.get, 'manager/drivers', {
       params: payload,
-    })
+    });
 
-    yield put(getDriversSuccess(response.data.data))
+    yield put(getDriversSuccess(response.data.data));
   } catch (error) {
-    yield put(getDriversFailure(error))
-    errorNotification(error)
+    yield put(getDriversFailure(error));
+    errorNotification(error);
   }
 }
 
 // Buscar por ID
 function* getDriverById({ payload }) {
   try {
-    const response = yield call(api.get, `manager/driver/${payload}`)
-    yield put(getDriverByIdSuccess(response.data.data))
+    const response = yield call(api.get, `manager/driver/${payload}`);
+    yield put(getDriverByIdSuccess(response.data.data));
   } catch (error) {
-    yield put(getDriverByIdFailure(error))
-    errorNotification(error)
+    yield put(getDriverByIdFailure(error));
+    errorNotification(error);
   }
 }
 
 // Criar
 function* createDriver({ payload }) {
   try {
-    if (!payload.value_fix) delete payload.value_fix
-    if (!payload.percentage) delete payload.percentage
+    if (!payload.value_fix) delete payload.value_fix;
+    if (!payload.percentage) delete payload.percentage;
 
-    const response = yield call(api.post, 'manager/driver/signup', payload)
-    yield put(createDriverSuccess(response.data.data))
+    const response = yield call(api.post, 'manager/driver/signup', payload);
+    yield put(createDriverSuccess(response.data.data));
 
-    successNotification('Motorista criado com sucesso')
+    successNotification('Motorista criado com sucesso');
   } catch (error) {
-    yield put(createDriverFailure(error))
-    errorNotification(error)
+    yield put(createDriverFailure(error));
+    errorNotification(error);
   }
 }
 
 // Atualizar
 function* updateDriver({ payload }) {
   try {
-    const { id, data } = payload
+    const { id, data } = payload;
 
-    if (!data.value_fix) delete data.value_fix
-    if (!data.percentage) delete data.percentage
+    if (!data.value_fix) delete data.value_fix;
+    if (!data.percentage) delete data.percentage;
 
-    if (data.cpf) delete data.cpf
+    if (data.cpf) delete data.cpf;
 
-    const response = yield call(api.patch, `manager/driver/${id}`, data)
+    const response = yield call(api.patch, `manager/driver/${id}`, data);
     if (response.data && response.data.data) {
-      yield put(updateDriverSuccess(response.data.data))
-      successNotification('Motorista atualizado com sucesso')
+      yield put(updateDriverSuccess(response.data.data));
+      successNotification('Motorista atualizado com sucesso');
     }
   } catch (error) {
-    yield put(updateDriverFailure(error))
-    errorNotification(error)
+    yield put(updateDriverFailure(error));
+    errorNotification(error);
   }
 }
 
 // Deletar
 function* deleteDriver({ payload }) {
   try {
-    yield call(api.delete, `manager/driver/${payload}`)
-    yield put(deleteDriverSuccess(payload))
-    successNotification('Motorista deletado com sucesso')
+    yield call(api.delete, `manager/driver/${payload}`);
+    yield put(deleteDriverSuccess(payload));
+    successNotification('Motorista deletado com sucesso');
   } catch (error) {
-    yield put(deleteDriverFailure(error))
-    errorNotification(error)
+    yield put(deleteDriverFailure(error));
+    errorNotification(error);
   }
 }
 
 function* forgotPasswordDriver({ payload }) {
   try {
-    yield call(api.post, '/drivers/forgot-password', payload)
-    yield put(forgotPasswordDriverSuccess())
+    yield call(api.post, '/drivers/forgot-password', payload);
+    yield put(forgotPasswordDriverSuccess());
   } catch (error) {
     yield put(
       forgotPasswordDriverFailure(
         error.response?.data?.message || 'Erro ao enviar email de recuperação'
       )
-    )
-    errorNotification(error || 'Erro ao enviar email de recuperação')
+    );
+    errorNotification(error || 'Erro ao enviar email de recuperação');
   }
 }
 
 // Buscar opções para select
 function* getDriversSelect() {
   try {
-    const response = yield call(api.get, 'manager/drivers-select')
-    yield put(getDriversSelectSuccess(response.data.data))
+    const response = yield call(api.get, 'manager/drivers-select');
+    yield put(getDriversSelectSuccess(response.data.data));
   } catch (error) {
-    yield put(getDriversSelectFailure(error))
-    errorNotification(error)
+    yield put(getDriversSelectFailure(error));
+    errorNotification(error);
   }
 }
 
 // Reset de senha
 function* resetDriverPassword({ payload }) {
   try {
-    yield call(api.patch, `driver/reset-password/${payload}`)
-    yield put(resetDriverPasswordSuccess())
+    yield call(api.patch, `driver/reset-password/${payload}`);
+    yield put(resetDriverPasswordSuccess());
   } catch (error) {
-    yield put(resetDriverPasswordFailure(error))
-    errorNotification(error)
+    yield put(resetDriverPasswordFailure(error));
+    errorNotification(error);
   }
 }
 
@@ -151,5 +151,5 @@ export default function* driverSagas() {
     takeEvery(forgotPasswordDriverRequest.type, forgotPasswordDriver),
     takeEvery(getDriversSelectRequest.type, getDriversSelect),
     takeEvery(resetDriverPasswordRequest.type, resetDriverPassword),
-  ])
+  ]);
 }

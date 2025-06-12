@@ -1,7 +1,7 @@
-const react = require('eslint-plugin-react')
-const reactHooks = require('eslint-plugin-react-hooks')
-const jsxA11y = require('eslint-plugin-jsx-a11y')
-const prettier = require('eslint-config-prettier')
+const react = require('eslint-plugin-react');
+const reactHooks = require('eslint-plugin-react-hooks');
+const jsxA11y = require('eslint-plugin-jsx-a11y');
+const prettier = require('eslint-config-prettier');
 
 module.exports = [
   {
@@ -41,4 +41,4 @@ module.exports = [
     ignores: ['node_modules/**', 'build/**', 'public/**'],
   },
   prettier,
-]
+];

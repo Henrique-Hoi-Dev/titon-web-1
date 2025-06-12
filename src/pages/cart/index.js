@@ -1,36 +1,36 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Grid } from '@mui/material'
-import { IconAdd } from 'assets/icons/icons'
-import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
-import { getCartsRequest } from 'store/modules/cart/cartSlice'
+import React, { useEffect, useRef, useState } from 'react';
+import { Grid } from '@mui/material';
+import { IconAdd } from 'assets/icons/icons';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCartsRequest } from 'store/modules/cart/cartSlice';
 
-import Table from './table'
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseModalAddCart from 'components/molecules/BaseModalAddCart/BaseModalAddCart'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import initialStateQuery from '@/utils/initialStateQuery'
+import Table from './table';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseModalAddCart from 'components/molecules/BaseModalAddCart/BaseModalAddCart';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import initialStateQuery from '@/utils/initialStateQuery';
 
 const Cart = () => {
-  const [showModalCart, setShowModalCart] = useState(false)
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
+  const [showModalCart, setShowModalCart] = useState(false);
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
 
-  const { data: carts, loadingGet: loading, errorGet: error } = useSelector((state) => state.cart)
+  const { data: carts, loadingGet: loading, errorGet: error } = useSelector((state) => state.cart);
 
-  const [cardQuery, setCardQuery] = useState(initialStateQuery.INITIAL_STATE_CART)
-  const [search, setSearch] = useState('')
-  const [shouldRefresh, setShouldRefresh] = useState(false)
+  const [cardQuery, setCardQuery] = useState(initialStateQuery.INITIAL_STATE_CART);
+  const [search, setSearch] = useState('');
+  const [shouldRefresh, setShouldRefresh] = useState(false);
 
-  const isMounted = useRef(false)
+  const isMounted = useRef(false);
 
   useEffect(() => {
     if (!isMounted.current) {
-      isMounted.current = true
-      dispatch(getCartsRequest(cardQuery))
-      return
+      isMounted.current = true;
+      dispatch(getCartsRequest(cardQuery));
+      return;
     }
 
     const timer = setTimeout(() => {
@@ -38,19 +38,19 @@ const Cart = () => {
         const query = {
           ...cardQuery,
           ...(search.trim() ? { search } : {}),
-        }
+        };
 
-        dispatch(getCartsRequest(query))
-        setShouldRefresh(false)
+        dispatch(getCartsRequest(query));
+        setShouldRefresh(false);
       }
-    }, 1200)
+    }, 1200);
 
-    return () => clearTimeout(timer)
-  }, [dispatch, search, shouldRefresh, cardQuery])
+    return () => clearTimeout(timer);
+  }, [dispatch, search, shouldRefresh, cardQuery]);
 
   const handleModalClose = () => {
-    setShowModalCart(false)
-  }
+    setShowModalCart(false);
+  };
 
   return (
     <Grid
@@ -107,7 +107,7 @@ const Cart = () => {
         />
       )}
     </Grid>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;

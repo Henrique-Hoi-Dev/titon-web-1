@@ -1,8 +1,6 @@
 name: CI/CD Front - Staging
 
 on:
-  pull_request:
-    branches: [staging, master]
   push:
     branches:
       - staging
@@ -24,6 +22,7 @@ on:
 
 env:
   NODE_VERSION: 20.12.2
+  YARN_REGISTRY: https://registry.npmjs.org
 
 jobs:
   lint:
@@ -33,18 +32,52 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - run: yarn install --frozen-lockfile
+
+      - name: Set Yarn registry
+        run: yarn config set registry ${{ env.YARN_REGISTRY }}
+
+      - name: Clean Yarn cache
+        run: yarn cache clean
+
+      - name: Install dependencies (with retry)
+        run: |
+          rm -rf node_modules
+          for i in 1 2; do
+            yarn install --frozen-lockfile && break
+            echo "Retrying yarn install in 5s..."
+            sleep 5
+          done
+
       - run: yarn lint
 
   build:
     runs-on: ubuntu-latest
+    outputs:
+      status: ${{ steps.build-status.outcome }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - run: yarn install --frozen-lockfile
-      - run: yarn build
+
+      - name: Set Yarn registry
+        run: yarn config set registry ${{ env.YARN_REGISTRY }}
+
+      - name: Clean Yarn cache
+        run: yarn cache clean
+
+      - name: Install dependencies (with retry)
+        run: |
+          rm -rf node_modules
+          for i in 1 2; do
+            yarn install --frozen-lockfile && break
+            echo "Retrying yarn install in 5s..."
+            sleep 5
+          done
+
+      - name: Build project
+        id: build-status
+        run: yarn build
 
   check-code-quality:
     runs-on: ubuntu-latest
@@ -65,12 +98,21 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+      - name: Set Yarn registry
+        run: yarn config set registry ${{ env.YARN_REGISTRY }}
+
+      - name: Install dependencies (with retry)
+        run: |
+          rm -rf node_modules
+          yarn cache clean
+          for i in 1 2; do
+            yarn install --frozen-lockfile && break
+            echo "Retrying yarn install in 5s..."
+            sleep 5
+          done
 
       - name: Install Heroku CLI
-        run: |
-          curl https://cli-assets.heroku.com/install.sh | sh
+        run: curl https://cli-assets.heroku.com/install.sh | sh
 
       - name: Deploy to Heroku (Staging)
         uses: akhileshns/heroku-deploy@v3.12.12
@@ -78,3 +120,54 @@ jobs:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME_STAGING }}
           heroku_email: ${{ secrets.HEROKU_EMAIL }}
+
+  notify-discord:
+    needs: [lint, build, check-code-quality, deploy]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Check if webhook is defined
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          if [ -z "$DISCORD_WEBHOOK" ]; then
+            echo "❌ DISCORD_WEBHOOK is NOT set"
+            exit 1
+          else
+            echo "✅ DISCORD_WEBHOOK is set"
+          fi
+
+      - name: Prepare Discord message
+        id: format_message
+        run: |
+          format_status() {
+            case "$1" in
+              success) echo "✅ success" ;;
+              failure) echo "❌ failure" ;;
+              cancelled) echo "⚠️ cancelled" ;;
+              *) echo "⏭️ skipped" ;;
+            esac
+          }
+
+          {
+            echo "🔔 **CI/CD Front - Staging**"
+            echo "**Branch**: \`${{ github.ref_name }}\`"
+            echo "**Autor**: \`${{ github.actor }}\`"
+            echo "**Status por etapa:**"
+            echo "- 🧹 Lint: $(format_status '${{ needs.lint.result }}')"
+            echo "- 🔧 Build: $(format_status '${{ needs.build.result }}')"
+            echo "- ✅ Code Quality: $(format_status '${{ needs.check-code-quality.result }}')"
+            echo "- 🚀 Deploy: $(format_status '${{ needs.deploy.result || 'skipped' }}')"
+            echo "👉 [Ver execução](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          } > message.txt
+
+          echo "message<<EOF" >> $GITHUB_OUTPUT
+          cat message.txt >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Send Discord Notification
+        uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        with:
+          args: ${{ steps.format_message.outputs.message }}

@@ -1,14 +1,14 @@
-import React from 'react'
-import { Paper, TableContainer } from '@mui/material'
-import { SCell, SHead, SRow, STable, STableBody } from 'components/atoms/BaseTable/BaseTable'
-import { useTranslation } from 'react-i18next'
+import React from 'react';
+import { Paper, TableContainer } from '@mui/material';
+import { SCell, SHead, SRow, STable, STableBody } from 'components/atoms/BaseTable/BaseTable';
+import { useTranslation } from 'react-i18next';
 
-import BaseNotFound from 'components/molecules/BaseNotFound/BaseNotFound'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import RowDeposit from './rowDeposit'
+import BaseNotFound from 'components/molecules/BaseNotFound/BaseNotFound';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import RowDeposit from './rowDeposit';
 
 export default function TableDeposit({ data, loading }) {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <>
@@ -43,5 +43,5 @@ export default function TableDeposit({ data, loading }) {
         {loading && <BaseLoading />}
       </TableContainer>
     </>
-  )
+  );
 }

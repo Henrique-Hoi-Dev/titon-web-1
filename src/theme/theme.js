@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material'
+import { createTheme } from '@mui/material';
 
 const Theme = (auth) => {
   return createTheme({
@@ -65,7 +65,7 @@ const Theme = (auth) => {
         },
       },
     },
-  })
-}
+  });
+};
 
-export default Theme
+export default Theme;

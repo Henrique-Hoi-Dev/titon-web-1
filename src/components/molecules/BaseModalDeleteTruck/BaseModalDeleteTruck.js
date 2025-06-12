@@ -1,42 +1,42 @@
-import React, { useCallback, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
-import { Grid } from '@mui/material'
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { Grid } from '@mui/material';
 import {
   deleteTruckRequest,
   getTrucksRequest,
   resetTruckDelete,
-} from 'store/modules/truck/truckSlice'
+} from 'store/modules/truck/truckSlice';
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseModal from 'components/molecules/BaseModal/BaseModal'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseText from 'components/atoms/BaseText/BaseText'
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseText from 'components/atoms/BaseText/BaseText';
 
 const BaseModalDeleteTruck = ({ showModal, setShowModal, data }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
-  const dispatch = useDispatch()
-  const { loadingDelete, successDelete } = useSelector((state) => state.truck)
+  const dispatch = useDispatch();
+  const { loadingDelete, successDelete } = useSelector((state) => state.truck);
 
   const onClose = useCallback(() => {
-    setShowModal(false)
-  }, [setShowModal])
+    setShowModal(false);
+  }, [setShowModal]);
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
-    dispatch(deleteTruckRequest(data.id))
-  }
+    ev.preventDefault();
+    dispatch(deleteTruckRequest(data.id));
+  };
 
   useEffect(() => {
     if (successDelete) {
-      onClose()
-      dispatch(getTrucksRequest({}))
-      dispatch(resetTruckDelete())
+      onClose();
+      dispatch(getTrucksRequest({}));
+      dispatch(resetTruckDelete());
     }
-  }, [successDelete, onClose, dispatch])
+  }, [successDelete, onClose, dispatch]);
 
   return (
     <BaseModal
@@ -94,7 +94,7 @@ const BaseModalDeleteTruck = ({ showModal, setShowModal, data }) => {
       )}
       {loadingDelete && <BaseLoading />}
     </BaseModal>
-  )
-}
+  );
+};
 
-export default BaseModalDeleteTruck
+export default BaseModalDeleteTruck;

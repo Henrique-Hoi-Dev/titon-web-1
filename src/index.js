@@ -1,28 +1,28 @@
-import React, { Suspense } from 'react'
-import LocalizationProvider from '@mui/lab/LocalizationProvider'
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import BaseLoader from 'components/atoms/BaseLoading/BaseLoading'
-import Toast from 'components/atoms/toast/toast'
-import App from './App'
-import './index.css'
-import './i18n/i18n'
+import React, { Suspense } from 'react';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import BaseLoader from 'components/atoms/BaseLoading/BaseLoading';
+import Toast from 'components/atoms/toast/toast';
+import App from './App';
+import './index.css';
+import './i18n/i18n';
 
-import { store, persistor } from './store/configureStore'
-import { createRoot } from 'react-dom/client'
-import { loadGoogleFonts, safeAccessStyleSheets } from './utils/fontLoader'
-import { initialState, reducer } from 'context/reducer'
-import { StateProvider } from 'context/state'
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { LocalizationProvider as DateProvider } from '@mui/x-date-pickers'
-import { AdapterDateFns as AdapterDate } from '@mui/x-date-pickers/AdapterDateFns'
+import { store, persistor } from './store/configureStore';
+import { createRoot } from 'react-dom/client';
+import { loadGoogleFonts, safeAccessStyleSheets } from './utils/fontLoader';
+import { initialState, reducer } from 'context/reducer';
+import { StateProvider } from 'context/state';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { LocalizationProvider as DateProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns as AdapterDate } from '@mui/x-date-pickers/AdapterDateFns';
 
-safeAccessStyleSheets()
-loadGoogleFonts()
+safeAccessStyleSheets();
+loadGoogleFonts();
 
-const container = document.getElementById('root')
-const root = createRoot(container)
+const container = document.getElementById('root');
+const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -44,4 +44,4 @@ root.render(
       </PersistGate>
     </Provider>
   </React.StrictMode>
-)
+);

@@ -1,28 +1,28 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom';
 
-import Truck from 'pages/truck'
-import Report from 'pages/report'
-import Freight from 'pages/freight'
-import Login from 'pages/login'
-import Home from 'pages/home'
-import Driver from 'pages/driver'
-import User from 'pages/user'
-import Cart from 'pages/cart'
-import History from 'pages/history'
-import InfoFinancial from 'pages/infoFinancial'
-import ForgotPassword from 'pages/forgot-password'
-import ForgotPasswordDriver from 'pages/forgot-password-driver'
-import CreateUser from '@/pages/user/create'
+import Truck from 'pages/truck';
+import Report from 'pages/report';
+import Freight from 'pages/freight';
+import Login from 'pages/login';
+import Home from 'pages/home';
+import Driver from 'pages/driver';
+import User from 'pages/user';
+import Cart from 'pages/cart';
+import History from 'pages/history';
+import InfoFinancial from 'pages/infoFinancial';
+import ForgotPassword from 'pages/forgot-password';
+import ForgotPasswordDriver from 'pages/forgot-password-driver';
+import CreateUser from '@/pages/user/create';
 
-import RequireAuth from 'utils/requireAuth'
-import MainTemplate from 'components/templates/main'
-import BaseTokenProtectedRoute from '@/components/atoms/BaseTokenProtectedRoute/BaseTokenProtectedRoute'
-import BaseForgotPasswordSuccess from '@/components/molecules/BaseForgotPasswordSuccess/BaseForgotPasswordSuccess'
+import RequireAuth from 'utils/requireAuth';
+import MainTemplate from 'components/templates/main';
+import BaseTokenProtectedRoute from '@/components/atoms/BaseTokenProtectedRoute/BaseTokenProtectedRoute';
+import BaseForgotPasswordSuccess from '@/components/molecules/BaseForgotPasswordSuccess/BaseForgotPasswordSuccess';
 
 const RouterController = () => {
   const initialPage = () => {
-    return <Home />
-  }
+    return <Home />;
+  };
 
   return (
     <Routes>
@@ -53,7 +53,7 @@ const RouterController = () => {
         </Route>
       </Route>
     </Routes>
-  )
-}
+  );
+};
 
-export default RouterController
+export default RouterController;

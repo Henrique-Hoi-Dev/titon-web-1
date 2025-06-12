@@ -149,22 +149,21 @@ jobs:
             esac
           }
 
-          echo "Lint: $(format_status '${{ needs.lint.result }}')" >> message.txt
-          echo "Build: $(format_status '${{ needs.build.result }}')" >> message.txt
-          echo "Code Quality: $(format_status '${{ needs.check-code-quality.result }}')" >> message.txt
-          echo "Deploy: $(format_status '${{ needs.deploy.result }}')" >> message.txt
+          echo "🔔 **CI/CD Front - Staging**" > message.txt
+          echo "**Branch**: \`${{ github.ref_name }}\`" >> message.txt
+          echo "**Autor**: \`${{ github.actor }}\`" >> message.txt
+          echo "**Status por etapa:**" >> message.txt
+          echo "- 🧹 Lint: $(format_status '${{ needs.lint.result }}')" >> message.txt
+          echo "- 🔧 Build: $(format_status '${{ needs.build.result }}')" >> message.txt
+          echo "- ✅ Code Quality: $(format_status '${{ needs.check-code-quality.result }}')" >> message.txt
+          echo "- 🚀 Deploy: $(format_status '${{ needs.deploy.result }}')" >> message.txt
+          echo "👉 [Ver execução](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> message.txt
 
-          echo "message<<EOF" >> $GITHUB_OUTPUT
-          echo "🔔 **CI/CD Front - Staging**" >> $GITHUB_OUTPUT
-          echo "**Branch**: \`${{ github.ref_name }}\`" >> $GITHUB_OUTPUT
-          echo "**Autor**: \`${{ github.actor }}\`" >> $GITHUB_OUTPUT
-          echo "**Status por etapa:**" >> $GITHUB_OUTPUT
-          cat message.txt >> $GITHUB_OUTPUT
-          echo "👉 [Ver execução](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          echo "message=$(cat message.txt)" >> $GITHUB_OUTPUT
 
       - name: Send Discord Notification
         uses: Ilshidur/action-discord@master
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          message: ${{ steps.format_message.outputs.message }}
+          args: ${{ steps.format_message.outputs.message }}

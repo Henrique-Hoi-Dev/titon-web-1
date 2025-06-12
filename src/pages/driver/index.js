@@ -1,39 +1,39 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Grid } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
-import { getDriversRequest } from 'store/modules/driver/driverSlice'
-import { IconAdd } from 'assets/icons/icons'
-import { useTranslation } from 'react-i18next'
+import React, { useEffect, useRef, useState } from 'react';
+import { Grid } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDriversRequest } from 'store/modules/driver/driverSlice';
+import { IconAdd } from 'assets/icons/icons';
+import { useTranslation } from 'react-i18next';
 
-import Table from './table'
-import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches'
-import BaseModalAddDriver from '../../components/molecules/BaseModalAddDriver/BaseModalAddDriver'
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import initialStateQuery from 'utils/initialStateQuery'
+import Table from './table';
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
+import BaseModalAddDriver from '../../components/molecules/BaseModalAddDriver/BaseModalAddDriver';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import initialStateQuery from 'utils/initialStateQuery';
 
 const Driver = () => {
-  const { t } = useTranslation()
-  const [showModalDriver, setShowModalDriver] = useState(false)
-  const dispatch = useDispatch()
+  const { t } = useTranslation();
+  const [showModalDriver, setShowModalDriver] = useState(false);
+  const dispatch = useDispatch();
   const {
     data: drivers,
     loadingGet: loading,
     errorGet: error,
-  } = useSelector((state) => state.driver)
+  } = useSelector((state) => state.driver);
 
-  const [driverQuery, setDriverQuery] = useState(initialStateQuery.INITIAL_STATE_DRIVER)
-  const [search, setSearch] = useState('')
-  const [shouldRefresh, setShouldRefresh] = useState(false)
+  const [driverQuery, setDriverQuery] = useState(initialStateQuery.INITIAL_STATE_DRIVER);
+  const [search, setSearch] = useState('');
+  const [shouldRefresh, setShouldRefresh] = useState(false);
 
-  const isMounted = useRef(false)
+  const isMounted = useRef(false);
 
   useEffect(() => {
     if (!isMounted.current) {
-      isMounted.current = true
-      dispatch(getDriversRequest(driverQuery))
-      return
+      isMounted.current = true;
+      dispatch(getDriversRequest(driverQuery));
+      return;
     }
 
     const timer = setTimeout(() => {
@@ -41,19 +41,19 @@ const Driver = () => {
         const query = {
           ...driverQuery,
           ...(search.trim() ? { search } : {}),
-        }
+        };
 
-        dispatch(getDriversRequest(query))
-        setShouldRefresh(false)
+        dispatch(getDriversRequest(query));
+        setShouldRefresh(false);
       }
-    }, 1200)
+    }, 1200);
 
-    return () => clearTimeout(timer)
-  }, [dispatch, search, shouldRefresh, driverQuery])
+    return () => clearTimeout(timer);
+  }, [dispatch, search, shouldRefresh, driverQuery]);
 
   const handleModalClose = () => {
-    setShowModalDriver(false)
-  }
+    setShowModalDriver(false);
+  };
 
   return (
     <Grid
@@ -113,7 +113,7 @@ const Driver = () => {
         />
       )}
     </Grid>
-  )
-}
+  );
+};
 
-export default Driver
+export default Driver;

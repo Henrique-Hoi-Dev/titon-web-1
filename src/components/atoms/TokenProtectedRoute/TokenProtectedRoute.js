@@ -1,16 +1,16 @@
-import { useLocation } from 'react-router-dom'
-import { Grid } from '@mui/material'
-import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router-dom';
+import { Grid } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
-import logo from '../../../assets/logo.png'
-import jwt_decode from 'jwt-decode'
-import Text from '../BaseText/BaseText'
+import logo from '../../../assets/logo.png';
+import jwt_decode from 'jwt-decode';
+import Text from '../BaseText/BaseText';
 
 const TokenProtectedRoute = ({ children }) => {
-  const { t } = useTranslation()
-  const location = useLocation()
-  const queryParams = new URLSearchParams(location.search)
-  const token = queryParams.get('token')
+  const { t } = useTranslation();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const token = queryParams.get('token');
 
   // Se não houver token na URL, exibe erro
   if (!token) {
@@ -35,12 +35,12 @@ const TokenProtectedRoute = ({ children }) => {
           <div style={{ color: '#fff', fontSize: 20 }}>{t('error.expired_error_token')}</div>
         </Grid>
       </Grid>
-    )
+    );
   }
 
   // Se for um JWT, podemos decodificar e checar a expiração
   try {
-    const decodedToken = jwt_decode(token)
+    const decodedToken = jwt_decode(token);
 
     if (decodedToken.exp * 1000 < Date.now()) {
       return (
@@ -64,7 +64,7 @@ const TokenProtectedRoute = ({ children }) => {
             <div style={{ color: '#fff', fontSize: 20 }}>{t('error.expired_token')}</div>
           </Grid>
         </Grid>
-      )
+      );
     }
   } catch (error) {
     return (
@@ -88,10 +88,10 @@ const TokenProtectedRoute = ({ children }) => {
           <div style={{ color: '#fff', fontSize: 20 }}>{t('error.token')}</div>
         </Grid>
       </Grid>
-    )
+    );
   }
 
-  return children
-}
+  return children;
+};
 
-export default TokenProtectedRoute
+export default TokenProtectedRoute;

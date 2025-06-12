@@ -1,7 +1,7 @@
-import { Grid } from '@mui/material'
-import { typeStatus, typeStatusTable } from 'utils/status'
+import { Grid } from '@mui/material';
+import { typeStatus, typeStatusTable } from 'utils/status';
 
-import BaseText from 'components/atoms/BaseText/BaseText'
+import BaseText from 'components/atoms/BaseText/BaseText';
 
 const BaseTypeStatus = ({ sx, props, statusTable = false }) => {
   return (
@@ -30,7 +30,7 @@ const BaseTypeStatus = ({ sx, props, statusTable = false }) => {
         {statusTable ? typeStatusTable(props).label : typeStatus(props).label}
       </BaseText>
     </Grid>
-  )
-}
+  );
+};
 
-export default BaseTypeStatus
+export default BaseTypeStatus;

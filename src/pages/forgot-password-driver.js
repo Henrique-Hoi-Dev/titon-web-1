@@ -1,24 +1,24 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
-import { Grid, Typography } from '@mui/material'
-import { forgotPasswordDriverRequest } from 'store/modules/driver/driverSlice'
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { Grid, Typography } from '@mui/material';
+import { forgotPasswordDriverRequest } from 'store/modules/driver/driverSlice';
 
-import BaseInput from 'components/molecules/BaseInput/BaseInput'
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import Loading from '@/components/atoms/BaseLoading/BaseLoading'
-import { Container, Content, Logo } from './styles'
+import BaseInput from 'components/molecules/BaseInput/BaseInput';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import Loading from '@/components/atoms/BaseLoading/BaseLoading';
+import { Container, Content, Logo } from './styles';
 
 const ForgotPasswordDriver = () => {
-  const [email, setEmail] = useState('')
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
-  const { loading } = useSelector((state) => state.driver)
+  const [email, setEmail] = useState('');
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.driver);
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    dispatch(forgotPasswordDriverRequest({ email }))
-  }
+    e.preventDefault();
+    dispatch(forgotPasswordDriverRequest({ email }));
+  };
 
   return (
     <Container>
@@ -63,7 +63,7 @@ const ForgotPasswordDriver = () => {
       </Content>
       {loading && <Loading />}
     </Container>
-  )
-}
+  );
+};
 
-export default ForgotPasswordDriver
+export default ForgotPasswordDriver;

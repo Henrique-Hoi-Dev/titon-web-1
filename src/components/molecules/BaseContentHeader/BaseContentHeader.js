@@ -1,5 +1,5 @@
-import React from 'react'
-import { Grid } from '@mui/material'
+import React from 'react';
+import { Grid } from '@mui/material';
 
 const BaseContentHeader = ({ children, mt, sx }) => {
   return (
@@ -14,7 +14,7 @@ const BaseContentHeader = ({ children, mt, sx }) => {
     >
       {children}
     </Grid>
-  )
-}
+  );
+};
 
-export default BaseContentHeader
+export default BaseContentHeader;

@@ -1,37 +1,37 @@
-import React, { useCallback, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
-import { Grid } from '@mui/material'
-import { deleteCartRequest, getCartsRequest, resetCartDelete } from 'store/modules/cart/cartSlice'
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { Grid } from '@mui/material';
+import { deleteCartRequest, getCartsRequest, resetCartDelete } from 'store/modules/cart/cartSlice';
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseModal from 'components/molecules/BaseModal/BaseModal'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseText from '@/components/atoms/BaseText/BaseText'
-import BaseContentHeader from '../BaseContentHeader/BaseContentHeader'
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseText from '@/components/atoms/BaseText/BaseText';
+import BaseContentHeader from '../BaseContentHeader/BaseContentHeader';
 
 const BaseModalDeleteCart = ({ showModal, setShowModal, data }) => {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
-  const { loadingDelete: loading, successDelete: success } = useSelector((state) => state.cart)
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { loadingDelete: loading, successDelete: success } = useSelector((state) => state.cart);
 
   const onClose = useCallback(() => {
-    setShowModal(false)
-  }, [setShowModal])
+    setShowModal(false);
+  }, [setShowModal]);
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
-    dispatch(deleteCartRequest(data.id))
-  }
+    ev.preventDefault();
+    dispatch(deleteCartRequest(data.id));
+  };
 
   useEffect(() => {
     if (success) {
-      onClose()
-      dispatch(getCartsRequest({}))
-      dispatch(resetCartDelete())
+      onClose();
+      dispatch(getCartsRequest({}));
+      dispatch(resetCartDelete());
     }
-  }, [success, onClose, dispatch])
+  }, [success, onClose, dispatch]);
 
   return (
     <BaseModal
@@ -91,7 +91,7 @@ const BaseModalDeleteCart = ({ showModal, setShowModal, data }) => {
       )}
       {loading && <BaseLoading />}
     </BaseModal>
-  )
-}
+  );
+};
 
-export default BaseModalDeleteCart
+export default BaseModalDeleteCart;

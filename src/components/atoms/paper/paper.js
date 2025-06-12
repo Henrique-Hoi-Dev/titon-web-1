@@ -1,4 +1,4 @@
-import { Paper, styled } from '@mui/material'
+import { Paper, styled } from '@mui/material';
 
 export const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -10,4 +10,4 @@ export const Item = styled(Paper)(({ theme }) => ({
   height: '35px',
   width: '35px',
   lineHeight: '37px',
-}))
+}));

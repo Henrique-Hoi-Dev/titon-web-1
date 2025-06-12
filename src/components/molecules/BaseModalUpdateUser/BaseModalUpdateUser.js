@@ -1,52 +1,52 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
-import { Grid } from '@mui/material'
-import { getUserByIdRequest, updateUserRequest } from 'store/modules/user/userSlice'
-import { maskCPF } from '@/utils/masks'
+import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { Grid } from '@mui/material';
+import { getUserByIdRequest, updateUserRequest } from 'store/modules/user/userSlice';
+import { maskCPF } from '@/utils/masks';
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseModal from 'components/molecules/BaseModal/BaseModal'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseInput from 'components/molecules/BaseInput/BaseInput'
-import BaseSelect from 'components/molecules/BaseSelect/BaseSelect'
-import enums from '@/utils/enums'
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseInput from 'components/molecules/BaseInput/BaseInput';
+import BaseSelect from 'components/molecules/BaseSelect/BaseSelect';
+import enums from '@/utils/enums';
 
 const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
-  const { selected: user, loading, success } = useSelector((state) => state.user)
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { selected: user, loading, success } = useSelector((state) => state.user);
 
-  const [body, setBody] = useState({})
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [passwordError, setPasswordError] = useState(false)
+  const [body, setBody] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const onClose = useCallback(() => {
-    setShowModal(false)
-    setBody({})
-    setPasswordError(false)
-  }, [setShowModal])
+    setShowModal(false);
+    setBody({});
+    setPasswordError(false);
+  }, [setShowModal]);
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
+    ev.preventDefault();
 
     if (body?.password !== body?.confirmPassword) {
-      setPasswordError(true)
-      return
+      setPasswordError(true);
+      return;
     }
 
-    dispatch(updateUserRequest({ id: data.id, data: body }))
-    setPasswordError(false)
-  }
+    dispatch(updateUserRequest({ id: data.id, data: body }));
+    setPasswordError(false);
+  };
 
   useEffect(() => {
     if (data.id) {
-      dispatch(getUserByIdRequest(data.id))
+      dispatch(getUserByIdRequest(data.id));
     }
-  }, [dispatch, data.id])
+  }, [dispatch, data.id]);
 
   useEffect(() => {
     if (user) {
@@ -56,15 +56,15 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
         email: user?.email,
         cpf: user?.cpf,
         type_position: user?.type_position,
-      }))
+      }));
     }
-  }, [user])
+  }, [user]);
 
   useEffect(() => {
     if (success) {
-      onClose()
+      onClose();
     }
-  }, [success, onClose])
+  }, [success, onClose]);
 
   return (
     <BaseModal
@@ -153,10 +153,10 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
                     setBody((state) => ({
                       ...state,
                       type_position: newValue.value,
-                    }))
+                    }));
                   }
                   if (newValue === null) {
-                    setBody((state) => ({ ...state, type_position: '' }))
+                    setBody((state) => ({ ...state, type_position: '' }));
                   }
                 }}
               />
@@ -202,7 +202,7 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
                 setBody((state) => ({
                   ...state,
                   confirmPassword: ev.target.value,
-                }))
+                }));
               }}
             />
           </Grid>
@@ -254,7 +254,7 @@ const BaseModalUpdateUser = ({ showModal, setShowModal, data }) => {
 
       {loading && <BaseLoading />}
     </BaseModal>
-  )
-}
+  );
+};
 
-export default BaseModalUpdateUser
+export default BaseModalUpdateUser;

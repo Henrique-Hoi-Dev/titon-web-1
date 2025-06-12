@@ -1,56 +1,56 @@
-import React, { useEffect, useState } from 'react'
-import { Card, CardContent, CardMedia, Divider, Grid, IconButton, Typography } from '@mui/material'
-import { moneyMask } from 'utils/masks'
-import { IconMenuTruck } from 'assets/icons/icons'
-import { formatDate } from 'utils/formatDate'
-import { HiOutlinePlusSm } from 'react-icons/hi'
-import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
-import { getFinancialByIdRequest } from 'store/modules/financial/financialSlice'
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent, CardMedia, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { moneyMask } from 'utils/masks';
+import { IconMenuTruck } from 'assets/icons/icons';
+import { formatDate } from 'utils/formatDate';
+import { HiOutlinePlusSm } from 'react-icons/hi';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { getFinancialByIdRequest } from 'store/modules/financial/financialSlice';
 
-import BaseNotFound from 'components/molecules/BaseNotFound/BaseNotFound'
-import BaseTypeStatus from 'components/molecules/BaseTypeStatus/BaseTypeStatus'
-import BaseModalFinalizeRecord from 'components/molecules/BaseModalFinalizeRecord/BaseModalFinalizeRecord'
-import BaseModalAddFreight from 'components/molecules/BaseModalAddFreight/BaseModalAddFreight'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseModalFreight from '@/components/molecules/BaseModalFreight/BaseModalFreight'
-import BaseText from 'components/atoms/BaseText/BaseText'
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import Table from './table'
+import BaseNotFound from 'components/molecules/BaseNotFound/BaseNotFound';
+import BaseTypeStatus from 'components/molecules/BaseTypeStatus/BaseTypeStatus';
+import BaseModalFinalizeRecord from 'components/molecules/BaseModalFinalizeRecord/BaseModalFinalizeRecord';
+import BaseModalAddFreight from 'components/molecules/BaseModalAddFreight/BaseModalAddFreight';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseModalFreight from '@/components/molecules/BaseModalFreight/BaseModalFreight';
+import BaseText from 'components/atoms/BaseText/BaseText';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import Table from './table';
 
 const InfoFinancial = () => {
-  const { t } = useTranslation()
-  const { id } = useParams()
-  const dispatch = useDispatch()
+  const { t } = useTranslation();
+  const { id } = useParams();
+  const dispatch = useDispatch();
 
-  const { selected: financial, loadingById } = useSelector((state) => state.financial)
+  const { selected: financial, loadingById } = useSelector((state) => state.financial);
 
-  const [freight, setFreight] = useState('')
+  const [freight, setFreight] = useState('');
 
-  const [showModalFinalizeRecord, setShowModalFinalizeRecord] = useState(false)
-  const [showModalAddFreight, setShowModalAddFreight] = useState(false)
-  const [showModalCheck, setShowModalCheck] = useState(false)
+  const [showModalFinalizeRecord, setShowModalFinalizeRecord] = useState(false);
+  const [showModalAddFreight, setShowModalAddFreight] = useState(false);
+  const [showModalCheck, setShowModalCheck] = useState(false);
 
   const handleCheck = (freightId, driverId) => {
-    if (!freightId || !driverId) return
-    setFreight({ freightId, driverId })
-    setShowModalCheck(!showModalCheck)
-  }
+    if (!freightId || !driverId) return;
+    setFreight({ freightId, driverId });
+    setShowModalCheck(!showModalCheck);
+  };
 
   useEffect(() => {
     if (id) {
-      dispatch(getFinancialByIdRequest(id))
+      dispatch(getFinancialByIdRequest(id));
     }
-  }, [dispatch, id])
+  }, [dispatch, id]);
 
   const getAvatar = (id, category) => {
     if (id) {
-      return `https://titon-file-storage.s3.us-east-1.amazonaws.com/${category}/${id}`
+      return `https://titon-file-storage.s3.us-east-1.amazonaws.com/${category}/${id}`;
     }
-    return 'https://titon-file-storage.s3.us-east-1.amazonaws.com/images-public/exemple-truck.webp'
-  }
+    return 'https://titon-file-storage.s3.us-east-1.amazonaws.com/images-public/exemple-truck.webp';
+  };
 
   return (
     <>
@@ -296,7 +296,7 @@ const InfoFinancial = () => {
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default InfoFinancial
+export default InfoFinancial;

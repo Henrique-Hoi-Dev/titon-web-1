@@ -1,72 +1,72 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
-import { Grid, IconButton } from '@mui/material'
+import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { Grid, IconButton } from '@mui/material';
 import {
   getCartByIdRequest,
   getCartsRequest,
   resetCartUpdate,
   updateCartRequest,
-} from 'store/modules/cart/cartSlice'
-import { uploadImage } from '@/services/uploadImage'
-import { errorNotification } from '@/utils/notification'
+} from 'store/modules/cart/cartSlice';
+import { uploadImage } from '@/services/uploadImage';
+import { errorNotification } from '@/utils/notification';
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseModal from 'components/molecules/BaseModal/BaseModal'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseInput from 'components/molecules/BaseInput/BaseInput'
-import BaseProgress from '@/components/atoms/BaseProgress/BaseProgress'
-import BaseAvatar from '../BaseAvatar/BaseAvatar'
-import BaseSelect from '../BaseSelect/BaseSelect'
-import enums from '@/utils/enums'
-import BaseInputMaskMil from '../BaseInputMaskMil/BaseInputMaskMil'
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseInput from 'components/molecules/BaseInput/BaseInput';
+import BaseProgress from '@/components/atoms/BaseProgress/BaseProgress';
+import BaseAvatar from '../BaseAvatar/BaseAvatar';
+import BaseSelect from '../BaseSelect/BaseSelect';
+import enums from '@/utils/enums';
+import BaseInputMaskMil from '../BaseInputMaskMil/BaseInputMaskMil';
 
 const BaseModalUpdateCart = ({ showModal, setShowModal, data }) => {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
   const {
     selected: cart,
     loadingUpdate,
     loading,
     successUpdate,
-  } = useSelector((state) => state.cart)
+  } = useSelector((state) => state.cart);
 
-  const [body, setBody] = useState({})
-  const [imageCart, setImageCart] = useState()
+  const [body, setBody] = useState({});
+  const [imageCart, setImageCart] = useState();
 
-  const [progressPercent, setProgressPercent] = useState(0)
+  const [progressPercent, setProgressPercent] = useState(0);
 
   const onClose = useCallback(() => {
-    setShowModal(false)
-    setBody({})
-  }, [setShowModal])
+    setShowModal(false);
+    setBody({});
+  }, [setShowModal]);
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
+    ev.preventDefault();
 
-    let updatedBody = { ...body }
+    let updatedBody = { ...body };
 
     // Limpar campos não usados
-    if (!updatedBody.cart_ton_capacity) delete updatedBody.cart_ton_capacity
-    if (!updatedBody.cart_liter_capacity) delete updatedBody.cart_liter_capacity
+    if (!updatedBody.cart_ton_capacity) delete updatedBody.cart_ton_capacity;
+    if (!updatedBody.cart_liter_capacity) delete updatedBody.cart_liter_capacity;
 
     // Definir campos conforme o tipo de carroceria
     if (updatedBody.cart_bodyworks === 'TANK') {
-      updatedBody.cart_ton_capacity = 0
+      updatedBody.cart_ton_capacity = 0;
     } else {
-      updatedBody.cart_liter_capacity = 0
+      updatedBody.cart_liter_capacity = 0;
     }
 
-    dispatch(updateCartRequest({ id: data.id, data: updatedBody }))
-  }
+    dispatch(updateCartRequest({ id: data.id, data: updatedBody }));
+  };
 
   useEffect(() => {
     if (data.id) {
-      dispatch(getCartByIdRequest(data.id))
+      dispatch(getCartByIdRequest(data.id));
     }
-  }, [dispatch, data.id])
+  }, [dispatch, data.id]);
 
   useEffect(() => {
     if (cart) {
@@ -79,16 +79,16 @@ const BaseModalUpdateCart = ({ showModal, setShowModal, data }) => {
         cart_year: cart.cartYear,
         cart_liter_capacity: cart.cartLiterCapacity,
         cart_ton_capacity: cart.cartTonCapacity,
-      })
+      });
     }
-  }, [cart])
+  }, [cart]);
 
   async function handleChange(e) {
-    const file = e.target.files[0]
-    if (!file) return
+    const file = e.target.files[0];
+    if (!file) return;
 
     try {
-      setProgressPercent(10) // opcional
+      setProgressPercent(10); // opcional
 
       const image = await uploadImage({
         url: 'manager/cart/upload-image',
@@ -96,24 +96,24 @@ const BaseModalUpdateCart = ({ showModal, setShowModal, data }) => {
         file,
         id: data.id,
         onUploadProgress: (event) => {
-          const progress = Math.round((event.loaded * 100) / event.total)
-          setProgressPercent(progress)
+          const progress = Math.round((event.loaded * 100) / event.total);
+          setProgressPercent(progress);
         },
-      })
+      });
 
-      setImageCart(image.imageCart)
+      setImageCart(image.imageCart);
     } catch (error) {
-      errorNotification(error)
+      errorNotification(error);
     }
   }
 
   useEffect(() => {
     if (successUpdate) {
-      onClose()
-      dispatch(getCartsRequest({}))
-      dispatch(resetCartUpdate())
+      onClose();
+      dispatch(getCartsRequest({}));
+      dispatch(resetCartUpdate());
     }
-  }, [successUpdate, onClose, dispatch])
+  }, [successUpdate, onClose, dispatch]);
 
   return (
     <BaseModal
@@ -248,10 +248,10 @@ const BaseModalUpdateCart = ({ showModal, setShowModal, data }) => {
                     setBody((state) => ({
                       ...state,
                       cart_bodyworks: newValue.value,
-                    }))
+                    }));
                   }
                   if (newValue === null) {
-                    setBody((state) => ({ ...state, cart_bodyworks: '' }))
+                    setBody((state) => ({ ...state, cart_bodyworks: '' }));
                   }
                 }}
               />
@@ -418,7 +418,7 @@ const BaseModalUpdateCart = ({ showModal, setShowModal, data }) => {
 
       {(loadingUpdate || loading) && <BaseLoading />}
     </BaseModal>
-  )
-}
+  );
+};
 
-export default BaseModalUpdateCart
+export default BaseModalUpdateCart;

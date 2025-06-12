@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { STablePagination } from '../BaseTable/BaseTable'
+import { useEffect, useState } from 'react';
+import { STablePagination } from '../BaseTable/BaseTable';
 
 export const TablePagination = ({
   data,
@@ -10,7 +10,7 @@ export const TablePagination = ({
   labelRowsPerPage,
   sx,
 }) => {
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     if (data?.totalPages < data?.currentPage) {
@@ -18,30 +18,30 @@ export const TablePagination = ({
         setQuery((state) => ({
           ...state,
           page: 1,
-        }))
+        }));
       }
     }
-  }, [data, setQuery, page])
+  }, [data, setQuery, page]);
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage)
+    setPage(newPage);
     setQuery((state) => ({
       ...state,
       page: newPage + 1,
-    }))
-  }
+    }));
+  };
 
   const handleChangeRowsPerPage = (event) => {
     setQuery((state) => ({
       ...state,
       limit: parseInt(event.target.value, 10),
       page: 1,
-    }))
-  }
+    }));
+  };
 
   const handleRowsPerPage = () => {
-    return [25, 50, 100]
-  }
+    return [25, 50, 100];
+  };
 
   return (
     <STablePagination
@@ -62,5 +62,5 @@ export const TablePagination = ({
       onPageChange={handleChangePage}
       onRowsPerPageChange={handleChangeRowsPerPage}
     />
-  )
-}
+  );
+};

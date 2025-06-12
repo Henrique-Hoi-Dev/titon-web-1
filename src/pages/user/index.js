@@ -1,35 +1,35 @@
-import React, { useEffect, useRef } from 'react'
-import { useState } from 'react'
-import { Grid } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
-import { getUsersRequest } from 'store/modules/user/userSlice'
-import { IconAdd } from '@/assets/icons/icons'
-import { useTranslation } from 'react-i18next'
+import React, { useEffect, useRef } from 'react';
+import { useState } from 'react';
+import { Grid } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUsersRequest } from 'store/modules/user/userSlice';
+import { IconAdd } from '@/assets/icons/icons';
+import { useTranslation } from 'react-i18next';
 
-import BaseModalAddUser from '../../components/molecules/BaseModalAddUser/BaseModalAddUser'
-import Table from './table'
-import initialStateQuery from '@/utils/initialStateQuery'
-import BaseContentHeader from '@/components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from '@/components/atoms/BaseTitle/BaseTitle'
-import BaseButton from '@/components/atoms/BaseButton/BaseButton'
-import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches'
+import BaseModalAddUser from '../../components/molecules/BaseModalAddUser/BaseModalAddUser';
+import Table from './table';
+import initialStateQuery from '@/utils/initialStateQuery';
+import BaseContentHeader from '@/components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from '@/components/atoms/BaseTitle/BaseTitle';
+import BaseButton from '@/components/atoms/BaseButton/BaseButton';
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
 
 const User = () => {
-  const dispatch = useDispatch()
-  const { data: users, loading } = useSelector((state) => state.user)
-  const { t } = useTranslation()
-  const [showModalUser, setShowModalUser] = useState(false)
-  const [search, setSearch] = useState('')
-  const [shouldRefresh, setShouldRefresh] = useState(false)
+  const dispatch = useDispatch();
+  const { data: users, loading } = useSelector((state) => state.user);
+  const { t } = useTranslation();
+  const [showModalUser, setShowModalUser] = useState(false);
+  const [search, setSearch] = useState('');
+  const [shouldRefresh, setShouldRefresh] = useState(false);
 
-  const [userQuery, setUserQuery] = useState(initialStateQuery.INITIAL_STATE_USER)
-  const isMounted = useRef(false)
+  const [userQuery, setUserQuery] = useState(initialStateQuery.INITIAL_STATE_USER);
+  const isMounted = useRef(false);
 
   useEffect(() => {
     if (!isMounted.current) {
-      isMounted.current = true
-      dispatch(getUsersRequest(userQuery))
-      return
+      isMounted.current = true;
+      dispatch(getUsersRequest(userQuery));
+      return;
     }
 
     const timer = setTimeout(() => {
@@ -39,18 +39,18 @@ const User = () => {
             ...userQuery,
             search: search,
           })
-        )
-        setShouldRefresh(false)
+        );
+        setShouldRefresh(false);
       }
-    }, 1200)
+    }, 1200);
 
-    return () => clearTimeout(timer)
-  }, [dispatch, search, shouldRefresh, userQuery])
+    return () => clearTimeout(timer);
+  }, [dispatch, search, shouldRefresh, userQuery]);
 
   const handleModalClose = () => {
-    setShowModalUser(false)
-    setShouldRefresh(true)
-  }
+    setShowModalUser(false);
+    setShouldRefresh(true);
+  };
 
   return (
     <Grid
@@ -101,7 +101,7 @@ const User = () => {
         <BaseModalAddUser setShowModal={handleModalClose} showModal={showModalUser} />
       )}
     </Grid>
-  )
-}
+  );
+};
 
-export default User
+export default User;

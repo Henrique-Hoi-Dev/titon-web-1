@@ -1,27 +1,27 @@
-import React, { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
-import { resetDriverPasswordRequest } from 'store/modules/driver/driverSlice'
-import { Grid } from '@mui/material'
+import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetDriverPasswordRequest } from 'store/modules/driver/driverSlice';
+import { Grid } from '@mui/material';
 
-import Button from 'components/atoms/BaseButton/BaseButton'
-import Modal from 'components/molecules/BaseModal/BaseModal'
-import Loading from '@/components/atoms/BaseLoading/BaseLoading'
-import Text from 'components/atoms/BaseText/BaseText'
+import Button from 'components/atoms/BaseButton/BaseButton';
+import Modal from 'components/molecules/BaseModal/BaseModal';
+import Loading from '@/components/atoms/BaseLoading/BaseLoading';
+import Text from 'components/atoms/BaseText/BaseText';
 
 const BaseModalResetPassword = ({ showModal, setShowModal, data }) => {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
-  const { loading, error } = useSelector((state) => state.driver)
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.driver);
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
-    dispatch(resetDriverPasswordRequest(data?.cpf))
-  }
+    ev.preventDefault();
+    dispatch(resetDriverPasswordRequest(data?.cpf));
+  };
 
   const onClose = useCallback(() => {
-    setShowModal(false)
-  }, [setShowModal])
+    setShowModal(false);
+  }, [setShowModal]);
 
   return (
     <Modal
@@ -86,7 +86,7 @@ const BaseModalResetPassword = ({ showModal, setShowModal, data }) => {
       )}
       {loading && <Loading />}
     </Modal>
-  )
-}
+  );
+};
 
-export default BaseModalResetPassword
+export default BaseModalResetPassword;

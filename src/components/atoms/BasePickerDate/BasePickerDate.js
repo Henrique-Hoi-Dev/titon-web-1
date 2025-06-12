@@ -1,11 +1,11 @@
-import React from 'react'
-import { TextField } from '@mui/material'
-import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
-import { ptBR } from 'date-fns/locale'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import React from 'react';
+import { TextField } from '@mui/material';
+import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { ptBR } from 'date-fns/locale';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import BaseText from 'components/atoms/BaseText/BaseText'
+import BaseText from 'components/atoms/BaseText/BaseText';
 
 const darkTheme = createTheme({
   palette: {
@@ -22,7 +22,7 @@ const darkTheme = createTheme({
       secondary: '#B0B0B0',
     },
   },
-})
+});
 
 const BasePickerDate = ({ size, label, styles, labelText, ...props }) => {
   return (
@@ -79,7 +79,7 @@ const BasePickerDate = ({ size, label, styles, labelText, ...props }) => {
         </LocalizationProvider>
       </ThemeProvider>
     </div>
-  )
-}
+  );
+};
 
-export default BasePickerDate
+export default BasePickerDate;

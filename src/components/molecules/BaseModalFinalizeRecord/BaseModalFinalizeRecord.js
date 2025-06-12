@@ -1,30 +1,30 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useTranslation } from 'react-i18next'
-import { errorNotification } from 'utils/notification'
-import { finishingFinancialRequest } from 'store/modules/financial/financialSlice'
-import { Grid } from '@mui/material'
-import { formatMil } from '@/utils/masks'
-import { unmaskMoney } from '@/utils/unmaskMoney'
+import React, { useEffect, useState, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { errorNotification } from 'utils/notification';
+import { finishingFinancialRequest } from 'store/modules/financial/financialSlice';
+import { Grid } from '@mui/material';
+import { formatMil } from '@/utils/masks';
+import { unmaskMoney } from '@/utils/unmaskMoney';
 
-import BaseModal from '@/components/molecules/BaseModal/BaseModal'
-import BaseButton from '@/components/atoms/BaseButton/BaseButton'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseText from '@/components/atoms/BaseText/BaseText'
-import BaseInput from '@/components/molecules/BaseInput/BaseInput'
+import BaseModal from '@/components/molecules/BaseModal/BaseModal';
+import BaseButton from '@/components/atoms/BaseButton/BaseButton';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseText from '@/components/atoms/BaseText/BaseText';
+import BaseInput from '@/components/molecules/BaseInput/BaseInput';
 
 const BaseModalFinalizeRecord = ({ showModal, setShowModal, financial }) => {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
 
-  const { loading, success } = useSelector((state) => state.financial)
+  const { loading, success } = useSelector((state) => state.financial);
 
-  const [body, setBody] = useState({ final_value: '' })
+  const [body, setBody] = useState({ final_value: '' });
 
   const handleSubmit = () => {
     if (!body.final_value) {
-      errorNotification(t('messages.error.final_value'))
-      return
+      errorNotification(t('messages.error.final_value'));
+      return;
     }
 
     dispatch(
@@ -32,18 +32,18 @@ const BaseModalFinalizeRecord = ({ showModal, setShowModal, financial }) => {
         id: financial?.id,
         data: { final_value: body.final_value },
       })
-    )
-  }
+    );
+  };
 
   const onClose = useCallback(() => {
-    setShowModal(false)
-  }, [setShowModal])
+    setShowModal(false);
+  }, [setShowModal]);
 
   useEffect(() => {
     if (success) {
-      onClose()
+      onClose();
     }
-  }, [success, onClose])
+  }, [success, onClose]);
 
   return (
     <BaseModal
@@ -111,7 +111,7 @@ const BaseModalFinalizeRecord = ({ showModal, setShowModal, financial }) => {
 
       {loading && <BaseLoading />}
     </BaseModal>
-  )
-}
+  );
+};
 
-export default BaseModalFinalizeRecord
+export default BaseModalFinalizeRecord;

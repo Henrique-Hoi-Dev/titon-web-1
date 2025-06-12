@@ -1,42 +1,42 @@
-import React, { useCallback, useEffect } from 'react'
-import { Grid } from '@mui/material'
-import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useCallback, useEffect } from 'react';
+import { Grid } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteDriverRequest,
   getDriversRequest,
   resetDeleteDriverStatus,
-} from 'store/modules/driver/driverSlice'
+} from 'store/modules/driver/driverSlice';
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseModal from 'components/molecules/BaseModal/BaseModal'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseText from 'components/atoms/BaseText/BaseText'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import initialStateQuery from '@/utils/initialStateQuery'
-import BaseContentHeader from '../BaseContentHeader/BaseContentHeader'
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseText from 'components/atoms/BaseText/BaseText';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import initialStateQuery from '@/utils/initialStateQuery';
+import BaseContentHeader from '../BaseContentHeader/BaseContentHeader';
 
 const BaseModalDeleteDriver = ({ showModal, setShowModal, data }) => {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
-  const { loadingDelete, successDelete } = useSelector((state) => state.driver)
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { loadingDelete, successDelete } = useSelector((state) => state.driver);
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
-    dispatch(deleteDriverRequest(data?.id))
-  }
+    ev.preventDefault();
+    dispatch(deleteDriverRequest(data?.id));
+  };
 
   const onClose = useCallback(() => {
-    setShowModal(false)
-  }, [setShowModal])
+    setShowModal(false);
+  }, [setShowModal]);
 
   useEffect(() => {
     if (successDelete) {
-      dispatch(getDriversRequest(initialStateQuery.INITIAL_STATE_DRIVER))
-      dispatch(resetDeleteDriverStatus())
-      onClose()
+      dispatch(getDriversRequest(initialStateQuery.INITIAL_STATE_DRIVER));
+      dispatch(resetDeleteDriverStatus());
+      onClose();
     }
-  }, [successDelete, onClose, dispatch])
+  }, [successDelete, onClose, dispatch]);
 
   return (
     <BaseModal
@@ -95,7 +95,7 @@ const BaseModalDeleteDriver = ({ showModal, setShowModal, data }) => {
       )}
       {loadingDelete && <BaseLoading />}
     </BaseModal>
-  )
-}
+  );
+};
 
-export default BaseModalDeleteDriver
+export default BaseModalDeleteDriver;

@@ -1,20 +1,20 @@
-import { ThemeProvider } from '@emotion/react'
-import { Box } from '@mui/material'
-import { useSelector } from 'react-redux'
-import { createContext, useState } from 'react'
+import { ThemeProvider } from '@emotion/react';
+import { Box } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { createContext, useState } from 'react';
 
-import Theme from 'theme/theme'
-import HeaderBar from 'components/organisms/HeaderBar'
-import Menu from '@/components/organisms/menu/menu'
-import Content from 'components/organisms/content/content'
+import Theme from 'theme/theme';
+import HeaderBar from 'components/organisms/HeaderBar';
+import Menu from '@/components/organisms/menu/menu';
+import Content from 'components/organisms/content/content';
 
-export const templateContext = createContext({})
+export const templateContext = createContext({});
 
 const MainTemplate = () => {
-  const [openMenu, setOpenMenu] = useState(true)
-  const [fetch, setFetch] = useState(false)
+  const [openMenu, setOpenMenu] = useState(true);
+  const [fetch, setFetch] = useState(false);
 
-  const user = useSelector((state) => state.auth.user)
+  const user = useSelector((state) => state.auth.user);
 
   return (
     <ThemeProvider theme={Theme(user)}>
@@ -26,7 +26,7 @@ const MainTemplate = () => {
         </Box>
       </templateContext.Provider>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default MainTemplate
+export default MainTemplate;

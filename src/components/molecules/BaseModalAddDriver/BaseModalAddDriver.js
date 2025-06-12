@@ -1,32 +1,32 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import { Grid, LinearProgress, linearProgressClasses, styled } from '@mui/material'
-import { useTranslation } from 'react-i18next'
-import { formatMoney, maskCPF, maskPhone } from 'utils/masks'
-import { useDispatch, useSelector } from 'react-redux'
-import { createDriverRequest, resetCreateDriverStatus } from 'store/modules/driver/driverSlice'
-import { unmaskPhone } from '@/utils/unmask'
-import { unmaskMoney } from '@/utils/unmaskMoney'
-import { evaluateStrongPassword } from '@/utils/passwordVerify'
+import React, { useEffect, useState, useCallback } from 'react';
+import { Grid, LinearProgress, linearProgressClasses, styled } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { formatMoney, maskCPF, maskPhone } from 'utils/masks';
+import { useDispatch, useSelector } from 'react-redux';
+import { createDriverRequest, resetCreateDriverStatus } from 'store/modules/driver/driverSlice';
+import { unmaskPhone } from '@/utils/unmask';
+import { unmaskMoney } from '@/utils/unmaskMoney';
+import { evaluateStrongPassword } from '@/utils/passwordVerify';
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseModal from 'components/molecules/BaseModal/BaseModal'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import BaseContentHeader from '@/components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseInput from '@/components/molecules/BaseInput/BaseInput'
-import BaseTitle from '@/components/atoms/BaseTitle/BaseTitle'
-import BaseSelect from '../BaseSelect/BaseSelect'
-import enums from '@/utils/enums'
-import BasePickerDate from '@/components/atoms/BasePickerDate/BasePickerDate'
-import { formatDatePicker, formatDatePickerToUTC } from '@/utils/formatDate'
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import BaseContentHeader from '@/components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseInput from '@/components/molecules/BaseInput/BaseInput';
+import BaseTitle from '@/components/atoms/BaseTitle/BaseTitle';
+import BaseSelect from '../BaseSelect/BaseSelect';
+import enums from '@/utils/enums';
+import BasePickerDate from '@/components/atoms/BasePickerDate/BasePickerDate';
+import { formatDatePicker, formatDatePickerToUTC } from '@/utils/formatDate';
 
 const BaseModalAddDriver = ({ showModal, setShowModal, onCreated }) => {
-  const { t } = useTranslation()
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const { t } = useTranslation();
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const [passwordError, setPasswordError] = useState(false)
+  const [passwordError, setPasswordError] = useState(false);
 
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 5,
@@ -38,33 +38,33 @@ const BaseModalAddDriver = ({ showModal, setShowModal, onCreated }) => {
       borderRadius: 2,
       backgroundColor: evaluateStrongPassword(body.password).color,
     },
-  }))
+  }));
 
-  const [body, setBody] = useState({})
+  const [body, setBody] = useState({});
 
-  const [data, setData] = useState({})
+  const [data, setData] = useState({});
 
-  const dispatch = useDispatch()
-  const { loadingCreate, successCreate } = useSelector((state) => state.driver)
+  const dispatch = useDispatch();
+  const { loadingCreate, successCreate } = useSelector((state) => state.driver);
 
   const handleSubmit = (ev) => {
-    ev.preventDefault()
+    ev.preventDefault();
 
     if (body?.password !== confirmPassword) {
-      setPasswordError(true)
-      return
+      setPasswordError(true);
+      return;
     }
-    dispatch(createDriverRequest(data))
+    dispatch(createDriverRequest(data));
 
-    setPasswordError(false)
-    setConfirmPassword('')
-  }
+    setPasswordError(false);
+    setConfirmPassword('');
+  };
 
   const onClose = useCallback(() => {
-    setBody({})
-    setShowModal(false)
-    dispatch(resetCreateDriverStatus())
-  }, [setShowModal, dispatch])
+    setBody({});
+    setShowModal(false);
+    dispatch(resetCreateDriverStatus());
+  }, [setShowModal, dispatch]);
 
   useEffect(() => {
     setData((state) => ({
@@ -79,15 +79,15 @@ const BaseModalAddDriver = ({ showModal, setShowModal, onCreated }) => {
       email: body?.email,
       name: body?.name,
       gender: body?.gender,
-    }))
-  }, [body])
+    }));
+  }, [body]);
 
   useEffect(() => {
     if (successCreate && typeof onCreated === 'function') {
-      onCreated()
-      onClose()
+      onCreated();
+      onClose();
     }
-  }, [successCreate, onClose, onCreated])
+  }, [successCreate, onClose, onCreated]);
 
   return (
     <BaseModal
@@ -189,10 +189,10 @@ const BaseModalAddDriver = ({ showModal, setShowModal, onCreated }) => {
                   setBody((state) => ({
                     ...state,
                     gender: newValue.value,
-                  }))
+                  }));
                 }
                 if (newValue === null) {
-                  setBody((state) => ({ ...state, gender: '' }))
+                  setBody((state) => ({ ...state, gender: '' }));
                 }
               }}
             />
@@ -342,7 +342,7 @@ const BaseModalAddDriver = ({ showModal, setShowModal, onCreated }) => {
 
       {loadingCreate && <BaseLoading />}
     </BaseModal>
-  )
-}
+  );
+};
 
-export default BaseModalAddDriver
+export default BaseModalAddDriver;

@@ -1,36 +1,36 @@
-import React, { useState } from 'react'
-import { IconButton, Menu, MenuItem } from '@mui/material'
-import { DropUpSharpIcon } from 'assets/icons/icons'
-import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable'
-import { useTranslation } from 'react-i18next'
+import React, { useState } from 'react';
+import { IconButton, Menu, MenuItem } from '@mui/material';
+import { DropUpSharpIcon } from 'assets/icons/icons';
+import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
+import { useTranslation } from 'react-i18next';
 
-import enums from '@/utils/enums'
-import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar'
+import enums from '@/utils/enums';
+import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
 
 const InfoRow = ({ data, index, setShowModalDelete, setShowModalUpdate, setCartId }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
-  const [openSettings, setOpenSettings] = useState(false)
-  const [anchorEl, setAnchorEl] = useState(false)
+  const [openSettings, setOpenSettings] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(false);
 
-  const getBodywork = () => enums.typeBodywork.find((item) => item.value === data?.cartBodyworks)
+  const getBodywork = () => enums.typeBodywork.find((item) => item.value === data?.cartBodyworks);
 
   const handleClick = (ev) => {
-    setOpenSettings(!openSettings)
-    setAnchorEl(ev.currentTarget)
-  }
+    setOpenSettings(!openSettings);
+    setAnchorEl(ev.currentTarget);
+  };
 
   const handleDelete = (id, name) => {
-    setShowModalDelete(true)
-    setCartId({ id: id, name: name })
-    setOpenSettings(false)
-  }
+    setShowModalDelete(true);
+    setCartId({ id: id, name: name });
+    setOpenSettings(false);
+  };
 
   const handleUpdate = (id) => {
-    setShowModalUpdate(true)
-    setCartId({ id: id })
-    setOpenSettings(false)
-  }
+    setShowModalUpdate(true);
+    setCartId({ id: id });
+    setOpenSettings(false);
+  };
 
   return (
     <>
@@ -115,7 +115,7 @@ const InfoRow = ({ data, index, setShowModalDelete, setShowModalUpdate, setCartI
         </MenuItem>
       </Menu>
     </>
-  )
-}
+  );
+};
 
-export default InfoRow
+export default InfoRow;

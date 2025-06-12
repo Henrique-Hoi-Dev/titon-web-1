@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   states: [],
@@ -8,7 +8,7 @@ const initialState = {
   loadingStates: false,
   errorCities: null,
   errorStates: null,
-}
+};
 
 const locationSlice = createSlice({
   name: 'location',
@@ -16,33 +16,33 @@ const locationSlice = createSlice({
   reducers: {
     // Listar todos os registros
     getLocationCityRequest: (state) => {
-      state.loadingCities = true
-      state.errorCities = null
+      state.loadingCities = true;
+      state.errorCities = null;
     },
     getLocationCitySuccess: (state, action) => {
-      state.cities = action.payload
-      state.loadingCities = false
+      state.cities = action.payload;
+      state.loadingCities = false;
     },
     getLocationCityFailure: (state, action) => {
-      state.loadingCities = false
-      state.error = action.payload
+      state.loadingCities = false;
+      state.error = action.payload;
     },
 
     // Buscar por ID
     getLocationStateRequest: (state) => {
-      state.loadingStates = true
-      state.errorStates = null
+      state.loadingStates = true;
+      state.errorStates = null;
     },
     getLocationStateSuccess: (state, action) => {
-      state.states = action.payload
-      state.loadingStates = false
+      state.states = action.payload;
+      state.loadingStates = false;
     },
     getLocationStateFailure: (state, action) => {
-      state.loadingStates = false
-      state.errorStates = action.payload
+      state.loadingStates = false;
+      state.errorStates = action.payload;
     },
   },
-})
+});
 
 export const {
   getLocationCityRequest,
@@ -51,6 +51,6 @@ export const {
   getLocationStateRequest,
   getLocationStateSuccess,
   getLocationStateFailure,
-} = locationSlice.actions
+} = locationSlice.actions;
 
-export default locationSlice.reducer
+export default locationSlice.reducer;

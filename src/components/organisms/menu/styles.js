@@ -6,11 +6,11 @@ import {
   ListItemIcon,
   ListItemText,
   List,
-} from '@mui/material'
-import { styled } from '@mui/system'
-import { MENU_WIDTH } from 'utils/constants'
+} from '@mui/material';
+import { styled } from '@mui/system';
+import { MENU_WIDTH } from 'utils/constants';
 
-import MuiDrawer from '@mui/material/Drawer'
+import MuiDrawer from '@mui/material/Drawer';
 
 export const ListItemCategoryUser = styled(ListItem)({
   cursor: 'pointer',
@@ -22,7 +22,7 @@ export const ListItemCategoryUser = styled(ListItem)({
   borderRadius: '8px',
   width: '260px',
   padding: 0,
-})
+});
 
 export const ListItemCategory = styled(ListItem)({
   cursor: 'pointer',
@@ -43,26 +43,26 @@ export const ListItemCategory = styled(ListItem)({
     background: '#0C59BB',
     borderRadius: '8px',
   },
-})
+});
 
 export const ButtonMenu = styled(ListItemButton)({
   color: '#FFFFFF',
   height: '40px',
   px: 2.5,
-})
+});
 
 export const ListSub = styled(List)({
   display: 'flex',
   alignItems: 'flex-end',
   height: '100%',
   paddingBottom: '24px',
-})
+});
 
 export const IconMenuCategory = styled(ListItemIcon)({
   cursor: 'pointer',
   color: '#FFFFFF',
   justifyContent: 'center',
-})
+});
 
 export const ListText = styled(ListItemText)({
   cursor: 'pointer',
@@ -71,14 +71,14 @@ export const ListText = styled(ListItemText)({
   '& .css-10hburv-MuiTypography-root': { fontWeight: '400' },
   marginTop: 0,
   marginBottom: '-4px',
-})
+});
 
 export const MenuCollapse = styled(Collapse)({
   '& .css-9l5vo-MuiCollapse-wrapperInner': { width: 'auto!important' },
   color: '#34475a',
   background: '#1C1C1C',
   boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-})
+});
 
 export const SubList = styled(Grid)({
   cursor: 'pointer',
@@ -94,7 +94,7 @@ export const SubList = styled(Grid)({
     transform: 'scale(1.04)',
     transition: 'all 0.8s',
   },
-})
+});
 
 export const openedMixin = (theme) => ({
   width: MENU_WIDTH,
@@ -107,7 +107,7 @@ export const openedMixin = (theme) => ({
   zIndex: 1,
   background: '#1C1C1C',
   boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-})
+});
 
 export const closedMixin = (theme) => ({
   transition: theme.transitions.create('width', {
@@ -122,7 +122,7 @@ export const closedMixin = (theme) => ({
   },
   background: '#1C1C1C',
   boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-})
+});
 
 export const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -131,7 +131,7 @@ export const DrawerHeader = styled('div')(({ theme }) => ({
   padding: '0 17px',
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-}))
+}));
 
 export const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -148,4 +148,4 @@ export const Drawer = styled(MuiDrawer, {
     ...closedMixin(theme),
     '& .MuiDrawer-paper': closedMixin(theme),
   }),
-}))
+}));

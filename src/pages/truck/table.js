@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { Grid, Paper, TableContainer } from '@mui/material'
-import { useTranslation } from 'react-i18next'
-import { TablePagination } from 'components/atoms/tablePagination/tablePagination'
+import React, { useState } from 'react';
+import { Grid, Paper, TableContainer } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { TablePagination } from 'components/atoms/tablePagination/tablePagination';
 import {
   SCell,
   SHead,
@@ -9,30 +9,30 @@ import {
   STable,
   STableBody,
   SLabel,
-} from 'components/atoms/BaseTable/BaseTable'
+} from 'components/atoms/BaseTable/BaseTable';
 
-import BaseNotFount from 'components/molecules/BaseNotFound/BaseNotFound'
-import Loading from '@/components/atoms/BaseLoading/BaseLoading'
-import InfoRow from './infoRow'
-import BaseModalDeleteTruck from 'components/molecules/BaseModalDeleteTruck/BaseModalDeleteTruck'
-import BaseModalUpdateTruck from 'components/molecules/BaseModalUpdateTruck/BaseModalUpdateTruck'
+import BaseNotFount from 'components/molecules/BaseNotFound/BaseNotFound';
+import Loading from '@/components/atoms/BaseLoading/BaseLoading';
+import InfoRow from './infoRow';
+import BaseModalDeleteTruck from 'components/molecules/BaseModalDeleteTruck/BaseModalDeleteTruck';
+import BaseModalUpdateTruck from 'components/molecules/BaseModalUpdateTruck/BaseModalUpdateTruck';
 
 const Table = ({ data, query, setQuery, loading }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
-  const [showModalDelete, setShowModalDelete] = useState(false)
-  const [showModalUpdate, setShowModalUpdate] = useState(false)
+  const [showModalDelete, setShowModalDelete] = useState(false);
+  const [showModalUpdate, setShowModalUpdate] = useState(false);
 
-  const [truckId, setTruckId] = useState(null)
+  const [truckId, setTruckId] = useState(null);
 
   const handleSort = (item) => {
     setQuery((state) => ({
       ...state,
       sort_field: item,
       sort_order: `${query?.sort_order === 'ASC' ? 'DESC' : 'ASC'}`,
-    }))
-    return
-  }
+    }));
+    return;
+  };
 
   return (
     <>
@@ -163,7 +163,7 @@ const Table = ({ data, query, setQuery, loading }) => {
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default Table
+export default Table;

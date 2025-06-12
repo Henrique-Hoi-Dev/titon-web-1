@@ -1,20 +1,20 @@
-import * as React from 'react'
-import Paper from '@mui/material/Paper'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableRow from '@mui/material/TableRow'
-import enums from '@/utils/enums'
-import BaseNotFound from 'components/molecules/BaseNotFound/BaseNotFound'
+import * as React from 'react';
+import Paper from '@mui/material/Paper';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+import enums from '@/utils/enums';
+import BaseNotFound from 'components/molecules/BaseNotFound/BaseNotFound';
 
-import { TablePagination } from '@mui/material'
-import { moneyMask } from 'utils/masks'
-import { formatDate } from 'utils/formatDate'
-import { SHead, SRow, STable } from 'components/atoms/BaseTable/BaseTable'
+import { TablePagination } from '@mui/material';
+import { moneyMask } from 'utils/masks';
+import { formatDate } from 'utils/formatDate';
+import { SHead, SRow, STable } from 'components/atoms/BaseTable/BaseTable';
 
 export default function Table({ data }) {
   function createData(typeTransactions, value, type, date) {
-    return { typeTransactions, value, type, date }
+    return { typeTransactions, value, type, date };
   }
 
   const rows =
@@ -25,19 +25,19 @@ export default function Table({ data }) {
         item.type_method === 'DEBIT' ? 'Débito' : 'Crédito',
         formatDate(item.date)
       )
-    ) ?? []
+    ) ?? [];
 
-  const [page, setPage] = React.useState(0)
-  const [rowsPerPage, setRowsPerPage] = React.useState(5)
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage)
-  }
+    setPage(newPage);
+  };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value)
-    setPage(0)
-  }
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
   return (
     <Paper
@@ -81,9 +81,9 @@ export default function Table({ data }) {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={i}>
                   {enums.columnsTableBank.map((column) => {
-                    const value = row[column.id]
+                    const value = row[column.id];
 
-                    const isValueOrType = column.id === 'value' || column.id === 'type'
+                    const isValueOrType = column.id === 'value' || column.id === 'type';
 
                     return (
                       <TableCell
@@ -99,10 +99,10 @@ export default function Table({ data }) {
                       >
                         {column.format && typeof value === 'number' ? column.format(value) : value}
                       </TableCell>
-                    )
+                    );
                   })}
                 </TableRow>
-              )
+              );
             })}
           </TableBody>
         </STable>
@@ -124,5 +124,5 @@ export default function Table({ data }) {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
-  )
+  );
 }

@@ -7,8 +7,8 @@ import {
   styled,
   TablePagination,
   TableSortLabel,
-} from '@mui/material'
-import { DataGrid } from '@mui/x-data-grid'
+} from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 
 export const SCell = styled(TableCell)(
   ({ color, textAlign, fontWeight, fontSize, backgroundcolor, displaywidth, minwidth }) => ({
@@ -26,7 +26,7 @@ export const SCell = styled(TableCell)(
       textDecorationLine: 'underline',
     },
   })
-)
+);
 
 export const SLabel = styled(TableSortLabel)(({ hideSortIcon }) => ({
   '& :hover': {
@@ -48,20 +48,20 @@ export const SLabel = styled(TableSortLabel)(({ hideSortIcon }) => ({
   '& .MuiButtonBase.Mui-active': {
     color: '#CCCCCC',
   },
-}))
+}));
 
 export const STableGrid = styled(DataGrid)(({ display }) => ({
   display: `${display ? '' : 'table'}`,
   overflow: 'auto',
   borderRadius: '8px',
-}))
+}));
 
 export const STable = styled(Table)(({ display }) => ({
   display: `${display ? '' : 'table'}`,
   overflow: 'auto',
   borderRadius: '16px',
   backgroundColor: `#3A3A3A`,
-}))
+}));
 
 export const SHead = styled(TableHead)(({ color, backgroundcolor, displaywidth, tableLayout }) => ({
   tableLayout: `${tableLayout}`,
@@ -77,12 +77,12 @@ export const SHead = styled(TableHead)(({ color, backgroundcolor, displaywidth, 
   '& :hover': {
     color: '#939395',
   },
-}))
+}));
 
 export const SRow = styled(TableRow)(({ displaywidth }) => ({
   display: `${displaywidth ? 'none' : ''}`,
   backgroundColor: `#3A3A3A`,
-}))
+}));
 
 export const SCellTwoHead = styled(TableCell)(
   ({ color, textAlign, fontWeight, fontSize, displaywidth, minwidth }) => ({
@@ -99,12 +99,12 @@ export const SCellTwoHead = styled(TableCell)(
       textDecorationLine: 'underline',
     },
   })
-)
+);
 
 export const STableBody = styled(TableBody)(() => ({
   border: `0.5px solid #545454`,
   backgroundColor: `#3A3A3A`,
-}))
+}));
 
 export const STablePagination = styled(TablePagination)(({ theme }) => ({
   '& .MuiIconButton-root': {
@@ -117,4 +117,4 @@ export const STablePagination = styled(TablePagination)(({ theme }) => ({
       opacity: 0.8,
     },
   },
-}))
+}));

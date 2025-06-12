@@ -1,6 +1,6 @@
-import React from 'react'
-import { TextField } from '@mui/material'
-import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker'
+import React from 'react';
+import { TextField } from '@mui/material';
+import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
 
 const BasePickerTime = ({ minWidth, value, onChange, size, label, height, ...props }) => {
   return (
@@ -33,7 +33,7 @@ const BasePickerTime = ({ minWidth, value, onChange, size, label, height, ...pro
         />
       )}
     />
-  )
-}
+  );
+};
 
-export default BasePickerTime
+export default BasePickerTime;

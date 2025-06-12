@@ -1,34 +1,34 @@
-import React, { useState } from 'react'
-import { IconButton, Menu, MenuItem } from '@mui/material'
-import { useMediaQuery } from 'react-responsive'
-import { formatDate } from 'utils/formatDate'
-import { ArrowDownIcon, ArrowUpIcon, IconActions } from 'assets/icons/icons'
-import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable'
-import { useTranslation } from 'react-i18next'
-import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar'
+import React, { useState } from 'react';
+import { IconButton, Menu, MenuItem } from '@mui/material';
+import { useMediaQuery } from 'react-responsive';
+import { formatDate } from 'utils/formatDate';
+import { ArrowDownIcon, ArrowUpIcon, IconActions } from 'assets/icons/icons';
+import { SCell, SRow } from 'components/atoms/BaseTable/BaseTable';
+import { useTranslation } from 'react-i18next';
+import BaseAvatar from '@/components/molecules/BaseAvatar/BaseAvatar';
 
 const InfoRow = (props) => {
-  const { t } = useTranslation()
-  const { data, index, setShowModalDelete, setFinancialId } = props
+  const { t } = useTranslation();
+  const { data, index, setShowModalDelete, setFinancialId } = props;
 
-  const [open, setOpen] = useState(false)
-  const [openSettings, setOpenSettings] = useState(false)
-  const [anchorEl, setAnchorEl] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [openSettings, setOpenSettings] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(false);
 
-  const isDesktop = useMediaQuery({ maxWidth: '1250px' })
-  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' })
-  const isMobile = useMediaQuery({ maxWidth: '730px' })
+  const isDesktop = useMediaQuery({ maxWidth: '1250px' });
+  const isSmallDesktop = useMediaQuery({ maxWidth: '1100px' });
+  const isMobile = useMediaQuery({ maxWidth: '730px' });
 
   const handleClick = (ev) => {
-    setOpenSettings(!openSettings)
-    setAnchorEl(ev.currentTarget)
-  }
+    setOpenSettings(!openSettings);
+    setAnchorEl(ev.currentTarget);
+  };
 
   const handleDelete = (id) => {
-    setShowModalDelete(true)
-    setFinancialId(id)
-    setOpenSettings(false)
-  }
+    setShowModalDelete(true);
+    setFinancialId(id);
+    setOpenSettings(false);
+  };
 
   // const handleUpdate = (id) => {
   //   setShowModalUpdate(true)
@@ -94,7 +94,7 @@ const InfoRow = (props) => {
         <MenuItem onClick={() => handleDelete(data?.id)}>{t('modal.delete')}</MenuItem>
       </Menu>
     </>
-  )
-}
+  );
+};
 
-export default InfoRow
+export default InfoRow;

@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-import { Button as ButtonComponent, CircularProgress } from '@mui/material'
+import { Button as ButtonComponent, CircularProgress } from '@mui/material';
 
 const BaseButton = ({
   disabled,
@@ -58,7 +58,7 @@ const BaseButton = ({
         </ButtonComponent>
       )}
     </>
-  )
-}
+  );
+};
 
-export default BaseButton
+export default BaseButton;

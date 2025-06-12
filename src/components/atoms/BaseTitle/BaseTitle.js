@@ -1,5 +1,5 @@
-import { Grid, Typography } from '@mui/material'
-import React from 'react'
+import { Grid, Typography } from '@mui/material';
+import React from 'react';
 
 const BaseTitle = ({ children, sx, sxGridText, fontSize = '32px' }) => {
   return (
@@ -12,7 +12,7 @@ const BaseTitle = ({ children, sx, sxGridText, fontSize = '32px' }) => {
         </Grid>
       )}
     </>
-  )
-}
+  );
+};
 
-export default BaseTitle
+export default BaseTitle;

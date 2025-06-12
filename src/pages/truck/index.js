@@ -1,42 +1,46 @@
-import { useEffect, useRef, useState } from 'react'
-import { Grid } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
-import { IconAdd } from 'assets/icons/icons'
-import { useTranslation } from 'react-i18next'
-import { getTrucksRequest } from 'store/modules/truck/truckSlice'
+import { useEffect, useRef, useState } from 'react';
+import { Grid } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { IconAdd } from 'assets/icons/icons';
+import { useTranslation } from 'react-i18next';
+import { getTrucksRequest } from 'store/modules/truck/truckSlice';
 
-import Table from './table'
-import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches'
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseModalAddTruck from 'components/molecules/BaseModalAddTruck/BaseModalAddTruck'
+import Table from './table';
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseModalAddTruck from 'components/molecules/BaseModalAddTruck/BaseModalAddTruck';
 
 const Truck = () => {
-  const dispatch = useDispatch()
-  const [showModalTruck, setShowModalTruck] = useState(false)
-  const { t } = useTranslation()
+  const dispatch = useDispatch();
+  const [showModalTruck, setShowModalTruck] = useState(false);
+  const { t } = useTranslation();
 
   const INITIAL_STATE_USER = {
     limit: 7,
     page: 1,
     sort_field: 'id',
     sort_order: 'ASC',
-  }
+  };
 
-  const [truckQuery, setTruckQuery] = useState(INITIAL_STATE_USER)
-  const [search, setSearch] = useState('')
-  const [shouldRefresh, setShouldRefresh] = useState(false)
+  const [truckQuery, setTruckQuery] = useState(INITIAL_STATE_USER);
+  const [search, setSearch] = useState('');
+  const [shouldRefresh, setShouldRefresh] = useState(false);
 
-  const isMounted = useRef(false)
+  const isMounted = useRef(false);
 
-  const { data: trucks, loadingGet: loading, errorGet: error } = useSelector((state) => state.truck)
+  const {
+    data: trucks,
+    loadingGet: loading,
+    errorGet: error,
+  } = useSelector((state) => state.truck);
 
   useEffect(() => {
     if (!isMounted.current) {
-      isMounted.current = true
-      dispatch(getTrucksRequest(truckQuery))
-      return
+      isMounted.current = true;
+      dispatch(getTrucksRequest(truckQuery));
+      return;
     }
 
     const timer = setTimeout(() => {
@@ -44,18 +48,18 @@ const Truck = () => {
         const query = {
           ...truckQuery,
           ...(search.trim() ? { search } : {}),
-        }
-        dispatch(getTrucksRequest(query))
-        setShouldRefresh(false)
+        };
+        dispatch(getTrucksRequest(query));
+        setShouldRefresh(false);
       }
-    }, 1200)
+    }, 1200);
 
-    return () => clearTimeout(timer)
-  }, [dispatch, search, shouldRefresh, truckQuery])
+    return () => clearTimeout(timer);
+  }, [dispatch, search, shouldRefresh, truckQuery]);
 
   const handleModalClose = () => {
-    setShowModalTruck(false)
-  }
+    setShowModalTruck(false);
+  };
 
   return (
     <Grid
@@ -114,7 +118,7 @@ const Truck = () => {
         onCreated={() => setShouldRefresh(true)}
       />
     </Grid>
-  )
-}
+  );
+};
 
-export default Truck
+export default Truck;

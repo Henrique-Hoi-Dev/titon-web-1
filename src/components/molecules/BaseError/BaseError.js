@@ -1,11 +1,11 @@
-import { useTranslation } from 'react-i18next'
-import { Grid } from '@mui/material'
+import { useTranslation } from 'react-i18next';
+import { Grid } from '@mui/material';
 
-import BaseText from 'components/atoms/BaseText/BaseText'
-import error404 from '../../../assets/error-404.png'
+import BaseText from 'components/atoms/BaseText/BaseText';
+import error404 from '../../../assets/error-404.png';
 
 export default function BaseError() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <Grid container item justifyContent="center" alignItems="center" pt={5}>
@@ -22,5 +22,5 @@ export default function BaseError() {
         />
       </BaseText>
     </Grid>
-  )
+  );
 }

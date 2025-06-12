@@ -1,10 +1,10 @@
-import React from 'react'
-import ReactApexChart from 'react-apexcharts'
-import './style.css'
+import React from 'react';
+import ReactApexChart from 'react-apexcharts';
+import './style.css';
 
 class BaseGraphic extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       series: [
@@ -103,12 +103,12 @@ class BaseGraphic extends React.Component {
         tooltip: {
           y: {
             formatter: function (val) {
-              return 'R$: ' + val + ',00'
+              return 'R$: ' + val + ',00';
             },
           },
         },
       },
-    }
+    };
   }
 
   render() {
@@ -122,8 +122,8 @@ class BaseGraphic extends React.Component {
           width={520}
         />
       </div>
-    )
+    );
   }
 }
 
-export default BaseGraphic
+export default BaseGraphic;

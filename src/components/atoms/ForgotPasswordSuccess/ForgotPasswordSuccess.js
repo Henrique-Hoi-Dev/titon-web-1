@@ -1,23 +1,23 @@
-import { Grid } from '@mui/material'
-import { useTranslation } from 'react-i18next'
+import { Grid } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
-import Text from '../BaseText/BaseText'
-import logo from '../../../assets/logo.png'
-import Button from '../BaseButton/BaseButton'
-import { useEffect } from 'react'
+import Text from '../BaseText/BaseText';
+import logo from '../../../assets/logo.png';
+import Button from '../BaseButton/BaseButton';
+import { useEffect } from 'react';
 
 const ForgotPasswordSuccess = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const handleReturnToApp = () => {
-    window.location.href = 'seuapp://home'
-  }
+    window.location.href = 'seuapp://home';
+  };
 
   useEffect(() => {
     // Redirecionar automaticamente após alguns segundos.
-    const timer = setTimeout(handleReturnToApp, 3000)
-    return () => clearTimeout(timer)
-  }, [])
+    const timer = setTimeout(handleReturnToApp, 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <Grid container height={'100vh'} justifyContent={'center'}>
@@ -59,7 +59,7 @@ const ForgotPasswordSuccess = () => {
         </Button>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default ForgotPasswordSuccess
+export default ForgotPasswordSuccess;

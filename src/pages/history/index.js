@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
-import { Grid } from '@mui/material'
-import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches'
+import { useEffect, useState } from 'react';
+import { Grid } from '@mui/material';
+import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
 
-import Table from './table'
+import Table from './table';
 
 const HistoryFinancialStatement = () => {
   const INITIAL_STATE_FINANCIAL = {
@@ -11,21 +11,21 @@ const HistoryFinancialStatement = () => {
     sort_field: null,
     sort_order: 'ASC',
     status: false,
-  }
+  };
 
-  const [financialQuery, setFinancialQuery] = useState(INITIAL_STATE_FINANCIAL)
-  const [search, setSearch] = useState('')
+  const [financialQuery, setFinancialQuery] = useState(INITIAL_STATE_FINANCIAL);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setFinancialQuery((state) => ({
         ...state,
         search: search,
-      }))
-    }, 1200)
+      }));
+    }, 1200);
 
-    return () => clearTimeout(timer)
-  }, [search])
+    return () => clearTimeout(timer);
+  }, [search]);
 
   return (
     <Grid container justifyContent="center" minHeight="88vh" padding={1} spacing={2}>
@@ -52,7 +52,7 @@ const HistoryFinancialStatement = () => {
         </Grid>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default HistoryFinancialStatement
+export default HistoryFinancialStatement;

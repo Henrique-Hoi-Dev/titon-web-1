@@ -1,9 +1,9 @@
-import React from 'react'
-import { Grid } from '@mui/material'
+import React from 'react';
+import { Grid } from '@mui/material';
 
-import logo from '../../../assets/logo.png'
+import logo from '../../../assets/logo.png';
 
-import BaseNotificationsPopover from '@/components/atoms/BaseNotificationsPopover/BaseNotificationsPopover'
+import BaseNotificationsPopover from '@/components/atoms/BaseNotificationsPopover/BaseNotificationsPopover';
 
 const HeaderBar = () => {
   return (
@@ -37,7 +37,7 @@ const HeaderBar = () => {
         </Grid>
       </Grid>
     </>
-  )
-}
+  );
+};
 
-export default HeaderBar
+export default HeaderBar;

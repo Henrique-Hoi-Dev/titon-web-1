@@ -1,46 +1,46 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Box, Divider, Grid, Tab, Tabs, Typography } from '@mui/material'
-import { useTranslation } from 'react-i18next'
-import { getFreightByIdRequest } from '@/store/modules/freight/freightSlice'
+import React, { useEffect, useState, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Box, Divider, Grid, Tab, Tabs, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { getFreightByIdRequest } from '@/store/modules/freight/freightSlice';
 
-import BaseButton from 'components/atoms/BaseButton/BaseButton'
-import BaseText from 'components/atoms/BaseText/BaseText'
-import BaseModal from 'components/molecules/BaseModal/BaseModal'
-import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader'
-import BaseTitle from 'components/atoms/BaseTitle/BaseTitle'
-import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import NestedList from 'components/atoms/nestedList/nestedList'
-import TableStocked from './tableStocked'
-import TableExpense from './tableExpense'
-import TableDeposit from './tableDeposit'
+import BaseButton from 'components/atoms/BaseButton/BaseButton';
+import BaseText from 'components/atoms/BaseText/BaseText';
+import BaseModal from 'components/molecules/BaseModal/BaseModal';
+import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
+import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
+import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import NestedList from 'components/atoms/nestedList/nestedList';
+import TableStocked from './tableStocked';
+import TableExpense from './tableExpense';
+import TableDeposit from './tableDeposit';
 
 const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
-  const { t } = useTranslation()
-  const dispatch = useDispatch()
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
 
-  const { selected, loadingById } = useSelector((state) => state?.freight)
+  const { selected, loadingById } = useSelector((state) => state?.freight);
 
-  const [value, setValue] = useState(0)
-  const [statusSecondCheck] = useState(false)
+  const [value, setValue] = useState(0);
+  const [statusSecondCheck] = useState(false);
 
   const handleChange = (event, newValue) => {
-    setValue(newValue)
-  }
+    setValue(newValue);
+  };
 
   const onClose = useCallback(() => {
-    setShowModal(false)
-  }, [setShowModal])
+    setShowModal(false);
+  }, [setShowModal]);
 
   useEffect(() => {
     if (freightId) {
-      dispatch(getFreightByIdRequest(freightId))
+      dispatch(getFreightByIdRequest(freightId));
     }
-  }, [dispatch, freightId])
+  }, [dispatch, freightId]);
 
   function TabPanel(props) {
-    const { children, value, index, ...other } = props
+    const { children, value, index, ...other } = props;
 
     return (
       <div
@@ -68,14 +68,14 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
           </>
         )}
       </div>
-    )
+    );
   }
 
   function a11yProps(index) {
     return {
       id: `simple-tab-${index}`,
       'aria-controls': `simple-tabpanel-${index}`,
-    }
+    };
   }
 
   const valuesFirstCheck = {
@@ -85,7 +85,7 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
     },
     value2: selected?.expenses,
     value3: selected?.totalDriver,
-  }
+  };
 
   return (
     <BaseModal
@@ -350,7 +350,7 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
         </Grid>
       )}
     </BaseModal>
-  )
-}
+  );
+};
 
-export default BaseModalAction
+export default BaseModalAction;

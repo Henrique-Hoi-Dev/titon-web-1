@@ -126,18 +126,45 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     steps:
+      - name: Check if webhook is defined
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          if [ -z "$DISCORD_WEBHOOK" ]; then
+            echo "❌ DISCORD_WEBHOOK is NOT set"
+            exit 1
+          else
+            echo "✅ DISCORD_WEBHOOK is set"
+          fi
+
+      - name: Prepare Discord message
+        id: format_message
+        run: |
+          format_status() {
+            case "$1" in
+              success) echo "✅ success" ;;
+              failure) echo "❌ failure" ;;
+              cancelled) echo "⚠️ cancelled" ;;
+              *) echo "⏭️ skipped" ;;
+            esac
+          }
+
+          echo "Lint: $(format_status '${{ needs.lint.result }}')" >> message.txt
+          echo "Build: $(format_status '${{ needs.build.result }}')" >> message.txt
+          echo "Code Quality: $(format_status '${{ needs.check-code-quality.result }}')" >> message.txt
+          echo "Deploy: $(format_status '${{ needs.deploy.result }}')" >> message.txt
+
+          echo "message<<EOF" >> $GITHUB_OUTPUT
+          echo "🔔 **CI/CD Front - Staging**" >> $GITHUB_OUTPUT
+          echo "**Branch**: \`${{ github.ref_name }}\`" >> $GITHUB_OUTPUT
+          echo "**Autor**: \`${{ github.actor }}\`" >> $GITHUB_OUTPUT
+          echo "**Status por etapa:**" >> $GITHUB_OUTPUT
+          cat message.txt >> $GITHUB_OUTPUT
+          echo "👉 [Ver execução](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Send Discord Notification
-        uses: appleboy/discord-action@master
+        uses: Ilshidur/action-discord@master
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          status: ${{ needs.build.result }}
-          message: |
-            🔔 **CI/CD Front - Staging**
-            **Branch**: `${{ github.ref_name }}`
-            **Autor**: `${{ github.actor }}`
-            **Status por etapa:**
-            - 🧹 Lint: `${{ needs.lint.result }}`
-            - 🔧 Build: `${{ needs.build.result }}`
-            - ✅ Code Quality: `${{ needs.check-code-quality.result }}`
-            - 🚀 Deploy: `${{ needs.deploy.result || 'skipped' }}`
-            👉 [Ver execução](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          message: ${{ steps.format_message.outputs.message }}

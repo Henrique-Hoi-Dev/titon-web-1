@@ -1,4 +1,6 @@
 export const moneyMask = (value) => {
+  if (value === 0) return 'R$: 0,00'
+
   if (value) {
     value = value / 100
     const result = new Intl.NumberFormat('pt-BR', {

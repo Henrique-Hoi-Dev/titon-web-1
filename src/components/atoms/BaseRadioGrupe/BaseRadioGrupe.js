@@ -32,11 +32,33 @@ MyFormControlLabel.propTypes = {
   value: PropTypes.any,
 }
 
-export default function RRadioGroup({ labelOne, labelTwo, defaultValue, value }) {
+export default function BaseRRadioGroup({ defaultValue, value, options = [], onChange }) {
   return (
-    <RadioGroup name="use-radio-group" defaultValue={defaultValue} value={value}>
-      <MyFormControlLabel value="first" label={labelOne} control={<Radio />} />
-      <MyFormControlLabel value="second" label={labelTwo} control={<Radio />} />
+    <RadioGroup
+      name="use-radio-group"
+      defaultValue={defaultValue}
+      value={value}
+      onChange={onChange}
+    >
+      {options.map((option, index) => (
+        <MyFormControlLabel
+          sx={{
+            '& .MuiFormControlLabel-label': {
+              color: '#fff',
+            },
+            '& .MuiRadio-root': {
+              color: '#1877F2',
+            },
+            '& .MuiRadio-root.Mui-checked': {
+              color: '#1877F2',
+            },
+          }}
+          key={index + option.label}
+          value={option.value}
+          label={option.label}
+          control={<Radio />}
+        />
+      ))}
     </RadioGroup>
   )
 }

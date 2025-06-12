@@ -53,8 +53,8 @@ const InfoRow = ({
         >
           {moneyMask(data.credit || [0])}
         </SCell>
-        <SCell>{data?.truck?.truckModels?.toUpperCase() ?? '--'}</SCell>
-        <SCell>{data?.cart?.cartModels?.toUpperCase() ?? '--'}</SCell>
+        <SCell>{data?.truck?.truckBoard?.toUpperCase() ?? '--'}</SCell>
+        <SCell>{data?.cart?.cartBoard?.toUpperCase() ?? '--'}</SCell>
         <SCell>
           <IconButton
             color="default"

@@ -40,13 +40,12 @@ const Truck = () => {
     }
 
     const timer = setTimeout(() => {
-      if (shouldRefresh || search) {
-        dispatch(
-          getTrucksRequest({
-            ...truckQuery,
-            search: search,
-          })
-        )
+      if (shouldRefresh || search.length >= 0) {
+        const query = {
+          ...truckQuery,
+          ...(search.trim() ? { search } : {}),
+        }
+        dispatch(getTrucksRequest(query))
         setShouldRefresh(false)
       }
     }, 1200)
@@ -56,7 +55,6 @@ const Truck = () => {
 
   const handleModalClose = () => {
     setShowModalTruck(false)
-    setShouldRefresh(true)
   }
 
   return (
@@ -110,7 +108,11 @@ const Truck = () => {
         </Grid>
       </Grid>
 
-      <BaseModalAddTruck setShowModal={handleModalClose} showModal={showModalTruck} />
+      <BaseModalAddTruck
+        setShowModal={handleModalClose}
+        showModal={showModalTruck}
+        onCreated={() => setShouldRefresh(true)}
+      />
     </Grid>
   )
 }

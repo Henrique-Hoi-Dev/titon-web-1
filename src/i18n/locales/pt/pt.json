@@ -7,6 +7,21 @@
     "financial": "Fichas",
     "createUser": "Criar Usuário"
   },
+  "add_freight": {
+    "title": "Adicionar Frete",
+    "label": {
+      "state": "Estado",
+      "start_freight_city": "Saindo De",
+      "end_freight_city": "Para",
+      "city": "Cidade"
+    },
+    "placeholder": {
+      "state": "insira o estado",
+      "start_freight_city": "insira a cidade",
+      "end_freight_city": "insira a cidade",
+      "city": "insira a cidade"
+    }
+  },
   "menu": {
     "home": "Home",
     "drivers": "Motoristas",
@@ -433,6 +448,7 @@
     "title": "Deseja finalizar ficha:",
     "startDate": "Data inicio",
     "endDate": "Data final",
+    "start": "Partida",
     "destiny": "Destino",
     "credit": "Crédito",
     "debit": "Débito",
@@ -452,9 +468,10 @@
   },
   "card_financial": {
     "label1": "Motorista:",
-    "label2": "Data de Inicio:",
+    "label2": "Inicio da ficha:",
     "label3": "Destino:",
-    "label4": "Crédito:"
+    "label4": "Crédito:",
+    "status": "Status do frete:"
   },
   "placeholder": {
     "driver": "Motorista",

@@ -67,33 +67,9 @@ const Table = ({ data, query, setQuery, loading }) => {
                   {t('driver.table.label2')}
                 </SLabel>
               </SCell>
-              <SCell>
-                <SLabel
-                  active={query?.sort_field === 'credit'}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort('credit')}
-                >
-                  {t('driver.table.label3')}
-                </SLabel>
-              </SCell>
-              <SCell>
-                <SLabel
-                  active={query?.sort_field === 'truck'}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort('truck')}
-                >
-                  {t('driver.table.label4')}
-                </SLabel>
-              </SCell>
-              <SCell>
-                <SLabel
-                  active={query?.sort_field === 'cart'}
-                  direction={query?.sort_order?.toLowerCase()}
-                  onClick={() => handleSort('cart')}
-                >
-                  {t('driver.table.label5')}
-                </SLabel>
-              </SCell>
+              <SCell>{t('driver.table.label3')}</SCell>
+              <SCell>{t('driver.table.label4')}</SCell>
+              <SCell>{t('driver.table.label5')}</SCell>
               <SCell> {t('driver.table.label6')}</SCell>
             </SRow>
           </SHead>

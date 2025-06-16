@@ -16,7 +16,7 @@ function* signIn({ payload }) {
     yield put(signInSuccess({ token, user }));
     history.push('/');
   } catch (err) {
-    yield put(signFailure());
+    yield put(signFailure(err));
     errorNotification(err);
   }
 }

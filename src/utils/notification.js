@@ -19,10 +19,9 @@ const successNotification = (successMessage) => {
 };
 
 const errorNotification = (error) => {
-  const customId =
-    error?.response?.data?.key ||
-    error?.message ||
-    (typeof error === 'string' ? error : 'erro_desconhecido');
+  const customId = errorMessages[error?.response?.data?.key]
+    ? errorMessages[error?.response?.data?.key]
+    : error?.message || error;
 
   const msg = errorMessages[error?.response?.data?.key]
     ? errorMessages[error?.response?.data?.key]

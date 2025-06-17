@@ -3,6 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   data: [],
   selected: null,
+  successCreate: false,
+  successUpdate: false,
+  successDelete: false,
   loading: false,
   loadingById: false,
   loadingCreate: false,
@@ -54,12 +57,16 @@ const freightSlice = createSlice({
     createFreightRequest: (state) => {
       state.loadingCreate = true;
       state.errorCreate = null;
+      state.successCreate = false;
     },
     createFreightSuccess: (state) => {
       state.loadingCreate = false;
+      state.errorCreate = null;
+      state.successCreate = true;
     },
     createFreightFailure: (state, action) => {
       state.loadingCreate = false;
+      state.successCreate = false;
       state.errorCreate = action.payload;
     },
 
@@ -67,13 +74,16 @@ const freightSlice = createSlice({
     updateFreightRequest: (state) => {
       state.loadingUpdate = true;
       state.errorUpdate = null;
+      state.successUpdate = false;
     },
     updateFreightSuccess: (state) => {
       state.loadingUpdate = false;
       state.errorUpdate = null;
+      state.successUpdate = true;
     },
     updateFreightFailure: (state, action) => {
       state.loadingUpdate = false;
+      state.successUpdate = false;
       state.errorUpdate = action.payload;
     },
 
@@ -81,13 +91,16 @@ const freightSlice = createSlice({
     deleteFreightRequest: (state) => {
       state.loadingDelete = true;
       state.errorDelete = null;
+      state.successDelete = false;
     },
     deleteFreightSuccess: (state) => {
       state.loadingDelete = false;
       state.errorDelete = null;
+      state.successDelete = true;
     },
     deleteFreightFailure: (state, action) => {
       state.loadingDelete = false;
+      state.successDelete = false;
       state.errorDelete = action.payload;
     },
 

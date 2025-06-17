@@ -13,6 +13,7 @@ import InfoFinancial from 'pages/infoFinancial';
 import ForgotPassword from 'pages/forgot-password';
 import ForgotPasswordDriver from 'pages/forgot-password-driver';
 import CreateUser from '@/pages/user/create';
+import NotFound from '@/pages/NotFound';
 
 import RequireAuth from 'utils/requireAuth';
 import MainTemplate from 'components/templates/main';
@@ -52,6 +53,8 @@ const RouterController = () => {
           <Route path="/check" element={<Freight />} />
         </Route>
       </Route>
+
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

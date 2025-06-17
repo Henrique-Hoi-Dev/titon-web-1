@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Divider, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +19,7 @@ import TableDeposit from './tableDeposit';
 const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const isFirstRender = useRef(true);
 
   const { selected, loadingById } = useSelector((state) => state?.freight);
 
@@ -31,10 +32,12 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
 
   const onClose = useCallback(() => {
     setShowModal(false);
+    isFirstRender.current = true;
   }, [setShowModal]);
 
   useEffect(() => {
-    if (freightId) {
+    if (freightId && isFirstRender.current) {
+      isFirstRender.current = false;
       dispatch(getFreightByIdRequest(freightId));
     }
   }, [dispatch, freightId]);

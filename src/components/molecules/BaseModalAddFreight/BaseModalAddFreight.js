@@ -1,6 +1,7 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import { Divider, Grid, IconButton } from '@mui/material';
 import { createFreightRequest } from 'store/modules/freight/freightSlice';
 import { unmaskMoney } from '@/utils/unmaskMoney';
@@ -23,65 +24,80 @@ import BaseRRadioGroup from '@/components/atoms/BaseRadioGrupe/BaseRadioGrupe';
 import BaseSelect from '@/components/molecules/BaseSelect/BaseSelect';
 import BaseText from '@/components/atoms/BaseText/BaseText';
 
-const BaseModalAddFreight = ({ showModal, setShowModal }) => {
+const BaseModalAddFreight = ({ showModal, setShowModal, onCreated }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { id } = useParams();
+  const isFirstRender = useRef(true);
+  const isStateLoaded = useRef(false);
 
-  const { loadingCreate: loading } = useSelector((state) => state.freight);
+  const { loadingCreate: loading, successCreate } = useSelector((state) => state.freight);
   const { cities, states } = useSelector((state) => state.location);
 
   const [stateUFStart, setStateUFStart] = useState('');
   const [stateUFEnd, setStateUFEnd] = useState('');
-
   const [citysStart, setCitysStart] = useState([]);
   const [citysEnd, setCitysEnd] = useState([]);
-
   const [typeForm, setTypeForm] = useState('manual');
-
-  const [body, setBody] = useState({});
+  const [body, setBody] = useState({
+    status: 'APPROVED',
+  });
 
   const onClose = useCallback(() => {
     setShowModal(false);
-    setBody({});
+    setBody({ status: 'APPROVED' });
     setStateUFStart('');
     setStateUFEnd('');
     setCitysStart([]);
     setCitysEnd([]);
+    isFirstRender.current = true;
+    isStateLoaded.current = false;
   }, [setShowModal]);
 
   useEffect(() => {
-    if (showModal) {
+    if (showModal && !isStateLoaded.current) {
+      isStateLoaded.current = true;
       dispatch(getLocationStateRequest());
     }
   }, [showModal, dispatch]);
 
   useEffect(() => {
-    if (stateUFStart) {
+    if (stateUFStart && !isFirstRender.current) {
       dispatch(getLocationCityRequest({ uf: stateUFStart }));
     }
   }, [stateUFStart, dispatch]);
 
   useEffect(() => {
-    if (stateUFEnd) {
+    if (stateUFEnd && !isFirstRender.current) {
       dispatch(getLocationCityRequest({ uf: stateUFEnd }));
     }
   }, [stateUFEnd, dispatch]);
 
   useEffect(() => {
-    if (stateUFStart && cities.length > 0) {
+    if (stateUFStart && cities?.length > 0) {
       setCitysStart(cities);
     }
   }, [cities, stateUFStart]);
 
   useEffect(() => {
-    if (stateUFEnd && cities.length > 0) {
+    if (stateUFEnd && cities?.length > 0) {
       setCitysEnd(cities);
     }
   }, [cities, stateUFEnd]);
 
+  useEffect(() => {
+    if (successCreate) {
+      if (typeof onCreated === 'function') {
+        onCreated();
+      }
+      onClose();
+    }
+  }, [successCreate, onClose, onCreated]);
+
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    dispatch(createFreightRequest(body));
+    isFirstRender.current = false;
+    dispatch(createFreightRequest({ data: body, financial_id: id }));
   };
 
   return (
@@ -176,7 +192,7 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
                   onChange={(event, newValue) => {
                     setBody((state) => ({
                       ...state,
-                      final_freight_city: newValue ? `${newValue.name} ${stateUFEnd}` : '',
+                      end_freight_city: newValue ? `${newValue.name} ${stateUFEnd}` : '',
                     }));
                   }}
                 />
@@ -184,36 +200,18 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
 
               <Divider
                 sx={{
-                  my: 0.5,
+                  my: 1,
                   width: '96%',
                   ml: '19px',
                   mt: 2,
-                  borderColor: 'rgba(0, 0, 0, 0.75)',
+                  borderColor: 'rgba(248, 248, 248, 0.75)',
                 }}
               />
 
-              <Grid item lg={6}>
+              <Grid item lg={12}>
                 <BaseInput
-                  label={'Transportadora'}
-                  styles={{
-                    maxWidth: '274px',
-                    '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem',
-                    },
-                  }}
-                  // value={body?.truck_km ?? ""}
-                  // onChange={(ev) =>
-                  //   setBody((state) => ({
-                  //     ...state,
-                  //     truck_km: ev.target.value,
-                  //   }))
-                  // }
-                />
-              </Grid>
-
-              <Grid item lg={6}>
-                <BaseInput
-                  label={'Contratante'}
+                  labelText={t('add_freight.label.contractor_name')}
+                  label={t('add_freight.placeholder.contractor_name')}
                   required
                   styles={{
                     maxWidth: '274px',
@@ -221,11 +219,11 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
                       height: '1.4rem',
                     },
                   }}
-                  value={body?.contractor}
+                  value={body?.contractor_name ?? ''}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      contractor: ev.target.value,
+                      contractor_name: ev.target.value,
                     }))
                   }
                 />
@@ -233,17 +231,18 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
 
               <Divider
                 sx={{
-                  my: 0.5,
+                  my: 1,
                   width: '96%',
                   ml: '19px',
                   mt: 2,
-                  borderColor: 'rgba(0, 0, 0, 0.75)',
+                  borderColor: 'rgba(248, 248, 248, 0.75)',
                 }}
               />
 
               <Grid item lg={6}>
                 <BaseInput
-                  label={'KM atual caminhão'}
+                  labelText={t('add_freight.label.truck_current_km')}
+                  label={t('add_freight.placeholder.truck_current_km')}
                   required
                   styles={{
                     maxWidth: '274px',
@@ -263,7 +262,8 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
 
               <Grid item lg={6}>
                 <BaseInput
-                  label={'Média combustível'}
+                  labelText={t('add_freight.label.fuel_average')}
+                  label={t('add_freight.placeholder.fuel_average')}
                   required
                   styles={{
                     maxWidth: '274px',
@@ -271,11 +271,11 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
                       height: '1.4rem',
                     },
                   }}
-                  value={formatMédia(body?.liter_of_fuel_per_km)}
+                  value={formatMédia(body?.fuel_avg_per_km)}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      liter_of_fuel_per_km: unmaskMoney(ev.target.value),
+                      fuel_avg_per_km: unmaskMoney(ev.target.value),
                     }))
                   }
                 />
@@ -283,7 +283,8 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
 
               <Grid item lg={6}>
                 <BaseInput
-                  label={'Peso Liquido'}
+                  labelText={t('add_freight.label.liquid_weight')}
+                  label={t('add_freight.placeholder.liquid_weight')}
                   required
                   styles={{
                     maxWidth: '274px',
@@ -291,11 +292,11 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
                       height: '1.4rem',
                     },
                   }}
-                  value={formatMil(body?.preview_tonne, true)}
+                  value={formatMil(body?.estimated_tonnage, true)}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      preview_tonne: unmaskMoney(ev.target.value),
+                      estimated_tonnage: unmaskMoney(ev.target.value),
                     }))
                   }
                 />
@@ -303,7 +304,8 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
 
               <Grid item lg={6}>
                 <BaseInput
-                  label={'R$/Tonelada'}
+                  labelText={t('add_freight.label.value_tonne')}
+                  label={t('add_freight.placeholder.value_tonne')}
                   required
                   styles={{
                     maxWidth: '274px',
@@ -311,11 +313,11 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
                       height: '1.4rem',
                     },
                   }}
-                  value={formatMoney(body?.value_tonne)}
+                  value={formatMoney(body?.ton_value)}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      value_tonne: unmaskMoney(ev.target.value),
+                      ton_value: unmaskMoney(ev.target.value),
                     }))
                   }
                 />
@@ -323,7 +325,8 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
 
               <Grid item lg={6}>
                 <BaseInput
-                  label={'Valor diesel'}
+                  labelText={t('add_freight.label.value_diesel')}
+                  label={t('add_freight.placeholder.value_diesel')}
                   required
                   styles={{
                     maxWidth: '274px',
@@ -331,61 +334,11 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
                       height: '1.4rem',
                     },
                   }}
-                  value={formatMoney(body?.jackpot)}
+                  value={formatMoney(body?.estimated_fuel_cost)}
                   onChange={(ev) =>
                     setBody((state) => ({
                       ...state,
-                      jackpot: unmaskMoney(ev.target.value),
-                    }))
-                  }
-                />
-              </Grid>
-
-              <Divider
-                sx={{
-                  my: 0.5,
-                  width: '96%',
-                  ml: '19px',
-                  mt: 2,
-                  borderColor: 'rgba(0, 0, 0, 0.75)',
-                }}
-              />
-
-              <Grid item lg={6}>
-                <BaseInput
-                  label={'Pagamento do Frete'}
-                  required
-                  styles={{
-                    maxWidth: '274px',
-                    '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem',
-                    },
-                  }}
-                  value={formatMoney(body?.jackpot)}
-                  onChange={(ev) =>
-                    setBody((state) => ({
-                      ...state,
-                      jackpot: unmaskMoney(ev.target.value),
-                    }))
-                  }
-                />
-              </Grid>
-
-              <Grid item lg={6}>
-                <BaseInput
-                  label={'Frete BRUTO'}
-                  required
-                  styles={{
-                    maxWidth: '274px',
-                    '& .MuiInputBase-input.MuiOutlinedInput-input': {
-                      height: '1.4rem',
-                    },
-                  }}
-                  value={formatMoney(body?.jackpot)}
-                  onChange={(ev) =>
-                    setBody((state) => ({
-                      ...state,
-                      jackpot: unmaskMoney(ev.target.value),
+                      estimated_fuel_cost: unmaskMoney(ev.target.value),
                     }))
                   }
                 />
@@ -503,7 +456,7 @@ const BaseModalAddFreight = ({ showModal, setShowModal }) => {
                   marginRight: '15px',
                 }}
               >
-                {t('button.register')}
+                {t('button.send')}
               </BaseButton>
             </Grid>
           </Grid>

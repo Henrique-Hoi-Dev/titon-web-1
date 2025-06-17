@@ -64,7 +64,8 @@ function* getFirstCheckById({ payload }) {
 // Criar
 function* createFreight({ payload }) {
   try {
-    const response = yield call(api.post, 'manager/freight', payload);
+    const { financial_id, data } = payload;
+    const response = yield call(api.patch, `manager/freight/${financial_id}`, data);
     yield put(createFreightSuccess(response.data.data));
     successNotification('Frete criado com sucesso');
   } catch (error) {

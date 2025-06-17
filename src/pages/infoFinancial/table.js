@@ -29,8 +29,8 @@ const Table = ({ data, loading }) => {
           <SHead>
             <SRow>
               <SCell>{t('info_financial.table.status')}</SCell>
-              <SCell>{t('info_financial.destiny')}</SCell>
-              <SCell>{t('info_financial.table.current_location')}</SCell>
+              <SCell>{t('info_financial.table.start')}</SCell>
+              <SCell>{t('info_financial.table.destiny')}</SCell>
               <SCell>{t('info_financial.table.creation_date')}</SCell>
               <SCell>{t('info_financial.table.gross_value')}</SCell>
             </SRow>

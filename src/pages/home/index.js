@@ -4,6 +4,7 @@ import { IconAdd } from 'assets/icons/icons';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFinancialsRequest } from 'store/modules/financial/financialSlice';
+import { TablePagination } from '@/components/atoms/tablePagination/tablePagination';
 
 import BaseGraphic from 'components/molecules/BaseGraphic/BaseGraphic';
 import BaseInputSearches from '@/components/atoms/BaseInputSearches/BaseInputSearches';
@@ -11,6 +12,8 @@ import BaseButton from 'components/atoms/BaseButton/BaseButton';
 import BaseMenuHomeFilterFinancial from 'components/molecules/BaseMenuHomeFilterFinancial/BaseMenuHomeFilterFinancial';
 import BaseCardInfoFinancial from 'components/molecules/BaseCardInfoFinancial/BaseCardInfoFinancial';
 import BaseModalAddFinancial from 'components/molecules/BaseModalAddFinancial/BaseModalAddFinancial';
+import DashboardCard from '@/components/organisms/DashboardCard/DashboardCard';
+import initialStateQuery from '@/utils/initialStateQuery';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -25,6 +28,8 @@ const Home = () => {
 
   const { data, loadingGet: loading } = useSelector((state) => state.financial);
 
+  const [query, setQuery] = useState(initialStateQuery.INITIAL_STATE_FINANCIAL);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       dispatch(
@@ -32,12 +37,13 @@ const Home = () => {
           search,
           status_check: searchStatus,
           sort_order: searchOrder,
+          ...query,
         })
       );
     }, 1200);
 
     return () => clearTimeout(timer);
-  }, [dispatch, search, searchOrder, searchStatus]);
+  }, [dispatch, search, searchOrder, searchStatus, query]);
 
   return (
     <>
@@ -47,6 +53,7 @@ const Home = () => {
         minHeight="88vh"
         padding={1}
         spacing={2}
+        gap={5}
         alignContent="flex-start"
       >
         <Grid item container pl={2} mr={4} justifyContent="space-between">
@@ -101,10 +108,25 @@ const Home = () => {
             financials={data}
             loading={loading}
           />
+          {!loading && data?.docs?.length > 0 && data?.totalPages > 0 && (
+            <TablePagination data={data} query={query} setQuery={setQuery} />
+          )}
         </Grid>
 
-        <Grid item container height="430px">
+        <Grid
+          item
+          container
+          pl={2}
+          height="430px"
+          spacing={5}
+          xs={12}
+          md={12}
+          lg={12}
+          flexDirection="row"
+          flexWrap="nowrap"
+        >
           <BaseGraphic />
+          <DashboardCard />
         </Grid>
       </Grid>
 

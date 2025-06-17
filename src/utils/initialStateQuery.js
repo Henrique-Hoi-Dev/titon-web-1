@@ -1,5 +1,5 @@
 const INITIAL_STATE_FINANCIAL = {
-  limit: 10,
+  limit: 5,
   page: 1,
   sort_field: null,
   sort_order: 'ASC',

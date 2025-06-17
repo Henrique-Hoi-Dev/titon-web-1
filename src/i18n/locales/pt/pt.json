@@ -13,13 +13,38 @@
       "state": "Estado",
       "start_freight_city": "Saindo De",
       "end_freight_city": "Para",
-      "city": "Cidade"
+      "city": "Cidade",
+      "contractor_name": "Transportadora",
+      "contractor_name_placeholder": "Insira o nome da transportadora",
+      "truck_current_km": "KM atual caminhão",
+      "fuel_average": "Média combustível",
+      "liquid_weight": "Peso Liquido",
+      "value_tonne": "R$/Tonelada",
+      "value_diesel": "Valor diesel",
+      "payment_freight": "Pagamento do Frete",
+      "gross_freight": "Frete BRUTO",
+      "truck_km": "KM atual caminhão",
+      "truck_km_placeholder": "Insira o KM atual do caminhão",
+      "fuel_average_placeholder": "Insira a média de combustível",
+      "liquid_weight_placeholder": "Insira o peso líquido",
+      "value_tonne_placeholder": "Insira o valor por tonelada",
+      "value_diesel_placeholder": "Insira o valor do diesel",
+      "payment_freight_placeholder": "Insira o pagamento do frete",
+      "gross_freight_placeholder": "Insira o frete bruto"
     },
     "placeholder": {
       "state": "insira o estado",
       "start_freight_city": "insira a cidade",
       "end_freight_city": "insira a cidade",
-      "city": "insira a cidade"
+      "city": "insira a cidade",
+      "contractor_name": "insira o nome da transportadora",
+      "truck_current_km": "insira o KM atual do caminhão",
+      "fuel_average": "insira a média de combustível",
+      "liquid_weight": "insira o peso líquido",
+      "value_tonne": "insira o valor por tonelada",
+      "value_diesel": "insira o valor do diesel",
+      "payment_freight": "insira o pagamento do frete",
+      "gross_freight": "insira o frete bruto"
     }
   },
   "forgot_password": {
@@ -463,6 +488,7 @@
     "destiny": "Destino",
     "credit": "Crédito",
     "debit": "Débito",
+    "origin": "Origem",
     "invoicing": "Faturamento",
     "notifications": "Notificações",
     "notFoundNotifications": "NÃO HÁ NOTIFICAÇÔES...",
@@ -471,7 +497,9 @@
       "status": "Status",
       "current_location": "Local atual",
       "creation_date": "Data de criação",
-      "gross_value": "Valor bruto"
+      "gross_value": "Valor bruto",
+      "start": "Partida",
+      "destiny": "Destino"
     }
   },
   "financial": {

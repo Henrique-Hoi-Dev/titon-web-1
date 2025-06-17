@@ -113,7 +113,7 @@ class BaseGraphic extends React.Component {
 
   render() {
     return (
-      <div id="chart" style={{ height: '430px' }}>
+      <div id="chart" style={{ height: '430px', paddingLeft: '30px' }}>
         <ReactApexChart
           options={this.state.options}
           series={this.state.series}

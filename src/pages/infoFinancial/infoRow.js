@@ -26,7 +26,7 @@ const InfoRow = (props) => {
         <SCell>
           <BaseTypeStatus props={data} statusTable />
         </SCell>
-        <SCell>{data?.finalFreightCity.toUpperCase() ?? '---'}</SCell>
+        <SCell>{data?.finalFreightCity?.toUpperCase() ?? '---'}</SCell>
         <SCell>{data?.locationTruck?.toUpperCase()}</SCell>
         <SCell>{formatDate(data?.date)}</SCell>
         <SCell>{data?.totalFreight}</SCell>

@@ -21,8 +21,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const auth = useSelector((state) => state?.auth || { loading: false, token: null });
-  const { token, loading } = auth;
+  const { token, loading = true } = useSelector((state) => state?.auth);
 
   useEffect(() => {
     if (token) {

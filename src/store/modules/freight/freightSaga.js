@@ -21,6 +21,9 @@ import {
   getFirstCheckByIdRequest,
   getFirstCheckByIdSuccess,
   getFirstCheckByIdFailure,
+  createFreightFileRequest,
+  createFreightFileSuccess,
+  createFreightFileFailure,
 } from './freightSlice';
 
 // Listar todos os registros
@@ -74,6 +77,18 @@ function* createFreight({ payload }) {
   }
 }
 
+function* createFreightFile({ payload }) {
+  try {
+    const { financial_id, data } = payload;
+    const response = yield call(api.post, `manager/freight/upload-file/${financial_id}`, data);
+    yield put(createFreightFileSuccess(response.data.data));
+    successNotification('Frete file criado com sucesso');
+  } catch (error) {
+    yield put(createFreightFileFailure(error));
+    errorNotification(error);
+  }
+}
+
 // Atualizar
 function* updateFreight({ payload }) {
   try {
@@ -105,6 +120,7 @@ export default function* freightSagas() {
     takeEvery(getFirstCheckByIdRequest.type, getFirstCheckById),
     takeEvery(getFreightByIdRequest.type, getFreightById),
     takeEvery(createFreightRequest.type, createFreight),
+    takeEvery(createFreightFileRequest.type, createFreightFile),
     takeEvery(updateFreightRequest.type, updateFreight),
     takeEvery(deleteFreightRequest.type, deleteFreight),
   ]);

@@ -96,7 +96,7 @@ const Home = () => {
           mb={1}
           pb={2}
           alignItems="flex-start"
-          justifyContent="flex-start"
+          justifyContent="flex-end"
           sx={{ color: '#fff', borderBottom: '1px solid #F1F3F9' }}
         >
           <BaseCardInfoFinancial

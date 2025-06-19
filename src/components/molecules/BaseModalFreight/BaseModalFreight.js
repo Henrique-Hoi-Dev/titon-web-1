@@ -89,6 +89,7 @@ const BaseModalFreight = ({ showModal, setShowModal, freight }) => {
             </Box>
           </Grid>
 
+          {/* row 2 */}
           <Grid item xs={12} md={4}>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
               <BaseText>{t('modal.trip_km')}</BaseText>
@@ -112,6 +113,7 @@ const BaseModalFreight = ({ showModal, setShowModal, freight }) => {
             </Box>
           </Grid>
 
+          {/* row 3 */}
           <Grid item xs={12} md={4}>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
               <BaseText>{t('modal.driver_commission')}</BaseText>

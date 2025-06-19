@@ -1,25 +1,23 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { Card, CardContent, CardMedia, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import { moneyMask } from 'utils/masks';
-import { IconMenuTruck } from 'assets/icons/icons';
+import { IconAdd, IconMenuTruck } from 'assets/icons/icons';
 import { formatDate } from 'utils/formatDate';
-import { HiOutlinePlusSm } from 'react-icons/hi';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { getFinancialByIdRequest } from 'store/modules/financial/financialSlice';
 
-import BaseNotFound from 'components/molecules/BaseNotFound/BaseNotFound';
 import BaseTypeStatus from 'components/molecules/BaseTypeStatus/BaseTypeStatus';
 import BaseModalFinalizeRecord from 'components/molecules/BaseModalFinalizeRecord/BaseModalFinalizeRecord';
 import BaseModalAddFreight from 'components/molecules/BaseModalAddFreight/BaseModalAddFreight';
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
-import BaseModalFreight from '@/components/molecules/BaseModalFreight/BaseModalFreight';
 import BaseText from 'components/atoms/BaseText/BaseText';
 import BaseButton from 'components/atoms/BaseButton/BaseButton';
 import Table from './table';
 import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import TableNotification from './tableNotification';
 
 const InfoFinancial = () => {
   const { t } = useTranslation();
@@ -29,17 +27,8 @@ const InfoFinancial = () => {
 
   const { selected: financial, loadingById } = useSelector((state) => state.financial);
 
-  const [freight, setFreight] = useState('');
-
   const [showModalFinalizeRecord, setShowModalFinalizeRecord] = useState(false);
   const [showModalAddFreight, setShowModalAddFreight] = useState(false);
-  const [showModalCheck, setShowModalCheck] = useState(false);
-
-  const handleCheck = (freightId, driverId) => {
-    if (!freightId || !driverId) return;
-    setFreight({ freightId, driverId });
-    setShowModalCheck(!showModalCheck);
-  };
 
   useEffect(() => {
     if (isFirstRender.current) {
@@ -109,6 +98,7 @@ const InfoFinancial = () => {
                     />
                   </Typography>
 
+                  {/* dados ficha */}
                   <Grid
                     item
                     container
@@ -163,7 +153,7 @@ const InfoFinancial = () => {
                     <Grid container justifyContent="flex-start" alignItems="flex-end">
                       <IconMenuTruck sx={{ fontSize: '30px', color: '#509BFB', mr: 1 }} />
                       <BaseText fontsize="16px" sx={{ verticalAlign: 'super' }}>
-                        {financial?.cartModels}
+                        {financial?.cart?.cartModels}
                       </BaseText>
                     </Grid>
                   </Grid>
@@ -179,14 +169,11 @@ const InfoFinancial = () => {
 
                   <BaseButton
                     onClick={() => setShowModalFinalizeRecord(!showModalFinalizeRecord)}
-                    background="#F03D3D"
+                    background="linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
                     sx={{
                       width: '153px',
                       mt: 2,
                       height: '49px',
-                      '&:hover': {
-                        backgroundColor: '#F03D3D',
-                      },
                     }}
                   >
                     {t('info_financial.button.finalize_form')}
@@ -209,80 +196,30 @@ const InfoFinancial = () => {
                 {t('info_financial.notifications')}
               </BaseText>
 
-              <Grid
-                item
-                container
-                alignItems="center"
-                justifyContent={financial?.notifications.length > 0 ? 'space-between' : 'center'}
-                borderRadius="4px"
-                padding={2}
-                m="12px 0 40px"
-                sx={{
-                  background: '#CCD6EB',
-                  overflow: 'auto',
-                  maxHeight: '180px',
-                  height: '180px',
-                }}
-              >
-                {financial?.notifications?.length === 0 && <BaseNotFound />}
-
-                {financial?.notifications?.map((item) => (
-                  <Grid
-                    container
-                    justifyContent="space-between"
-                    onClick={() => handleCheck(item?.freightId, item?.driverId)}
-                    key={item?.id}
-                    sx={{
-                      cursor: `${!item?.freightId || !item?.driverId ? '' : 'pointer'}`,
-                    }}
-                  >
-                    <BaseText color="#2B2B2C" font_weight="600" sx={{ maxWidth: '690px' }}>
-                      {item?.content}
-                    </BaseText>
-                    <BaseText font_weight="600" color="#2B2B2C">
-                      {formatDate(item?.createdAt)}
-                    </BaseText>
-                    <Divider
-                      sx={{
-                        my: 1,
-                        mt: 1,
-                        width: '100%',
-                        opacity: '0.5',
-                        background: '#2B2B2C',
-                      }}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
+              <TableNotification data={financial?.notifications} loading={loadingById} />
 
               <Grid
                 item
                 container
                 alignItems="flex-start"
                 justifyContent="flex-start"
-                maxHeight="270px"
-                height="270px"
                 overflow="auto"
+                gap={4}
               >
+                <Grid item container justifyContent="flex-end" alignItems="flex-end" m="20px 0 0 0">
+                  <BaseButton
+                    onClick={() => setShowModalAddFreight(!showModalAddFreight)}
+                    background="linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)"
+                    sx={{
+                      mt: 2,
+                      height: '49px',
+                    }}
+                  >
+                    <IconAdd sx={{ mb: '4px', mr: '10px' }} />
+                    {t('info_financial.button.add_freight')}
+                  </BaseButton>
+                </Grid>
                 <Table data={financial} loading={loadingById} />
-              </Grid>
-
-              <Grid item container justifyContent="flex-end" alignItems="flex-end" m="20px 0 0 0">
-                <IconButton
-                  aria-label="add cards"
-                  onClick={() => setShowModalAddFreight(!showModalAddFreight)}
-                  component="label"
-                  sx={{
-                    color: '#F1F3F9',
-                    background: '#1877F2',
-                    '&:hover': {
-                      background: '#1877F2',
-                      opacity: '0.8',
-                    },
-                  }}
-                >
-                  <HiOutlinePlusSm fontSize="42px" />
-                </IconButton>
               </Grid>
             </Grid>
           </Grid>
@@ -305,14 +242,6 @@ const InfoFinancial = () => {
           financial={financial}
           setShowModal={setShowModalFinalizeRecord}
           showModal={showModalFinalizeRecord}
-        />
-      )}
-
-      {showModalCheck && (
-        <BaseModalFreight
-          freight={freight}
-          showModal={showModalCheck}
-          setShowModal={setShowModalCheck}
         />
       )}
     </>

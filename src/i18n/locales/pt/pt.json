@@ -492,14 +492,16 @@
     "invoicing": "Faturamento",
     "notifications": "Notificações",
     "notFoundNotifications": "NÃO HÁ NOTIFICAÇÔES...",
-    "button": { "finalize_form": "Finalizar Ficha" },
+    "button": { "finalize_form": "Finalizar Ficha", "add_freight": "Adicionar Frete" },
     "table": {
       "status": "Status",
       "current_location": "Local atual",
       "creation_date": "Data de criação",
       "gross_value": "Valor bruto",
       "start": "Partida",
-      "destiny": "Destino"
+      "destiny": "Destino",
+      "time": "Hora",
+      "date": "Data"
     }
   },
   "financial": {

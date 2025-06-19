@@ -11,8 +11,9 @@ import {
 import { DataGrid } from '@mui/x-data-grid';
 
 export const SCell = styled(TableCell)(
-  ({ color, textAlign, fontWeight, fontSize, backgroundcolor, displaywidth, minwidth }) => ({
+  ({ color, textAlign, fontWeight, fontSize, backgroundcolor, displaywidth, minwidth, width }) => ({
     display: `${displaywidth ? 'none' : ''}`,
+    width: `${width ? width : 'auto'}`,
     fontSize: `${fontSize ? fontSize : '14px'}`,
     minWidth: `${minwidth ? minwidth : '100px'}`,
     whiteSpace: 'nowrap',

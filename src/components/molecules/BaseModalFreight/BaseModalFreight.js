@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
+import { Grid, Box } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@mui/material';
 import { getFirstCheckByIdRequest } from '@/store/modules/freight/freightSlice';
 import { useDispatch } from 'react-redux';
 
@@ -12,6 +11,7 @@ import BaseModal from 'components/molecules/BaseModal/BaseModal';
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import BaseButton from '@/components/atoms/BaseButton/BaseButton';
 
 const BaseModalFreight = ({ showModal, setShowModal, freight }) => {
   const { t } = useTranslation();
@@ -56,118 +56,121 @@ const BaseModalFreight = ({ showModal, setShowModal, freight }) => {
         }}
       >
         <BaseTitle sxGridText={{ justifyContent: 'center' }}>
-          {selectedFirstCheck?.startFreightCity.toUpperCase()}{' '}
+          {selectedFirstCheck?.startFreightCity?.toUpperCase()}{' '}
           <ArrowForwardIcon style={{ verticalAlign: 'middle' }} />{' '}
-          {selectedFirstCheck?.finalFreightCity.toUpperCase()}
+          {selectedFirstCheck?.endFreightCity?.toUpperCase()}
         </BaseTitle>
       </BaseContentHeader>
 
       {!loadingFirstCheck && (
-        <Grid container item spacing={2} mt={1} sx={{ minHeight: '300px' }}>
-          <Grid item md={4} lg={4} container flexDirection={'column'}>
-            <BaseText>{t('modal.previous_average')}</BaseText>
-            <BaseText fontsize={'24px'}>{selectedFirstCheck?.previousAverage}</BaseText>
+        <Grid container spacing={2} mt={1} ml={1} mb={1} sx={{ minHeight: '300px' }}>
+          <Grid item xs={12} md={4}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <BaseText>{t('modal.previous_average')}</BaseText>
+              <BaseText fontsize={'24px'}>{selectedFirstCheck?.previousAverage}</BaseText>
+            </Box>
           </Grid>
 
-          <Grid item md={4} lg={4} container flexDirection={'column'}>
-            <BaseText>{t('modal.fuel_estimate')}</BaseText>
-            <BaseText fontsize={'24px'} color="#F03D3D">
-              {selectedFirstCheck?.fuelEstimate}
-            </BaseText>
+          <Grid item xs={12} md={4}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <BaseText>{t('modal.fuel_estimate')}</BaseText>
+              <BaseText fontsize={'24px'} color="#F03D3D">
+                {selectedFirstCheck?.fuelEstimate}
+              </BaseText>
+            </Box>
           </Grid>
 
-          <Grid item md={3} lg={3} container flexDirection={'column'}>
-            <BaseText>{t('modal.liquid_surplus')}</BaseText>
-            <BaseText fontsize={'24px'} color="#0BB07B">
-              {selectedFirstCheck?.netFreight}
-            </BaseText>
+          <Grid item xs={12} md={4}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <BaseText>{t('modal.liquid_surplus')}</BaseText>
+              <BaseText fontsize={'24px'} color="#0BB07B">
+                {selectedFirstCheck?.netFreight}
+              </BaseText>
+            </Box>
           </Grid>
 
-          <Grid item md={4} lg={4} container flexDirection={'column'}>
-            <BaseText>{t('modal.trip_km')}</BaseText>
-            <BaseText fontsize={'24px'}>{selectedFirstCheck?.distance}</BaseText>
+          <Grid item xs={12} md={4}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <BaseText>{t('modal.trip_km')}</BaseText>
+              <BaseText fontsize={'24px'}>{selectedFirstCheck?.distance}</BaseText>
+            </Box>
           </Grid>
 
-          <Grid item md={4} lg={4} container flexDirection={'column'}>
-            <BaseText>{t('modal.total_shipping')}</BaseText>
-            <BaseText fontsize={'24px'} color="#0BB07B">
-              {selectedFirstCheck?.fullFreight}
-            </BaseText>
-          </Grid>
-          <Grid item md={3} lg={3} container flexDirection={'column'}>
-            <BaseText> </BaseText>
-            <BaseText fontsize={'24px'}> </BaseText>
+          <Grid item xs={12} md={4}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <BaseText>{t('modal.total_shipping')}</BaseText>
+              <BaseText fontsize={'24px'} color="#0BB07B">
+                {selectedFirstCheck?.fullFreight}
+              </BaseText>
+            </Box>
           </Grid>
 
-          <Grid item md={4} lg={4} container flexDirection={'column'}>
-            <BaseText>{t('modal.fuel_consumption')}</BaseText>
-            <BaseText fontsize={'24px'}>{selectedFirstCheck?.consumption}</BaseText>
+          <Grid item xs={12} md={4}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <BaseText>{t('modal.fuel_consumption')}</BaseText>
+              <BaseText fontsize={'24px'}>{selectedFirstCheck?.consumption}</BaseText>
+            </Box>
           </Grid>
 
-          <Grid item md={4} lg={4} container flexDirection={'column'}>
-            <BaseText>{t('modal.driver_commission')}</BaseText>
-            <BaseText fontsize={'24px'} color="#F03D3D">
-              {selectedFirstCheck?.driverCommission}
-            </BaseText>
-          </Grid>
-          <Grid item md={3} lg={3} container flexDirection={'column'}>
-            <BaseText> </BaseText>
-            <BaseText fontsize={'24px'}> </BaseText>
+          <Grid item xs={12} md={4}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <BaseText>{t('modal.driver_commission')}</BaseText>
+              <BaseText fontsize={'24px'} color="#F03D3D">
+                {selectedFirstCheck?.driverCommission}
+              </BaseText>
+            </Box>
           </Grid>
 
-          <Grid item md={4} lg={4} container flexDirection={'column'}>
-            <BaseText>{t('modal.km_price')}</BaseText>
-            <BaseText fontsize={'24px'}>{selectedFirstCheck?.kmPrice}</BaseText>
+          <Grid item xs={12} md={4}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <BaseText>{t('modal.km_price')}</BaseText>
+              <BaseText fontsize={'24px'}>{selectedFirstCheck?.kmPrice}</BaseText>
+            </Box>
           </Grid>
 
-          <Grid item md={4} lg={4} container flexDirection={'column'}>
-            <BaseText>{t('modal.net_shipping')}</BaseText>
-            <BaseText fontsize={'24px'} color="#0BB07B">
-              {selectedFirstCheck?.leftoverLiquid}
-            </BaseText>
-          </Grid>
-          <Grid item md={3} lg={3} container flexDirection={'column'}>
-            <BaseText> </BaseText>
-            <BaseText fontsize={'24px'}></BaseText>
+          <Grid item xs={12} md={4}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <BaseText>{t('modal.net_shipping')}</BaseText>
+              <BaseText fontsize={'24px'} color="#0BB07B">
+                {selectedFirstCheck?.leftoverLiquid}
+              </BaseText>
+            </Box>
           </Grid>
         </Grid>
       )}
 
       {selectedFirstCheck?.status === 'PENDING' && !loadingFirstCheck && (
-        <Grid container item spacing={2} mt={1} justifyContent="flex-end">
-          <Grid container item xs={12} md={3} lg={3}>
-            <Button
+        <Grid container xs={12} md={12} lg={12} spacing={1} mt={0.3} justifyContent={'flex-end'}>
+          <Grid item container xs={3} md={3} lg={3}>
+            <BaseButton
               onClick={(ev) =>
                 setBody((state) => ({ ...state, status: 'DENIED' })) || handleSubmit(ev)
               }
-              disableRipple
-              variant="outlined"
+              background={'linear-gradient(224.78deg, #F03D3D 8.12%,rgb(138, 23, 23) 92.21%)'}
               sx={{
                 width: '141px',
                 height: '49px',
-                marginRight: '15px',
                 color: '#fff',
               }}
             >
               {t('button.disapprove')}
-            </Button>
+            </BaseButton>
           </Grid>
-          <Grid container item xs={12} md={3} lg={3}>
-            <Button
+          <Grid item container xs={3} md={3} lg={3}>
+            <BaseButton
               onClick={(ev) =>
                 setBody((state) => ({ ...state, status: 'APPROVED' })) || handleSubmit(ev)
               }
               type="submit"
-              background={'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'}
+              background={'linear-gradient(224.78deg, #0BB07B 8.12%,rgb(3, 112, 81) 92.21%)'}
               sx={{
                 color: 'white',
                 width: '141px',
                 height: '49px',
-                marginRight: '15px',
               }}
             >
               {t('button.approved')}
-            </Button>
+            </BaseButton>
           </Grid>
         </Grid>
       )}

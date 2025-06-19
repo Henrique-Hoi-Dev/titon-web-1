@@ -14,6 +14,28 @@ export const formatDate = (date, local) => {
   }
 };
 
+export const formatDateOnly = (date, local) => {
+  if (date) {
+    if (local) return format(new Date(date), 'dd/MM/yyyy');
+    else {
+      return format(utcToZonedTime(new Date(date), ''), 'dd/MM/yyyy');
+    }
+  } else {
+    return '-';
+  }
+};
+
+export const formatTimeOnly = (date, local) => {
+  if (date) {
+    if (local) return format(new Date(date), 'HH:mm');
+    else {
+      return format(utcToZonedTime(new Date(date), ''), 'HH:mm');
+    }
+  } else {
+    return '-';
+  }
+};
+
 export const formatMMMM = (date, local) => {
   if (date) {
     if (local) return format(new Date(date), 'MMMM', { locale: pt });

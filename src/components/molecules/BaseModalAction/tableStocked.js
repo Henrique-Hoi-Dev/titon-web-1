@@ -41,7 +41,6 @@ export default function TableStocked({ data, loading }) {
         </STable>
 
         {loading && <BaseLoading />}
-
         {data?.length === 0 && !loading && <BaseNotFound />}
       </TableContainer>
     </>

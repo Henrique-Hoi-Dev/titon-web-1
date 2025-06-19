@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Divider, Grid, IconButton } from '@mui/material';
-import { createFreightRequest } from 'store/modules/freight/freightSlice';
+import { createFreightFileRequest, createFreightRequest } from 'store/modules/freight/freightSlice';
 import { unmaskMoney } from '@/utils/unmaskMoney';
 import { formatMil, formatMoney, formatMédia } from '@/utils/masks';
 import {
@@ -95,9 +95,27 @@ const BaseModalAddFreight = ({ showModal, setShowModal, onCreated }) => {
   }, [successCreate, onClose, onCreated]);
 
   const handleSubmit = (ev) => {
+    if (typeForm === 'manual') {
+      ev.preventDefault();
+      isFirstRender.current = false;
+      dispatch(createFreightRequest({ data: body, financial_id: id }));
+    }
+
+    if (typeForm === 'xml') {
+      handleSubmitFile(ev);
+    }
+  };
+
+  const handleSubmitFile = (ev) => {
     ev.preventDefault();
     isFirstRender.current = false;
-    dispatch(createFreightRequest({ data: body, financial_id: id }));
+
+    const formData = new FormData();
+    if (body.xmlFile) {
+      formData.append('file', body.xmlFile);
+    }
+
+    dispatch(createFreightFileRequest({ data: formData, financial_id: id }));
   };
 
   return (
@@ -382,6 +400,10 @@ const BaseModalAddFreight = ({ showModal, setShowModal, onCreated }) => {
                   <Grid container direction="column" alignItems="center" mt={1}>
                     <IconButton
                       component="label"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setBody((prev) => ({ ...prev, xmlFile: null }));
+                      }}
                       sx={{
                         background: '#CCD6EB',
                         gap: 2,
@@ -407,10 +429,7 @@ const BaseModalAddFreight = ({ showModal, setShowModal, onCreated }) => {
                         {body.xmlFile.name}
                       </BaseText>
 
-                      <HighlightOffIcon
-                        sx={{ width: '24px', height: '24px', cursor: 'pointer' }}
-                        onClick={() => setBody((prev) => ({ ...prev, xmlFile: null }))}
-                      />
+                      <HighlightOffIcon sx={{ width: '24px', height: '24px', cursor: 'pointer' }} />
                     </IconButton>
                   </Grid>
                 )}

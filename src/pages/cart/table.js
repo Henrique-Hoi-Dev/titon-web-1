@@ -142,7 +142,7 @@ const Table = ({ data, query, setQuery, loading }) => {
           )}
         </STable>
 
-        {data?.docs?.length > 0 && data?.totalPages > 0 && (
+        {!loading && data?.docs?.length > 0 && data?.totalPages > 0 && (
           <TablePagination data={data} query={query} setQuery={setQuery} />
         )}
 

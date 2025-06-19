@@ -19,6 +19,9 @@ const initialState = {
   loadingFirstCheck: false,
   errorFirstCheck: null,
   selectedFirstCheck: null,
+  loadingCreateFile: false,
+  errorCreateFile: null,
+  successCreateFile: false,
 };
 
 const freightSlice = createSlice({
@@ -68,6 +71,22 @@ const freightSlice = createSlice({
       state.loadingCreate = false;
       state.successCreate = false;
       state.errorCreate = action.payload;
+    },
+
+    createFreightFileRequest: (state) => {
+      state.loadingCreateFile = true;
+      state.errorCreateFile = null;
+      state.successCreateFile = false;
+    },
+    createFreightFileSuccess: (state) => {
+      state.loadingCreateFile = false;
+      state.errorCreateFile = null;
+      state.successCreateFile = true;
+    },
+    createFreightFileFailure: (state, action) => {
+      state.loadingCreateFile = false;
+      state.successCreateFile = false;
+      state.errorCreateFile = action.payload;
     },
 
     // Atualizar
@@ -139,6 +158,9 @@ export const {
   getFirstCheckByIdRequest,
   getFirstCheckByIdSuccess,
   getFirstCheckByIdFailure,
+  createFreightFileRequest,
+  createFreightFileSuccess,
+  createFreightFileFailure,
 } = freightSlice.actions;
 
 export default freightSlice.reducer;

@@ -24,6 +24,7 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
   const { selected, loadingById } = useSelector((state) => state?.freight);
 
   const [value, setValue] = useState(0);
+
   const [statusSecondCheck] = useState(false);
 
   const handleChange = (event, newValue) => {
@@ -63,7 +64,7 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
                   borderRadius: '8px',
                 }}
               >
-                <Typography>{children}</Typography>
+                <Typography component="div">{children}</Typography>
               </Box>
             )}
 
@@ -108,8 +109,8 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
         }}
       >
         <BaseTitle sxGridText={{ justifyContent: 'center' }}>
-          {selected?.startCity?.toUpperCase()}{' '}
-          <ArrowForwardIcon style={{ verticalAlign: 'middle' }} />{' '}
+          {selected?.startCity?.toUpperCase()}
+          <ArrowForwardIcon style={{ verticalAlign: 'middle' }} />
           {selected?.finalCity?.toUpperCase()}
         </BaseTitle>
       </BaseContentHeader>
@@ -177,7 +178,6 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
 
       <TabPanel value={value} index={0}>
         <Grid
-          item
           container
           alignItems="center"
           justifyContent={statusSecondCheck ? 'flex-start' : 'center'}
@@ -189,38 +189,42 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
         >
           {statusSecondCheck && (
             <>
-              <Grid item container flexDirection={'column'} alignItems={'center'} width="45%">
-                <BaseText sx={{ marginBottom: '-15px', fontWeight: '800' }}>
-                  {t('modal.price')}
-                </BaseText>
-                <NestedList
-                  maxwidth={'200px'}
-                  titleOne={t('modal.total_shipping')}
-                  valorOne={selected?.freightTotal}
-                  titleTwo={t('modal.net_shipping')}
-                  valorTwo={selected?.totalNetFreight}
-                  valuesFirstCheck={valuesFirstCheck}
-                  statusSecondCheck={statusSecondCheck}
-                />
+              <Grid item sx={{ width: '45%' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <BaseText sx={{ marginBottom: '-15px', fontWeight: '800' }}>
+                    {t('modal.price')}
+                  </BaseText>
+                  <NestedList
+                    maxwidth={'200px'}
+                    titleOne={t('modal.total_shipping')}
+                    valorOne={selected?.freightTotal}
+                    titleTwo={t('modal.net_shipping')}
+                    valorTwo={selected?.totalNetFreight}
+                    valuesFirstCheck={valuesFirstCheck}
+                    statusSecondCheck={statusSecondCheck}
+                  />
+                </Box>
               </Grid>
               <ArrowForwardIcon style={{ verticalAlign: 'middle' }} />
             </>
           )}
-          <Grid item container flexDirection={'column'} alignItems={'center'} width="45%">
-            {statusSecondCheck && (
-              <BaseText sx={{ marginBottom: '-15px', fontWeight: '800' }}>
-                {t('modal.accomplished')}
-              </BaseText>
-            )}
-            <NestedList
-              maxwidth={statusSecondCheck ? '220px' : '360px'}
-              titleOne={t('modal.total_shipping')}
-              valorOne={selected?.freightTotal}
-              titleTwo={t('modal.net_shipping')}
-              valorTwo={selected?.totalNetFreight}
-              valuesFirstCheck={valuesFirstCheck}
-              statusSecondCheck={statusSecondCheck}
-            />
+          <Grid item sx={{ width: '45%' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              {statusSecondCheck && (
+                <BaseText sx={{ marginBottom: '-15px', fontWeight: '800' }}>
+                  {t('modal.accomplished')}
+                </BaseText>
+              )}
+              <NestedList
+                maxwidth={statusSecondCheck ? '220px' : '360px'}
+                titleOne={t('modal.total_shipping')}
+                valorOne={selected?.freightTotal}
+                titleTwo={t('modal.net_shipping')}
+                valorTwo={selected?.totalNetFreight}
+                valuesFirstCheck={valuesFirstCheck}
+                statusSecondCheck={statusSecondCheck}
+              />
+            </Box>
           </Grid>
           {statusSecondCheck && (
             <>
@@ -234,39 +238,33 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
                   right: '48px',
                 }}
               />
-              <Grid
-                item
-                md={4}
-                lg={4}
-                marginLeft={2}
-                container
-                flexDirection={'column'}
-                spacing={2}
-              >
-                <Grid item container flexDirection={'column'}>
-                  <BaseText fontsize={'12px'} sx={{ opacity: 0.5 }}>
-                    {t('modal.credit/debit')}
-                  </BaseText>
-                  <BaseText fontsize={'16px'}>{''}</BaseText>
-                </Grid>
-                <Grid item container flexDirection={'column'}>
-                  <BaseText fontsize={'12px'} sx={{ opacity: 0.5 }}>
-                    {t('modal.discharge_location')}
-                  </BaseText>
-                  <BaseText fontsize={'16px'}>{''}</BaseText>
-                </Grid>
-                <Grid item container flexDirection={'column'}>
-                  <BaseText fontsize={'12px'} sx={{ opacity: 0.5 }}>
-                    {t('modal.discharge_date')}
-                  </BaseText>
-                  <BaseText fontsize={'16px'}>{''}</BaseText>
-                </Grid>
-                <Grid item container flexDirection={'column'}>
-                  <BaseText fontsize={'12px'} sx={{ opacity: 0.5 }}>
-                    {t('modal.hour_of_discharge')}
-                  </BaseText>
-                  <BaseText fontsize={'16px'}>{''}</BaseText>
-                </Grid>
+              <Grid item md={4} lg={4} sx={{ marginLeft: 2 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', spacing: 2 }}>
+                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <BaseText fontsize={'12px'} sx={{ opacity: 0.5 }}>
+                      {t('modal.credit/debit')}
+                    </BaseText>
+                    <BaseText fontsize={'16px'}></BaseText>
+                  </Box>
+                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <BaseText fontsize={'12px'} sx={{ opacity: 0.5 }}>
+                      {t('modal.discharge_location')}
+                    </BaseText>
+                    <BaseText fontsize={'16px'}></BaseText>
+                  </Box>
+                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <BaseText fontsize={'12px'} sx={{ opacity: 0.5 }}>
+                      {t('modal.discharge_date')}
+                    </BaseText>
+                    <BaseText fontsize={'16px'}></BaseText>
+                  </Box>
+                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <BaseText fontsize={'12px'} sx={{ opacity: 0.5 }}>
+                      {t('modal.hour_of_discharge')}
+                    </BaseText>
+                    <BaseText fontsize={'16px'}></BaseText>
+                  </Box>
+                </Box>
               </Grid>
             </>
           )}
@@ -275,7 +273,6 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
 
       <TabPanel value={value} index={1}>
         <Grid
-          item
           container
           alignItems="flex-start"
           justifyContent="flex-start"
@@ -290,7 +287,6 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
 
       <TabPanel value={value} index={2}>
         <Grid
-          item
           container
           alignItems="flex-start"
           justifyContent="flex-start"
@@ -304,7 +300,6 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
 
       <TabPanel value={value} index={3}>
         <Grid
-          item
           container
           alignItems="flex-start"
           justifyContent="flex-start"
@@ -317,28 +312,27 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
       </TabPanel>
 
       {selected?.status === 'FINISHED' && !loadingById && (
-        <Grid container item spacing={2} mt={1} justifyContent="flex-end">
-          <Grid container item xs={12} md={3} lg={3}>
+        <Grid container spacing={2} mt={1} justifyContent="flex-end">
+          <Grid item xs={12} md={3} lg={3}>
             <BaseButton
-              background={'#fff'}
+              background={'linear-gradient(224.78deg, #F03D3D 8.12%, #D32F2F 92.21%)'}
               variant="text"
               sx={{
                 fontSize: '14px',
                 width: '141px',
                 height: '49px',
                 marginRight: '15px',
-                border: '1px solid #F03D3D',
-                color: '#000000',
+                color: '#FFFFFF',
               }}
             >
               {t('modal.disapproved')}
             </BaseButton>
           </Grid>
-          <Grid container item xs={12} md={3} lg={3}>
+          <Grid item xs={12} md={3} lg={3}>
             <BaseButton
               type="submit"
               color="success"
-              background={'linear-gradient(224.78deg, #509BFB 8.12%, #0C59BB 92.21%)'}
+              background={'linear-gradient(224.78deg, #0BB07B 8.12%, #00A676 92.21%)'}
               sx={{
                 fontSize: '14px',
                 color: 'white',

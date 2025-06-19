@@ -8,6 +8,7 @@ export const TablePagination = ({
   allowRowsPerPage,
   arrayRowPerPage,
   labelRowsPerPage,
+  justifyContent = 'center',
   sx,
 }) => {
   const [page, setPage] = useState(0);
@@ -48,8 +49,21 @@ export const TablePagination = ({
       color="secondary"
       sx={{
         ...sx,
-        marginLeft: 'auto',
+        display: 'flex',
+        justifyContent: justifyContent,
         color: '#939395',
+        '& .MuiIconButton-root': {
+          width: '24px',
+          height: '24px',
+          minWidth: '24px',
+          minHeight: '24px',
+          padding: '2px',
+          marginLeft: '5px',
+        },
+        '& .MuiTablePagination-select': {
+          paddingTop: '0px',
+          paddingBottom: '0px',
+        },
       }}
       rowsPerPageOptions={
         allowRowsPerPage ? (arrayRowPerPage ? arrayRowPerPage : handleRowsPerPage()) : []

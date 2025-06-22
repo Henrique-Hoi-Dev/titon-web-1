@@ -11,20 +11,14 @@ import BaseButton from 'components/atoms/BaseButton/BaseButton';
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
 import BaseModalAddTruck from 'components/molecules/BaseModalAddTruck/BaseModalAddTruck';
+import initialStateQuery from '@/utils/initialStateQuery';
 
 const Truck = () => {
   const dispatch = useDispatch();
   const [showModalTruck, setShowModalTruck] = useState(false);
   const { t } = useTranslation();
 
-  const INITIAL_STATE_USER = {
-    limit: 7,
-    page: 1,
-    sort_field: 'id',
-    sort_order: 'ASC',
-  };
-
-  const [truckQuery, setTruckQuery] = useState(INITIAL_STATE_USER);
+  const [truckQuery, setTruckQuery] = useState(initialStateQuery.INITIAL_STATE_TRUCK);
   const [search, setSearch] = useState('');
   const [shouldRefresh, setShouldRefresh] = useState(false);
 

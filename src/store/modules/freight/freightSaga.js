@@ -24,6 +24,12 @@ import {
   createFreightFileRequest,
   createFreightFileSuccess,
   createFreightFileFailure,
+  freightStatusApprovedRequest,
+  freightStatusApprovedSuccess,
+  freightStatusApprovedFailure,
+  freightStatusDeniedRequest,
+  freightStatusDeniedSuccess,
+  freightStatusDeniedFailure,
 } from './freightSlice';
 
 // Listar todos os registros
@@ -102,6 +108,30 @@ function* updateFreight({ payload }) {
   }
 }
 
+function* freightStatusApproved({ payload }) {
+  try {
+    const { id, financial_id, data } = payload;
+    const response = yield call(api.put, `manager/freight/approve/${id}/${financial_id}`, data);
+    yield put(freightStatusApprovedSuccess(response.data));
+    successNotification('Frete atualizado com sucesso');
+  } catch (error) {
+    yield put(freightStatusApprovedFailure(error));
+    errorNotification(error);
+  }
+}
+
+function* freightStatusDenied({ payload }) {
+  try {
+    const { id, financial_id, data } = payload;
+    const response = yield call(api.put, `manager/freight/reject/${id}/${financial_id}`, data);
+    yield put(freightStatusDeniedSuccess(response.data));
+    successNotification('Frete atualizado com sucesso');
+  } catch (error) {
+    yield put(freightStatusDeniedFailure(error));
+    errorNotification(error);
+  }
+}
+
 // Deletar
 function* deleteFreight({ payload }) {
   try {
@@ -122,6 +152,8 @@ export default function* freightSagas() {
     takeEvery(createFreightRequest.type, createFreight),
     takeEvery(createFreightFileRequest.type, createFreightFile),
     takeEvery(updateFreightRequest.type, updateFreight),
+    takeEvery(freightStatusApprovedRequest.type, freightStatusApproved),
+    takeEvery(freightStatusDeniedRequest.type, freightStatusDenied),
     takeEvery(deleteFreightRequest.type, deleteFreight),
   ]);
 }

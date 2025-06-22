@@ -8,7 +8,7 @@ import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
 import InfoRowNotification from './infoRowNotification';
 import BaseModalFreight from '@/components/molecules/BaseModalFreight/BaseModalFreight';
 
-const TableNotification = ({ data, loading }) => {
+const TableNotification = ({ data, loading, handleRefresh }) => {
   const { t } = useTranslation();
 
   const [showModalFreight, setShowModalFreight] = useState(false);
@@ -57,6 +57,7 @@ const TableNotification = ({ data, loading }) => {
           freight={freight}
           showModal={showModalFreight}
           setShowModal={setShowModalFreight}
+          handleRefresh={handleRefresh}
         />
       )}
     </>

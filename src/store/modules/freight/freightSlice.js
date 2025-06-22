@@ -22,6 +22,12 @@ const initialState = {
   loadingCreateFile: false,
   errorCreateFile: null,
   successCreateFile: false,
+  loadingStatusApproved: false,
+  errorStatusApproved: null,
+  successStatusApproved: false,
+  loadingStatusDenied: false,
+  errorStatusDenied: null,
+  successStatusDenied: false,
 };
 
 const freightSlice = createSlice({
@@ -89,6 +95,40 @@ const freightSlice = createSlice({
       state.errorCreateFile = action.payload;
     },
 
+    // Aprovar
+    freightStatusApprovedRequest: (state) => {
+      state.loadingStatusApproved = true;
+      state.errorStatusApproved = null;
+      state.successStatusApproved = false;
+    },
+    freightStatusApprovedSuccess: (state) => {
+      state.loadingStatusApproved = false;
+      state.errorStatusApproved = null;
+      state.successStatusApproved = true;
+    },
+    freightStatusApprovedFailure: (state, action) => {
+      state.loadingStatusApproved = false;
+      state.successStatusApproved = false;
+      state.errorStatusApproved = action.payload;
+    },
+
+    // Rejeitar
+    freightStatusDeniedRequest: (state) => {
+      state.loadingStatusDenied = true;
+      state.errorStatusDenied = null;
+      state.successStatusDenied = false;
+    },
+    freightStatusDeniedSuccess: (state) => {
+      state.loadingStatusDenied = false;
+      state.errorStatusDenied = null;
+      state.successStatusDenied = true;
+    },
+    freightStatusDeniedFailure: (state, action) => {
+      state.loadingStatusDenied = false;
+      state.successStatusDenied = false;
+      state.errorStatusDenied = action.payload;
+    },
+
     // Atualizar
     updateFreightRequest: (state) => {
       state.loadingUpdate = true;
@@ -136,6 +176,30 @@ const freightSlice = createSlice({
       state.loadingFirstCheck = false;
       state.errorFirstCheck = action.payload;
     },
+
+    resetFreightStatusApproved: (state) => {
+      state.loadingStatusApproved = false;
+      state.errorStatusApproved = null;
+      state.successStatusApproved = false;
+    },
+
+    resetFreightStatusDenied: (state) => {
+      state.loadingStatusDenied = false;
+      state.errorStatusDenied = null;
+      state.successStatusDenied = false;
+    },
+
+    resetFreightCreate: (state) => {
+      state.loadingCreate = false;
+      state.errorCreate = null;
+      state.successCreate = false;
+    },
+
+    resetFreightUpdate: (state) => {
+      state.loadingUpdate = false;
+      state.errorUpdate = null;
+      state.successUpdate = false;
+    },
   },
 });
 
@@ -161,6 +225,16 @@ export const {
   createFreightFileRequest,
   createFreightFileSuccess,
   createFreightFileFailure,
+  freightStatusApprovedRequest,
+  freightStatusApprovedSuccess,
+  freightStatusApprovedFailure,
+  freightStatusDeniedRequest,
+  freightStatusDeniedSuccess,
+  freightStatusDeniedFailure,
+  resetFreightStatusApproved,
+  resetFreightStatusDenied,
+  resetFreightCreate,
+  resetFreightUpdate,
 } = freightSlice.actions;
 
 export default freightSlice.reducer;

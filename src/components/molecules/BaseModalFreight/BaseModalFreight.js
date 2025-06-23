@@ -143,7 +143,6 @@ const BaseModalFreight = ({ showModal, setShowModal, freight, handleRefresh }) =
           />
           <DataRow label={t('modal.fuel_consumption')} value={selectedFirstCheck?.consumption} />
           <Divider sx={{ backgroundColor: '#939395' }} />
-
           <DataRow
             label={t('modal.driver_commission')}
             value={selectedFirstCheck?.driverCommission}

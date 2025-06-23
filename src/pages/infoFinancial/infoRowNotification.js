@@ -18,6 +18,7 @@ const InfoRowNotification = ({ data, setFreight, setShowModalFreight }) => {
         key={data.id}
         sx={{
           cursor: `${!data?.freightId || !data?.driverId ? '' : 'pointer'}`,
+          '&:hover': { backgroundColor: '#545454' },
         }}
         onClick={(ev) => handleAction(ev, data?.freightId, data?.driverId)}
       >

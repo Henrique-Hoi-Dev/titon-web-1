@@ -30,7 +30,22 @@
       "value_tonne_placeholder": "Insira o valor por tonelada",
       "value_diesel_placeholder": "Insira o valor do diesel",
       "payment_freight_placeholder": "Insira o pagamento do frete",
-      "gross_freight_placeholder": "Insira o frete bruto"
+      "gross_freight_placeholder": "Insira o frete bruto",
+      "total": "Total",
+      "total_freight": "Frete total",
+      "net_freight": "Frete líquido",
+      "discharge_value": "Valor de descarga",
+      "total_liters": "Total de litros",
+      "fuel_value_total": "Valor do combustível",
+      "driver": "Motorista",
+      "expenses": "Despesas",
+      "total_driver": "Total motorista",
+      "combustible": "Combustível",
+      "realized": "Realizado",
+      "discharge": "Descarga",
+      "location": "Local",
+      "date": "Data",
+      "hour": "Hora"
     },
     "placeholder": {
       "state": "insira o estado",

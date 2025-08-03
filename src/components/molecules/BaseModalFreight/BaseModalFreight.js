@@ -1,9 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, Box } from '@mui/material';
+import React, { useEffect, useCallback, useRef } from 'react';
+import { Divider, Grid } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { getFirstCheckByIdRequest } from '@/store/modules/freight/freightSlice';
+import {
+  freightStatusApprovedRequest,
+  freightStatusDeniedRequest,
+  getFirstCheckByIdRequest,
+  resetFreightStatusApproved,
+  resetFreightStatusDenied,
+} from '@/store/modules/freight/freightSlice';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
 import BaseText from 'components/atoms/BaseText/BaseText';
@@ -13,32 +20,76 @@ import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import BaseButton from '@/components/atoms/BaseButton/BaseButton';
 
-const BaseModalFreight = ({ showModal, setShowModal, freight }) => {
+const DataRow = ({ label, value, color }) => (
+  <Grid
+    container
+    item
+    justifyContent="space-between"
+    alignItems="center"
+    sx={{
+      py: 1.5,
+      '&:last-child': {
+        borderBottom: 'none',
+      },
+    }}
+  >
+    <BaseText color="#939395">{label}</BaseText>
+    <BaseText fontsize={'18px'} sx={{ fontWeight: 'bold' }} color={color}>
+      {value}
+    </BaseText>
+  </Grid>
+);
+
+const BaseModalFreight = ({ showModal, setShowModal, freight, handleRefresh }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { id } = useParams();
+  const hasExecuted = useRef(false);
 
-  const [, setFetch] = useState(false);
-  const [, setBody] = useState({});
+  const {
+    selectedFirstCheck,
+    loadingFirstCheck,
+    loadingStatusApproved,
+    loadingStatusDenied,
+    successStatusApproved,
+    successStatusDenied,
+  } = useSelector((state) => state?.freight);
 
-  const user = useSelector((state) => state?.auth?.user);
-  const { selectedFirstCheck, loadingFirstCheck } = useSelector((state) => state?.freight);
-
-  const handleSubmit = (ev) => {
+  const handleSubmit = (ev, status) => {
     ev.preventDefault();
-    setFetch(true);
+
+    if (status === 'APPROVED') {
+      dispatch(
+        freightStatusApprovedRequest({
+          id: freight?.freightId,
+          financial_id: id,
+          data: {},
+        })
+      );
+    } else if (status === 'DENIED') {
+      dispatch(
+        freightStatusDeniedRequest({
+          id: freight?.freightId,
+          financial_id: id,
+          data: {},
+        })
+      );
+    }
   };
 
-  const onClose = () => {
+  const onClose = useCallback(() => {
     setShowModal(false);
-  };
+  }, [setShowModal]);
 
   useEffect(() => {
-    setBody((state) => ({
-      ...state,
-      user_id: user?.id,
-      driver_id: freight?.driverId,
-    }));
-  }, [freight?.driverId, freight?.freightId, user?.id]);
+    if ((successStatusApproved || successStatusDenied) && !hasExecuted.current) {
+      hasExecuted.current = true;
+      dispatch(resetFreightStatusApproved());
+      dispatch(resetFreightStatusDenied());
+      handleRefresh();
+      onClose();
+    }
+  }, [successStatusApproved, successStatusDenied, dispatch, handleRefresh, onClose]);
 
   useEffect(() => {
     if (freight?.freightId) {
@@ -47,14 +98,14 @@ const BaseModalFreight = ({ showModal, setShowModal, freight }) => {
   }, [freight?.freightId, dispatch]);
 
   return (
-    <BaseModal open={showModal} onClose={onClose} component="form" maxWidth="770px">
-      <BaseContentHeader
-        mt={2}
-        sx={{
-          borderBottom: '2px solid #fff',
-          width: '96% !important',
-        }}
-      >
+    <BaseModal
+      open={showModal}
+      onClose={onClose}
+      component="form"
+      maxWidth="770px"
+      sx={{ p: '15px !important' }}
+    >
+      <BaseContentHeader>
         <BaseTitle sxGridText={{ justifyContent: 'center' }}>
           {selectedFirstCheck?.startFreightCity?.toUpperCase()}{' '}
           <ArrowForwardIcon style={{ verticalAlign: 'middle' }} />{' '}
@@ -62,122 +113,91 @@ const BaseModalFreight = ({ showModal, setShowModal, freight }) => {
         </BaseTitle>
       </BaseContentHeader>
 
-      {!loadingFirstCheck && (
-        <Grid container spacing={2} mt={1} ml={1} mb={1} sx={{ minHeight: '300px' }}>
-          <Grid item xs={12} md={4}>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <BaseText>{t('modal.previous_average')}</BaseText>
-              <BaseText fontsize={'24px'}>{selectedFirstCheck?.previousAverage}</BaseText>
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <BaseText>{t('modal.fuel_estimate')}</BaseText>
-              <BaseText fontsize={'24px'} color="#F03D3D">
-                {selectedFirstCheck?.fuelEstimate}
-              </BaseText>
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <BaseText>{t('modal.liquid_surplus')}</BaseText>
-              <BaseText fontsize={'24px'} color="#0BB07B">
-                {selectedFirstCheck?.netFreight}
-              </BaseText>
-            </Box>
-          </Grid>
-
-          {/* row 2 */}
-          <Grid item xs={12} md={4}>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <BaseText>{t('modal.trip_km')}</BaseText>
-              <BaseText fontsize={'24px'}>{selectedFirstCheck?.distance}</BaseText>
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <BaseText>{t('modal.total_shipping')}</BaseText>
-              <BaseText fontsize={'24px'} color="#0BB07B">
-                {selectedFirstCheck?.fullFreight}
-              </BaseText>
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <BaseText>{t('modal.fuel_consumption')}</BaseText>
-              <BaseText fontsize={'24px'}>{selectedFirstCheck?.consumption}</BaseText>
-            </Box>
-          </Grid>
-
-          {/* row 3 */}
-          <Grid item xs={12} md={4}>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <BaseText>{t('modal.driver_commission')}</BaseText>
-              <BaseText fontsize={'24px'} color="#F03D3D">
-                {selectedFirstCheck?.driverCommission}
-              </BaseText>
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <BaseText>{t('modal.km_price')}</BaseText>
-              <BaseText fontsize={'24px'}>{selectedFirstCheck?.kmPrice}</BaseText>
-            </Box>
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <BaseText>{t('modal.net_shipping')}</BaseText>
-              <BaseText fontsize={'24px'} color="#0BB07B">
-                {selectedFirstCheck?.leftoverLiquid}
-              </BaseText>
-            </Box>
-          </Grid>
+      {!loadingFirstCheck && !loadingStatusApproved && !loadingStatusDenied && (
+        <Grid
+          container
+          direction="column"
+          p="0 24px"
+          mt="30px"
+          sx={{
+            minHeight: '300px',
+            backgroundColor: '#343434',
+            borderRadius: '8px',
+          }}
+        >
+          <DataRow
+            label={t('modal.previous_average')}
+            value={selectedFirstCheck?.previousAverage}
+          />
+          <DataRow
+            label={t('modal.fuel_estimate')}
+            value={selectedFirstCheck?.fuelEstimate}
+            color="#F03D3D"
+          />
+          <Divider sx={{ backgroundColor: '#939395' }} />
+          <DataRow label={t('modal.trip_km')} value={selectedFirstCheck?.distance} />
+          <DataRow
+            label={t('modal.total_shipping')}
+            value={selectedFirstCheck?.fullFreight}
+            color="#0BB07B"
+          />
+          <DataRow label={t('modal.fuel_consumption')} value={selectedFirstCheck?.consumption} />
+          <Divider sx={{ backgroundColor: '#939395' }} />
+          <DataRow
+            label={t('modal.driver_commission')}
+            value={selectedFirstCheck?.driverCommission}
+            color="#F03D3D"
+          />
+          <DataRow label={t('modal.km_price')} value={selectedFirstCheck?.kmPrice} />
+          <DataRow
+            label={t('modal.net_shipping')}
+            value={selectedFirstCheck?.leftoverLiquid}
+            color="#0BB07B"
+          />
+          <DataRow
+            label={t('modal.liquid_surplus')}
+            value={selectedFirstCheck?.netFreight}
+            color="#0BB07B"
+          />
         </Grid>
       )}
 
-      {selectedFirstCheck?.status === 'PENDING' && !loadingFirstCheck && (
-        <Grid container xs={12} md={12} lg={12} spacing={1} mt={0.3} justifyContent={'flex-end'}>
-          <Grid item container xs={3} md={3} lg={3}>
-            <BaseButton
-              onClick={(ev) =>
-                setBody((state) => ({ ...state, status: 'DENIED' })) || handleSubmit(ev)
-              }
-              background={'linear-gradient(224.78deg, #F03D3D 8.12%,rgb(138, 23, 23) 92.21%)'}
-              sx={{
-                width: '141px',
-                height: '49px',
-                color: '#fff',
-              }}
-            >
-              {t('button.disapprove')}
-            </BaseButton>
+      {selectedFirstCheck?.status === 'PENDING' &&
+        !loadingFirstCheck &&
+        !loadingStatusApproved &&
+        !loadingStatusDenied && (
+          <Grid container spacing={2} p="30px 24px 24px 24px" justifyContent={'flex-end'}>
+            <Grid item>
+              <BaseButton
+                onClick={(ev) => handleSubmit(ev, 'DENIED')}
+                background={'linear-gradient(224.78deg, #F03D3D 8.12%,rgb(138, 23, 23) 92.21%)'}
+                sx={{
+                  width: '141px',
+                  height: '49px',
+                  color: '#fff',
+                }}
+              >
+                {t('button.disapprove')}
+              </BaseButton>
+            </Grid>
+            <Grid item>
+              <BaseButton
+                onClick={(ev) => handleSubmit(ev, 'APPROVED')}
+                type="submit"
+                background={'linear-gradient(224.78deg, #0BB07B 8.12%,rgb(3, 112, 81) 92.21%)'}
+                sx={{
+                  color: 'white',
+                  width: '141px',
+                  height: '49px',
+                }}
+              >
+                {t('button.approved')}
+              </BaseButton>
+            </Grid>
           </Grid>
-          <Grid item container xs={3} md={3} lg={3}>
-            <BaseButton
-              onClick={(ev) =>
-                setBody((state) => ({ ...state, status: 'APPROVED' })) || handleSubmit(ev)
-              }
-              type="submit"
-              background={'linear-gradient(224.78deg, #0BB07B 8.12%,rgb(3, 112, 81) 92.21%)'}
-              sx={{
-                color: 'white',
-                width: '141px',
-                height: '49px',
-              }}
-            >
-              {t('button.approved')}
-            </BaseButton>
-          </Grid>
-        </Grid>
-      )}
+        )}
 
-      {loadingFirstCheck && <BaseLoading />}
+      {(loadingFirstCheck || loadingStatusApproved || loadingStatusDenied) && <BaseLoading />}
     </BaseModal>
   );
 };

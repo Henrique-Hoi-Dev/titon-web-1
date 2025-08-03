@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Divider, Grid, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Grid, List, ListItem, ListItemText, Tab, Tabs, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { getFreightByIdRequest } from '@/store/modules/freight/freightSlice';
 
@@ -11,7 +11,7 @@ import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseConten
 import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
 import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import NestedList from 'components/atoms/nestedList/nestedList';
+import BaseNestedList from '@/components/atoms/BaseNestedList/BaseNestedList';
 import TableStocked from './tableStocked';
 import TableExpense from './tableExpense';
 import TableDeposit from './tableDeposit';
@@ -24,8 +24,6 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
   const { selected, loadingById } = useSelector((state) => state?.freight);
 
   const [value, setValue] = useState(0);
-
-  const [statusSecondCheck] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -52,6 +50,12 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
         hidden={value !== index}
         id={`simple-tabpanel-${index}`}
         aria-labelledby={`simple-tab-${index}`}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+        }}
         {...other}
       >
         {value === index && (
@@ -60,14 +64,13 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
               <Box
                 sx={{
                   p: 2,
-                  background: `${value === index && '#545454'}`,
+                  background: `${value === index && '#454545'}`,
                   borderRadius: '8px',
                 }}
               >
                 <Typography component="div">{children}</Typography>
               </Box>
             )}
-
             {loadingById && <BaseLoading />}
           </>
         )}
@@ -82,32 +85,15 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
     };
   }
 
-  const valuesFirstCheck = {
-    value: {
-      liter: selected?.totalLiters,
-      fuelValue: selected?.fuelValueTotal,
-    },
-    value2: selected?.expenses,
-    value3: selected?.totalDriver,
-  };
-
   return (
     <BaseModal
       open={showModal}
       onClose={onClose}
       component="form"
       maxWidth="800px"
-      minheight={'590px'}
-      sxGridModal={{ marginLeft: 0 }}
+      maxHeight="750px"
     >
-      <BaseContentHeader
-        mt={2}
-        sx={{
-          borderBottom: '2px solid #FFF',
-          marginBottom: '15px',
-          width: '96%',
-        }}
-      >
+      <BaseContentHeader>
         <BaseTitle sxGridText={{ justifyContent: 'center' }}>
           {selected?.startCity?.toUpperCase()}
           <ArrowForwardIcon style={{ verticalAlign: 'middle' }} />
@@ -115,159 +101,187 @@ const BaseModalAction = ({ showModal, setShowModal, freightId }) => {
         </BaseTitle>
       </BaseContentHeader>
 
-      <Box
-        sx={{
-          borderBottom: 1,
-          borderColor: 'divider',
-          width: '100%',
-          '& .css-heg063-MuiTabs-flexContainer': {
-            justifyContent: 'center',
-          },
-          '& .css-k008qs': {
-            justifyContent: 'center',
-          },
-        }}
-      >
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab
-            sx={{
-              fontWeight: 'bold',
-              borderTopRightRadius: '8px',
-              borderTopLeftRadius: '8px',
-              background: `${value === 0 && '#545454'}`,
-              color: '#FFF !important',
-            }}
-            label={statusSecondCheck ? t('modal.label_price') : t('modal.label_price2')}
-            {...a11yProps(0)}
-          />
-          <Tab
-            sx={{
-              fontWeight: '700',
-              borderTopRightRadius: '8px',
-              borderTopLeftRadius: '8px',
-              background: `${value === 1 && '#545454'}`,
-              color: '#FFF !important',
-            }}
-            label={t('modal.label_filled_with_fuel')}
-            {...a11yProps(1)}
-          />
-          <Tab
-            sx={{
-              fontWeight: '700',
-              borderTopRightRadius: '8px',
-              borderTopLeftRadius: '8px',
-              background: `${value === 2 && '#545454'}`,
-              color: '#FFF !important',
-            }}
-            label={t('modal.label_financial_expenses')}
-            {...a11yProps(2)}
-          />
-          <Tab
-            sx={{
-              fontWeight: '700',
-              borderTopRightRadius: '8px',
-              borderTopLeftRadius: '8px',
-              background: `${value === 3 && '#545454'}`,
-              color: '#FFF !important',
-            }}
-            label={t('modal.label_money_deposit')}
-            {...a11yProps(3)}
-          />
-        </Tabs>
+      <Box sx={{ width: '100%' }}>
+        <Box
+          sx={{
+            borderBottom: 1,
+            borderColor: 'divider',
+            width: '100%',
+            '& .css-heg063-MuiTabs-flexContainer': {
+              justifyContent: 'center',
+            },
+            '& .css-k008qs': {
+              justifyContent: 'center',
+            },
+          }}
+        >
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+            indicatorColor="primary"
+            sx={{ '& .MuiTabs-indicator': { display: 'none' } }}
+          >
+            <Tab
+              sx={{
+                fontWeight: 'bold',
+                padding: '10px 20px',
+                borderTopRightRadius: '8px',
+                borderTopLeftRadius: '8px',
+                background: `${value === 0 && '#454545'}`,
+                color: `${value === 0 ? '#FFF!important' : '#939395'}`,
+              }}
+              label={t('modal.label_price2')}
+              {...a11yProps(0)}
+            />
+            <Tab
+              sx={{
+                fontWeight: '700',
+                padding: '10px 20px',
+                borderTopRightRadius: '8px',
+                borderTopLeftRadius: '8px',
+                background: `${value === 1 && '#454545'}`,
+                color: `${value === 1 ? '#FFF!important' : '#939395'}`,
+              }}
+              label={t('modal.label_filled_with_fuel')}
+              {...a11yProps(1)}
+            />
+            <Tab
+              sx={{
+                fontWeight: '700',
+                padding: '10px 20px',
+                borderTopRightRadius: '8px',
+                borderTopLeftRadius: '8px',
+                background: `${value === 2 && '#454545'}`,
+                color: `${value === 2 ? '#FFF!important' : '#939395'}`,
+              }}
+              label={t('modal.label_financial_expenses')}
+              {...a11yProps(2)}
+            />
+            <Tab
+              sx={{
+                fontWeight: '700',
+                padding: '10px 20px',
+                borderTopRightRadius: '8px',
+                borderTopLeftRadius: '8px',
+                background: `${value === 3 && '#454545'}`,
+                color: `${value === 3 ? '#FFF!important' : '#939395'}`,
+              }}
+              label={t('modal.label_money_deposit')}
+              {...a11yProps(3)}
+            />
+          </Tabs>
+        </Box>
       </Box>
 
       <TabPanel value={value} index={0}>
-        <Grid
-          container
-          alignItems="center"
-          justifyContent={statusSecondCheck ? 'flex-start' : 'center'}
-          minWidth={'730px'}
-          maxHeight="365px"
-          minHeight="365px"
-          flexDirection={'row'}
-          flexWrap={'nowrap'}
-        >
-          {statusSecondCheck && (
-            <>
-              <Grid item sx={{ width: '45%' }}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <BaseText sx={{ marginBottom: '-15px', fontWeight: '800' }}>
-                    {t('modal.price')}
-                  </BaseText>
-                  <NestedList
-                    maxwidth={'200px'}
-                    titleOne={t('modal.total_shipping')}
-                    valorOne={selected?.freightTotal}
-                    titleTwo={t('modal.net_shipping')}
-                    valorTwo={selected?.totalNetFreight}
-                    valuesFirstCheck={valuesFirstCheck}
-                    statusSecondCheck={statusSecondCheck}
-                  />
-                </Box>
-              </Grid>
-              <ArrowForwardIcon style={{ verticalAlign: 'middle' }} />
-            </>
-          )}
-          <Grid item sx={{ width: '45%' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              {statusSecondCheck && (
-                <BaseText sx={{ marginBottom: '-15px', fontWeight: '800' }}>
-                  {t('modal.accomplished')}
+        <Grid container alignItems="center" minWidth={'730px'}>
+          <BaseNestedList
+            titleHeader={t('modal.price')}
+            title={t('modal.total_shipping')}
+            valor={selected?.freightTotal}
+            titleFooter={t('modal.net_shipping')}
+            valorFooter={selected?.totalNetFreight}
+          >
+            <List sx={{ px: '20px' }}>
+              <ListItem>
+                <ListItemText
+                  sx={{ color: '#939395' }}
+                  primary={t('add_freight.label.combustible')}
+                />
+                <BaseText fontsize={'18px'} color={'#F03D3D'} sx={{ marginRight: '20px' }}>
+                  {selected?.totalLiters + ' L'} / {selected?.fuelValueTotal}
                 </BaseText>
-              )}
-              <NestedList
-                maxwidth={statusSecondCheck ? '220px' : '360px'}
-                titleOne={t('modal.total_shipping')}
-                valorOne={selected?.freightTotal}
-                titleTwo={t('modal.net_shipping')}
-                valorTwo={selected?.totalNetFreight}
-                valuesFirstCheck={valuesFirstCheck}
-                statusSecondCheck={statusSecondCheck}
-              />
-            </Box>
-          </Grid>
-          {statusSecondCheck && (
-            <>
-              <Divider
-                sx={{
-                  borderColor: 'rgba(0, 0, 0, 0.32)',
-                  width: '49%',
-                  ml: 2,
-                  transform: 'rotate(90deg)',
-                  position: 'absolute',
-                  right: '48px',
-                }}
-              />
-              <Grid item md={4} lg={4} sx={{ marginLeft: 2 }}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', spacing: 2 }}>
-                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <BaseText fontsize={'12px'} sx={{ opacity: 0.5 }}>
-                      {t('modal.credit/debit')}
-                    </BaseText>
-                    <BaseText fontsize={'16px'}></BaseText>
-                  </Box>
-                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <BaseText fontsize={'12px'} sx={{ opacity: 0.5 }}>
-                      {t('modal.discharge_location')}
-                    </BaseText>
-                    <BaseText fontsize={'16px'}></BaseText>
-                  </Box>
-                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <BaseText fontsize={'12px'} sx={{ opacity: 0.5 }}>
-                      {t('modal.discharge_date')}
-                    </BaseText>
-                    <BaseText fontsize={'16px'}></BaseText>
-                  </Box>
-                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <BaseText fontsize={'12px'} sx={{ opacity: 0.5 }}>
-                      {t('modal.hour_of_discharge')}
-                    </BaseText>
-                    <BaseText fontsize={'16px'}></BaseText>
-                  </Box>
-                </Box>
-              </Grid>
-            </>
-          )}
+              </ListItem>
+              <ListItem>
+                <ListItemText sx={{ color: '#939395' }} primary={t('add_freight.label.expenses')} />
+                <BaseText fontsize={'18px'} color={'#F03D3D'} sx={{ marginRight: '20px' }}>
+                  {selected?.expenses}
+                </BaseText>
+              </ListItem>
+              <ListItem>
+                <ListItemText sx={{ color: '#939395' }} primary={t('add_freight.label.driver')} />
+                <BaseText fontsize={'18px'} color={'#F03D3D'} sx={{ marginRight: '20px' }}>
+                  {selected?.totalDriver}
+                </BaseText>
+              </ListItem>
+            </List>
+          </BaseNestedList>
+          <BaseNestedList
+            titleHeader={t('add_freight.label.realized')}
+            title={t('add_freight.label.total_freight')}
+            valor={selected?.freightTotal}
+            titleFooter={t('add_freight.label.net_freight')}
+            valorFooter={selected?.totalNetFreight}
+            styleHeader={{
+              marginTop: '20px',
+            }}
+          >
+            <List sx={{ px: '20px' }}>
+              <ListItem>
+                <ListItemText
+                  sx={{ color: '#939395' }}
+                  primary={t('add_freight.label.combustible')}
+                />
+                <BaseText fontsize={'18px'} color={'#F03D3D'} sx={{ marginRight: '20px' }}>
+                  {selected?.totalLiters + ' L'} / {selected?.fuelValueTotal}
+                </BaseText>
+              </ListItem>
+              <ListItem>
+                <ListItemText sx={{ color: '#939395' }} primary={t('add_freight.label.expenses')} />
+                <BaseText fontsize={'18px'} color={'#F03D3D'} sx={{ marginRight: '20px' }}>
+                  {selected?.expenses}
+                </BaseText>
+              </ListItem>
+              <ListItem>
+                <ListItemText sx={{ color: '#939395' }} primary={t('add_freight.label.driver')} />
+                <BaseText fontsize={'18px'} color={'#F03D3D'} sx={{ marginRight: '20px' }}>
+                  {selected?.totalDriver}
+                </BaseText>
+              </ListItem>
+            </List>
+          </BaseNestedList>
+          <BaseNestedList
+            typeTemplate="list"
+            titleHeader={t('add_freight.label.discharge')}
+            title={t('add_freight.label.discharge_value')}
+            valor={selected?.freightTotal}
+            titleFooter={t('add_freight.label.discharge_value')}
+            valorFooter={selected?.totalNetFreight}
+            styleHeader={{
+              marginTop: '20px',
+            }}
+          >
+            <List sx={{ width: '100%' }}>
+              <ListItem>
+                <ListItemText
+                  sx={{ color: '#939395' }}
+                  primary={t('add_freight.label.combustible')}
+                />
+                <BaseText fontsize={'18px'} color={'#F03D3D'} sx={{ marginRight: '20px' }}>
+                  {0}
+                </BaseText>
+              </ListItem>
+              <ListItem>
+                <ListItemText sx={{ color: '#939395' }} primary={t('add_freight.label.location')} />
+                <BaseText fontsize={'18px'} color={'#F03D3D'} sx={{ marginRight: '20px' }}>
+                  {0}
+                </BaseText>
+              </ListItem>
+              <ListItem>
+                <ListItemText sx={{ color: '#939395' }} primary={t('add_freight.label.date')} />
+                <BaseText fontsize={'18px'} color={'#F03D3D'} sx={{ marginRight: '20px' }}>
+                  {0}
+                </BaseText>
+              </ListItem>
+              <ListItem>
+                <ListItemText sx={{ color: '#939395' }} primary={t('add_freight.label.hour')} />
+                <BaseText fontsize={'18px'} color={'#F03D3D'} sx={{ marginRight: '20px' }}>
+                  {0}
+                </BaseText>
+              </ListItem>
+            </List>
+          </BaseNestedList>
         </Grid>
       </TabPanel>
 

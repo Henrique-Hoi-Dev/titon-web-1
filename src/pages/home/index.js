@@ -19,7 +19,6 @@ const Home = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const [showModalFicha, setShowModalFicha] = useState(false);
   const [showModalAddFinancial, setShowModalAddFinancial] = useState(false);
 
   const [search, setSearch] = useState('');
@@ -99,15 +98,7 @@ const Home = () => {
           justifyContent="flex-end"
           sx={{ color: '#fff', borderBottom: '1px solid #F1F3F9' }}
         >
-          <BaseCardInfoFinancial
-            search={search}
-            searchOrder={searchOrder}
-            searchStatus={searchStatus}
-            showModalFicha={showModalFicha}
-            setShowModalFicha={setShowModalFicha}
-            financials={data}
-            loading={loading}
-          />
+          <BaseCardInfoFinancial financials={data} loading={loading} />
           {!loading && data?.docs?.length > 0 && data?.totalPages > 0 && (
             <TablePagination data={data} query={query} setQuery={setQuery} />
           )}

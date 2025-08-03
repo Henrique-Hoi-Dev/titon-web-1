@@ -104,7 +104,7 @@ const BaseModal = ({
           <Grid item container>
             <BaseText>{title}</BaseText>
           </Grid>
-          <Grid item container spacing={2} justifyContent="center">
+          <Grid item container>
             {children}
           </Grid>
         </ContentContainer>

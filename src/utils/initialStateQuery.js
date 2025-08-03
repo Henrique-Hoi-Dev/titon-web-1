@@ -1,8 +1,6 @@
 const INITIAL_STATE_FINANCIAL = {
   limit: 5,
   page: 1,
-  sort_field: null,
-  sort_order: 'ASC',
 };
 
 const INITIAL_STATE_DRIVER = {
@@ -25,8 +23,17 @@ const INITIAL_STATE_CART = {
   sort_field: null,
   sort_order: 'ASC',
 };
+
+const INITIAL_STATE_TRUCK = {
+  limit: 7,
+  page: 1,
+  sort_field: 'id',
+  sort_order: 'ASC',
+};
+
 const initialStateQuery = {
   INITIAL_STATE_FINANCIAL,
+  INITIAL_STATE_TRUCK,
   INITIAL_STATE_DRIVER,
   INITIAL_STATE_USER,
   INITIAL_STATE_CART,

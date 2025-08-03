@@ -74,11 +74,13 @@ const Login = () => {
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
+            background: '#2ac5c9',
           }}
         >
           <Box
             sx={{
               display: 'flex',
+              marginLeft: '40px',
               justifyContent: 'center',
               alignItems: 'center',
               flexDirection: 'column',

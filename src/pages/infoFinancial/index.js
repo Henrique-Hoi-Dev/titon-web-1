@@ -15,8 +15,8 @@ import BaseTitle from 'components/atoms/BaseTitle/BaseTitle';
 import BaseContentHeader from 'components/molecules/BaseContentHeader/BaseContentHeader';
 import BaseText from 'components/atoms/BaseText/BaseText';
 import BaseButton from 'components/atoms/BaseButton/BaseButton';
-import Table from './table';
 import BaseLoading from '@/components/atoms/BaseLoading/BaseLoading';
+import Table from './table';
 import TableNotification from './tableNotification';
 
 const InfoFinancial = () => {
@@ -196,7 +196,11 @@ const InfoFinancial = () => {
                 {t('info_financial.notifications')}
               </BaseText>
 
-              <TableNotification data={financial?.notifications} loading={loadingById} />
+              <TableNotification
+                data={financial?.notifications}
+                loading={loadingById}
+                handleRefresh={handleRefresh}
+              />
 
               <Grid
                 item

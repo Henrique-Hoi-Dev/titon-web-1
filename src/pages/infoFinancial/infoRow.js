@@ -19,11 +19,11 @@ const InfoRow = (props) => {
         key={data.id}
         sx={{
           cursor: 'pointer',
-          '&:hover': { border: '2px solid #545454' },
+          '&:hover': { backgroundColor: '#545454' },
         }}
         onClick={(ev) => handleAction(ev, data?.id)}
       >
-        <SCell>
+        <SCell width={'100px'}>
           <BaseTypeStatus props={data} statusTable />
         </SCell>
         <SCell>{data?.endFreightCity?.toUpperCase() ?? '---'}</SCell>
